@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏠 Casa - Objetos, Ações e Quiz</title>
+    <style>
+        /* ── RESET & BASE ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0efe7;
+            color: #2d2a24;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .app-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+            background: linear-gradient(135deg, #f7f3e9, #e8e0d5);
+            border-radius: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .app-header h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #3d352b;
+        }
+        .app-header h1 span {
+            background: #d4c9b8;
+            padding: 0 12px;
+            border-radius: 40px;
+            color: #2d2a24;
+        }
+        .app-header p {
+            font-size: 1.15rem;
+            color: #5f5546;
+            margin-top: 6px;
+        }
+
+        /* ── TABS ── */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 12px;
+            margin-bottom: 28px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 60px;
+            background: #e3dbcf;
+            color: #4a4136;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tab-btn:hover {
+            background: #d5cbbc;
+            transform: translateY(-2px);
+        }
+        .tab-btn.active {
+            background: #b8a48c;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(184, 164, 140, 0.35);
+        }
+        .tab-btn .icon {
+            font-size: 1.2rem;
+        }
+
+        /* ── CONTENT ── */
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #3d352b;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title .badge {
+            font-size: 0.9rem;
+            font-weight: 400;
+            background: #d4c9b8;
+            padding: 2px 16px;
+            border-radius: 40px;
+            color: #4a4136;
+        }
+
+        /* ── CARD GRID ── */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 18px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fffffffa;
+            border-radius: 22px;
+            padding: 18px 12px 16px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            transition: 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+            border-color: #d4c9b8;
+        }
+        .card .emoji {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+        .card .word {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d2a24;
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+        .card .pronunciation {
+            font-size: 0.8rem;
+            color: #7a6e5c;
+            background: #f3efe8;
+            padding: 3px 12px;
+            border-radius: 40px;
+            margin-top: 5px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #e8e0d5;
+        }
+        .card .speak-btn {
+            margin-top: 10px;
+            background: #e8e0d5;
+            border: none;
+            border-radius: 60px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #3d352b;
+            cursor: pointer;
+            transition: 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid transparent;
+        }
+        .card .speak-btn:hover {
+            background: #d5cbbc;
+            border-color: #b8a48c;
+            transform: scale(1.02);
+        }
+
+        /* ── QUIZ ── */
+        .quiz-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #faf8f4;
+            border-radius: 32px;
+            padding: 30px 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e8e0d5;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .quiz-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #3d352b;
+        }
+        .quiz-stats {
+            font-size: 1rem;
+            background: #e8e0d5;
+            padding: 6px 18px;
+            border-radius: 40px;
+            color: #4a4136;
+            font-weight: 500;
+        }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 720px) {
+            .quiz-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        .quiz-col {
+            background: #fff;
+            border-radius: 20px;
+            padding: 16px 12px;
+            box-shadow: inset 0 0 0 1px #ede8df;
+            min-height: 300px;
+        }
+        .quiz-col h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #6b5f4e;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+        .quiz-item {
+            padding: 10px 14px;
+            margin: 6px 0;
+            border-radius: 14px;
+            background: #f7f4ee;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.15s ease;
+            font-weight: 500;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quiz-item:hover:not(.matched):not(.disabled) {
+            background: #ede6db;
+            transform: scale(1.01);
+        }
+        .quiz-item.selected {
+            border-color: #b8a48c;
+            background: #e8e0d5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .quiz-item.matched {
+            background: #d4e0c8;
+            border-color: #7fa86a;
+            cursor: default;
+            opacity: 0.7;
+            text-decoration: line-through 2px #4e7a3a;
+        }
+        .quiz-item.wrong {
+            background: #f4d6d6;
+            border-color: #c45a5a;
+            animation: shake 0.3s ease;
+        }
+        .quiz-item .q-emoji {
+            font-size: 1.3rem;
+        }
+        .quiz-item .q-word {
+            flex: 1;
+        }
+        .quiz-item .q-pron {
+            font-size: 0.7rem;
+            color: #7a6e5c;
+            background: #ede8df;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-family: monospace;
+        }
+        .quiz-item .speak-small {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0 4px;
+            transition: 0.1s;
+        }
+        .quiz-item .speak-small:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-6px);
+            }
+            75% {
+                transform: translateX(6px);
+            }
+        }
+
+        .quiz-reset-btn {
+            margin-top: 24px;
+            padding: 10px 30px;
+            background: #d4c9b8;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3d352b;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .quiz-reset-btn:hover {
+            background: #c0b4a1;
+            transform: scale(1.02);
+        }
+
+        .quiz-congrats {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #4e7a3a;
+            margin-top: 18px;
+            font-weight: 500;
+        }
+
+        /* ── FOOTER ── */
+        .app-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px 10px 10px;
+            color: #8a7e6e;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0d8cc;
+        }
+        .app-footer small {
+            opacity: 0.7;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .app-header h1 {
+                font-size: 1.8rem;
+            }
+            .tab-btn {
+                padding: 7px 14px;
+                font-size: 0.8rem;
+            }
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 12px;
+            }
+            .card .emoji {
+                font-size: 2.4rem;
+            }
+            .card .word {
+                font-size: 0.95rem;
+            }
+            .quiz-container {
+                padding: 16px 12px;
+            }
+            .quiz-item {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="app-header">
+        <h1>🏠 House <span>Objects</span> &amp; <span>Actions</span></h1>
+        <p>Vocabulário com pronúncia, imagens e quiz interativo</p>
+    </header>
+
+    <!-- ═══ TABS ═══ -->
+    <nav class="tabs" id="tabNav">
+        <button class="tab-btn active" data-tab="livingroom"><span class="icon">🛋️</span> Living</button>
+        <button class="tab-btn" data-tab="kitchen"><span class="icon">🍳</span> Kitchen</button>
+        <button class="tab-btn" data-tab="bedroom"><span class="icon">🛏️</span> Bedroom</button>
+        <button class="tab-btn" data-tab="bathroom"><span class="icon">🚿</span> Bathroom</button>
+        <button class="tab-btn" data-tab="diningroom"><span class="icon">🍽️</span> Dining</button>
+        <button class="tab-btn" data-tab="garage"><span class="icon">🚗</span> Garage</button>
+        <button class="tab-btn" data-tab="actions"><span class="icon">🏃</span> Actions</button>
+        <button class="tab-btn" data-tab="quiz"><span class="icon">🧩</span> Quiz</button>
+    </nav>
+
+    <!-- ═══ CONTENT ═══ -->
+    <main>
+
+        <!-- ─── LIVING ROOM ─── -->
+        <section class="tab-content active" id="livingroom"><div class="section-title">🛋️ Living Room <span class="badge">16 items</span></div><div class="card-grid" id="grid-livingroom"></div></section>
+
+        <!-- ─── KITCHEN ─── -->
+        <section class="tab-content" id="kitchen"><div class="section-title">🍳 Kitchen <span class="badge">14 items</span></div><div class="card-grid" id="grid-kitchen"></div></section>
+
+        <!-- ─── BEDROOM ─── -->
+        <section class="tab-content" id="bedroom"><div class="section-title">🛏️ Bedroom <span class="badge">14 items</span></div><div class="card-grid" id="grid-bedroom"></div></section>
+
+        <!-- ─── BATHROOM ─── -->
+        <section class="tab-content" id="bathroom"><div class="section-title">🚿 Bathroom <span class="badge">12 items</span></div><div class="card-grid" id="grid-bathroom"></div></section>
+
+        <!-- ─── DINING ROOM ─── -->
+        <section class="tab-content" id="diningroom"><div class="section-title">🍽️ Dining Room <span class="badge">12 items</span></div><div class="card-grid" id="grid-diningroom"></div></section>
+
+        <!-- ─── GARAGE & VEHICLES ─── -->
+        <section class="tab-content" id="garage"><div class="section-title">🚗 Garage &amp; Vehicles <span class="badge">30 items</span></div><div class="card-grid" id="grid-garage"></div></section>
+
+        <!-- ─── ACTIONS ─── -->
+        <section class="tab-content" id="actions"><div class="section-title">🏃 Common Actions <span class="badge">30 verbs</span></div><div class="card-grid" id="grid-actions"></div></section>
+
+        <!-- ─── QUIZ ─── -->
+        <section class="tab-content" id="quiz">
+            <div class="section-title">🧩 Matching Quiz <span class="badge">clique e associe</span></div>
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-header">
+                    <h2>🔗 Inglês ↔ Português</h2>
+                    <span class="quiz-stats" id="quizStats">0 / 0</span>
+                </div>
+                <div class="quiz-grid" id="quizGrid">
+                    <div class="quiz-col" id="quizLeft">
+                        <h3>🇬🇧 English</h3>
+                        <div id="quizLeftList"></div>
+                    </div>
+                    <div class="quiz-col" id="quizRight">
+                        <h3>🇧🇷 Português</h3>
+                        <div id="quizRightList"></div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:20px;">
+                    <button class="quiz-reset-btn" id="quizReset">🔄 Embaralhar e recomeçar</button>
+                </div>
+                <div id="quizCongrats" class="quiz-congrats"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="app-footer">
+        <small>🔊 Clique no alto-falante para ouvir a pronúncia &bull; Quiz: selecione um item em cada coluna</small>
+    </footer>
+
+    <!-- ═══ JAVASCRIPT ═══ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ─── VOCABULARY ────────────────────────────────────────────────────────
+            const vocabulary = {
+                livingroom: [
+                    { word: "Sofa", translation: "Sofá", pron: "/ˈsoʊ.fə/", emoji: "🛋️" },
+                    { word: "Armchair", translation: "Poltrona", pron: "/ˈɑːrm.tʃer/", emoji: "🪑" },
+                    { word: "Coffee Table", translation: "Mesa de centro", pron: "/ˈkɔː.fi ˌteɪ.bəl/", emoji: "🪵" },
+                    { word: "TV", translation: "Televisão", pron: "/ˌtiːˈviː/", emoji: "📺" },
+                    { word: "Lamp", translation: "Lâmpada", pron: "/læmp/", emoji: "💡" },
+                    { word: "Floor Lamp", translation: "Abajur de pé", pron: "/flɔːr læmp/", emoji: "🪔" },
+                    { word: "Rug", translation: "Tapete", pron: "/rʌɡ/", emoji: "🧶" },
+                    { word: "Bookshelf", translation: "Estante", pron: "/ˈbʊk.ʃelf/", emoji: "📚" },
+                    { word: "Remote Control", translation: "Controle remoto", pron: "/rɪˈmoʊt kənˈtroʊl/", emoji: "📟" },
+                    { word: "Cushion", translation: "Almofada", pron: "/ˈkʊʃ.ən/", emoji: "🟤" },
+                    { word: "Curtain", translation: "Cortina", pron: "/ˈkɜːr.tən/", emoji: "🧵" },
+                    { word: "Fireplace", translation: "Lareira", pron: "/ˈfaɪr.pleɪs/", emoji: "🔥" },
+                    { word: "Clock", translation: "Relógio", pron: "/klɑːk/", emoji: "🕐" },
+                    { word: "Plant", translation: "Planta", pron: "/plænt/", emoji: "🌿" },
+                    { word: "Sofa Bed", translation: "Sofá-cama", pron: "/ˈsoʊ.fə bed/", emoji: "🛋️" },
+                    { word: "Chandelier", translation: "Lustre", pron: "/ˌʃæn.dəˈlɪr/", emoji: "💎" }
+                ],
+                kitchen: [
+                    { word: "Refrigerator", translation: "Geladeira", pron: "/rɪˈfrɪdʒ.ə.reɪ.tər/", emoji: "🧊" },
+                    { word: "Stove", translation: "Fogão", pron: "/stoʊv/", emoji: "🔥" },
+                    { word: "Oven", translation: "Forno", pron: "/ˈʌv.ən/", emoji: "🍞" },
+                    { word: "Microwave", translation: "Micro-ondas", pron: "/ˈmaɪ.kroʊ.weɪv/", emoji: "📡" },
+                    { word: "Sink", translation: "Pia", pron: "/sɪŋk/", emoji: "🚰" },
+                    { word: "Dishwasher", translation: "Lava-louças", pron: "/ˈdɪʃ.wɑː.ʃər/", emoji: "🧼" },
+                    { word: "Kettle", translation: "Chaleira", pron: "/ˈket.əl/", emoji: "🫖" },
+                    { word: "Toaster", translation: "Torradeira", pron: "/ˈtoʊ.stər/", emoji: "🍞" },
+                    { word: "Cabinet", translation: "Armário", pron: "/ˈkæb.ə.nət/", emoji: "🗄️" },
+                    { word: "Counter", translation: "Bancada", pron: "/ˈkaʊn.tər/", emoji: "🧑‍🍳" },
+                    { word: "Blender", translation: "Liquidificador", pron: "/ˈblen.dər/", emoji: "🥤" },
+                    { word: "Frying Pan", translation: "Frigideira", pron: "/ˈfraɪ.ɪŋ pæn/", emoji: "🍳" },
+                    { word: "Cupboard", translation: "Despensa", pron: "/ˈkʌb.ərd/", emoji: "🚪" },
+                    { word: "Cutting Board", translation: "Tábua de corte", pron: "/ˈkʌt.ɪŋ bɔːrd/", emoji: "🪵" }
+                ],
+                bedroom: [
+                    { word: "Bed", translation: "Cama", pron: "/bed/", emoji: "🛏️" },
+                    { word: "Wardrobe", translation: "Roupeiro", pron: "/ˈwɔːr.droʊb/", emoji: "👔" },
+                    { word: "Nightstand", translation: "Criado-mudo", pron: "/ˈnaɪt.stænd/", emoji: "🪑" },
+                    { word: "Mirror", translation: "Espelho", pron: "/ˈmɪr.ər/", emoji: "🪞" },
+                    { word: "Pillow", translation: "Travesseiro", pron: "/ˈpɪl.oʊ/", emoji: "🟦" },
+                    { word: "Blanket", translation: "Cobertor", pron: "/ˈblæŋ.kɪt/", emoji: "🧶" },
+                    { word: "Alarm Clock", translation: "Despertador", pron: "/əˈlɑːrm klɑːk/", emoji: "⏰" },
+                    { word: "Dresser", translation: "Cômoda", pron: "/ˈdres.ər/", emoji: "🪞" },
+                    { word: "Hanger", translation: "Cabide", pron: "/ˈhæŋ.ər/", emoji: "🧥" },
+                    { word: "Lamp", translation: "Luminária", pron: "/læmp/", emoji: "💡" },
+                    { word: "Desk", translation: "Escrivaninha", pron: "/desk/", emoji: "🪑" },
+                    { word: "Rocking Chair", translation: "Cadeira de balanço", pron: "/ˈrɑː.kɪŋ tʃer/", emoji: "🪑" },
+                    { word: "Bench", translation: "Banco", pron: "/bentʃ/", emoji: "🪑" },
+                    { word: "Rug", translation: "Tapete", pron: "/rʌɡ/", emoji: "🧶" }
+                ],
+                bathroom: [
+                    { word: "Shower", translation: "Chuveiro", pron: "/ˈʃaʊ.ər/", emoji: "🚿" },
+                    { word: "Bathtub", translation: "Banheira", pron: "/ˈbæθ.tʌb/", emoji: "🛁" },
+                    { word: "Toilet", translation: "Vaso sanitário", pron: "/ˈtɔɪ.lət/", emoji: "🚽" },
+                    { word: "Sink", translation: "Pia", pron: "/sɪŋk/", emoji: "🚰" },
+                    { word: "Towel", translation: "Toalha", pron: "/ˈtaʊ.əl/", emoji: "🧣" },
+                    { word: "Toothbrush", translation: "Escova de dentes", pron: "/ˈtuːθ.brʌʃ/", emoji: "🪥" },
+                    { word: "Toothpaste", translation: "Pasta de dente", pron: "/ˈtuːθ.peɪst/", emoji: "🧴" },
+                    { word: "Shampoo", translation: "Xampu", pron: "/ʃæmˈpuː/", emoji: "🧴" },
+                    { word: "Soap", translation: "Sabonete", pron: "/soʊp/", emoji: "🧼" },
+                    { word: "Razor", translation: "Aparelho de barbear", pron: "/ˈreɪ.zər/", emoji: "🪒" },
+                    { word: "Tissue", translation: "Lenço de papel", pron: "/ˈtɪʃ.uː/", emoji: "🧻" },
+                    { word: "Scale", translation: "Balança", pron: "/skeɪl/", emoji: "⚖️" }
+                ],
+                diningroom: [
+                    { word: "Table", translation: "Mesa", pron: "/ˈteɪ.bəl/", emoji: "🪑" },
+                    { word: "Chair", translation: "Cadeira", pron: "/tʃer/", emoji: "🪑" },
+                    { word: "Plate", translation: "Prato", pron: "/pleɪt/", emoji: "🍽️" },
+                    { word: "Glass", translation: "Copo", pron: "/ɡlæs/", emoji: "🥛" },
+                    { word: "Fork", translation: "Garfo", pron: "/fɔːrk/", emoji: "🍴" },
+                    { word: "Knife", translation: "Faca", pron: "/naɪf/", emoji: "🔪" },
+                    { word: "Spoon", translation: "Colher", pron: "/spuːn/", emoji: "🥄" },
+                    { word: "Napkin", translation: "Guardanapo", pron: "/ˈnæp.kɪn/", emoji: "🧻" },
+                    { word: "Cup", translation: "Xícara", pron: "/kʌp/", emoji: "☕" },
+                    { word: "Bowl", translation: "Tigela", pron: "/boʊl/", emoji: "🥣" },
+                    { word: "Pitcher", translation: "Jarra", pron: "/ˈpɪtʃ.ər/", emoji: "🏺" },
+                    { word: "Salt Shaker", translation: "Saleiro", pron: "/sɔːlt ˌʃeɪ.kər/", emoji: "🧂" }
+                ],
+                garage: [
+                    { word: "Car", translation: "Carro", pron: "/kɑːr/", emoji: "🚗" },
+                    { word: "Bicycle", translation: "Bicicleta", pron: "/ˈbaɪ.sɪ.kəl/", emoji: "🚲" },
+                    { word: "Motorcycle", translation: "Moto", pron: "/ˈmoʊ.tər.saɪ.kəl/", emoji: "🏍️" },
+                    { word: "Steering Wheel", translation: "Volante", pron: "/ˈstɪr.ɪŋ wiːl/", emoji: "⚙️" },
+                    { word: "Gear Shift", translation: "Câmbio", pron: "/ɡɪr ʃɪft/", emoji: "⚙️" },
+                    { word: "Accelerator", translation: "Acelerador", pron: "/əkˈsel.ə.reɪ.tər/", emoji: "⬆️" },
+                    { word: "Brake", translation: "Freio", pron: "/breɪk/", emoji: "⛔" },
+                    { word: "Clutch", translation: "Embreagem", pron: "/klʌtʃ/", emoji: "⚙️" },
+                    { word: "Dashboard", translation: "Painel", pron: "/ˈdæʃ.bɔːrd/", emoji: "📊" },
+                    { word: "Seat", translation: "Banco", pron: "/siːt/", emoji: "💺" },
+                    { word: "Seatbelt", translation: "Cinto de segurança", pron: "/ˈsiːt.belt/", emoji: "🔗" },
+                    { word: "Tire", translation: "Pneu", pron: "/taɪr/", emoji: "🛞" },
+                    { word: "Headlight", translation: "Farol", pron: "/ˈhed.laɪt/", emoji: "💡" },
+                    { word: "Taillight", translation: "Lanterna traseira", pron: "/ˈteɪl.laɪt/", emoji: "🔴" },
+                    { word: "Bumper", translation: "Para-choque", pron: "/ˈbʌm.pər/", emoji: "🛡️" },
+                    { word: "Hood", translation: "Capô", pron: "/hʊd/", emoji: "🔧" },
+                    { word: "Trunk", translation: "Porta-malas", pron: "/trʌŋk/", emoji: "🧳" },
+                    { word: "Windshield Wiper", translation: "Limpador", pron: "/ˈwɪnd.ʃiːld ˌwaɪ.pər/", emoji: "💦" },
+                    { word: "Handlebar", translation: "Guidão", pron: "/ˈhæn.dəl.bɑːr/", emoji: "🚲" },
+                    { word: "Saddle", translation: "Selim", pron: "/ˈsæd.əl/", emoji: "🚲" },
+                    { word: "Pedal", translation: "Pedal", pron: "/ˈped.əl/", emoji: "🚲" },
+                    { word: "Chain", translation: "Corrente", pron: "/tʃeɪn/", emoji: "⛓️" },
+                    { word: "Rim", translation: "Aro", pron: "/rɪm/", emoji: "⚙️" },
+                    { word: "Frame", translation: "Quadro", pron: "/freɪm/", emoji: "🔩" },
+                    { word: "Helmet", translation: "Capacete", pron: "/ˈhel.mɪt/", emoji: "⛑️" },
+                    { word: "Tank", translation: "Tanque", pron: "/tæŋk/", emoji: "⛽" },
+                    { word: "Fairing", translation: "Carenagem", pron: "/ˈfer.ɪŋ/", emoji: "🏍️" },
+                    { word: "Exhaust", translation: "Escapamento", pron: "/ɪɡˈzɔːst/", emoji: "💨" },
+                    { word: "Mirror", translation: "Retrovisor", pron: "/ˈmɪr.ər/", emoji: "🪞" },
+                    { word: "Bell", translation: "Campainha", pron: "/bel/", emoji: "🔔" }
+                ],
+                actions: [
+                    { word: "Sit", translation: "Sentar", pron: "/sɪt/", emoji: "🧘" },
+                    { word: "Stand", translation: "Levantar", pron: "/stænd/", emoji: "🧍" },
+                    { word: "Sleep", translation: "Dormir", pron: "/sliːp/", emoji: "😴" },
+                    { word: "Eat", translation: "Comer", pron: "/iːt/", emoji: "🍽️" },
+                    { word: "Drink", translation: "Beber", pron: "/drɪŋk/", emoji: "🥤" },
+                    { word: "Cook", translation: "Cozinhar", pron: "/kʊk/", emoji: "👨‍🍳" },
+                    { word: "Wash", translation: "Lavar", pron: "/wɑːʃ/", emoji: "🧼" },
+                    { word: "Clean", translation: "Limpar", pron: "/kliːn/", emoji: "🧹" },
+                    { word: "Open", translation: "Abrir", pron: "/ˈoʊ.pən/", emoji: "🚪" },
+                    { word: "Close", translation: "Fechar", pron: "/kloʊz/", emoji: "🚪" },
+                    { word: "Turn On", translation: "Ligar", pron: "/tɜːrn ɑːn/", emoji: "💡" },
+                    { word: "Turn Off", translation: "Desligar", pron: "/tɜːrn ɔːf/", emoji: "💡" },
+                    { word: "Watch", translation: "Assistir", pron: "/wɑːtʃ/", emoji: "👀" },
+                    { word: "Read", translation: "Ler", pron: "/riːd/", emoji: "📖" },
+                    { word: "Listen", translation: "Ouvir", pron: "/ˈlɪs.ən/", emoji: "👂" },
+                    { word: "Write", translation: "Escrever", pron: "/raɪt/", emoji: "✍️" },
+                    { word: "Brush", translation: "Escovar", pron: "/brʌʃ/", emoji: "🪥" },
+                    { word: "Shower", translation: "Tomar banho", pron: "/ˈʃaʊ.ər/", emoji: "🚿" },
+                    { word: "Flush", translation: "Dar descarga", pron: "/flʌʃ/", emoji: "🚽" },
+                    { word: "Lock", translation: "Trancar", pron: "/lɑːk/", emoji: "🔒" },
+                    { word: "Unlock", translation: "Destrancar", pron: "/ʌnˈlɑːk/", emoji: "🔓" },
+                    { word: "Vacuum", translation: "Aspirar", pron: "/ˈvæk.juːm/", emoji: "🧹" },
+                    { word: "Sweep", translation: "Varrer", pron: "/swiːp/", emoji: "🧹" },
+                    { word: "Mop", translation: "Esfregar", pron: "/mɑːp/", emoji: "🧹" },
+                    { word: "Dust", translation: "Tirar pó", pron: "/dʌst/", emoji: "🧽" },
+                    { word: "Water", translation: "Regar", pron: "/ˈwɔː.tər/", emoji: "💧" },
+                    { word: "Feed", translation: "Alimentar", pron: "/fiːd/", emoji: "🍲" },
+                    { word: "Play", translation: "Brincar", pron: "/pleɪ/", emoji: "🎮" },
+                    { word: "Work", translation: "Trabalhar", pron: "/wɜːrk/", emoji: "💼" },
+                    { word: "Relax", translation: "Relaxar", pron: "/rɪˈlæks/", emoji: "🧘" }
+                ]
+            };
+
+            // ─── HELPERS ──────────────────────────────────────────────────────────
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function speakText(text) {
+                if (!window.speechSynthesis) return;
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US';
+                u.rate = 0.85;
+                u.pitch = 1;
+                window.speechSynthesis.speak(u);
+            }
+
+            // ─── RENDER CARDS ─────────────────────────────────────────────────────
+            function renderCards(containerId, items) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                container.innerHTML = '';
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="emoji">${item.emoji || '📦'}</div>
+                        <div class="word">${item.word}</div>
+                        <div class="pronunciation">${item.pron || ''}</div>
+                        <button class="speak-btn" data-word="${item.word}">🔊 Listen</button>
+                    `;
+                    const btn = card.querySelector('.speak-btn');
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        speakText(item.word);
+                    });
+                    container.appendChild(card);
+                });
+            }
+
+            // ─── INIT CARDS ──────────────────────────────────────────────────────
+            function initCards() {
+                for (const [key, items] of Object.entries(vocabulary)) {
+                    const gridId = `grid-${key}`;
+                    const grid = document.getElementById(gridId);
+                    if (grid) renderCards(gridId, items);
+                }
+            }
+
+            // ─── QUIZ ─────────────────────────────────────────────────────────────
+            let quizState = {
+                allItems: [],
+                leftItems: [],
+                rightItems: [],
+                selectedLeft: null, // index
+                selectedRight: null, // index
+                matchedPairs: new Set(), // set of translation strings (or word)
+                totalPairs: 0,
+                matchedCount: 0
+            };
+
+            function initQuiz() {
+                // gather all items from all categories
+                const all = [];
+                for (const cat of Object.values(vocabulary)) {
+                    all.push(...cat);
+                }
+                // remove duplicates by word (keep first)
+                const seen = new Set();
+                const unique = all.filter(item => {
+                    if (seen.has(item.word)) return false;
+                    seen.add(item.word);
+                    return true;
+                });
+                // shuffle
+                const shuffled = shuffle([...unique]);
+                // take up to 40 to keep quiz manageable, but show all if less
+                const maxItems = Math.min(shuffled.length, 60);
+                const selected = shuffled.slice(0, maxItems);
+
+                quizState.allItems = selected;
+                quizState.totalPairs = selected.length;
+                quizState.matchedCount = 0;
+                quizState.matchedPairs = new Set();
+                quizState.selectedLeft = null;
+                quizState.selectedRight = null;
+
+                // create left and right arrays with objects and shuffle separately
+                const left = selected.map((item, idx) => ({ ...item, idx }));
+                const right = selected.map((item, idx) => ({ ...item, idx }));
+                shuffle(left);
+                shuffle(right);
+
+                quizState.leftItems = left;
+                quizState.rightItems = right;
+
+                renderQuiz();
+            }
+
+            function renderQuiz() {
+                const leftList = document.getElementById('quizLeftList');
+                const rightList = document.getElementById('quizRightList');
+                const stats = document.getElementById('quizStats');
+                const congrats = document.getElementById('quizCongrats');
+
+                leftList.innerHTML = '';
+                rightList.innerHTML = '';
+
+                quizState.leftItems.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'quiz-item';
+                    div.dataset.index = index;
+                    div.dataset.side = 'left';
+                    div.dataset.word = item.word;
+                    div.dataset.translation = item.translation;
+
+                    const isMatched = quizState.matchedPairs.has(item.translation);
+                    if (isMatched) div.classList.add('matched');
+
+                    const isSelected = (quizState.selectedLeft === index && !isMatched);
+                    if (isSelected) div.classList.add('selected');
+
+                    div.innerHTML = `
+                        <span class="q-emoji">${item.emoji || '📌'}</span>
+                        <span class="q-word">${item.word}</span>
+                        <span class="q-pron">${item.pron || ''}</span>
+                        <button class="speak-small" data-word="${item.word}">🔊</button>
+                    `;
+                    // speak button
+                    const speakBtn = div.querySelector('.speak-small');
+                    speakBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        speakText(item.word);
+                    });
+
+                    div.addEventListener('click', () => handleQuizClick('left', index));
+                    leftList.appendChild(div);
+                });
+
+                quizState.rightItems.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'quiz-item';
+                    div.dataset.index = index;
+                    div.dataset.side = 'right';
+                    div.dataset.word = item.word;
+                    div.dataset.translation = item.translation;
+
+                    const isMatched = quizState.matchedPairs.has(item.translation);
+                    if (isMatched) div.classList.add('matched');
+
+                    const isSelected = (quizState.selectedRight === index && !isMatched);
+                    if (isSelected) div.classList.add('selected');
+
+                    div.innerHTML = `
+                        <span class="q-emoji">${item.emoji || '📌'}</span>
+                        <span class="q-word">${item.translation}</span>
+                    `;
+                    div.addEventListener('click', () => handleQuizClick('right', index));
+                    rightList.appendChild(div);
+                });
+
+                stats.textContent = `${quizState.matchedCount} / ${quizState.totalPairs}`;
+
+                if (quizState.matchedCount === quizState.totalPairs && quizState.totalPairs > 0) {
+                    congrats.textContent = '🎉 Parabéns! Você associou todos os pares corretamente! 🎉';
+                } else {
+                    congrats.textContent = '';
+                }
+            }
+
+            function handleQuizClick(side, index) {
+                const items = (side === 'left') ? quizState.leftItems : quizState.rightItems;
+                const item = items[index];
+                // if already matched, ignore
+                if (quizState.matchedPairs.has(item.translation)) return;
+
+                if (side === 'left') {
+                    // if same item selected, deselect
+                    if (quizState.selectedLeft === index) {
+                        quizState.selectedLeft = null;
+                        renderQuiz();
+                        return;
+                    }
+                    // if there is a selected right, check match
+                    if (quizState.selectedRight !== null) {
+                        const rightItem = quizState.rightItems[quizState.selectedRight];
+                        // if right item is matched, clear selection and try again
+                        if (quizState.matchedPairs.has(rightItem.translation)) {
+                            quizState.selectedRight = null;
+                            quizState.selectedLeft = index;
+                            renderQuiz();
+                            return;
+                        }
+                        // check match
+                        if (item.translation === rightItem.translation) {
+                            // correct match
+                            quizState.matchedPairs.add(item.translation);
+                            quizState.matchedCount++;
+                            quizState.selectedLeft = null;
+                            quizState.selectedRight = null;
+                            renderQuiz();
+                            // speak the word
+                            speakText(item.word);
+                        } else {
+                            // wrong match - show error
+                            const leftEl = document.querySelector(`#quizLeftList .quiz-item[data-index="${index}"]`);
+                            const rightEl = document.querySelector(
+                            `#quizRightList .quiz-item[data-index="${quizState.selectedRight}"]`);
+                            if (leftEl) leftEl.classList.add('wrong');
+                            if (rightEl) rightEl.classList.add('wrong');
+                            // reset after delay
+                            setTimeout(() => {
+                                if (leftEl) leftEl.classList.remove('wrong');
+                                if (rightEl) rightEl.classList.remove('wrong');
+                                quizState.selectedLeft = null;
+                                quizState.selectedRight = null;
+                                renderQuiz();
+                            }, 600);
+                        }
+                        return;
+                    }
+                    // no right selected, select left
+                    quizState.selectedLeft = index;
+                    // speak the word
+                    speakText(item.word);
+                    renderQuiz();
+                    return;
+                }
+
+                // side === 'right'
+                if (quizState.selectedRight === index) {
+                    quizState.selectedRight = null;
+                    renderQuiz();
+                    return;
+                }
+                if (quizState.selectedLeft !== null) {
+                    const leftItem = quizState.leftItems[quizState.selectedLeft];
+                    if (quizState.matchedPairs.has(leftItem.translation)) {
+                        quizState.selectedLeft = null;
+                        quizState.selectedRight = index;
+                        renderQuiz();
+                        return;
+                    }
+                    if (item.translation === leftItem.translation) {
+                        quizState.matchedPairs.add(item.translation);
+                        quizState.matchedCount++;
+                        quizState.selectedLeft = null;
+                        quizState.selectedRight = null;
+                        renderQuiz();
+                        speakText(leftItem.word);
+                    } else {
+                        const leftEl = document.querySelector(
+                            `#quizLeftList .quiz-item[data-index="${quizState.selectedLeft}"]`);
+                        const rightEl = document.querySelector(`#quizRightList .quiz-item[data-index="${index}"]`);
+                        if (leftEl) leftEl.classList.add('wrong');
+                        if (rightEl) rightEl.classList.add('wrong');
+                        setTimeout(() => {
+                            if (leftEl) leftEl.classList.remove('wrong');
+                            if (rightEl) rightEl.classList.remove('wrong');
+                            quizState.selectedLeft = null;
+                            quizState.selectedRight = null;
+                            renderQuiz();
+                        }, 600);
+                    }
+                    return;
+                }
+                // no left selected, select right
+                quizState.selectedRight = index;
+                renderQuiz();
+            }
+
+            // ─── TABS ─────────────────────────────────────────────────────────────
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            function switchTab(tabId) {
+                tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+                contents.forEach(section => section.classList.toggle('active', section.id === tabId));
+                // if quiz tab, re-render quiz (in case of changes)
+                if (tabId === 'quiz') {
+                    // ensure quiz is initialized
+                    if (quizState.allItems.length === 0) initQuiz();
+                    else renderQuiz();
+                }
+            }
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    switchTab(tabId);
+                    // update url hash
+                    if (tabId !== 'quiz') window.location.hash = tabId;
+                    else window.location.hash = 'quiz';
+                });
+            });
+
+            // ─── RESET QUIZ ──────────────────────────────────────────────────────
+            document.getElementById('quizReset').addEventListener('click', function() {
+                initQuiz();
+            });
+
+            // ─── INIT ─────────────────────────────────────────────────────────────
+            // Render all card grids
+            initCards();
+
+            // Check hash for initial tab
+            if (window.location.hash) {
+                const hash = window.location.hash.replace('#', '');
+                const targetBtn = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
+                if (targetBtn) switchTab(hash);
+            }
+
+            // Initialize quiz (lazy, but we can init now)
+            initQuiz();
+
+            // If quiz tab is not active, we still have quiz data ready
+
+            // Keyboard: Escape cancels speech
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && window.speechSynthesis) window.speechSynthesis.cancel();
+            });
+
+            console.log('🏠 Casa - vocabulário e quiz carregados!');
+        })();
+    </script>
+
+</body>
+</html>
