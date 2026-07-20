@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🛒 Supermercado - 1000+ Itens & Preposições in/on/at</title>
+    <title>🛒 Supermercado - 1000+ Itens & Preposições</title>
     <style>
         /* ── RESET & BASE ── */
         * {
@@ -186,23 +186,29 @@
             border: 1px solid #e8e0d5;
             display: inline-block;
         }
-        .item-card .speak-btn {
+        .item-card .actions {
+            display: flex;
+            gap: 6px;
             margin-top: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .item-card .actions button {
             background: #e8e0d5;
             border: none;
             border-radius: 60px;
-            padding: 5px 14px;
-            font-size: 0.75rem;
+            padding: 4px 12px;
+            font-size: 0.7rem;
             font-weight: 500;
             color: #3d352b;
             cursor: pointer;
             transition: 0.15s;
+            border: 1px solid transparent;
             display: flex;
             align-items: center;
-            gap: 5px;
-            border: 1px solid transparent;
+            gap: 4px;
         }
-        .item-card .speak-btn:hover {
+        .item-card .actions button:hover {
             background: #d5cbbc;
             border-color: #b8a48c;
         }
@@ -216,6 +222,100 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
+
+        /* ── MODAL (POP-UP) ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #fff;
+            border-radius: 28px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            animation: popIn 0.3s ease;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .modal-box .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #8a7e6e;
+            transition: 0.15s;
+        }
+        .modal-box .modal-close:hover {
+            color: #3d352b;
+            transform: rotate(90deg);
+        }
+        .modal-box .modal-emoji {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .modal-box .modal-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2d2a24;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .modal-box .modal-pron {
+            text-align: center;
+            font-family: monospace;
+            font-size: 1rem;
+            color: #7a6e5c;
+            background: #f3efe8;
+            padding: 4px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            margin: 0 auto 12px;
+        }
+        .modal-box .modal-description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #3d352b;
+            padding: 12px 0;
+            border-top: 1px solid #ede8df;
+            margin-top: 8px;
+        }
+        .modal-box .modal-speak {
+            background: #e8e0d5;
+            border: none;
+            border-radius: 60px;
+            padding: 8px 20px;
+            font-weight: 600;
+            color: #3d352b;
+            cursor: pointer;
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.15s;
+        }
+        .modal-box .modal-speak:hover {
+            background: #d5cbbc;
+        }
+
         /* ── EXERCISE BOX ── */
         .exercise-box {
             background: #faf8f4;
@@ -303,28 +403,16 @@
         .exercise-box .speak-small:hover {
             transform: scale(1.15);
         }
+
         @media (max-width: 640px) {
-            .app-header h1 {
-                font-size: 1.8rem;
-            }
-            .tab-btn {
-                padding: 7px 14px;
-                font-size: 0.8rem;
-            }
-            .grid-items {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 10px;
-            }
-            .item-card .emoji {
-                font-size: 2.2rem;
-            }
-            .exercise-box .question {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .exercise-box .question select {
-                width: 100%;
-            }
+            .app-header h1 { font-size: 1.8rem; }
+            .tab-btn { padding: 7px 14px; font-size: 0.8rem; }
+            .grid-items { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+            .item-card .emoji { font-size: 2.2rem; }
+            .modal-box { padding: 24px 18px; }
+            .modal-box .modal-title { font-size: 1.3rem; }
+            .exercise-box .question { flex-direction: column; align-items: stretch; }
+            .exercise-box .question select { width: 100%; }
         }
         .app-footer {
             text-align: center;
@@ -340,7 +428,7 @@
 
     <header class="app-header">
         <h1>🛒 <span>Supermercado</span> · 1000+ Itens · <span>in/on/at</span></h1>
-        <p>Lista gigante de produtos com figuras (emojis), pronúncia e exercícios de preposições</p>
+        <p>Lista gigante de produtos com figuras, pronúncia, descrições em inglês e exercícios</p>
     </header>
 
     <nav class="tabs" id="tabNav">
@@ -349,7 +437,6 @@
     </nav>
 
     <main>
-
         <!-- ═══ TAB 1: ITEMS ═══ -->
         <section class="tab-content active" id="items">
             <div class="section-title">🛍️ Itens de Supermercado <span class="badge" id="itemCountBadge">0</span></div>
@@ -376,11 +463,24 @@
                 </ul>
             </div>
         </section>
-
     </main>
 
+    <!-- ═══ MODAL (POP-UP) ═══ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-emoji" id="modalEmoji">🍎</div>
+            <div class="modal-title" id="modalTitle">Apple</div>
+            <div style="text-align:center;"><span class="modal-pron" id="modalPron">/ˈæp.əl/</span></div>
+            <div class="modal-description" id="modalDescription">Description here</div>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px;">
+                <button class="modal-speak" id="modalSpeak">🔊 Listen</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="app-footer">
-        <small>🔊 Clique no alto-falante para ouvir a pronúncia &bull; Exercícios corrigem automaticamente</small>
+        <small>🔊 Clique em "Describe" para ver a descrição em inglês &bull; Exercícios corrigem automaticamente</small>
     </footer>
 
     <script>
@@ -398,9 +498,8 @@
                 window.speechSynthesis.speak(u);
             }
 
-            // ─── MAPEAMENTO DE EMOJIS (FIGURAS) ──────────────────────────────
+            // ─── MAPEAMENTO DE EMOJIS ──────────────────────────────────────────
             const emojiMap = {
-                // Frutas
                 'apple': '🍎', 'banana': '🍌', 'orange': '🍊', 'grape': '🍇',
                 'strawberry': '🍓', 'blueberry': '🫐', 'raspberry': '🫐', 'blackberry': '🫐',
                 'pineapple': '🍍', 'mango': '🥭', 'papaya': '🥭', 'peach': '🍑',
@@ -409,7 +508,6 @@
                 'grapefruit': '🍊', 'tangerine': '🍊', 'kiwi': '🥝', 'fig': '🫐',
                 'date': '🫐', 'coconut': '🥥', 'avocado': '🥑', 'pomegranate': '🫐',
                 'passionfruit': '🫐', 'dragonfruit': '🐉',
-                // Verduras
                 'lettuce': '🥬', 'spinach': '🥬', 'kale': '🥬', 'cabbage': '🥬',
                 'broccoli': '🥦', 'cauliflower': '🥦', 'celery': '🥬', 'asparagus': '🥬',
                 'artichoke': '🥬', 'zucchini': '🥒', 'cucumber': '🥒', 'pepper': '🫑',
@@ -418,61 +516,111 @@
                 'beetroot': '🫐', 'onion': '🧅', 'garlic': '🧄', 'leek': '🧅',
                 'mushroom': '🍄', 'corn': '🌽', 'pea': '🫛', 'greenbean': '🫛',
                 'okra': '🥬', 'eggplant': '🍆',
-                // Carnes
                 'chicken': '🍗', 'beef': '🥩', 'pork': '🥩', 'lamb': '🥩',
                 'turkey': '🍗', 'duck': '🍗', 'veal': '🥩', 'goat': '🥩',
                 'bacon': '🥓', 'sausage': '🌭', 'ham': '🥩', 'meatball': '🧆',
                 'steak': '🥩', 'rib': '🍖', 'brisket': '🥩', 'groundbeef': '🥩',
-                // Peixes
                 'salmon': '🍣', 'tuna': '🐟', 'cod': '🐟', 'trout': '🐟',
                 'mackerel': '🐟', 'sardine': '🐟', 'anchovy': '🐟', 'tilapia': '🐟',
                 'catfish': '🐟', 'halibut': '🐟', 'swordfish': '🐟', 'sole': '🐟',
                 'herring': '🐟', 'bass': '🐟', 'perch': '🐟',
-                // Laticínios
                 'milk': '🥛', 'cheese': '🧀', 'yogurt': '🥛', 'butter': '🧈',
                 'cream': '🥛', 'sourcream': '🥛', 'cottagecheese': '🧀',
                 'creamcheese': '🧀', 'mozzarella': '🧀', 'parmesan': '🧀',
                 'gouda': '🧀', 'cheddar': '🧀', 'swisscheese': '🧀',
-                // Bebidas
                 'water': '💧', 'soda': '🥤', 'juice': '🧃', 'tea': '🍵',
                 'coffee': '☕', 'lemonade': '🍋', 'icedtea': '🧋', 'smoothie': '🥤',
                 'milkshake': '🥤', 'sportsdrink': '🥤', 'energy': '⚡', 'beer': '🍺',
                 'wine': '🍷', 'whiskey': '🥃', 'vodka': '🥃',
-                // Grãos / Padaria
                 'rice': '🍚', 'pasta': '🍝', 'spaghetti': '🍝', 'macaroni': '🍝',
                 'noodle': '🍜', 'bread': '🍞', 'bagel': '🥯', 'muffin': '🧁',
                 'cereal': '🥣', 'oatmeal': '🥣', 'flour': '🌾', 'sugar': '🍬',
                 'salt': '🧂', 'pepper': '🌶️', 'cinnamon': '🫘', 'vanilla': '🫘',
-                // Enlatados
                 'cannedbeans': '🥫', 'cannedcorn': '🥫', 'cannedpeas': '🥫',
                 'cannedtomato': '🥫', 'cannedtuna': '🥫', 'cannedsardine': '🥫',
                 'cannedsoup': '🥫', 'cannedfruit': '🥫', 'cannedmilk': '🥫',
                 'cannedmeat': '🥫',
-                // Limpeza
                 'soap': '🧼', 'detergent': '🧴', 'bleach': '🧴', 'ammonia': '🧴',
                 'vinegar': '🧴', 'baking': '🧂', 'sponge': '🧽', 'paper': '🧻',
                 'napkin': '🧻', 'towel': '🧻', 'trashbag': '🗑️', 'gloves': '🧤',
                 'broom': '🧹', 'mop': '🧹',
-                // Higiene
                 'toothpaste': '🪥', 'shampoo': '🧴', 'conditioner': '🧴',
                 'bodywash': '🧴', 'lotion': '🧴', 'deodorant': '🧴',
                 'razor': '🪒', 'shavingcream': '🧴', 'tissue': '🧻',
                 'toiletpaper': '🧻', 'diaper': '🩲',
-                // Outros
                 'icecream': '🍦', 'chocolate': '🍫', 'candy': '🍬', 'biscuit': '🍪',
                 'cookie': '🍪', 'cake': '🎂', 'pie': '🥧', 'cerealbar': '🍫',
                 'granola': '🥣', 'nuts': '🥜', 'peanutbutter': '🥜', 'jam': '🍯',
                 'honey': '🍯', 'syrup': '🍯', 'oil': '🫒', 'sauce': '🥫',
                 'ketchup': '🍅', 'mayonnaise': '🥫', 'mustard': '🥫', 'relish': '🥫'
             };
-
             const categoryEmoji = {
                 'frutas': '🍎', 'verduras': '🥬', 'carnes': '🥩', 'peixes': '🐟',
                 'laticinios': '🧀', 'bebidas': '🥤', 'graos': '🍞', 'enlatados': '🥫',
                 'limpeza': '🧼', 'higiene': '🧴', 'outros': '🍫'
             };
 
-            // ─── GERAR LISTA DE ITENS (1000+ COM FIGURAS) ──────────────────
+            // ─── DESCRIÇÕES EM INGLÊS (manual para alguns, genérico para o resto) ──
+            function generateDescription(item) {
+                const name = item.name;
+                const cat = item.category;
+
+                // Descrições manuais para itens comuns
+                const manual = {
+                    'apple': 'A round fruit with red, green or yellow skin and a crisp white flesh. It is sweet and often eaten raw or used in pies and juices.',
+                    'banana': 'A long curved fruit with a yellow peel and soft sweet flesh inside. Rich in potassium and often eaten as a snack.',
+                    'orange': 'A round citrus fruit with a thick orange skin and juicy segments inside. It is rich in vitamin C.',
+                    'grape': 'Small round fruits that grow in clusters. They can be green, red, or purple and are used to make wine, juice, or eaten fresh.',
+                    'strawberry': 'A small red fruit with tiny seeds on the outside. It is sweet and juicy, often used in desserts and jams.',
+                    'watermelon': 'A large round fruit with a green rind and sweet red or pink flesh inside. It is very refreshing and mostly water.',
+                    'lemon': 'A bright yellow citrus fruit with a sour taste. It is used to add flavor to foods, drinks, and desserts.',
+                    'tomato': 'A red or yellow fruit with a juicy texture, often used as a vegetable in salads, sauces, and cooking.',
+                    'potato': 'A starchy root vegetable with a brown skin and white or yellow flesh. It is a staple food in many cuisines, eaten boiled, baked, or fried.',
+                    'carrot': 'A long orange root vegetable that is crunchy and sweet. It is rich in beta-carotene and often eaten raw or cooked.',
+                    'onion': 'A round bulb vegetable with layers of papery skin. It has a strong flavor and is used in many savory dishes.',
+                    'garlic': 'A small bulb with a strong pungent flavor. It is used to season many dishes and has health benefits.',
+                    'milk': 'A white liquid produced by mammals. It is a common beverage and used in cooking, baking, and making dairy products.',
+                    'cheese': 'A dairy product made from curdled milk. It comes in many varieties and is used in sandwiches, pizzas, and sauces.',
+                    'bread': 'A staple food made from flour, water, and yeast, baked into a loaf. It is eaten worldwide in many forms.',
+                    'chicken': 'A type of poultry meat that is lean and versatile. It is widely consumed in many dishes around the world.',
+                    'beef': 'Meat from cattle. It is rich in protein and iron, commonly used in steaks, burgers, and roasts.',
+                    'salmon': 'A pinkish-orange fish with a rich flavor. It is high in omega-3 fatty acids and often grilled, smoked, or baked.',
+                    'rice': 'A cereal grain that is a staple food for a large part of the world. It is cooked by boiling or steaming.',
+                    'pasta': 'A staple Italian food made from durum wheat flour and water. It comes in various shapes and is served with sauces.',
+                    'coffee': 'A brewed beverage made from roasted coffee beans. It is popular for its stimulating effect due to caffeine.',
+                    'tea': 'A beverage made by infusing dried leaves of the tea plant in hot water. It can be served hot or iced.',
+                    'chocolate': 'A sweet treat made from cocoa beans. It is often eaten as candy or used in desserts and baking.',
+                    'soap': 'A cleaning product used for washing hands, body, and clothes. It removes dirt and germs.',
+                    'shampoo': 'A liquid or cream used for washing hair. It cleans the scalp and hair, often with a pleasant fragrance.',
+                    'toothpaste': 'A gel or paste used with a toothbrush to clean teeth. It helps prevent cavities and freshens breath.'
+                };
+
+                // Se houver descrição manual, usa ela
+                const cleanName = name.toLowerCase().replace(/^[a-z]+\s/, '').trim(); // remove prefixos como "organic"
+                if (manual[cleanName]) return manual[cleanName];
+                // Tenta também com o nome completo (ex: "organic apple" -> "apple")
+                const baseName = name.split(' ').pop().toLowerCase();
+                if (manual[baseName]) return manual[baseName];
+
+                // Descrições genéricas por categoria
+                const catDescriptions = {
+                    'frutas': `A type of fruit. It is usually eaten fresh, but can also be used in cooking, baking, or making juices.`,
+                    'verduras': `A vegetable that is commonly used in cooking. It can be eaten raw in salads or cooked in various dishes.`,
+                    'carnes': `A type of meat. It is a good source of protein and is prepared in many ways, such as grilling, roasting, or frying.`,
+                    'peixes': `A type of fish. It is rich in protein and healthy fats, and can be cooked by grilling, baking, or frying.`,
+                    'laticinios': `A dairy product. It is made from milk and is used in a wide range of foods and beverages.`,
+                    'bebidas': `A beverage. It is consumed to quench thirst and can be enjoyed hot, cold, or at room temperature.`,
+                    'graos': `A grain-based product. It is a staple food that provides energy and is used in many meals.`,
+                    'enlatados': `A canned product. It is preserved in a can for long shelf life and is ready to use in meals.`,
+                    'limpeza': `A cleaning product. It is used to maintain cleanliness and hygiene in the home.`,
+                    'higiene': `A personal hygiene product. It helps maintain cleanliness and health in daily routines.`,
+                    'outros': `A general grocery item. It is commonly found in supermarkets and used in everyday life.`
+                };
+
+                return catDescriptions[cat] || `This is a common grocery item. It is used in a variety of ways in daily life.`;
+            }
+
+            // ─── GERAR LISTA DE ITENS (1000+) ──────────────────────────────────
             function gerarItens() {
                 const categorias = {
                     frutas: [
@@ -531,21 +679,17 @@
 
                 for (const [cat, lista] of Object.entries(categorias)) {
                     lista.forEach(baseName => {
-                        // Busca o emoji específico, ou fallback da categoria
                         let emoji = emojiMap[baseName] || categoryEmoji[cat] || '📦';
-
-                        // Adiciona o item base
+                        // Item base
                         itens.push({
                             name: baseName,
                             category: cat,
                             emoji: emoji,
                             pron: '/' + baseName + '/'
                         });
-
-                        // Adiciona variações com prefixos (sem números!)
+                        // Variações com prefixos
                         prefixos.forEach(prefix => {
                             const newName = prefix + ' ' + baseName;
-                            // Evita duplicar se o prefixo já estiver no nome (ex: frozen frozen)
                             if (!itens.some(i => i.name === newName)) {
                                 itens.push({
                                     name: newName,
@@ -558,13 +702,13 @@
                     });
                 }
 
-                // Embaralhar para misturar as categorias
+                // Embaralhar
                 for (let i = itens.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [itens[i], itens[j]] = [itens[j], itens[i]];
                 }
 
-                // Ajustar pronúncia para IPA aproximado (simplificado)
+                // Ajustar pronúncia (IPA simplificado)
                 itens.forEach(item => {
                     let pron = item.name
                         .replace(/a/g, 'æ')
@@ -611,16 +755,67 @@
                         <div class="name">${item.name}</div>
                         <div class="pron">${item.pron}</div>
                         <div class="category">${item.category}</div>
-                        <button class="speak-btn" data-text="${item.name}">🔊 Listen</button>
+                        <div class="actions">
+                            <button class="speak-btn" data-text="${item.name}">🔊 Listen</button>
+                            <button class="describe-btn" data-name="${item.name}" data-emoji="${item.emoji}" data-pron="${item.pron}" data-cat="${item.category}">📖 Describe</button>
+                        </div>
                     `;
-                    const btn = card.querySelector('.speak-btn');
-                    btn.addEventListener('click', () => speakText(item.name));
+                    // Listen
+                    const speakBtn = card.querySelector('.speak-btn');
+                    speakBtn.addEventListener('click', () => speakText(item.name));
+                    // Describe
+                    const descBtn = card.querySelector('.describe-btn');
+                    descBtn.addEventListener('click', function() {
+                        const name = this.dataset.name;
+                        const emoji = this.dataset.emoji;
+                        const pron = this.dataset.pron;
+                        const cat = this.dataset.cat;
+                        // Construir o objeto item para gerar descrição
+                        const fullItem = { name, category: cat, pron, emoji };
+                        const description = generateDescription(fullItem);
+                        openModal(emoji, name, pron, description);
+                    });
                     grid.appendChild(card);
                 });
 
                 counter.textContent = `Mostrando ${filtered.length} de ${itemList.length}`;
                 badge.textContent = itemList.length;
             }
+
+            // ─── MODAL (POP-UP) ────────────────────────────────────────────────
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const modalEmoji = document.getElementById('modalEmoji');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalPron = document.getElementById('modalPron');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalSpeak = document.getElementById('modalSpeak');
+
+            function openModal(emoji, title, pron, description) {
+                modalEmoji.textContent = emoji;
+                modalTitle.textContent = title;
+                modalPron.textContent = pron;
+                modalDescription.textContent = description;
+                modalOverlay.classList.add('active');
+                // Atualiza o botão de áudio do modal
+                modalSpeak.onclick = function() {
+                    speakText(title);
+                };
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
 
             // ─── EXERCÍCIOS IN/ON/AT ────────────────────────────────────────────
             const prepQuestions = [
@@ -727,19 +922,17 @@
             renderItems('');
             renderPreps();
 
-            // Hash navigation
             if (window.location.hash) {
                 const hash = window.location.hash.replace('#', '');
                 const target = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
                 if (target) switchTab(hash);
             }
 
-            // Escape to cancel speech
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && window.speechSynthesis) window.speechSynthesis.cancel();
             });
 
-            console.log(`🛒 Página carregada com ${itemList.length} itens de supermercado com figuras!`);
+            console.log(`🛒 Página carregada com ${itemList.length} itens. Clique em "Describe" para ver a descrição em inglês.`);
         })();
     </script>
 
