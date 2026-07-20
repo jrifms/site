@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🛒 Supermercado - 1000+ Itens & Preposições</title>
+    <title>🛒 Supermercado - 1000+ Itens, Quiz e Preposições</title>
     <style>
         /* ── RESET & BASE ── */
         * {
@@ -167,7 +167,6 @@
             font-size: 2.8rem;
             line-height: 1.2;
             margin-bottom: 2px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
         }
         .item-card .name {
             font-size: 1.0rem;
@@ -223,7 +222,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* ── MODAL (POP-UP) ── */
+        /* ── MODAL ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -267,53 +266,144 @@
             color: #3d352b;
             transform: rotate(90deg);
         }
-        .modal-box .modal-emoji {
-            font-size: 3.5rem;
-            text-align: center;
-            margin-bottom: 6px;
+        .modal-box .modal-emoji { font-size: 3.5rem; text-align: center; margin-bottom: 6px; }
+        .modal-box .modal-title { font-size: 1.6rem; font-weight: 700; color: #2d2a24; text-align: center; margin-bottom: 4px; }
+        .modal-box .modal-pron { text-align: center; font-family: monospace; font-size: 1rem; color: #7a6e5c; background: #f3efe8; padding: 4px 16px; border-radius: 40px; display: inline-block; margin: 0 auto 12px; }
+        .modal-box .modal-description { font-size: 1.05rem; line-height: 1.6; color: #3d352b; padding: 12px 0; border-top: 1px solid #ede8df; margin-top: 8px; }
+        .modal-box .modal-speak { background: #e8e0d5; border: none; border-radius: 60px; padding: 8px 20px; font-weight: 600; color: #3d352b; cursor: pointer; margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; transition: 0.15s; }
+        .modal-box .modal-speak:hover { background: #d5cbbc; }
+
+        /* ── QUIZ ── */
+        .quiz-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #faf8f4;
+            border-radius: 28px;
+            padding: 24px 20px;
+            border: 1px solid #e8e0d5;
         }
-        .modal-box .modal-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #2d2a24;
-            text-align: center;
-            margin-bottom: 4px;
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
         }
-        .modal-box .modal-pron {
-            text-align: center;
-            font-family: monospace;
-            font-size: 1rem;
-            color: #7a6e5c;
-            background: #f3efe8;
-            padding: 4px 16px;
-            border-radius: 40px;
-            display: inline-block;
-            margin: 0 auto 12px;
-        }
-        .modal-box .modal-description {
-            font-size: 1.05rem;
-            line-height: 1.6;
+        .quiz-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
             color: #3d352b;
-            padding: 12px 0;
-            border-top: 1px solid #ede8df;
-            margin-top: 8px;
         }
-        .modal-box .modal-speak {
+        .quiz-stats {
+            font-size: 1rem;
             background: #e8e0d5;
+            padding: 6px 18px;
+            border-radius: 40px;
+            color: #4a4136;
+            font-weight: 500;
+        }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 720px) {
+            .quiz-grid { grid-template-columns: 1fr; gap: 16px; }
+        }
+        .quiz-col {
+            background: #fff;
+            border-radius: 20px;
+            padding: 14px 12px;
+            box-shadow: inset 0 0 0 1px #ede8df;
+            min-height: 300px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .quiz-col h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #6b5f4e;
+            margin-bottom: 10px;
+            text-align: center;
+            letter-spacing: 0.3px;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            padding: 4px 0;
+            z-index: 2;
+            border-bottom: 2px solid #ede8df;
+        }
+        .quiz-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 12px;
+            background: #f7f4ee;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.15s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .quiz-item:hover:not(.matched):not(.disabled) {
+            background: #ede6db;
+            transform: scale(1.01);
+        }
+        .quiz-item.selected {
+            border-color: #b8a48c;
+            background: #e8e0d5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .quiz-item.matched {
+            background: #d4e0c8;
+            border-color: #7fa86a;
+            cursor: default;
+            opacity: 0.7;
+            text-decoration: line-through 2px #4e7a3a;
+        }
+        .quiz-item.wrong {
+            background: #f4d6d6;
+            border-color: #c45a5a;
+            animation: shake 0.3s ease;
+        }
+        .quiz-item .q-emoji {
+            font-size: 1.2rem;
+        }
+        .quiz-item .q-word {
+            flex: 1;
+        }
+        .quiz-reset-btn {
+            margin-top: 18px;
+            padding: 10px 30px;
+            background: #d4c9b8;
             border: none;
             border-radius: 60px;
-            padding: 8px 20px;
+            font-size: 1rem;
             font-weight: 600;
             color: #3d352b;
             cursor: pointer;
-            margin-top: 12px;
+            transition: 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            transition: 0.15s;
+            gap: 8px;
         }
-        .modal-box .modal-speak:hover {
-            background: #d5cbbc;
+        .quiz-reset-btn:hover {
+            background: #c0b4a1;
+            transform: scale(1.02);
+        }
+        .quiz-congrats {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #4e7a3a;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
         }
 
         /* ── EXERCISE BOX ── */
@@ -345,64 +435,17 @@
             align-items: center;
             gap: 10px;
         }
-        .exercise-box .question .q-text {
-            flex: 1;
-            font-weight: 500;
-            min-width: 150px;
-        }
-        .exercise-box .question .q-hint {
-            font-size: 0.85rem;
-            color: #7a6e5c;
-            font-style: italic;
-            width: 100%;
-        }
-        .exercise-box .question select {
-            padding: 6px 12px;
-            border-radius: 30px;
-            border: 1px solid #d4c9b8;
-            background: #fff;
-            font-size: 0.95rem;
-            outline: none;
-            min-width: 100px;
-        }
-        .exercise-box .question select:focus {
-            border-color: #b8a48c;
-            box-shadow: 0 0 0 3px rgba(184, 164, 140, 0.2);
-        }
-        .exercise-box .question .check-btn {
-            background: #d4c9b8;
-            border: none;
-            border-radius: 60px;
-            padding: 6px 18px;
-            font-weight: 600;
-            color: #3d352b;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .exercise-box .question .check-btn:hover {
-            background: #c0b4a1;
-        }
-        .exercise-box .question .feedback {
-            margin-left: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-        .feedback.correct {
-            color: #2e7d32;
-        }
-        .feedback.wrong {
-            color: #c62828;
-        }
-        .exercise-box .speak-small {
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 0 4px;
-        }
-        .exercise-box .speak-small:hover {
-            transform: scale(1.15);
-        }
+        .exercise-box .question .q-text { flex: 1; font-weight: 500; min-width: 150px; }
+        .exercise-box .question .q-hint { font-size: 0.85rem; color: #7a6e5c; font-style: italic; width: 100%; }
+        .exercise-box .question select { padding: 6px 12px; border-radius: 30px; border: 1px solid #d4c9b8; background: #fff; font-size: 0.95rem; outline: none; min-width: 100px; }
+        .exercise-box .question select:focus { border-color: #b8a48c; box-shadow: 0 0 0 3px rgba(184, 164, 140, 0.2); }
+        .exercise-box .question .check-btn { background: #d4c9b8; border: none; border-radius: 60px; padding: 6px 18px; font-weight: 600; color: #3d352b; cursor: pointer; transition: 0.15s; }
+        .exercise-box .question .check-btn:hover { background: #c0b4a1; }
+        .exercise-box .question .feedback { margin-left: 8px; font-weight: 600; font-size: 0.95rem; }
+        .feedback.correct { color: #2e7d32; }
+        .feedback.wrong { color: #c62828; }
+        .exercise-box .speak-small { background: none; border: none; font-size: 1.1rem; cursor: pointer; padding: 0 4px; }
+        .exercise-box .speak-small:hover { transform: scale(1.15); }
 
         @media (max-width: 640px) {
             .app-header h1 { font-size: 1.8rem; }
@@ -413,6 +456,7 @@
             .modal-box .modal-title { font-size: 1.3rem; }
             .exercise-box .question { flex-direction: column; align-items: stretch; }
             .exercise-box .question select { width: 100%; }
+            .quiz-col { max-height: 400px; }
         }
         .app-footer {
             text-align: center;
@@ -427,12 +471,13 @@
 <body>
 
     <header class="app-header">
-        <h1>🛒 <span>Supermercado</span> · 1000+ Itens · <span>in/on/at</span></h1>
-        <p>Lista gigante de produtos com figuras, pronúncia, descrições em inglês e exercícios</p>
+        <h1>🛒 <span>Supermercado</span> · 1000+ Itens · <span>Quiz</span> · in/on/at</h1>
+        <p>Lista gigante de produtos com figuras, pronúncia, descrições, quiz e exercícios</p>
     </header>
 
     <nav class="tabs" id="tabNav">
-        <button class="tab-btn active" data-tab="items"><span class="icon">🛍️</span> Itens (1000+)</button>
+        <button class="tab-btn active" data-tab="items"><span class="icon">🛍️</span> Itens</button>
+        <button class="tab-btn" data-tab="quiz"><span class="icon">🧩</span> Quiz</button>
         <button class="tab-btn" data-tab="prepositions"><span class="icon">📍</span> in / on / at</button>
     </nav>
 
@@ -447,7 +492,32 @@
             <div class="grid-items" id="itemGrid"></div>
         </section>
 
-        <!-- ═══ TAB 2: PREPOSITIONS ═══ -->
+        <!-- ═══ TAB 2: QUIZ ═══ -->
+        <section class="tab-content" id="quiz">
+            <div class="section-title">🧩 Quiz de Associação <span class="badge">800+ palavras</span></div>
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-header">
+                    <h2>🔗 Inglês ↔ Português</h2>
+                    <span class="quiz-stats" id="quizStats">0 / 0</span>
+                </div>
+                <div class="quiz-grid" id="quizGrid">
+                    <div class="quiz-col" id="quizLeft">
+                        <h3>🇬🇧 English</h3>
+                        <div id="quizLeftList"></div>
+                    </div>
+                    <div class="quiz-col" id="quizRight">
+                        <h3>🇧🇷 Português</h3>
+                        <div id="quizRightList"></div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:16px;">
+                    <button class="quiz-reset-btn" id="quizReset">🔄 Embaralhar e recomeçar</button>
+                </div>
+                <div id="quizCongrats" class="quiz-congrats"></div>
+            </div>
+        </section>
+
+        <!-- ═══ TAB 3: PREPOSITIONS ═══ -->
         <section class="tab-content" id="prepositions">
             <div class="section-title">📍 Preposições: <em>in, on, at</em> <span class="badge">exercícios com correção</span></div>
             <div class="exercise-box">
@@ -480,7 +550,7 @@
     </div>
 
     <footer class="app-footer">
-        <small>🔊 Clique em "Describe" para ver a descrição em inglês &bull; Exercícios corrigem automaticamente</small>
+        <small>🔊 Clique em "Describe" para ver a descrição em inglês &bull; Quiz: associe cada palavra à sua tradução</small>
     </footer>
 
     <script>
@@ -560,12 +630,10 @@
                 'limpeza': '🧼', 'higiene': '🧴', 'outros': '🍫'
             };
 
-            // ─── DESCRIÇÕES EM INGLÊS (manual para alguns, genérico para o resto) ──
+            // ─── DESCRIÇÕES EM INGLÊS ──────────────────────────────────────────
             function generateDescription(item) {
                 const name = item.name;
                 const cat = item.category;
-
-                // Descrições manuais para itens comuns
                 const manual = {
                     'apple': 'A round fruit with red, green or yellow skin and a crisp white flesh. It is sweet and often eaten raw or used in pies and juices.',
                     'banana': 'A long curved fruit with a yellow peel and soft sweet flesh inside. Rich in potassium and often eaten as a snack.',
@@ -594,15 +662,11 @@
                     'shampoo': 'A liquid or cream used for washing hair. It cleans the scalp and hair, often with a pleasant fragrance.',
                     'toothpaste': 'A gel or paste used with a toothbrush to clean teeth. It helps prevent cavities and freshens breath.'
                 };
-
-                // Se houver descrição manual, usa ela
-                const cleanName = name.toLowerCase().replace(/^[a-z]+\s/, '').trim(); // remove prefixos como "organic"
+                const cleanName = name.toLowerCase().replace(/^[a-z]+\s/, '').trim();
                 if (manual[cleanName]) return manual[cleanName];
-                // Tenta também com o nome completo (ex: "organic apple" -> "apple")
                 const baseName = name.split(' ').pop().toLowerCase();
                 if (manual[baseName]) return manual[baseName];
 
-                // Descrições genéricas por categoria
                 const catDescriptions = {
                     'frutas': `A type of fruit. It is usually eaten fresh, but can also be used in cooking, baking, or making juices.`,
                     'verduras': `A vegetable that is commonly used in cooking. It can be eaten raw in salads or cooked in various dishes.`,
@@ -616,8 +680,112 @@
                     'higiene': `A personal hygiene product. It helps maintain cleanliness and health in daily routines.`,
                     'outros': `A general grocery item. It is commonly found in supermarkets and used in everyday life.`
                 };
-
                 return catDescriptions[cat] || `This is a common grocery item. It is used in a variety of ways in daily life.`;
+            }
+
+            // ─── TRADUÇÕES PARA O QUIZ ──────────────────────────────────────────
+            const translationMap = {
+                // Frutas
+                'apple': 'maçã', 'banana': 'banana', 'orange': 'laranja', 'grape': 'uva',
+                'strawberry': 'morango', 'blueberry': 'mirtilo', 'raspberry': 'framboesa',
+                'blackberry': 'amora', 'pineapple': 'abacaxi', 'mango': 'manga',
+                'papaya': 'mamão', 'peach': 'pêssego', 'plum': 'ameixa', 'cherry': 'cereja',
+                'pear': 'pera', 'watermelon': 'melancia', 'cantaloupe': 'melão',
+                'honeydew': 'melão', 'lemon': 'limão', 'lime': 'limão verde',
+                'grapefruit': 'toranja', 'tangerine': 'tangerina', 'kiwi': 'kiwi',
+                'fig': 'figo', 'date': 'tâmara', 'coconut': 'coco', 'avocado': 'abacate',
+                'pomegranate': 'romã', 'passionfruit': 'maracujá', 'dragonfruit': 'pitaya',
+                // Verduras
+                'lettuce': 'alface', 'spinach': 'espinafre', 'kale': 'couve', 'cabbage': 'repolho',
+                'broccoli': 'brócolis', 'cauliflower': 'couve-flor', 'celery': 'aipo',
+                'asparagus': 'aspargo', 'artichoke': 'alcachofra', 'zucchini': 'abobrinha',
+                'cucumber': 'pepino', 'pepper': 'pimentão', 'chili': 'pimenta',
+                'tomato': 'tomate', 'potato': 'batata', 'sweetpotato': 'batata-doce',
+                'yam': 'inhame', 'carrot': 'cenoura', 'radish': 'rabanete', 'turnip': 'nabo',
+                'beetroot': 'beterraba', 'onion': 'cebola', 'garlic': 'alho', 'leek': 'alho-poró',
+                'mushroom': 'cogumelo', 'corn': 'milho', 'pea': 'ervilha', 'greenbean': 'vagem',
+                'okra': 'quiabo', 'eggplant': 'berinjela',
+                // Carnes
+                'chicken': 'frango', 'beef': 'carne bovina', 'pork': 'carne de porco',
+                'lamb': 'carne de cordeiro', 'turkey': 'peru', 'duck': 'pato',
+                'veal': 'vitela', 'goat': 'carne de cabra', 'bacon': 'bacon',
+                'sausage': 'linguiça', 'ham': 'presunto', 'meatball': 'almôndega',
+                'steak': 'bife', 'rib': 'costela', 'brisket': 'peito bovino',
+                'groundbeef': 'carne moída',
+                // Peixes
+                'salmon': 'salmão', 'tuna': 'atum', 'cod': 'bacalhau', 'trout': 'truta',
+                'mackerel': 'cavala', 'sardine': 'sardinha', 'anchovy': 'anchova',
+                'tilapia': 'tilápia', 'catfish': 'bagre', 'halibut': 'linguado',
+                'swordfish': 'peixe-espada', 'sole': 'linguado', 'herring': 'arenque',
+                'bass': 'robalo', 'perch': 'perca',
+                // Laticínios
+                'milk': 'leite', 'cheese': 'queijo', 'yogurt': 'iogurte', 'butter': 'manteiga',
+                'cream': 'creme de leite', 'sourcream': 'creme azedo',
+                'cottagecheese': 'queijo cottage', 'creamcheese': 'cream cheese',
+                'mozzarella': 'muçarela', 'parmesan': 'parmesão', 'gouda': 'gouda',
+                'cheddar': 'cheddar', 'swisscheese': 'queijo suíço',
+                // Bebidas
+                'water': 'água', 'soda': 'refrigerante', 'juice': 'suco', 'tea': 'chá',
+                'coffee': 'café', 'lemonade': 'limonada', 'icedtea': 'chá gelado',
+                'smoothie': 'smoothie', 'milkshake': 'milkshake',
+                'sportsdrink': 'bebida esportiva', 'energy': 'energético',
+                'beer': 'cerveja', 'wine': 'vinho', 'whiskey': 'uísque', 'vodka': 'vodca',
+                // Grãos / Padaria
+                'rice': 'arroz', 'pasta': 'massa', 'spaghetti': 'espaguete',
+                'macaroni': 'macarrão', 'noodle': 'macarrão instantâneo',
+                'bread': 'pão', 'bagel': 'bagel', 'muffin': 'bolinho',
+                'cereal': 'cereal', 'oatmeal': 'aveia', 'flour': 'farinha',
+                'sugar': 'açúcar', 'salt': 'sal', 'pepper': 'pimenta',
+                'cinnamon': 'canela', 'vanilla': 'baunilha',
+                // Enlatados
+                'cannedbeans': 'feijão enlatado', 'cannedcorn': 'milho enlatado',
+                'cannedpeas': 'ervilha enlatada', 'cannedtomato': 'tomate enlatado',
+                'cannedtuna': 'atum enlatado', 'cannedsardine': 'sardinha enlatada',
+                'cannedsoup': 'sopa enlatada', 'cannedfruit': 'fruta enlatada',
+                'cannedmilk': 'leite condensado', 'cannedmeat': 'carne enlatada',
+                // Limpeza
+                'soap': 'sabão', 'detergent': 'detergente', 'bleach': 'água sanitária',
+                'ammonia': 'amônia', 'vinegar': 'vinagre', 'baking': 'bicarbonato',
+                'sponge': 'esponja', 'paper': 'papel', 'napkin': 'guardanapo',
+                'towel': 'toalha', 'trashbag': 'saco de lixo', 'gloves': 'luvas',
+                'broom': 'vassoura', 'mop': 'esfregão',
+                // Higiene
+                'toothpaste': 'pasta de dente', 'shampoo': 'xampu',
+                'conditioner': 'condicionador', 'bodywash': 'sabonete líquido',
+                'lotion': 'loção', 'deodorant': 'desodorante', 'razor': 'aparelho de barbear',
+                'shavingcream': 'creme de barbear', 'tissue': 'lenço de papel',
+                'toiletpaper': 'papel higiênico', 'diaper': 'fralda',
+                // Outros
+                'icecream': 'sorvete', 'chocolate': 'chocolate', 'candy': 'bala',
+                'biscuit': 'biscoito', 'cookie': 'cookie', 'cake': 'bolo', 'pie': 'torta',
+                'cerealbar': 'barra de cereal', 'granola': 'granola', 'nuts': 'nozes',
+                'peanutbutter': 'manteiga de amendoim', 'jam': 'geleia',
+                'honey': 'mel', 'syrup': 'xarope', 'oil': 'óleo', 'sauce': 'molho',
+                'ketchup': 'catchup', 'mayonnaise': 'maionese', 'mustard': 'mostarda',
+                'relish': 'condimento'
+            };
+
+            const prefixMap = {
+                'organic': 'orgânico(a)',
+                'fresh': 'fresco(a)',
+                'frozen': 'congelado(a)',
+                'large': 'grande',
+                'small': 'pequeno(a)',
+                'whole': 'inteiro(a)'
+            };
+
+            function translateItem(word) {
+                // Separa em partes (ex: "organic apple")
+                const parts = word.toLowerCase().split(' ');
+                const translatedParts = parts.map(p => {
+                    if (prefixMap[p]) return prefixMap[p];
+                    // Tenta a base (última palavra) se for a principal
+                    if (translationMap[p]) return translationMap[p];
+                    return p; // fallback
+                });
+                // Ajusta gênero para português (simplificado: se termina em "a" usa "orgânica" etc - não vamos complicar)
+                // Vamos apenas juntar as partes traduzidas
+                return translatedParts.join(' ');
             }
 
             // ─── GERAR LISTA DE ITENS (1000+) ──────────────────────────────────
@@ -673,62 +841,35 @@
                         "oil", "sauce", "ketchup", "mayonnaise", "mustard", "relish"
                     ]
                 };
-
                 const prefixos = ["organic", "fresh", "frozen", "large", "small", "whole"];
                 let itens = [];
-
                 for (const [cat, lista] of Object.entries(categorias)) {
                     lista.forEach(baseName => {
                         let emoji = emojiMap[baseName] || categoryEmoji[cat] || '📦';
-                        // Item base
-                        itens.push({
-                            name: baseName,
-                            category: cat,
-                            emoji: emoji,
-                            pron: '/' + baseName + '/'
-                        });
-                        // Variações com prefixos
+                        itens.push({ name: baseName, category: cat, emoji: emoji, pron: '/' + baseName + '/' });
                         prefixos.forEach(prefix => {
                             const newName = prefix + ' ' + baseName;
                             if (!itens.some(i => i.name === newName)) {
-                                itens.push({
-                                    name: newName,
-                                    category: cat,
-                                    emoji: emoji,
-                                    pron: '/' + newName + '/'
-                                });
+                                itens.push({ name: newName, category: cat, emoji: emoji, pron: '/' +
+                                        newName + '/' });
                             }
                         });
                     });
                 }
-
-                // Embaralhar
                 for (let i = itens.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [itens[i], itens[j]] = [itens[j], itens[i]];
                 }
-
-                // Ajustar pronúncia (IPA simplificado)
                 itens.forEach(item => {
                     let pron = item.name
-                        .replace(/a/g, 'æ')
-                        .replace(/e/g, 'ɛ')
-                        .replace(/i/g, 'ɪ')
-                        .replace(/o/g, 'ɒ')
-                        .replace(/u/g, 'ʌ')
-                        .replace(/ch/g, 'tʃ')
-                        .replace(/sh/g, 'ʃ')
-                        .replace(/th/g, 'θ')
-                        .replace(/ng/g, 'ŋ')
-                        .replace(/ee/g, 'iː')
-                        .replace(/oo/g, 'uː')
-                        .replace(/ai/g, 'aɪ')
-                        .replace(/au/g, 'aʊ')
-                        .replace(/oi/g, 'ɔɪ')
+                        .replace(/a/g, 'æ').replace(/e/g, 'ɛ').replace(/i/g, 'ɪ')
+                        .replace(/o/g, 'ɒ').replace(/u/g, 'ʌ')
+                        .replace(/ch/g, 'tʃ').replace(/sh/g, 'ʃ').replace(/th/g, 'θ')
+                        .replace(/ng/g, 'ŋ').replace(/ee/g, 'iː').replace(/oo/g, 'uː')
+                        .replace(/ai/g, 'aɪ').replace(/au/g, 'aʊ').replace(/oi/g, 'ɔɪ')
                         .replace(/ou/g, 'oʊ');
                     item.pron = '/' + pron + '/';
                 });
-
                 return itens;
             }
 
@@ -740,12 +881,10 @@
                 const counter = document.getElementById('itemCounter');
                 const badge = document.getElementById('itemCountBadge');
                 if (!grid) return;
-
                 const filtered = itemList.filter(item =>
                     item.name.toLowerCase().includes(filter.toLowerCase()) ||
                     item.category.toLowerCase().includes(filter.toLowerCase())
                 );
-
                 grid.innerHTML = '';
                 filtered.forEach(item => {
                     const card = document.createElement('div');
@@ -760,29 +899,19 @@
                             <button class="describe-btn" data-name="${item.name}" data-emoji="${item.emoji}" data-pron="${item.pron}" data-cat="${item.category}">📖 Describe</button>
                         </div>
                     `;
-                    // Listen
-                    const speakBtn = card.querySelector('.speak-btn');
-                    speakBtn.addEventListener('click', () => speakText(item.name));
-                    // Describe
-                    const descBtn = card.querySelector('.describe-btn');
-                    descBtn.addEventListener('click', function() {
-                        const name = this.dataset.name;
-                        const emoji = this.dataset.emoji;
-                        const pron = this.dataset.pron;
-                        const cat = this.dataset.cat;
-                        // Construir o objeto item para gerar descrição
-                        const fullItem = { name, category: cat, pron, emoji };
-                        const description = generateDescription(fullItem);
-                        openModal(emoji, name, pron, description);
+                    card.querySelector('.speak-btn').addEventListener('click', () => speakText(item.name));
+                    card.querySelector('.describe-btn').addEventListener('click', function() {
+                        const fullItem = { name: this.dataset.name, category: this.dataset.cat, pron: this
+                                .dataset.pron, emoji: this.dataset.emoji };
+                        openModal(fullItem.emoji, fullItem.name, fullItem.pron, generateDescription(fullItem));
                     });
                     grid.appendChild(card);
                 });
-
                 counter.textContent = `Mostrando ${filtered.length} de ${itemList.length}`;
                 badge.textContent = itemList.length;
             }
 
-            // ─── MODAL (POP-UP) ────────────────────────────────────────────────
+            // ─── MODAL ────────────────────────────────────────────────────────────
             const modalOverlay = document.getElementById('modalOverlay');
             const modalClose = document.getElementById('modalClose');
             const modalEmoji = document.getElementById('modalEmoji');
@@ -797,10 +926,7 @@
                 modalPron.textContent = pron;
                 modalDescription.textContent = description;
                 modalOverlay.classList.add('active');
-                // Atualiza o botão de áudio do modal
-                modalSpeak.onclick = function() {
-                    speakText(title);
-                };
+                modalSpeak.onclick = function() { speakText(title); };
                 document.body.style.overflow = 'hidden';
             }
 
@@ -808,13 +934,229 @@
                 modalOverlay.classList.remove('active');
                 document.body.style.overflow = '';
             }
-
             modalClose.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', function(e) {
-                if (e.target === this) closeModal();
-            });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') closeModal();
+            modalOverlay.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+            // ─── QUIZ ──────────────────────────────────────────────────────────────
+            let quizState = {
+                items: [], // array de {word, translation, emoji}
+                leftItems: [], // array de {word, translation, emoji, idx}
+                rightItems: [],
+                selectedLeft: null, // índice em leftItems
+                selectedRight: null, // índice em rightItems
+                matchedPairs: new Set(), // conjunto de traduções (ou palavras) já acertadas
+                totalPairs: 0,
+                matchedCount: 0
+            };
+
+            function initQuiz() {
+                // Selecionar 800 itens aleatórios (ou todos se houver menos)
+                const shuffled = [...itemList];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                const selected = shuffled.slice(0, Math.min(shuffled.length, 850)); // pega até 850
+
+                // Construir pares (word, translation)
+                const pairs = selected.map(item => ({
+                    word: item.name,
+                    translation: translateItem(item.name),
+                    emoji: item.emoji
+                }));
+
+                // Remover duplicatas de tradução (caso haja itens com mesma tradução, como "large apple" e "apple")
+                // Vamos manter todas, mas garantir que cada par seja único pela palavra + tradução
+                // Para evitar conflitos, usamos a palavra como chave primária
+                const uniquePairs = [];
+                const seenWords = new Set();
+                pairs.forEach(p => {
+                    if (!seenWords.has(p.word)) {
+                        seenWords.add(p.word);
+                        uniquePairs.push(p);
+                    }
+                });
+
+                quizState.items = uniquePairs;
+                quizState.totalPairs = uniquePairs.length;
+                quizState.matchedCount = 0;
+                quizState.matchedPairs = new Set();
+                quizState.selectedLeft = null;
+                quizState.selectedRight = null;
+
+                // Criar left e right separadamente e embaralhar
+                const left = uniquePairs.map((p, idx) => ({ ...p, idx }));
+                const right = uniquePairs.map((p, idx) => ({ ...p, idx }));
+                for (let i = left.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [left[i], left[j]] = [left[j], left[i]];
+                }
+                for (let i = right.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [right[i], right[j]] = [right[j], right[i]];
+                }
+
+                quizState.leftItems = left;
+                quizState.rightItems = right;
+
+                renderQuiz();
+            }
+
+            function renderQuiz() {
+                const leftList = document.getElementById('quizLeftList');
+                const rightList = document.getElementById('quizRightList');
+                const stats = document.getElementById('quizStats');
+                const congrats = document.getElementById('quizCongrats');
+
+                leftList.innerHTML = '';
+                rightList.innerHTML = '';
+
+                quizState.leftItems.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'quiz-item';
+                    div.dataset.index = index;
+                    div.dataset.side = 'left';
+                    div.dataset.word = item.word;
+                    div.dataset.translation = item.translation;
+
+                    const isMatched = quizState.matchedPairs.has(item.word);
+                    if (isMatched) div.classList.add('matched');
+
+                    const isSelected = (quizState.selectedLeft === index && !isMatched);
+                    if (isSelected) div.classList.add('selected');
+
+                    div.innerHTML = `
+                        <span class="q-emoji">${item.emoji || '📦'}</span>
+                        <span class="q-word">${item.word}</span>
+                    `;
+                    div.addEventListener('click', () => handleQuizClick('left', index));
+                    leftList.appendChild(div);
+                });
+
+                quizState.rightItems.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'quiz-item';
+                    div.dataset.index = index;
+                    div.dataset.side = 'right';
+                    div.dataset.word = item.word;
+                    div.dataset.translation = item.translation;
+
+                    const isMatched = quizState.matchedPairs.has(item.word);
+                    if (isMatched) div.classList.add('matched');
+
+                    const isSelected = (quizState.selectedRight === index && !isMatched);
+                    if (isSelected) div.classList.add('selected');
+
+                    div.innerHTML = `
+                        <span class="q-word">${item.translation}</span>
+                    `;
+                    div.addEventListener('click', () => handleQuizClick('right', index));
+                    rightList.appendChild(div);
+                });
+
+                stats.textContent = `${quizState.matchedCount} / ${quizState.totalPairs}`;
+
+                if (quizState.matchedCount === quizState.totalPairs && quizState.totalPairs > 0) {
+                    congrats.textContent = '🎉 Parabéns! Você associou todos os pares corretamente! 🎉';
+                } else {
+                    congrats.textContent = '';
+                }
+            }
+
+            function handleQuizClick(side, index) {
+                const items = (side === 'left') ? quizState.leftItems : quizState.rightItems;
+                const item = items[index];
+
+                if (quizState.matchedPairs.has(item.word)) return;
+
+                if (side === 'left') {
+                    if (quizState.selectedLeft === index) {
+                        quizState.selectedLeft = null;
+                        renderQuiz();
+                        return;
+                    }
+                    if (quizState.selectedRight !== null) {
+                        const rightItem = quizState.rightItems[quizState.selectedRight];
+                        if (quizState.matchedPairs.has(rightItem.word)) {
+                            quizState.selectedRight = null;
+                            quizState.selectedLeft = index;
+                            renderQuiz();
+                            return;
+                        }
+                        if (item.word === rightItem.word) {
+                            // Acerto
+                            quizState.matchedPairs.add(item.word);
+                            quizState.matchedCount++;
+                            quizState.selectedLeft = null;
+                            quizState.selectedRight = null;
+                            renderQuiz();
+                            speakText(item.word);
+                        } else {
+                            // Erro
+                            const leftEl = document.querySelector(`#quizLeftList .quiz-item[data-index="${index}"]`);
+                            const rightEl = document.querySelector(
+                                `#quizRightList .quiz-item[data-index="${quizState.selectedRight}"]`);
+                            if (leftEl) leftEl.classList.add('wrong');
+                            if (rightEl) rightEl.classList.add('wrong');
+                            setTimeout(() => {
+                                if (leftEl) leftEl.classList.remove('wrong');
+                                if (rightEl) rightEl.classList.remove('wrong');
+                                quizState.selectedLeft = null;
+                                quizState.selectedRight = null;
+                                renderQuiz();
+                            }, 500);
+                        }
+                        return;
+                    }
+                    quizState.selectedLeft = index;
+                    renderQuiz();
+                    return;
+                }
+
+                // side === 'right'
+                if (quizState.selectedRight === index) {
+                    quizState.selectedRight = null;
+                    renderQuiz();
+                    return;
+                }
+                if (quizState.selectedLeft !== null) {
+                    const leftItem = quizState.leftItems[quizState.selectedLeft];
+                    if (quizState.matchedPairs.has(leftItem.word)) {
+                        quizState.selectedLeft = null;
+                        quizState.selectedRight = index;
+                        renderQuiz();
+                        return;
+                    }
+                    if (item.word === leftItem.word) {
+                        quizState.matchedPairs.add(item.word);
+                        quizState.matchedCount++;
+                        quizState.selectedLeft = null;
+                        quizState.selectedRight = null;
+                        renderQuiz();
+                        speakText(item.word);
+                    } else {
+                        const leftEl = document.querySelector(
+                            `#quizLeftList .quiz-item[data-index="${quizState.selectedLeft}"]`);
+                        const rightEl = document.querySelector(`#quizRightList .quiz-item[data-index="${index}"]`);
+                        if (leftEl) leftEl.classList.add('wrong');
+                        if (rightEl) rightEl.classList.add('wrong');
+                        setTimeout(() => {
+                            if (leftEl) leftEl.classList.remove('wrong');
+                            if (rightEl) rightEl.classList.remove('wrong');
+                            quizState.selectedLeft = null;
+                            quizState.selectedRight = null;
+                            renderQuiz();
+                        }, 500);
+                    }
+                    return;
+                }
+                quizState.selectedRight = index;
+                renderQuiz();
+            }
+
+            document.getElementById('quizReset').addEventListener('click', function() {
+                initQuiz();
             });
 
             // ─── EXERCÍCIOS IN/ON/AT ────────────────────────────────────────────
@@ -844,7 +1186,7 @@
                 { q: "We arrived ______ 8:30.", hint: "horário", correct: "at" },
                 { q: "She left ______ a hurry.", hint: "expressão fixa", correct: "in" },
                 { q: "He's ______ the phone right now.", hint: "expressão fixa", correct: "on" },
-                { q: "They are ______ the beach.", hint: "lugar aberto", correct: "at" },
+                { q: "They are ______ the beach.", hint: "lugar aberto", correct: "at" }
             ];
 
             function renderPreps() {
@@ -869,8 +1211,7 @@
                     const checkBtn = div.querySelector('.check-btn');
                     const speakBtn = div.querySelector('.speak-small');
                     speakBtn.addEventListener('click', () => {
-                        const text = item.q.replace('______', '_____');
-                        speakText(text);
+                        speakText(item.q.replace('______', '_____'));
                     });
                     checkBtn.addEventListener('click', function() {
                         const select = document.getElementById(`prepSelect_${idx}`);
@@ -900,6 +1241,11 @@
                     const search = document.getElementById('itemSearch');
                     if (search) renderItems(search.value);
                 }
+                if (tabId === 'quiz') {
+                    // Se o quiz ainda não foi inicializado ou está vazio, inicializa
+                    if (quizState.items.length === 0) initQuiz();
+                    else renderQuiz();
+                }
             }
 
             tabButtons.forEach(btn => {
@@ -911,17 +1257,16 @@
             });
 
             // ─── SEARCH ────────────────────────────────────────────────────────────
-            const searchInput = document.getElementById('itemSearch');
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    renderItems(this.value);
-                });
-            }
+            document.getElementById('itemSearch').addEventListener('input', function() {
+                renderItems(this.value);
+            });
 
             // ─── INIT ──────────────────────────────────────────────────────────────
             renderItems('');
             renderPreps();
+            initQuiz(); // inicializa o quiz
 
+            // Hash navigation
             if (window.location.hash) {
                 const hash = window.location.hash.replace('#', '');
                 const target = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
@@ -932,7 +1277,7 @@
                 if (e.key === 'Escape' && window.speechSynthesis) window.speechSynthesis.cancel();
             });
 
-            console.log(`🛒 Página carregada com ${itemList.length} itens. Clique em "Describe" para ver a descrição em inglês.`);
+            console.log(`🛒 Página carregada com ${itemList.length} itens. Quiz com ${quizState.totalPairs} pares.`);
         })();
     </script>
 
