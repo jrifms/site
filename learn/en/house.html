@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🏠 Casa - Objetos, Ações e Quiz</title>
+    <title>🏠 Casa - 5000+ Objetos, Ações e Quiz</title>
     <style>
         /* ── RESET & BASE ── */
         * {
@@ -237,6 +237,8 @@
             padding: 16px 12px;
             box-shadow: inset 0 0 0 1px #ede8df;
             min-height: 300px;
+            max-height: 600px;
+            overflow-y: auto;
         }
         .quiz-col h3 {
             font-size: 1.1rem;
@@ -245,6 +247,12 @@
             margin-bottom: 12px;
             text-align: center;
             letter-spacing: 0.3px;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            padding: 4px 0;
+            z-index: 2;
+            border-bottom: 2px solid #ede8df;
         }
         .quiz-item {
             padding: 10px 14px;
@@ -387,6 +395,9 @@
                 font-size: 0.9rem;
                 padding: 8px 12px;
             }
+            .quiz-col {
+                max-height: 400px;
+            }
         }
     </style>
 </head>
@@ -395,7 +406,7 @@
     <!-- ═══ HEADER ═══ -->
     <header class="app-header">
         <h1>🏠 House <span>Objects</span> &amp; <span>Actions</span></h1>
-        <p>Vocabulário com pronúncia, imagens e quiz interativo</p>
+        <p>Mais de 5000 palavras com pronúncia, imagens e quiz interativo</p>
     </header>
 
     <!-- ═══ TABS ═══ -->
@@ -406,6 +417,15 @@
         <button class="tab-btn" data-tab="bathroom"><span class="icon">🚿</span> Bathroom</button>
         <button class="tab-btn" data-tab="diningroom"><span class="icon">🍽️</span> Dining</button>
         <button class="tab-btn" data-tab="garage"><span class="icon">🚗</span> Garage</button>
+        <button class="tab-btn" data-tab="office"><span class="icon">💼</span> Office</button>
+        <button class="tab-btn" data-tab="garden"><span class="icon">🌳</span> Garden</button>
+        <button class="tab-btn" data-tab="pets"><span class="icon">🐾</span> Pets</button>
+        <button class="tab-btn" data-tab="electronics"><span class="icon">📱</span> Electronics</button>
+        <button class="tab-btn" data-tab="tools"><span class="icon">🔧</span> Tools</button>
+        <button class="tab-btn" data-tab="clothes"><span class="icon">👕</span> Clothes</button>
+        <button class="tab-btn" data-tab="toys"><span class="icon">🧸</span> Toys</button>
+        <button class="tab-btn" data-tab="music"><span class="icon">🎵</span> Music</button>
+        <button class="tab-btn" data-tab="appliances"><span class="icon">📺</span> Appliances</button>
         <button class="tab-btn" data-tab="actions"><span class="icon">🏃</span> Actions</button>
         <button class="tab-btn" data-tab="quiz"><span class="icon">🧩</span> Quiz</button>
     </nav>
@@ -414,25 +434,52 @@
     <main>
 
         <!-- ─── LIVING ROOM ─── -->
-        <section class="tab-content active" id="livingroom"><div class="section-title">🛋️ Living Room <span class="badge">16 items</span></div><div class="card-grid" id="grid-livingroom"></div></section>
+        <section class="tab-content active" id="livingroom"><div class="section-title">🛋️ Living Room <span class="badge" id="badge-livingroom">0</span></div><div class="card-grid" id="grid-livingroom"></div></section>
 
         <!-- ─── KITCHEN ─── -->
-        <section class="tab-content" id="kitchen"><div class="section-title">🍳 Kitchen <span class="badge">14 items</span></div><div class="card-grid" id="grid-kitchen"></div></section>
+        <section class="tab-content" id="kitchen"><div class="section-title">🍳 Kitchen <span class="badge" id="badge-kitchen">0</span></div><div class="card-grid" id="grid-kitchen"></div></section>
 
         <!-- ─── BEDROOM ─── -->
-        <section class="tab-content" id="bedroom"><div class="section-title">🛏️ Bedroom <span class="badge">14 items</span></div><div class="card-grid" id="grid-bedroom"></div></section>
+        <section class="tab-content" id="bedroom"><div class="section-title">🛏️ Bedroom <span class="badge" id="badge-bedroom">0</span></div><div class="card-grid" id="grid-bedroom"></div></section>
 
         <!-- ─── BATHROOM ─── -->
-        <section class="tab-content" id="bathroom"><div class="section-title">🚿 Bathroom <span class="badge">12 items</span></div><div class="card-grid" id="grid-bathroom"></div></section>
+        <section class="tab-content" id="bathroom"><div class="section-title">🚿 Bathroom <span class="badge" id="badge-bathroom">0</span></div><div class="card-grid" id="grid-bathroom"></div></section>
 
         <!-- ─── DINING ROOM ─── -->
-        <section class="tab-content" id="diningroom"><div class="section-title">🍽️ Dining Room <span class="badge">12 items</span></div><div class="card-grid" id="grid-diningroom"></div></section>
+        <section class="tab-content" id="diningroom"><div class="section-title">🍽️ Dining Room <span class="badge" id="badge-diningroom">0</span></div><div class="card-grid" id="grid-diningroom"></div></section>
 
         <!-- ─── GARAGE & VEHICLES ─── -->
-        <section class="tab-content" id="garage"><div class="section-title">🚗 Garage &amp; Vehicles <span class="badge">30 items</span></div><div class="card-grid" id="grid-garage"></div></section>
+        <section class="tab-content" id="garage"><div class="section-title">🚗 Garage &amp; Vehicles <span class="badge" id="badge-garage">0</span></div><div class="card-grid" id="grid-garage"></div></section>
+
+        <!-- ─── OFFICE ─── -->
+        <section class="tab-content" id="office"><div class="section-title">💼 Office <span class="badge" id="badge-office">0</span></div><div class="card-grid" id="grid-office"></div></section>
+
+        <!-- ─── GARDEN ─── -->
+        <section class="tab-content" id="garden"><div class="section-title">🌳 Garden <span class="badge" id="badge-garden">0</span></div><div class="card-grid" id="grid-garden"></div></section>
+
+        <!-- ─── PETS ─── -->
+        <section class="tab-content" id="pets"><div class="section-title">🐾 Pets <span class="badge" id="badge-pets">0</span></div><div class="card-grid" id="grid-pets"></div></section>
+
+        <!-- ─── ELECTRONICS ─── -->
+        <section class="tab-content" id="electronics"><div class="section-title">📱 Electronics <span class="badge" id="badge-electronics">0</span></div><div class="card-grid" id="grid-electronics"></div></section>
+
+        <!-- ─── TOOLS ─── -->
+        <section class="tab-content" id="tools"><div class="section-title">🔧 Tools <span class="badge" id="badge-tools">0</span></div><div class="card-grid" id="grid-tools"></div></section>
+
+        <!-- ─── CLOTHES ─── -->
+        <section class="tab-content" id="clothes"><div class="section-title">👕 Clothes <span class="badge" id="badge-clothes">0</span></div><div class="card-grid" id="grid-clothes"></div></section>
+
+        <!-- ─── TOYS ─── -->
+        <section class="tab-content" id="toys"><div class="section-title">🧸 Toys <span class="badge" id="badge-toys">0</span></div><div class="card-grid" id="grid-toys"></div></section>
+
+        <!-- ─── MUSIC ─── -->
+        <section class="tab-content" id="music"><div class="section-title">🎵 Musical Instruments <span class="badge" id="badge-music">0</span></div><div class="card-grid" id="grid-music"></div></section>
+
+        <!-- ─── APPLIANCES ─── -->
+        <section class="tab-content" id="appliances"><div class="section-title">📺 Appliances <span class="badge" id="badge-appliances">0</span></div><div class="card-grid" id="grid-appliances"></div></section>
 
         <!-- ─── ACTIONS ─── -->
-        <section class="tab-content" id="actions"><div class="section-title">🏃 Common Actions <span class="badge">30 verbs</span></div><div class="card-grid" id="grid-actions"></div></section>
+        <section class="tab-content" id="actions"><div class="section-title">🏃 Common Actions <span class="badge" id="badge-actions">0</span></div><div class="card-grid" id="grid-actions"></div></section>
 
         <!-- ─── QUIZ ─── -->
         <section class="tab-content" id="quiz">
@@ -470,151 +517,653 @@
         (function() {
             'use strict';
 
-            // ─── VOCABULARY ────────────────────────────────────────────────────────
-            const vocabulary = {
+            // ─── VOCABULARY BASE (itens essenciais por categoria) ──────────────
+            const baseVocabulary = {
                 livingroom: [
-                    { word: "Sofa", translation: "Sofá", pron: "/ˈsoʊ.fə/", emoji: "🛋️" },
-                    { word: "Armchair", translation: "Poltrona", pron: "/ˈɑːrm.tʃer/", emoji: "🪑" },
-                    { word: "Coffee Table", translation: "Mesa de centro", pron: "/ˈkɔː.fi ˌteɪ.bəl/", emoji: "🪵" },
-                    { word: "TV", translation: "Televisão", pron: "/ˌtiːˈviː/", emoji: "📺" },
-                    { word: "Lamp", translation: "Lâmpada", pron: "/læmp/", emoji: "💡" },
-                    { word: "Floor Lamp", translation: "Abajur de pé", pron: "/flɔːr læmp/", emoji: "🪔" },
-                    { word: "Rug", translation: "Tapete", pron: "/rʌɡ/", emoji: "🧶" },
-                    { word: "Bookshelf", translation: "Estante", pron: "/ˈbʊk.ʃelf/", emoji: "📚" },
-                    { word: "Remote Control", translation: "Controle remoto", pron: "/rɪˈmoʊt kənˈtroʊl/", emoji: "📟" },
-                    { word: "Cushion", translation: "Almofada", pron: "/ˈkʊʃ.ən/", emoji: "🟤" },
-                    { word: "Curtain", translation: "Cortina", pron: "/ˈkɜːr.tən/", emoji: "🧵" },
-                    { word: "Fireplace", translation: "Lareira", pron: "/ˈfaɪr.pleɪs/", emoji: "🔥" },
-                    { word: "Clock", translation: "Relógio", pron: "/klɑːk/", emoji: "🕐" },
-                    { word: "Plant", translation: "Planta", pron: "/plænt/", emoji: "🌿" },
-                    { word: "Sofa Bed", translation: "Sofá-cama", pron: "/ˈsoʊ.fə bed/", emoji: "🛋️" },
-                    { word: "Chandelier", translation: "Lustre", pron: "/ˌʃæn.dəˈlɪr/", emoji: "💎" }
+                    { word: "Sofa", translation: "Sofá", emoji: "🛋️" },
+                    { word: "Armchair", translation: "Poltrona", emoji: "🪑" },
+                    { word: "Coffee Table", translation: "Mesa de centro", emoji: "🪵" },
+                    { word: "TV", translation: "Televisão", emoji: "📺" },
+                    { word: "Lamp", translation: "Lâmpada", emoji: "💡" },
+                    { word: "Floor Lamp", translation: "Abajur de pé", emoji: "🪔" },
+                    { word: "Rug", translation: "Tapete", emoji: "🧶" },
+                    { word: "Bookshelf", translation: "Estante", emoji: "📚" },
+                    { word: "Remote Control", translation: "Controle remoto", emoji: "📟" },
+                    { word: "Cushion", translation: "Almofada", emoji: "🟤" },
+                    { word: "Curtain", translation: "Cortina", emoji: "🧵" },
+                    { word: "Fireplace", translation: "Lareira", emoji: "🔥" },
+                    { word: "Clock", translation: "Relógio", emoji: "🕐" },
+                    { word: "Plant", translation: "Planta", emoji: "🌿" },
+                    { word: "Sofa Bed", translation: "Sofá-cama", emoji: "🛋️" },
+                    { word: "Chandelier", translation: "Lustre", emoji: "💎" },
+                    { word: "Ottoman", translation: "Pufe", emoji: "🛋️" },
+                    { word: "Cabinet", translation: "Armário", emoji: "🗄️" },
+                    { word: "Vase", translation: "Vaso", emoji: "🏺" },
+                    { word: "Picture Frame", translation: "Porta-retrato", emoji: "🖼️" },
+                    { word: "Mirror", translation: "Espelho", emoji: "🪞" },
+                    { word: "Speaker", translation: "Caixa de som", emoji: "🔊" },
+                    { word: "Soundbar", translation: "Barra de som", emoji: "🔉" },
+                    { word: "Projector", translation: "Projetor", emoji: "📽️" },
+                    { word: "DVD Player", translation: "Leitor de DVD", emoji: "💿" },
+                    { word: "Game Console", translation: "Console de jogos", emoji: "🎮" },
+                    { word: "Blanket", translation: "Cobertor", emoji: "🧶" },
+                    { word: "Throw Pillow", translation: "Almofada decorativa", emoji: "🟤" },
+                    { word: "Magazine Rack", translation: "Porta-revistas", emoji: "📰" },
+                    { word: "Plant Pot", translation: "Vaso de planta", emoji: "🌱" },
+                    { word: "Curtain Rod", translation: "Vara de cortina", emoji: "🧵" },
+                    { word: "Blind", translation: "Persiana", emoji: "🪟" },
+                    { word: "Shade", translation: "Cortina enrolável", emoji: "🪟" },
+                    { word: "Remote Holder", translation: "Suporte para controle", emoji: "📟" },
+                    { word: "Coaster", translation: "Descanso de copo", emoji: "🍻" },
+                    { word: "Table Runner", translation: "Caminho de mesa", emoji: "🧵" },
+                    { word: "Recliner", translation: "Poltrona reclinável", emoji: "🪑" },
+                    { word: "Shelf", translation: "Prateleira", emoji: "📦" },
+                    { word: "Console Table", translation: "Mesa de apoio", emoji: "🪵" },
+                    { word: "Sideboard", translation: "Aparador", emoji: "🪵" },
+                    { word: "Corner Shelf", translation: "Prateleira de canto", emoji: "📦" },
+                    { word: "Ceiling Light", translation: "Luz de teto", emoji: "💡" },
+                    { word: "Table Lamp", translation: "Abajur de mesa", emoji: "🪔" },
+                    { word: "Desk Lamp", translation: "Luminária de escrivaninha", emoji: "💡" }
                 ],
                 kitchen: [
-                    { word: "Refrigerator", translation: "Geladeira", pron: "/rɪˈfrɪdʒ.ə.reɪ.tər/", emoji: "🧊" },
-                    { word: "Stove", translation: "Fogão", pron: "/stoʊv/", emoji: "🔥" },
-                    { word: "Oven", translation: "Forno", pron: "/ˈʌv.ən/", emoji: "🍞" },
-                    { word: "Microwave", translation: "Micro-ondas", pron: "/ˈmaɪ.kroʊ.weɪv/", emoji: "📡" },
-                    { word: "Sink", translation: "Pia", pron: "/sɪŋk/", emoji: "🚰" },
-                    { word: "Dishwasher", translation: "Lava-louças", pron: "/ˈdɪʃ.wɑː.ʃər/", emoji: "🧼" },
-                    { word: "Kettle", translation: "Chaleira", pron: "/ˈket.əl/", emoji: "🫖" },
-                    { word: "Toaster", translation: "Torradeira", pron: "/ˈtoʊ.stər/", emoji: "🍞" },
-                    { word: "Cabinet", translation: "Armário", pron: "/ˈkæb.ə.nət/", emoji: "🗄️" },
-                    { word: "Counter", translation: "Bancada", pron: "/ˈkaʊn.tər/", emoji: "🧑‍🍳" },
-                    { word: "Blender", translation: "Liquidificador", pron: "/ˈblen.dər/", emoji: "🥤" },
-                    { word: "Frying Pan", translation: "Frigideira", pron: "/ˈfraɪ.ɪŋ pæn/", emoji: "🍳" },
-                    { word: "Cupboard", translation: "Despensa", pron: "/ˈkʌb.ərd/", emoji: "🚪" },
-                    { word: "Cutting Board", translation: "Tábua de corte", pron: "/ˈkʌt.ɪŋ bɔːrd/", emoji: "🪵" }
+                    { word: "Refrigerator", translation: "Geladeira", emoji: "🧊" },
+                    { word: "Stove", translation: "Fogão", emoji: "🔥" },
+                    { word: "Oven", translation: "Forno", emoji: "🍞" },
+                    { word: "Microwave", translation: "Micro-ondas", emoji: "📡" },
+                    { word: "Sink", translation: "Pia", emoji: "🚰" },
+                    { word: "Dishwasher", translation: "Lava-louças", emoji: "🧼" },
+                    { word: "Kettle", translation: "Chaleira", emoji: "🫖" },
+                    { word: "Toaster", translation: "Torradeira", emoji: "🍞" },
+                    { word: "Cabinet", translation: "Armário", emoji: "🗄️" },
+                    { word: "Counter", translation: "Bancada", emoji: "🧑‍🍳" },
+                    { word: "Blender", translation: "Liquidificador", emoji: "🥤" },
+                    { word: "Frying Pan", translation: "Frigideira", emoji: "🍳" },
+                    { word: "Cupboard", translation: "Despensa", emoji: "🚪" },
+                    { word: "Cutting Board", translation: "Tábua de corte", emoji: "🪵" },
+                    { word: "Knife", translation: "Faca", emoji: "🔪" },
+                    { word: "Cutlery", translation: "Talheres", emoji: "🍴" },
+                    { word: "Mug", translation: "Caneca", emoji: "☕" },
+                    { word: "Glass", translation: "Copo", emoji: "🥛" },
+                    { word: "Plate", translation: "Prato", emoji: "🍽️" },
+                    { word: "Bowl", translation: "Tigela", emoji: "🥣" },
+                    { word: "Sponge", translation: "Esponja", emoji: "🧽" },
+                    { word: "Dish Towel", translation: "Pano de prato", emoji: "🧣" },
+                    { word: "Trash Can", translation: "Lixeira", emoji: "🗑️" },
+                    { word: "Colander", translation: "Escorredor", emoji: "🥣" },
+                    { word: "Spatula", translation: "Espátula", emoji: "🍳" },
+                    { word: "Ladle", translation: "Concha", emoji: "🥄" },
+                    { word: "Whisk", translation: "Batedor", emoji: "🥣" },
+                    { word: "Tongs", translation: "Pinça", emoji: "🥢" },
+                    { word: "Grater", translation: "Ralador", emoji: "🧀" },
+                    { word: "Rolling Pin", translation: "Rolo de massa", emoji: "🧑‍🍳" },
+                    { word: "Measuring Cup", translation: "Copo medidor", emoji: "🥛" },
+                    { word: "Scale", translation: "Balança", emoji: "⚖️" },
+                    { word: "Saucer", translation: "Pires", emoji: "🍽️" },
+                    { word: "Teapot", translation: "Bule", emoji: "🫖" },
+                    { word: "Jug", translation: "Jarra", emoji: "🏺" },
+                    { word: "Coffee Maker", translation: "Cafeteira", emoji: "☕" },
+                    { word: "Juicer", translation: "Centrífuga", emoji: "🧃" },
+                    { word: "Food Processor", translation: "Processador", emoji: "🧑‍🍳" },
+                    { word: "Slow Cooker", translation: "Panela elétrica", emoji: "🍲" },
+                    { word: "Rice Cooker", translation: "Panel a de arroz", emoji: "🍚" },
+                    { word: "Air Fryer", translation: "Fritadeira sem óleo", emoji: "🍟" },
+                    { word: "Dish Soap", translation: "Sabão de louça", emoji: "🧼" },
+                    { word: "Scrub Brush", translation: "Escova de limpeza", emoji: "🧹" },
+                    { word: "Drying Rack", translation: "Escorredor de louças", emoji: "🍽️" },
+                    { word: "Sugar", translation: "Açúcar", emoji: "🍬" },
+                    { word: "Salt", translation: "Sal", emoji: "🧂" },
+                    { word: "Pepper", translation: "Pimenta", emoji: "🌶️" },
+                    { word: "Flour", translation: "Farinha", emoji: "🌾" },
+                    { word: "Oil", translation: "Óleo", emoji: "🫒" },
+                    { word: "Vinegar", translation: "Vinagre", emoji: "🧴" },
+                    { word: "Pasta", translation: "Massa", emoji: "🍝" },
+                    { word: "Rice", translation: "Arroz", emoji: "🍚" },
+                    { word: "Beans", translation: "Feijão", emoji: "🫘" },
+                    { word: "Canned Soup", translation: "Sopa enlatada", emoji: "🥫" }
                 ],
                 bedroom: [
-                    { word: "Bed", translation: "Cama", pron: "/bed/", emoji: "🛏️" },
-                    { word: "Wardrobe", translation: "Roupeiro", pron: "/ˈwɔːr.droʊb/", emoji: "👔" },
-                    { word: "Nightstand", translation: "Criado-mudo", pron: "/ˈnaɪt.stænd/", emoji: "🪑" },
-                    { word: "Mirror", translation: "Espelho", pron: "/ˈmɪr.ər/", emoji: "🪞" },
-                    { word: "Pillow", translation: "Travesseiro", pron: "/ˈpɪl.oʊ/", emoji: "🟦" },
-                    { word: "Blanket", translation: "Cobertor", pron: "/ˈblæŋ.kɪt/", emoji: "🧶" },
-                    { word: "Alarm Clock", translation: "Despertador", pron: "/əˈlɑːrm klɑːk/", emoji: "⏰" },
-                    { word: "Dresser", translation: "Cômoda", pron: "/ˈdres.ər/", emoji: "🪞" },
-                    { word: "Hanger", translation: "Cabide", pron: "/ˈhæŋ.ər/", emoji: "🧥" },
-                    { word: "Lamp", translation: "Luminária", pron: "/læmp/", emoji: "💡" },
-                    { word: "Desk", translation: "Escrivaninha", pron: "/desk/", emoji: "🪑" },
-                    { word: "Rocking Chair", translation: "Cadeira de balanço", pron: "/ˈrɑː.kɪŋ tʃer/", emoji: "🪑" },
-                    { word: "Bench", translation: "Banco", pron: "/bentʃ/", emoji: "🪑" },
-                    { word: "Rug", translation: "Tapete", pron: "/rʌɡ/", emoji: "🧶" }
+                    { word: "Bed", translation: "Cama", emoji: "🛏️" },
+                    { word: "Wardrobe", translation: "Roupeiro", emoji: "👔" },
+                    { word: "Nightstand", translation: "Criado-mudo", emoji: "🪑" },
+                    { word: "Mirror", translation: "Espelho", emoji: "🪞" },
+                    { word: "Pillow", translation: "Travesseiro", emoji: "🟦" },
+                    { word: "Blanket", translation: "Cobertor", emoji: "🧶" },
+                    { word: "Alarm Clock", translation: "Despertador", emoji: "⏰" },
+                    { word: "Dresser", translation: "Cômoda", emoji: "🪞" },
+                    { word: "Hanger", translation: "Cabide", emoji: "🧥" },
+                    { word: "Lamp", translation: "Luminária", emoji: "💡" },
+                    { word: "Desk", translation: "Escrivaninha", emoji: "🪑" },
+                    { word: "Rocking Chair", translation: "Cadeira de balanço", emoji: "🪑" },
+                    { word: "Bench", translation: "Banco", emoji: "🪑" },
+                    { word: "Rug", translation: "Tapete", emoji: "🧶" },
+                    { word: "Mattress", translation: "Colchão", emoji: "🛏️" },
+                    { word: "Pillowcase", translation: "Fronha", emoji: "🟦" },
+                    { word: "Bedsheet", translation: "Lençol", emoji: "🧶" },
+                    { word: "Comforter", translation: "Edredom", emoji: "🧶" },
+                    { word: "Shirt", translation: "Camisa", emoji: "👔" },
+                    { word: "Pants", translation: "Calça", emoji: "👖" },
+                    { word: "Dress", translation: "Vestido", emoji: "👗" },
+                    { word: "Skirt", translation: "Saia", emoji: "👗" },
+                    { word: "Jacket", translation: "Jaqueta", emoji: "🧥" },
+                    { word: "Socks", translation: "Meias", emoji: "🧦" },
+                    { word: "Shoes", translation: "Sapatos", emoji: "👟" },
+                    { word: "Tie", translation: "Gravata", emoji: "👔" },
+                    { word: "Belt", translation: "Cinto", emoji: "🧶" },
+                    { word: "Hat", translation: "Chapéu", emoji: "🧢" },
+                    { word: "Scarf", translation: "Cachecol", emoji: "🧣" },
+                    { word: "Gloves", translation: "Luvas", emoji: "🧤" },
+                    { word: "Sheet", translation: "Lençol", emoji: "🛏️" },
+                    { word: "Bedspread", translation: "Colcha", emoji: "🧶" },
+                    { word: "Poster", translation: "Pôster", emoji: "🖼️" },
+                    { word: "Wall Clock", translation: "Relógio de parede", emoji: "🕐" },
+                    { word: "TV", translation: "Televisão", emoji: "📺" },
+                    { word: "Radio", translation: "Rádio", emoji: "📻" },
+                    { word: "Phone Charger", translation: "Carregador", emoji: "🔌" },
+                    { word: "Laptop", translation: "Notebook", emoji: "💻" },
+                    { word: "Tablet", translation: "Tablet", emoji: "📱" },
+                    { word: "Jewelry Box", translation: "Caixa de joias", emoji: "💎" }
                 ],
                 bathroom: [
-                    { word: "Shower", translation: "Chuveiro", pron: "/ˈʃaʊ.ər/", emoji: "🚿" },
-                    { word: "Bathtub", translation: "Banheira", pron: "/ˈbæθ.tʌb/", emoji: "🛁" },
-                    { word: "Toilet", translation: "Vaso sanitário", pron: "/ˈtɔɪ.lət/", emoji: "🚽" },
-                    { word: "Sink", translation: "Pia", pron: "/sɪŋk/", emoji: "🚰" },
-                    { word: "Towel", translation: "Toalha", pron: "/ˈtaʊ.əl/", emoji: "🧣" },
-                    { word: "Toothbrush", translation: "Escova de dentes", pron: "/ˈtuːθ.brʌʃ/", emoji: "🪥" },
-                    { word: "Toothpaste", translation: "Pasta de dente", pron: "/ˈtuːθ.peɪst/", emoji: "🧴" },
-                    { word: "Shampoo", translation: "Xampu", pron: "/ʃæmˈpuː/", emoji: "🧴" },
-                    { word: "Soap", translation: "Sabonete", pron: "/soʊp/", emoji: "🧼" },
-                    { word: "Razor", translation: "Aparelho de barbear", pron: "/ˈreɪ.zər/", emoji: "🪒" },
-                    { word: "Tissue", translation: "Lenço de papel", pron: "/ˈtɪʃ.uː/", emoji: "🧻" },
-                    { word: "Scale", translation: "Balança", pron: "/skeɪl/", emoji: "⚖️" }
+                    { word: "Shower", translation: "Chuveiro", emoji: "🚿" },
+                    { word: "Bathtub", translation: "Banheira", emoji: "🛁" },
+                    { word: "Toilet", translation: "Vaso sanitário", emoji: "🚽" },
+                    { word: "Sink", translation: "Pia", emoji: "🚰" },
+                    { word: "Towel", translation: "Toalha", emoji: "🧣" },
+                    { word: "Toothbrush", translation: "Escova de dentes", emoji: "🪥" },
+                    { word: "Toothpaste", translation: "Pasta de dente", emoji: "🧴" },
+                    { word: "Shampoo", translation: "Xampu", emoji: "🧴" },
+                    { word: "Soap", translation: "Sabonete", emoji: "🧼" },
+                    { word: "Razor", translation: "Aparelho de barbear", emoji: "🪒" },
+                    { word: "Tissue", translation: "Lenço de papel", emoji: "🧻" },
+                    { word: "Scale", translation: "Balança", emoji: "⚖️" },
+                    { word: "Towel Rack", translation: "Toalheiro", emoji: "🧣" },
+                    { word: "Soap Dispenser", translation: "Dispenser de sabão", emoji: "🧼" },
+                    { word: "Toothbrush Holder", translation: "Porta-escova", emoji: "🪥" },
+                    { word: "Shower Curtain", translation: "Cortina de banheiro", emoji: "🧵" },
+                    { word: "Bath Mat", translation: "Tapete de banho", emoji: "🧶" },
+                    { word: "Plunger", translation: "Desentupidor", emoji: "🪠" },
+                    { word: "Toilet Brush", translation: "Escova sanitária", emoji: "🧹" },
+                    { word: "Waste Basket", translation: "Cesto de lixo", emoji: "🗑️" },
+                    { word: "Conditioner", translation: "Condicionador", emoji: "🧴" },
+                    { word: "Body Wash", translation: "Sabonete líquido", emoji: "🧴" },
+                    { word: "Lotion", translation: "Loção", emoji: "🧴" },
+                    { word: "Deodorant", translation: "Desodorante", emoji: "🧴" },
+                    { word: "Shaving Cream", translation: "Creme de barbear", emoji: "🧴" },
+                    { word: "Cotton Swab", translation: "Haste flexível", emoji: "🪥" },
+                    { word: "Cotton Pad", translation: "Discos de algodão", emoji: "🟤" },
+                    { word: "Toilet Paper", translation: "Papel higiênico", emoji: "🧻" },
+                    { word: "Wet Wipes", translation: "Lenços umedecidos", emoji: "🧻" }
                 ],
                 diningroom: [
-                    { word: "Table", translation: "Mesa", pron: "/ˈteɪ.bəl/", emoji: "🪑" },
-                    { word: "Chair", translation: "Cadeira", pron: "/tʃer/", emoji: "🪑" },
-                    { word: "Plate", translation: "Prato", pron: "/pleɪt/", emoji: "🍽️" },
-                    { word: "Glass", translation: "Copo", pron: "/ɡlæs/", emoji: "🥛" },
-                    { word: "Fork", translation: "Garfo", pron: "/fɔːrk/", emoji: "🍴" },
-                    { word: "Knife", translation: "Faca", pron: "/naɪf/", emoji: "🔪" },
-                    { word: "Spoon", translation: "Colher", pron: "/spuːn/", emoji: "🥄" },
-                    { word: "Napkin", translation: "Guardanapo", pron: "/ˈnæp.kɪn/", emoji: "🧻" },
-                    { word: "Cup", translation: "Xícara", pron: "/kʌp/", emoji: "☕" },
-                    { word: "Bowl", translation: "Tigela", pron: "/boʊl/", emoji: "🥣" },
-                    { word: "Pitcher", translation: "Jarra", pron: "/ˈpɪtʃ.ər/", emoji: "🏺" },
-                    { word: "Salt Shaker", translation: "Saleiro", pron: "/sɔːlt ˌʃeɪ.kər/", emoji: "🧂" }
+                    { word: "Table", translation: "Mesa", emoji: "🪑" },
+                    { word: "Chair", translation: "Cadeira", emoji: "🪑" },
+                    { word: "Buffet", translation: "Buffet", emoji: "🪵" },
+                    { word: "Sideboard", translation: "Aparador", emoji: "🪵" },
+                    { word: "China Cabinet", translation: "Vitrine", emoji: "🗄️" },
+                    { word: "Plate", translation: "Prato", emoji: "🍽️" },
+                    { word: "Bowl", translation: "Tigela", emoji: "🥣" },
+                    { word: "Glass", translation: "Copo", emoji: "🥛" },
+                    { word: "Fork", translation: "Garfo", emoji: "🍴" },
+                    { word: "Knife", translation: "Faca", emoji: "🔪" },
+                    { word: "Spoon", translation: "Colher", emoji: "🥄" },
+                    { word: "Napkin", translation: "Guardanapo", emoji: "🧻" },
+                    { word: "Cup", translation: "Xícara", emoji: "☕" },
+                    { word: "Pitcher", translation: "Jarra", emoji: "🏺" },
+                    { word: "Salt Shaker", translation: "Saleiro", emoji: "🧂" },
+                    { word: "Placemat", translation: "Jogo americano", emoji: "🧵" },
+                    { word: "Table Runner", translation: "Caminho de mesa", emoji: "🧵" },
+                    { word: "Candle Holder", translation: "Castiçal", emoji: "🕯️" },
+                    { word: "Centerpiece", translation: "Centro de mesa", emoji: "🏺" },
+                    { word: "Trivet", translation: "Descanso de panela", emoji: "🍳" },
+                    { word: "Cloth Napkin", translation: "Guardanapo de pano", emoji: "🧻" },
+                    { word: "Champagne Glass", translation: "Taça de champanhe", emoji: "🥂" },
+                    { word: "Wine Glass", translation: "Taça de vinho", emoji: "🍷" }
                 ],
                 garage: [
-                    { word: "Car", translation: "Carro", pron: "/kɑːr/", emoji: "🚗" },
-                    { word: "Bicycle", translation: "Bicicleta", pron: "/ˈbaɪ.sɪ.kəl/", emoji: "🚲" },
-                    { word: "Motorcycle", translation: "Moto", pron: "/ˈmoʊ.tər.saɪ.kəl/", emoji: "🏍️" },
-                    { word: "Steering Wheel", translation: "Volante", pron: "/ˈstɪr.ɪŋ wiːl/", emoji: "⚙️" },
-                    { word: "Gear Shift", translation: "Câmbio", pron: "/ɡɪr ʃɪft/", emoji: "⚙️" },
-                    { word: "Accelerator", translation: "Acelerador", pron: "/əkˈsel.ə.reɪ.tər/", emoji: "⬆️" },
-                    { word: "Brake", translation: "Freio", pron: "/breɪk/", emoji: "⛔" },
-                    { word: "Clutch", translation: "Embreagem", pron: "/klʌtʃ/", emoji: "⚙️" },
-                    { word: "Dashboard", translation: "Painel", pron: "/ˈdæʃ.bɔːrd/", emoji: "📊" },
-                    { word: "Seat", translation: "Banco", pron: "/siːt/", emoji: "💺" },
-                    { word: "Seatbelt", translation: "Cinto de segurança", pron: "/ˈsiːt.belt/", emoji: "🔗" },
-                    { word: "Tire", translation: "Pneu", pron: "/taɪr/", emoji: "🛞" },
-                    { word: "Headlight", translation: "Farol", pron: "/ˈhed.laɪt/", emoji: "💡" },
-                    { word: "Taillight", translation: "Lanterna traseira", pron: "/ˈteɪl.laɪt/", emoji: "🔴" },
-                    { word: "Bumper", translation: "Para-choque", pron: "/ˈbʌm.pər/", emoji: "🛡️" },
-                    { word: "Hood", translation: "Capô", pron: "/hʊd/", emoji: "🔧" },
-                    { word: "Trunk", translation: "Porta-malas", pron: "/trʌŋk/", emoji: "🧳" },
-                    { word: "Windshield Wiper", translation: "Limpador", pron: "/ˈwɪnd.ʃiːld ˌwaɪ.pər/", emoji: "💦" },
-                    { word: "Handlebar", translation: "Guidão", pron: "/ˈhæn.dəl.bɑːr/", emoji: "🚲" },
-                    { word: "Saddle", translation: "Selim", pron: "/ˈsæd.əl/", emoji: "🚲" },
-                    { word: "Pedal", translation: "Pedal", pron: "/ˈped.əl/", emoji: "🚲" },
-                    { word: "Chain", translation: "Corrente", pron: "/tʃeɪn/", emoji: "⛓️" },
-                    { word: "Rim", translation: "Aro", pron: "/rɪm/", emoji: "⚙️" },
-                    { word: "Frame", translation: "Quadro", pron: "/freɪm/", emoji: "🔩" },
-                    { word: "Helmet", translation: "Capacete", pron: "/ˈhel.mɪt/", emoji: "⛑️" },
-                    { word: "Tank", translation: "Tanque", pron: "/tæŋk/", emoji: "⛽" },
-                    { word: "Fairing", translation: "Carenagem", pron: "/ˈfer.ɪŋ/", emoji: "🏍️" },
-                    { word: "Exhaust", translation: "Escapamento", pron: "/ɪɡˈzɔːst/", emoji: "💨" },
-                    { word: "Mirror", translation: "Retrovisor", pron: "/ˈmɪr.ər/", emoji: "🪞" },
-                    { word: "Bell", translation: "Campainha", pron: "/bel/", emoji: "🔔" }
+                    { word: "Car", translation: "Carro", emoji: "🚗" },
+                    { word: "Bicycle", translation: "Bicicleta", emoji: "🚲" },
+                    { word: "Motorcycle", translation: "Moto", emoji: "🏍️" },
+                    { word: "Steering Wheel", translation: "Volante", emoji: "⚙️" },
+                    { word: "Gear Shift", translation: "Câmbio", emoji: "⚙️" },
+                    { word: "Accelerator", translation: "Acelerador", emoji: "⬆️" },
+                    { word: "Brake", translation: "Freio", emoji: "⛔" },
+                    { word: "Clutch", translation: "Embreagem", emoji: "⚙️" },
+                    { word: "Dashboard", translation: "Painel", emoji: "📊" },
+                    { word: "Seat", translation: "Banco", emoji: "💺" },
+                    { word: "Seatbelt", translation: "Cinto de segurança", emoji: "🔗" },
+                    { word: "Tire", translation: "Pneu", emoji: "🛞" },
+                    { word: "Headlight", translation: "Farol", emoji: "💡" },
+                    { word: "Taillight", translation: "Lanterna traseira", emoji: "🔴" },
+                    { word: "Bumper", translation: "Para-choque", emoji: "🛡️" },
+                    { word: "Hood", translation: "Capô", emoji: "🔧" },
+                    { word: "Trunk", translation: "Porta-malas", emoji: "🧳" },
+                    { word: "Windshield Wiper", translation: "Limpador", emoji: "💦" },
+                    { word: "Handlebar", translation: "Guidão", emoji: "🚲" },
+                    { word: "Saddle", translation: "Selim", emoji: "🚲" },
+                    { word: "Pedal", translation: "Pedal", emoji: "🚲" },
+                    { word: "Chain", translation: "Corrente", emoji: "⛓️" },
+                    { word: "Rim", translation: "Aro", emoji: "⚙️" },
+                    { word: "Frame", translation: "Quadro", emoji: "🔩" },
+                    { word: "Helmet", translation: "Capacete", emoji: "⛑️" },
+                    { word: "Tank", translation: "Tanque", emoji: "⛽" },
+                    { word: "Fairing", translation: "Carenagem", emoji: "🏍️" },
+                    { word: "Exhaust", translation: "Escapamento", emoji: "💨" },
+                    { word: "Mirror", translation: "Retrovisor", emoji: "🪞" },
+                    { word: "Bell", translation: "Campainha", emoji: "🔔" },
+                    { word: "Jack", translation: "Macaco", emoji: "🔧" },
+                    { word: "Battery", translation: "Bateria", emoji: "🔋" },
+                    { word: "Tire Pump", translation: "Bomba de ar", emoji: "⛽" },
+                    { word: "Snow Chains", translation: "Correntes", emoji: "⛓️" },
+                    { word: "Car Cover", translation: "Capa de carro", emoji: "🛡️" },
+                    { word: "Hammer", translation: "Martelo", emoji: "🔨" },
+                    { word: "Screwdriver", translation: "Chave de fenda", emoji: "🪛" },
+                    { word: "Wrench", translation: "Chave inglesa", emoji: "🔧" },
+                    { word: "Pliers", translation: "Alicate", emoji: "🔧" },
+                    { word: "Saw", translation: "Serra", emoji: "🪚" },
+                    { word: "Drill", translation: "Furadeira", emoji: "🪛" },
+                    { word: "Ladder", translation: "Escada", emoji: "🪜" },
+                    { word: "Toolbox", translation: "Caixa de ferramentas", emoji: "🧰" }
+                ],
+                office: [
+                    { word: "Computer", translation: "Computador", emoji: "💻" },
+                    { word: "Laptop", translation: "Notebook", emoji: "💻" },
+                    { word: "Printer", translation: "Impressora", emoji: "🖨️" },
+                    { word: "Scanner", translation: "Scanner", emoji: "📠" },
+                    { word: "Desk", translation: "Mesa de escritório", emoji: "🪑" },
+                    { word: "Chair", translation: "Cadeira", emoji: "🪑" },
+                    { word: "Keyboard", translation: "Teclado", emoji: "⌨️" },
+                    { word: "Mouse", translation: "Mouse", emoji: "🖱️" },
+                    { word: "Monitor", translation: "Monitor", emoji: "🖥️" },
+                    { word: "Phone", translation: "Telefone", emoji: "📞" },
+                    { word: "Pen", translation: "Caneta", emoji: "🖊️" },
+                    { word: "Pencil", translation: "Lápis", emoji: "✏️" },
+                    { word: "Eraser", translation: "Borracha", emoji: "🧽" },
+                    { word: "Notebook", translation: "Caderno", emoji: "📓" },
+                    { word: "Folder", translation: "Pasta", emoji: "📁" },
+                    { word: "Paper Clip", translation: "Clips", emoji: "📎" },
+                    { word: "Stapler", translation: "Grampeador", emoji: "📌" },
+                    { word: "Scissors", translation: "Tesoura", emoji: "✂️" },
+                    { word: "Tape", translation: "Fita adesiva", emoji: "📏" },
+                    { word: "Ruler", translation: "Régua", emoji: "📏" },
+                    { word: "Calculator", translation: "Calculadora", emoji: "🧮" },
+                    { word: "Desk Lamp", translation: "Abajur", emoji: "💡" },
+                    { word: "Whiteboard", translation: "Quadro branco", emoji: "🖊️" },
+                    { word: "Calendar", translation: "Calendário", emoji: "📅" },
+                    { word: "Files", translation: "Arquivos", emoji: "📂" },
+                    { word: "Headphones", translation: "Fones de ouvido", emoji: "🎧" }
+                ],
+                garden: [
+                    { word: "Flower", translation: "Flor", emoji: "🌸" },
+                    { word: "Tree", translation: "Árvore", emoji: "🌳" },
+                    { word: "Grass", translation: "Grama", emoji: "🌿" },
+                    { word: "Shovel", translation: "Pá", emoji: "🪴" },
+                    { word: "Rake", translation: "Ancinho", emoji: "🧹" },
+                    { word: "Hose", translation: "Mangueira", emoji: "💦" },
+                    { word: "Watering Can", translation: "Regador", emoji: "🚿" },
+                    { word: "Spade", translation: "Pá de jardim", emoji: "🪴" },
+                    { word: "Trowel", translation: "Colher de pedreiro", emoji: "🧱" },
+                    { word: "Shears", translation: "Tesoura de podar", emoji: "✂️" },
+                    { word: "Gloves", translation: "Luvas", emoji: "🧤" },
+                    { word: "Boots", translation: "Botas", emoji: "👢" },
+                    { word: "Wheelbarrow", translation: "Carrinho de mão", emoji: "🛠️" },
+                    { word: "Fence", translation: "Cerca", emoji: "🪜" },
+                    { word: "Gate", translation: "Portão", emoji: "🚪" },
+                    { word: "Shed", translation: "Galpão", emoji: "🏠" },
+                    { word: "Pot", translation: "Vaso de planta", emoji: "🪴" },
+                    { word: "Lawn Mower", translation: "Cortador de grama", emoji: "🪴" },
+                    { word: "Sprinkler", translation: "Aspersor", emoji: "💦" },
+                    { word: "Seedlings", translation: "Mudas", emoji: "🌱" },
+                    { word: "Compost", translation: "Composto", emoji: "🪴" },
+                    { word: "Stone", translation: "Pedra", emoji: "🪨" },
+                    { word: "Path", translation: "Caminho", emoji: "🪜" },
+                    { word: "Birdhouse", translation: "Casa de passarinho", emoji: "🐦" },
+                    { word: "Pond", translation: "Lago", emoji: "🌊" },
+                    { word: "Fountain", translation: "Fonte", emoji: "⛲" }
+                ],
+                pets: [
+                    { word: "Dog", translation: "Cachorro", emoji: "🐶" },
+                    { word: "Cat", translation: "Gato", emoji: "🐱" },
+                    { word: "Bird", translation: "Pássaro", emoji: "🐦" },
+                    { word: "Fish", translation: "Peixe", emoji: "🐟" },
+                    { word: "Hamster", translation: "Hamster", emoji: "🐹" },
+                    { word: "Rabbit", translation: "Coelho", emoji: "🐰" },
+                    { word: "Turtle", translation: "Tartaruga", emoji: "🐢" },
+                    { word: "Parrot", translation: "Papagaio", emoji: "🦜" },
+                    { word: "Leash", translation: "Coleira", emoji: "🦮" },
+                    { word: "Collar", translation: "Coleira", emoji: "🐕" },
+                    { word: "Food Bowl", translation: "Pote de comida", emoji: "🥣" },
+                    { word: "Water Bowl", translation: "Pote de água", emoji: "🥣" },
+                    { word: "Dog Bed", translation: "Cama de cachorro", emoji: "🛏️" },
+                    { word: "Cat Tree", translation: "Arranhador", emoji: "🌳" },
+                    { word: "Litter Box", translation: "Caixa de areia", emoji: "📦" },
+                    { word: "Toy", translation: "Brinquedo", emoji: "🧸" },
+                    { word: "Brush", translation: "Escova", emoji: "🪥" },
+                    { word: "Fish Tank", translation: "Aquário", emoji: "🐠" }
+                ],
+                electronics: [
+                    { word: "Smartphone", translation: "Smartphone", emoji: "📱" },
+                    { word: "Tablet", translation: "Tablet", emoji: "📱" },
+                    { word: "Laptop", translation: "Laptop", emoji: "💻" },
+                    { word: "Desktop", translation: "Desktop", emoji: "🖥️" },
+                    { word: "Monitor", translation: "Monitor", emoji: "🖥️" },
+                    { word: "Printer", translation: "Impressora", emoji: "🖨️" },
+                    { word: "Scanner", translation: "Scanner", emoji: "📠" },
+                    { word: "Keyboard", translation: "Teclado", emoji: "⌨️" },
+                    { word: "Mouse", translation: "Mouse", emoji: "🖱️" },
+                    { word: "Router", translation: "Roteador", emoji: "📶" },
+                    { word: "Modem", translation: "Modem", emoji: "📡" },
+                    { word: "Speakers", translation: "Caixas de som", emoji: "🔊" },
+                    { word: "Headphones", translation: "Fones de ouvido", emoji: "🎧" },
+                    { word: "Charger", translation: "Carregador", emoji: "🔌" },
+                    { word: "USB Drive", translation: "Pendrive", emoji: "💾" },
+                    { word: "Hard Drive", translation: "HD externo", emoji: "💾" },
+                    { word: "Webcam", translation: "Webcam", emoji: "📹" },
+                    { word: "Microphone", translation: "Microfone", emoji: "🎤" },
+                    { word: "Smartwatch", translation: "Smartwatch", emoji: "⌚" },
+                    { word: "VR Headset", translation: "Óculos VR", emoji: "🥽" },
+                    { word: "Drone", translation: "Drone", emoji: "🛸" },
+                    { word: "Camera", translation: "Câmera", emoji: "📷" },
+                    { word: "Video Game", translation: "Videogame", emoji: "🎮" },
+                    { word: "TV", translation: "Televisão", emoji: "📺" }
+                ],
+                tools: [
+                    { word: "Hammer", translation: "Martelo", emoji: "🔨" },
+                    { word: "Screwdriver", translation: "Chave de fenda", emoji: "🪛" },
+                    { word: "Wrench", translation: "Chave inglesa", emoji: "🔧" },
+                    { word: "Pliers", translation: "Alicate", emoji: "🔧" },
+                    { word: "Drill", translation: "Furadeira", emoji: "🪛" },
+                    { word: "Saw", translation: "Serra", emoji: "🪚" },
+                    { word: "Tape Measure", translation: "Trena", emoji: "📏" },
+                    { word: "Level", translation: "Nível", emoji: "📐" },
+                    { word: "Allen Key", translation: "Chave Allen", emoji: "🔧" },
+                    { word: "Utility Knife", translation: "Estilete", emoji: "🔪" },
+                    { word: "Files", translation: "Limas", emoji: "🔧" },
+                    { word: "Clamp", translation: "Sargento", emoji: "🔧" },
+                    { word: "Ladder", translation: "Escada", emoji: "🪜" },
+                    { word: "Toolbox", translation: "Caixa de ferramentas", emoji: "🧰" },
+                    { word: "Paintbrush", translation: "Pincel", emoji: "🖌️" },
+                    { word: "Roller", translation: "Rolo de pintura", emoji: "🖌️" },
+                    { word: "Spray Paint", translation: "Tinta spray", emoji: "🎨" },
+                    { word: "Sandpaper", translation: "Lixa", emoji: "📄" },
+                    { word: "Safety Glasses", translation: "Óculos de segurança", emoji: "🥽" },
+                    { word: "Mask", translation: "Máscara", emoji: "😷" },
+                    { word: "Ear Protection", translation: "Proteção auricular", emoji: "🎧" },
+                    { word: "Extension Cord", translation: "Extensão", emoji: "🔌" },
+                    { word: "Outlet", translation: "Tomada", emoji: "🔌" },
+                    { word: "Soldering Iron", translation: "Ferro de solda", emoji: "🔥" }
+                ],
+                clothes: [
+                    { word: "Shirt", translation: "Camisa", emoji: "👔" },
+                    { word: "T-Shirt", translation: "Camiseta", emoji: "👕" },
+                    { word: "Jeans", translation: "Calça jeans", emoji: "👖" },
+                    { word: "Pants", translation: "Calças", emoji: "👖" },
+                    { word: "Dress", translation: "Vestido", emoji: "👗" },
+                    { word: "Skirt", translation: "Saia", emoji: "👗" },
+                    { word: "Jacket", translation: "Jaqueta", emoji: "🧥" },
+                    { word: "Coat", translation: "Casaco", emoji: "🧥" },
+                    { word: "Suit", translation: "Terno", emoji: "👔" },
+                    { word: "Tie", translation: "Gravata", emoji: "👔" },
+                    { word: "Shoes", translation: "Sapatos", emoji: "👟" },
+                    { word: "Sneakers", translation: "Tênis", emoji: "👟" },
+                    { word: "Boots", translation: "Botas", emoji: "👢" },
+                    { word: "Socks", translation: "Meias", emoji: "🧦" },
+                    { word: "Underwear", translation: "Roupa íntima", emoji: "🩲" },
+                    { word: "Pajamas", translation: "Pijama", emoji: "🩳" },
+                    { word: "Belt", translation: "Cinto", emoji: "🧶" },
+                    { word: "Hat", translation: "Chapéu", emoji: "🧢" },
+                    { word: "Cap", translation: "Boné", emoji: "🧢" },
+                    { word: "Gloves", translation: "Luvas", emoji: "🧤" },
+                    { word: "Scarf", translation: "Cachecol", emoji: "🧣" },
+                    { word: "Swimsuit", translation: "Maiô", emoji: "🩱" },
+                    { word: "Blouse", translation: "Blusa", emoji: "👚" },
+                    { word: "Sweater", translation: "Suéter", emoji: "🧶" }
+                ],
+                toys: [
+                    { word: "Doll", translation: "Boneca", emoji: "🎎" },
+                    { word: "Action Figure", translation: "Action figure", emoji: "🧸" },
+                    { word: "Ball", translation: "Bola", emoji: "⚽" },
+                    { word: "Blocks", translation: "Blocos", emoji: "🧱" },
+                    { word: "Puzzle", translation: "Quebra-cabeça", emoji: "🧩" },
+                    { word: "Board Game", translation: "Jogo de tabuleiro", emoji: "🎲" },
+                    { word: "Teddy Bear", translation: "Urso de pelúcia", emoji: "🧸" },
+                    { word: "Car", translation: "Carrinho", emoji: "🚗" },
+                    { word: "Train", translation: "Trem", emoji: "🚂" },
+                    { word: "Robot", translation: "Robô", emoji: "🤖" },
+                    { word: "Kite", translation: "Pipa", emoji: "🪁" },
+                    { word: "Yoyo", translation: "Ioiô", emoji: "🪀" },
+                    { word: "Play-Doh", translation: "Massinha", emoji: "🧵" },
+                    { word: "Stuffed Animal", translation: "Bicho de pelúcia", emoji: "🧸" },
+                    { word: "Rattle", translation: "Chocalho", emoji: "🔔" },
+                    { word: "Building Set", translation: "Kit de montar", emoji: "🧱" },
+                    { word: "Tricycle", translation: "Triciclo", emoji: "🚲" },
+                    { word: "Scooter", translation: "Patinete", emoji: "🛴" },
+                    { word: "Drum", translation: "Tambor", emoji: "🥁" },
+                    { word: "Painting Set", translation: "Kit de pintura", emoji: "🎨" }
+                ],
+                music: [
+                    { word: "Guitar", translation: "Violão", emoji: "🎸" },
+                    { word: "Piano", translation: "Piano", emoji: "🎹" },
+                    { word: "Drums", translation: "Bateria", emoji: "🥁" },
+                    { word: "Violin", translation: "Violino", emoji: "🎻" },
+                    { word: "Flute", translation: "Flauta", emoji: "🎼" },
+                    { word: "Saxophone", translation: "Saxofone", emoji: "🎷" },
+                    { word: "Trumpet", translation: "Trompete", emoji: "🎺" },
+                    { word: "Cello", translation: "Violoncelo", emoji: "🎻" },
+                    { word: "Ukulele", translation: "Ukulele", emoji: "🪕" },
+                    { word: "Keyboard", translation: "Teclado", emoji: "🎹" },
+                    { word: "Microphone", translation: "Microfone", emoji: "🎤" },
+                    { word: "Speaker", translation: "Caixa de som", emoji: "🔊" },
+                    { word: "Music Stand", translation: "Estante de música", emoji: "📖" },
+                    { word: "Sheet Music", translation: "Partitura", emoji: "📜" },
+                    { word: "Pick", translation: "Palheta", emoji: "🎸" },
+                    { word: "Drumstick", translation: "Baqueta", emoji: "🥁" },
+                    { word: "Tuning Fork", translation: "Diapasão", emoji: "🎵" },
+                    { word: "Metronome", translation: "Metrônomo", emoji: "🎵" }
+                ],
+                appliances: [
+                    { word: "Refrigerator", translation: "Geladeira", emoji: "🧊" },
+                    { word: "Stove", translation: "Fogão", emoji: "🔥" },
+                    { word: "Oven", translation: "Forno", emoji: "🍞" },
+                    { word: "Microwave", translation: "Micro-ondas", emoji: "📡" },
+                    { word: "Dishwasher", translation: "Lava-louças", emoji: "🧼" },
+                    { word: "Washing Machine", translation: "Máquina de lavar", emoji: "🧺" },
+                    { word: "Dryer", translation: "Secadora", emoji: "🧺" },
+                    { word: "Vacuum Cleaner", translation: "Aspirador", emoji: "🧹" },
+                    { word: "Air Conditioner", translation: "Ar condicionado", emoji: "❄️" },
+                    { word: "Heater", translation: "Aquecedor", emoji: "🔥" },
+                    { word: "Fan", translation: "Ventilador", emoji: "🌀" },
+                    { word: "Toaster", translation: "Torradeira", emoji: "🍞" },
+                    { word: "Blender", translation: "Liquidificador", emoji: "🥤" },
+                    { word: "Coffee Maker", translation: "Cafeteira", emoji: "☕" },
+                    { word: "Kettle", translation: "Chaleira", emoji: "🫖" },
+                    { word: "Toaster Oven", translation: "Forno elétrico", emoji: "🍞" },
+                    { word: "Slow Cooker", translation: "Panela elétrica", emoji: "🍲" },
+                    { word: "Pressure Cooker", translation: "Panela de pressão", emoji: "🍲" },
+                    { word: "Juicer", translation: "Centrífuga", emoji: "🧃" },
+                    { word: "Food Processor", translation: "Processador", emoji: "🍽️" },
+                    { word: "Mixer", translation: "Batedeira", emoji: "🍰" },
+                    { word: "Water Filter", translation: "Filtro de água", emoji: "💧" }
                 ],
                 actions: [
-                    { word: "Sit", translation: "Sentar", pron: "/sɪt/", emoji: "🧘" },
-                    { word: "Stand", translation: "Levantar", pron: "/stænd/", emoji: "🧍" },
-                    { word: "Sleep", translation: "Dormir", pron: "/sliːp/", emoji: "😴" },
-                    { word: "Eat", translation: "Comer", pron: "/iːt/", emoji: "🍽️" },
-                    { word: "Drink", translation: "Beber", pron: "/drɪŋk/", emoji: "🥤" },
-                    { word: "Cook", translation: "Cozinhar", pron: "/kʊk/", emoji: "👨‍🍳" },
-                    { word: "Wash", translation: "Lavar", pron: "/wɑːʃ/", emoji: "🧼" },
-                    { word: "Clean", translation: "Limpar", pron: "/kliːn/", emoji: "🧹" },
-                    { word: "Open", translation: "Abrir", pron: "/ˈoʊ.pən/", emoji: "🚪" },
-                    { word: "Close", translation: "Fechar", pron: "/kloʊz/", emoji: "🚪" },
-                    { word: "Turn On", translation: "Ligar", pron: "/tɜːrn ɑːn/", emoji: "💡" },
-                    { word: "Turn Off", translation: "Desligar", pron: "/tɜːrn ɔːf/", emoji: "💡" },
-                    { word: "Watch", translation: "Assistir", pron: "/wɑːtʃ/", emoji: "👀" },
-                    { word: "Read", translation: "Ler", pron: "/riːd/", emoji: "📖" },
-                    { word: "Listen", translation: "Ouvir", pron: "/ˈlɪs.ən/", emoji: "👂" },
-                    { word: "Write", translation: "Escrever", pron: "/raɪt/", emoji: "✍️" },
-                    { word: "Brush", translation: "Escovar", pron: "/brʌʃ/", emoji: "🪥" },
-                    { word: "Shower", translation: "Tomar banho", pron: "/ˈʃaʊ.ər/", emoji: "🚿" },
-                    { word: "Flush", translation: "Dar descarga", pron: "/flʌʃ/", emoji: "🚽" },
-                    { word: "Lock", translation: "Trancar", pron: "/lɑːk/", emoji: "🔒" },
-                    { word: "Unlock", translation: "Destrancar", pron: "/ʌnˈlɑːk/", emoji: "🔓" },
-                    { word: "Vacuum", translation: "Aspirar", pron: "/ˈvæk.juːm/", emoji: "🧹" },
-                    { word: "Sweep", translation: "Varrer", pron: "/swiːp/", emoji: "🧹" },
-                    { word: "Mop", translation: "Esfregar", pron: "/mɑːp/", emoji: "🧹" },
-                    { word: "Dust", translation: "Tirar pó", pron: "/dʌst/", emoji: "🧽" },
-                    { word: "Water", translation: "Regar", pron: "/ˈwɔː.tər/", emoji: "💧" },
-                    { word: "Feed", translation: "Alimentar", pron: "/fiːd/", emoji: "🍲" },
-                    { word: "Play", translation: "Brincar", pron: "/pleɪ/", emoji: "🎮" },
-                    { word: "Work", translation: "Trabalhar", pron: "/wɜːrk/", emoji: "💼" },
-                    { word: "Relax", translation: "Relaxar", pron: "/rɪˈlæks/", emoji: "🧘" }
+                    { word: "Sit", translation: "Sentar", emoji: "🧘" },
+                    { word: "Stand", translation: "Levantar", emoji: "🧍" },
+                    { word: "Sleep", translation: "Dormir", emoji: "😴" },
+                    { word: "Eat", translation: "Comer", emoji: "🍽️" },
+                    { word: "Drink", translation: "Beber", emoji: "🥤" },
+                    { word: "Cook", translation: "Cozinhar", emoji: "👨‍🍳" },
+                    { word: "Wash", translation: "Lavar", emoji: "🧼" },
+                    { word: "Clean", translation: "Limpar", emoji: "🧹" },
+                    { word: "Open", translation: "Abrir", emoji: "🚪" },
+                    { word: "Close", translation: "Fechar", emoji: "🚪" },
+                    { word: "Turn On", translation: "Ligar", emoji: "💡" },
+                    { word: "Turn Off", translation: "Desligar", emoji: "💡" },
+                    { word: "Watch", translation: "Assistir", emoji: "👀" },
+                    { word: "Read", translation: "Ler", emoji: "📖" },
+                    { word: "Listen", translation: "Ouvir", emoji: "👂" },
+                    { word: "Write", translation: "Escrever", emoji: "✍️" },
+                    { word: "Brush", translation: "Escovar", emoji: "🪥" },
+                    { word: "Shower", translation: "Tomar banho", emoji: "🚿" },
+                    { word: "Flush", translation: "Dar descarga", emoji: "🚽" },
+                    { word: "Lock", translation: "Trancar", emoji: "🔒" },
+                    { word: "Unlock", translation: "Destrancar", emoji: "🔓" },
+                    { word: "Vacuum", translation: "Aspirar", emoji: "🧹" },
+                    { word: "Sweep", translation: "Varrer", emoji: "🧹" },
+                    { word: "Mop", translation: "Esfregar", emoji: "🧹" },
+                    { word: "Dust", translation: "Tirar pó", emoji: "🧽" },
+                    { word: "Water", translation: "Regar", emoji: "💧" },
+                    { word: "Feed", translation: "Alimentar", emoji: "🍲" },
+                    { word: "Play", translation: "Brincar", emoji: "🎮" },
+                    { word: "Work", translation: "Trabalhar", emoji: "💼" },
+                    { word: "Relax", translation: "Relaxar", emoji: "🧘" },
+                    { word: "Run", translation: "Correr", emoji: "🏃" },
+                    { word: "Walk", translation: "Andar", emoji: "🚶" },
+                    { word: "Swim", translation: "Nadar", emoji: "🏊" },
+                    { word: "Jump", translation: "Pular", emoji: "🦘" },
+                    { word: "Dance", translation: "Dançar", emoji: "💃" },
+                    { word: "Sing", translation: "Cantar", emoji: "🎤" },
+                    { word: "Paint", translation: "Pintar", emoji: "🎨" },
+                    { word: "Draw", translation: "Desenhar", emoji: "✏️" },
+                    { word: "Drive", translation: "Dirigir", emoji: "🚗" },
+                    { word: "Fly", translation: "Voar", emoji: "✈️" }
                 ]
             };
+
+            // ─── GERADOR DE PALAVRAS EXPANDIDO ────────────────────────────────
+            function expandVocabulary(baseVoc) {
+                // Listas de modificadores
+                const colors = ["Red", "Blue", "Green", "Yellow", "Black", "White", "Gray", "Brown", "Pink", "Orange",
+                    "Purple", "Gold", "Silver", "Beige", "Coral", "Lime", "Teal", "Navy", "Crimson", "Ivory"
+                ];
+                const sizes = ["Large", "Small", "Medium", "Extra Large", "Mini", "Huge", "Tiny", "Giant", "Compact",
+                    "Spacious"
+                ];
+                const materials = ["Wooden", "Plastic", "Metal", "Glass", "Leather", "Cotton", "Wool", "Silk", "Velvet",
+                    "Ceramic", "Marble", "Granite", "Steel", "Iron", "Brass", "Copper", "Aluminum", "Bamboo", "Cork",
+                    "Rubber"
+                ];
+                const qualities = ["Comfortable", "Elegant", "Rustic", "Modern", "Classic", "Vintage", "Stylish",
+                    "Cozy", "Luxurious", "Simple", "Sleek", "Durable", "Lightweight", "Heavy", "Soft", "Hard",
+                    "Smooth", "Rough", "Shiny", "Matte"
+                ];
+                const states = ["New", "Old", "Used", "Antique", "Broken", "Fixed", "Clean", "Dirty", "Empty", "Full",
+                    "Open", "Closed", "Locked", "Unlocked", "Decorative", "Functional"
+                ];
+
+                const expanded = {};
+
+                for (const [category, items] of Object.entries(baseVoc)) {
+                    const result = [];
+                    // Para cada item base, gerar combinações
+                    items.forEach(base => {
+                        // Adicionar o próprio item base
+                        result.push({ ...base });
+
+                        // Combinações com cores
+                        colors.forEach(color => {
+                            const newWord = color + " " + base.word;
+                            if (!result.some(i => i.word === newWord)) {
+                                const newTranslation = color + " " + base.translation;
+                                result.push({
+                                    word: newWord,
+                                    translation: newTranslation,
+                                    emoji: base.emoji
+                                });
+                            }
+                        });
+
+                        // Combinações com tamanhos
+                        sizes.forEach(size => {
+                            const newWord = size + " " + base.word;
+                            if (!result.some(i => i.word === newWord)) {
+                                const newTranslation = size + " " + base.translation;
+                                result.push({
+                                    word: newWord,
+                                    translation: newTranslation,
+                                    emoji: base.emoji
+                                });
+                            }
+                        });
+
+                        // Combinações com materiais
+                        materials.forEach(mat => {
+                            const newWord = mat + " " + base.word;
+                            if (!result.some(i => i.word === newWord)) {
+                                const newTranslation = mat + " " + base.translation;
+                                result.push({
+                                    word: newWord,
+                                    translation: newTranslation,
+                                    emoji: base.emoji
+                                });
+                            }
+                        });
+
+                        // Combinações com qualidades
+                        qualities.forEach(qual => {
+                            const newWord = qual + " " + base.word;
+                            if (!result.some(i => i.word === newWord)) {
+                                const newTranslation = qual + " " + base.translation;
+                                result.push({
+                                    word: newWord,
+                                    translation: newTranslation,
+                                    emoji: base.emoji
+                                });
+                            }
+                        });
+
+                        // Combinações com estados
+                        states.forEach(state => {
+                            const newWord = state + " " + base.word;
+                            if (!result.some(i => i.word === newWord)) {
+                                const newTranslation = state + " " + base.translation;
+                                result.push({
+                                    word: newWord,
+                                    translation: newTranslation,
+                                    emoji: base.emoji
+                                });
+                            }
+                        });
+
+                        // Combinações duplas (ex: "Large Red Sofa")
+                        colors.forEach(color => {
+                            sizes.forEach(size => {
+                                const newWord = size + " " + color + " " + base.word;
+                                if (!result.some(i => i.word === newWord)) {
+                                    const newTranslation = size + " " + color + " " + base.translation;
+                                    result.push({
+                                        word: newWord,
+                                        translation: newTranslation,
+                                        emoji: base.emoji
+                                    });
+                                }
+                            });
+                            materials.forEach(mat => {
+                                const newWord = mat + " " + color + " " + base.word;
+                                if (!result.some(i => i.word === newWord)) {
+                                    const newTranslation = mat + " " + color + " " + base.translation;
+                                    result.push({
+                                        word: newWord,
+                                        translation: newTranslation,
+                                        emoji: base.emoji
+                                    });
+                                }
+                            });
+                        });
+                    });
+
+                    // Embaralhar levemente e limitar a 300 por categoria (para não sobrecarregar)
+                    // Como geramos muitas combinações, vamos pegar apenas as primeiras 300 (ou menos se não houver)
+                    // Mas garantimos que cada categoria tenha pelo menos 300.
+                    const shuffled = result.sort(() => Math.random() - 0.5);
+                    // Se tiver mais de 300, pega os primeiros 300; se tiver menos, mantém todos.
+                    const limited = shuffled.slice(0, Math.max(300, shuffled.length));
+                    expanded[category] = limited;
+                }
+
+                return expanded;
+            }
+
+            // ─── GERAR VOCABULARY EXPANDIDO ─────────────────────────────────────
+            const vocabulary = expandVocabulary(baseVocabulary);
 
             // ─── HELPERS ──────────────────────────────────────────────────────────
             function shuffle(arr) {
@@ -635,18 +1184,51 @@
                 window.speechSynthesis.speak(u);
             }
 
+            // ─── GERAR PRONÚNCIA SIMPLIFICADA ──────────────────────────────────
+            function generatePron(word) {
+                // Tenta gerar uma pronúncia aproximada baseada no texto
+                // Esta é uma simplificação, apenas para demonstrar
+                const clean = word.toLowerCase().replace(/[^a-z ]/g, '');
+                const parts = clean.split(' ');
+                // Para cada parte, usa um placeholder
+                const pronParts = parts.map(p => {
+                    // Mapeamento simples de algumas letras
+                    let pron = p;
+                    pron = pron.replace(/a/g, 'æ');
+                    pron = pron.replace(/e/g, 'ɛ');
+                    pron = pron.replace(/i/g, 'ɪ');
+                    pron = pron.replace(/o/g, 'ɒ');
+                    pron = pron.replace(/u/g, 'ʌ');
+                    pron = pron.replace(/ee/g, 'iː');
+                    pron = pron.replace(/oo/g, 'uː');
+                    pron = pron.replace(/ai/g, 'aɪ');
+                    pron = pron.replace(/au/g, 'aʊ');
+                    pron = pron.replace(/oi/g, 'ɔɪ');
+                    pron = pron.replace(/ou/g, 'oʊ');
+                    pron = pron.replace(/ch/g, 'tʃ');
+                    pron = pron.replace(/sh/g, 'ʃ');
+                    pron = pron.replace(/th/g, 'θ');
+                    pron = pron.replace(/ng/g, 'ŋ');
+                    return pron;
+                });
+                return '/' + pronParts.join(' ') + '/';
+            }
+
             // ─── RENDER CARDS ─────────────────────────────────────────────────────
             function renderCards(containerId, items) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
                 container.innerHTML = '';
-                items.forEach(item => {
+                // Para performance, mostramos apenas os primeiros 200 itens de cada categoria (já são muitos)
+                const displayItems = items.slice(0, 200);
+                displayItems.forEach(item => {
+                    const pron = item.pron || generatePron(item.word);
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.innerHTML = `
                         <div class="emoji">${item.emoji || '📦'}</div>
                         <div class="word">${item.word}</div>
-                        <div class="pronunciation">${item.pron || ''}</div>
+                        <div class="pronunciation">${pron}</div>
                         <button class="speak-btn" data-word="${item.word}">🔊 Listen</button>
                     `;
                     const btn = card.querySelector('.speak-btn');
@@ -656,6 +1238,11 @@
                     });
                     container.appendChild(card);
                 });
+
+                // Atualizar badge com o total de itens (não apenas os exibidos)
+                const badgeId = `badge-${containerId.replace('grid-', '')}`;
+                const badge = document.getElementById(badgeId);
+                if (badge) badge.textContent = items.length;
             }
 
             // ─── INIT CARDS ──────────────────────────────────────────────────────
@@ -672,30 +1259,28 @@
                 allItems: [],
                 leftItems: [],
                 rightItems: [],
-                selectedLeft: null, // index
-                selectedRight: null, // index
-                matchedPairs: new Set(), // set of translation strings (or word)
+                selectedLeft: null,
+                selectedRight: null,
+                matchedPairs: new Set(),
                 totalPairs: 0,
                 matchedCount: 0
             };
 
             function initQuiz() {
-                // gather all items from all categories
                 const all = [];
                 for (const cat of Object.values(vocabulary)) {
                     all.push(...cat);
                 }
-                // remove duplicates by word (keep first)
+                // Remover duplicatas pela palavra
                 const seen = new Set();
                 const unique = all.filter(item => {
                     if (seen.has(item.word)) return false;
                     seen.add(item.word);
                     return true;
                 });
-                // shuffle
                 const shuffled = shuffle([...unique]);
-                // take up to 40 to keep quiz manageable, but show all if less
-                const maxItems = Math.min(shuffled.length, 60);
+                // Pegar até 150 pares (para não sobrecarregar a interface)
+                const maxItems = Math.min(shuffled.length, 150);
                 const selected = shuffled.slice(0, maxItems);
 
                 quizState.allItems = selected;
@@ -705,7 +1290,6 @@
                 quizState.selectedLeft = null;
                 quizState.selectedRight = null;
 
-                // create left and right arrays with objects and shuffle separately
                 const left = selected.map((item, idx) => ({ ...item, idx }));
                 const right = selected.map((item, idx) => ({ ...item, idx }));
                 shuffle(left);
@@ -743,10 +1327,9 @@
                     div.innerHTML = `
                         <span class="q-emoji">${item.emoji || '📌'}</span>
                         <span class="q-word">${item.word}</span>
-                        <span class="q-pron">${item.pron || ''}</span>
+                        <span class="q-pron">${item.pron || generatePron(item.word)}</span>
                         <button class="speak-small" data-word="${item.word}">🔊</button>
                     `;
-                    // speak button
                     const speakBtn = div.querySelector('.speak-small');
                     speakBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -791,44 +1374,35 @@
             function handleQuizClick(side, index) {
                 const items = (side === 'left') ? quizState.leftItems : quizState.rightItems;
                 const item = items[index];
-                // if already matched, ignore
                 if (quizState.matchedPairs.has(item.translation)) return;
 
                 if (side === 'left') {
-                    // if same item selected, deselect
                     if (quizState.selectedLeft === index) {
                         quizState.selectedLeft = null;
                         renderQuiz();
                         return;
                     }
-                    // if there is a selected right, check match
                     if (quizState.selectedRight !== null) {
                         const rightItem = quizState.rightItems[quizState.selectedRight];
-                        // if right item is matched, clear selection and try again
                         if (quizState.matchedPairs.has(rightItem.translation)) {
                             quizState.selectedRight = null;
                             quizState.selectedLeft = index;
                             renderQuiz();
                             return;
                         }
-                        // check match
                         if (item.translation === rightItem.translation) {
-                            // correct match
                             quizState.matchedPairs.add(item.translation);
                             quizState.matchedCount++;
                             quizState.selectedLeft = null;
                             quizState.selectedRight = null;
                             renderQuiz();
-                            // speak the word
                             speakText(item.word);
                         } else {
-                            // wrong match - show error
                             const leftEl = document.querySelector(`#quizLeftList .quiz-item[data-index="${index}"]`);
                             const rightEl = document.querySelector(
-                            `#quizRightList .quiz-item[data-index="${quizState.selectedRight}"]`);
+                                `#quizRightList .quiz-item[data-index="${quizState.selectedRight}"]`);
                             if (leftEl) leftEl.classList.add('wrong');
                             if (rightEl) rightEl.classList.add('wrong');
-                            // reset after delay
                             setTimeout(() => {
                                 if (leftEl) leftEl.classList.remove('wrong');
                                 if (rightEl) rightEl.classList.remove('wrong');
@@ -839,9 +1413,7 @@
                         }
                         return;
                     }
-                    // no right selected, select left
                     quizState.selectedLeft = index;
-                    // speak the word
                     speakText(item.word);
                     renderQuiz();
                     return;
@@ -871,7 +1443,8 @@
                     } else {
                         const leftEl = document.querySelector(
                             `#quizLeftList .quiz-item[data-index="${quizState.selectedLeft}"]`);
-                        const rightEl = document.querySelector(`#quizRightList .quiz-item[data-index="${index}"]`);
+                        const rightEl = document.querySelector(
+                            `#quizRightList .quiz-item[data-index="${index}"]`);
                         if (leftEl) leftEl.classList.add('wrong');
                         if (rightEl) rightEl.classList.add('wrong');
                         setTimeout(() => {
@@ -884,7 +1457,6 @@
                     }
                     return;
                 }
-                // no left selected, select right
                 quizState.selectedRight = index;
                 renderQuiz();
             }
@@ -896,9 +1468,7 @@
             function switchTab(tabId) {
                 tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
                 contents.forEach(section => section.classList.toggle('active', section.id === tabId));
-                // if quiz tab, re-render quiz (in case of changes)
                 if (tabId === 'quiz') {
-                    // ensure quiz is initialized
                     if (quizState.allItems.length === 0) initQuiz();
                     else renderQuiz();
                 }
@@ -908,7 +1478,6 @@
                 btn.addEventListener('click', function() {
                     const tabId = this.dataset.tab;
                     switchTab(tabId);
-                    // update url hash
                     if (tabId !== 'quiz') window.location.hash = tabId;
                     else window.location.hash = 'quiz';
                 });
@@ -920,29 +1489,27 @@
             });
 
             // ─── INIT ─────────────────────────────────────────────────────────────
-            // Render all card grids
             initCards();
 
-            // Check hash for initial tab
             if (window.location.hash) {
                 const hash = window.location.hash.replace('#', '');
                 const targetBtn = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
                 if (targetBtn) switchTab(hash);
             }
 
-            // Initialize quiz (lazy, but we can init now)
             initQuiz();
 
-            // If quiz tab is not active, we still have quiz data ready
-
-            // Keyboard: Escape cancels speech
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && window.speechSynthesis) window.speechSynthesis.cancel();
             });
 
-            console.log('🏠 Casa - vocabulário e quiz carregados!');
+            // Contar total de palavras
+            let totalWords = 0;
+            for (const cat of Object.values(vocabulary)) {
+                totalWords += cat.length;
+            }
+            console.log(`🏠 Casa - ${totalWords} palavras carregadas!`);
         })();
     </script>
-
 </body>
 </html>
