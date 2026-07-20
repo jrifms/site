@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🛒 Supermercado - 1000+ Itens & Preposições in/on/at</title>
+    <style>
+        /* ── RESET & BASE ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f3ee;
+            color: #2d2a24;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .app-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+            background: linear-gradient(135deg, #f7f3e9, #e8e0d5);
+            border-radius: 28px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+        .app-header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #3d352b;
+        }
+        .app-header h1 span {
+            background: #d4c9b8;
+            padding: 0 12px;
+            border-radius: 40px;
+        }
+        .app-header p {
+            font-size: 1.1rem;
+            color: #5f5546;
+            margin-top: 6px;
+        }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 12px;
+            margin-bottom: 28px;
+        }
+        .tab-btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 60px;
+            background: #e3dbcf;
+            color: #4a4136;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tab-btn:hover {
+            background: #d5cbbc;
+            transform: translateY(-2px);
+        }
+        .tab-btn.active {
+            background: #b8a48c;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(184, 164, 140, 0.35);
+        }
+        .tab-btn .icon {
+            font-size: 1.2rem;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #3d352b;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .section-title .badge {
+            font-size: 0.9rem;
+            font-weight: 400;
+            background: #d4c9b8;
+            padding: 2px 16px;
+            border-radius: 40px;
+            color: #4a4136;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .toolbar input {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 18px;
+            border-radius: 40px;
+            border: 1px solid #d4c9b8;
+            background: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+        .toolbar input:focus {
+            border-color: #b8a48c;
+            box-shadow: 0 0 0 3px rgba(184, 164, 140, 0.2);
+        }
+        .toolbar .counter {
+            font-weight: 500;
+            color: #5f5546;
+            background: #e8e0d5;
+            padding: 6px 18px;
+            border-radius: 40px;
+            white-space: nowrap;
+        }
+        .grid-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 14px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .item-card {
+            background: #fffffffa;
+            border-radius: 18px;
+            padding: 14px 12px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .item-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
+            border-color: #d4c9b8;
+        }
+        .item-card .emoji {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+        .item-card .name {
+            font-size: 1.0rem;
+            font-weight: 600;
+            color: #2d2a24;
+            word-break: break-word;
+        }
+        .item-card .pron {
+            font-size: 0.75rem;
+            color: #7a6e5c;
+            background: #f3efe8;
+            padding: 2px 10px;
+            border-radius: 30px;
+            margin-top: 4px;
+            font-family: monospace;
+            border: 1px solid #e8e0d5;
+            display: inline-block;
+        }
+        .item-card .speak-btn {
+            margin-top: 8px;
+            background: #e8e0d5;
+            border: none;
+            border-radius: 60px;
+            padding: 5px 14px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #3d352b;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid transparent;
+        }
+        .item-card .speak-btn:hover {
+            background: #d5cbbc;
+            border-color: #b8a48c;
+        }
+        .item-card .category {
+            font-size: 0.65rem;
+            color: #9a8e7e;
+            background: #ede8df;
+            padding: 0 10px;
+            border-radius: 20px;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        /* ── EXERCISE BOX ── */
+        .exercise-box {
+            background: #faf8f4;
+            border-radius: 24px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+            border: 1px solid #e8e0d5;
+            max-width: 900px;
+        }
+        .exercise-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #3d352b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .exercise-box .question {
+            background: #fff;
+            padding: 14px 18px;
+            border-radius: 16px;
+            margin: 10px 0;
+            border: 1px solid #ede8df;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        .exercise-box .question .q-text {
+            flex: 1;
+            font-weight: 500;
+            min-width: 150px;
+        }
+        .exercise-box .question .q-hint {
+            font-size: 0.85rem;
+            color: #7a6e5c;
+            font-style: italic;
+            width: 100%;
+        }
+        .exercise-box .question select {
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid #d4c9b8;
+            background: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            min-width: 100px;
+        }
+        .exercise-box .question select:focus {
+            border-color: #b8a48c;
+            box-shadow: 0 0 0 3px rgba(184, 164, 140, 0.2);
+        }
+        .exercise-box .question .check-btn {
+            background: #d4c9b8;
+            border: none;
+            border-radius: 60px;
+            padding: 6px 18px;
+            font-weight: 600;
+            color: #3d352b;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .exercise-box .question .check-btn:hover {
+            background: #c0b4a1;
+        }
+        .exercise-box .question .feedback {
+            margin-left: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .feedback.correct {
+            color: #2e7d32;
+        }
+        .feedback.wrong {
+            color: #c62828;
+        }
+        .exercise-box .speak-small {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+        .exercise-box .speak-small:hover {
+            transform: scale(1.15);
+        }
+        @media (max-width: 640px) {
+            .app-header h1 {
+                font-size: 1.8rem;
+            }
+            .tab-btn {
+                padding: 7px 14px;
+                font-size: 0.8rem;
+            }
+            .grid-items {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            .item-card .emoji {
+                font-size: 2.2rem;
+            }
+            .exercise-box .question {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .exercise-box .question select {
+                width: 100%;
+            }
+        }
+        .app-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px 10px 10px;
+            color: #8a7e6e;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0d8cc;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <h1>🛒 <span>Supermercado</span> · 1000+ Itens · <span>in/on/at</span></h1>
+        <p>Lista gigante de produtos com figuras (emojis), pronúncia e exercícios de preposições</p>
+    </header>
+
+    <nav class="tabs" id="tabNav">
+        <button class="tab-btn active" data-tab="items"><span class="icon">🛍️</span> Itens (1000+)</button>
+        <button class="tab-btn" data-tab="prepositions"><span class="icon">📍</span> in / on / at</button>
+    </nav>
+
+    <main>
+
+        <!-- ═══ TAB 1: ITEMS ═══ -->
+        <section class="tab-content active" id="items">
+            <div class="section-title">🛍️ Itens de Supermercado <span class="badge" id="itemCountBadge">0</span></div>
+            <div class="toolbar">
+                <input type="text" id="itemSearch" placeholder="🔍 Buscar item ou categoria..." />
+                <span class="counter" id="itemCounter">Mostrando 0 de 0</span>
+            </div>
+            <div class="grid-items" id="itemGrid"></div>
+        </section>
+
+        <!-- ═══ TAB 2: PREPOSITIONS ═══ -->
+        <section class="tab-content" id="prepositions">
+            <div class="section-title">📍 Preposições: <em>in, on, at</em> <span class="badge">exercícios com correção</span></div>
+            <div class="exercise-box">
+                <h3>📝 Complete com <em>in, on</em> ou <em>at</em></h3>
+                <div id="prepExercises"></div>
+            </div>
+            <div class="exercise-box" style="margin-top:20px;">
+                <h3>📘 Regras rápidas</h3>
+                <ul style="list-style:none; padding:0; line-height:1.8; color:#4a4136;">
+                    <li><strong>IN</strong> – lugares fechados (room, car, city), meses, anos, períodos longos (in the morning)</li>
+                    <li><strong>ON</strong> – superfícies (table, wall), dias da semana, datas (on Monday, on July 4th)</li>
+                    <li><strong>AT</strong> – pontos específicos (at the door, at the corner), horários (at 7 PM), eventos (at the party)</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="app-footer">
+        <small>🔊 Clique no alto-falante para ouvir a pronúncia &bull; Exercícios corrigem automaticamente</small>
+    </footer>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ─── SPEECH ──────────────────────────────────────────────────────────
+            function speakText(text) {
+                if (!window.speechSynthesis) return;
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US';
+                u.rate = 0.82;
+                u.pitch = 1;
+                window.speechSynthesis.speak(u);
+            }
+
+            // ─── MAPEAMENTO DE EMOJIS (FIGURAS) ──────────────────────────────
+            const emojiMap = {
+                // Frutas
+                'apple': '🍎', 'banana': '🍌', 'orange': '🍊', 'grape': '🍇',
+                'strawberry': '🍓', 'blueberry': '🫐', 'raspberry': '🫐', 'blackberry': '🫐',
+                'pineapple': '🍍', 'mango': '🥭', 'papaya': '🥭', 'peach': '🍑',
+                'plum': '🫐', 'cherry': '🍒', 'pear': '🍐', 'watermelon': '🍉',
+                'cantaloupe': '🍈', 'honeydew': '🍈', 'lemon': '🍋', 'lime': '🍋',
+                'grapefruit': '🍊', 'tangerine': '🍊', 'kiwi': '🥝', 'fig': '🫐',
+                'date': '🫐', 'coconut': '🥥', 'avocado': '🥑', 'pomegranate': '🫐',
+                'passionfruit': '🫐', 'dragonfruit': '🐉',
+                // Verduras
+                'lettuce': '🥬', 'spinach': '🥬', 'kale': '🥬', 'cabbage': '🥬',
+                'broccoli': '🥦', 'cauliflower': '🥦', 'celery': '🥬', 'asparagus': '🥬',
+                'artichoke': '🥬', 'zucchini': '🥒', 'cucumber': '🥒', 'pepper': '🫑',
+                'chili': '🌶️', 'tomato': '🍅', 'potato': '🥔', 'sweetpotato': '🍠',
+                'yam': '🍠', 'carrot': '🥕', 'radish': '🥕', 'turnip': '🥕',
+                'beetroot': '🫐', 'onion': '🧅', 'garlic': '🧄', 'leek': '🧅',
+                'mushroom': '🍄', 'corn': '🌽', 'pea': '🫛', 'greenbean': '🫛',
+                'okra': '🥬', 'eggplant': '🍆',
+                // Carnes
+                'chicken': '🍗', 'beef': '🥩', 'pork': '🥩', 'lamb': '🥩',
+                'turkey': '🍗', 'duck': '🍗', 'veal': '🥩', 'goat': '🥩',
+                'bacon': '🥓', 'sausage': '🌭', 'ham': '🥩', 'meatball': '🧆',
+                'steak': '🥩', 'rib': '🍖', 'brisket': '🥩', 'groundbeef': '🥩',
+                // Peixes
+                'salmon': '🍣', 'tuna': '🐟', 'cod': '🐟', 'trout': '🐟',
+                'mackerel': '🐟', 'sardine': '🐟', 'anchovy': '🐟', 'tilapia': '🐟',
+                'catfish': '🐟', 'halibut': '🐟', 'swordfish': '🐟', 'sole': '🐟',
+                'herring': '🐟', 'bass': '🐟', 'perch': '🐟',
+                // Laticínios
+                'milk': '🥛', 'cheese': '🧀', 'yogurt': '🥛', 'butter': '🧈',
+                'cream': '🥛', 'sourcream': '🥛', 'cottagecheese': '🧀',
+                'creamcheese': '🧀', 'mozzarella': '🧀', 'parmesan': '🧀',
+                'gouda': '🧀', 'cheddar': '🧀', 'swisscheese': '🧀',
+                // Bebidas
+                'water': '💧', 'soda': '🥤', 'juice': '🧃', 'tea': '🍵',
+                'coffee': '☕', 'lemonade': '🍋', 'icedtea': '🧋', 'smoothie': '🥤',
+                'milkshake': '🥤', 'sportsdrink': '🥤', 'energy': '⚡', 'beer': '🍺',
+                'wine': '🍷', 'whiskey': '🥃', 'vodka': '🥃',
+                // Grãos / Padaria
+                'rice': '🍚', 'pasta': '🍝', 'spaghetti': '🍝', 'macaroni': '🍝',
+                'noodle': '🍜', 'bread': '🍞', 'bagel': '🥯', 'muffin': '🧁',
+                'cereal': '🥣', 'oatmeal': '🥣', 'flour': '🌾', 'sugar': '🍬',
+                'salt': '🧂', 'pepper': '🌶️', 'cinnamon': '🫘', 'vanilla': '🫘',
+                // Enlatados
+                'cannedbeans': '🥫', 'cannedcorn': '🥫', 'cannedpeas': '🥫',
+                'cannedtomato': '🥫', 'cannedtuna': '🥫', 'cannedsardine': '🥫',
+                'cannedsoup': '🥫', 'cannedfruit': '🥫', 'cannedmilk': '🥫',
+                'cannedmeat': '🥫',
+                // Limpeza
+                'soap': '🧼', 'detergent': '🧴', 'bleach': '🧴', 'ammonia': '🧴',
+                'vinegar': '🧴', 'baking': '🧂', 'sponge': '🧽', 'paper': '🧻',
+                'napkin': '🧻', 'towel': '🧻', 'trashbag': '🗑️', 'gloves': '🧤',
+                'broom': '🧹', 'mop': '🧹',
+                // Higiene
+                'toothpaste': '🪥', 'shampoo': '🧴', 'conditioner': '🧴',
+                'bodywash': '🧴', 'lotion': '🧴', 'deodorant': '🧴',
+                'razor': '🪒', 'shavingcream': '🧴', 'tissue': '🧻',
+                'toiletpaper': '🧻', 'diaper': '🩲',
+                // Outros
+                'icecream': '🍦', 'chocolate': '🍫', 'candy': '🍬', 'biscuit': '🍪',
+                'cookie': '🍪', 'cake': '🎂', 'pie': '🥧', 'cerealbar': '🍫',
+                'granola': '🥣', 'nuts': '🥜', 'peanutbutter': '🥜', 'jam': '🍯',
+                'honey': '🍯', 'syrup': '🍯', 'oil': '🫒', 'sauce': '🥫',
+                'ketchup': '🍅', 'mayonnaise': '🥫', 'mustard': '🥫', 'relish': '🥫'
+            };
+
+            const categoryEmoji = {
+                'frutas': '🍎', 'verduras': '🥬', 'carnes': '🥩', 'peixes': '🐟',
+                'laticinios': '🧀', 'bebidas': '🥤', 'graos': '🍞', 'enlatados': '🥫',
+                'limpeza': '🧼', 'higiene': '🧴', 'outros': '🍫'
+            };
+
+            // ─── GERAR LISTA DE ITENS (1000+ COM FIGURAS) ──────────────────
+            function gerarItens() {
+                const categorias = {
+                    frutas: [
+                        "apple", "banana", "orange", "grape", "strawberry", "blueberry", "raspberry",
+                        "blackberry", "pineapple", "mango", "papaya", "peach", "plum", "cherry", "pear",
+                        "watermelon", "cantaloupe", "honeydew", "lemon", "lime", "grapefruit", "tangerine",
+                        "kiwi", "fig", "date", "coconut", "avocado", "pomegranate", "passionfruit", "dragonfruit"
+                    ],
+                    verduras: [
+                        "lettuce", "spinach", "kale", "cabbage", "broccoli", "cauliflower", "celery",
+                        "asparagus", "artichoke", "zucchini", "cucumber", "pepper", "chili", "tomato",
+                        "potato", "sweetpotato", "yam", "carrot", "radish", "turnip", "beetroot", "onion",
+                        "garlic", "leek", "mushroom", "corn", "pea", "greenbean", "okra", "eggplant"
+                    ],
+                    carnes: [
+                        "chicken", "beef", "pork", "lamb", "turkey", "duck", "veal", "goat",
+                        "bacon", "sausage", "ham", "meatball", "steak", "rib", "brisket", "groundbeef"
+                    ],
+                    peixes: [
+                        "salmon", "tuna", "cod", "trout", "mackerel", "sardine", "anchovy", "tilapia",
+                        "catfish", "halibut", "swordfish", "sole", "herring", "bass", "perch"
+                    ],
+                    laticinios: [
+                        "milk", "cheese", "yogurt", "butter", "cream", "sourcream", "cottagecheese",
+                        "creamcheese", "mozzarella", "parmesan", "gouda", "cheddar", "swisscheese"
+                    ],
+                    bebidas: [
+                        "water", "soda", "juice", "tea", "coffee", "lemonade", "icedtea", "smoothie",
+                        "milkshake", "sportsdrink", "energy", "beer", "wine", "whiskey", "vodka"
+                    ],
+                    graos: [
+                        "rice", "pasta", "spaghetti", "macaroni", "noodle", "bread", "bagel", "muffin",
+                        "cereal", "oatmeal", "flour", "sugar", "salt", "pepper", "cinnamon", "vanilla"
+                    ],
+                    enlatados: [
+                        "cannedbeans", "cannedcorn", "cannedpeas", "cannedtomato", "cannedtuna",
+                        "cannedsardine", "cannedsoup", "cannedfruit", "cannedmilk", "cannedmeat"
+                    ],
+                    limpeza: [
+                        "soap", "detergent", "bleach", "ammonia", "vinegar", "baking", "sponge",
+                        "paper", "napkin", "towel", "trashbag", "gloves", "broom", "mop"
+                    ],
+                    higiene: [
+                        "toothpaste", "shampoo", "conditioner", "bodywash", "lotion",
+                        "deodorant", "razor", "shavingcream", "tissue", "toiletpaper", "diaper"
+                    ],
+                    outros: [
+                        "icecream", "chocolate", "candy", "biscuit", "cookie", "cake", "pie",
+                        "cerealbar", "granola", "nuts", "peanutbutter", "jam", "honey", "syrup",
+                        "oil", "sauce", "ketchup", "mayonnaise", "mustard", "relish"
+                    ]
+                };
+
+                const prefixos = ["organic", "fresh", "frozen", "large", "small", "whole"];
+                let itens = [];
+
+                for (const [cat, lista] of Object.entries(categorias)) {
+                    lista.forEach(baseName => {
+                        // Busca o emoji específico, ou fallback da categoria
+                        let emoji = emojiMap[baseName] || categoryEmoji[cat] || '📦';
+
+                        // Adiciona o item base
+                        itens.push({
+                            name: baseName,
+                            category: cat,
+                            emoji: emoji,
+                            pron: '/' + baseName + '/'
+                        });
+
+                        // Adiciona variações com prefixos (sem números!)
+                        prefixos.forEach(prefix => {
+                            const newName = prefix + ' ' + baseName;
+                            // Evita duplicar se o prefixo já estiver no nome (ex: frozen frozen)
+                            if (!itens.some(i => i.name === newName)) {
+                                itens.push({
+                                    name: newName,
+                                    category: cat,
+                                    emoji: emoji,
+                                    pron: '/' + newName + '/'
+                                });
+                            }
+                        });
+                    });
+                }
+
+                // Embaralhar para misturar as categorias
+                for (let i = itens.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [itens[i], itens[j]] = [itens[j], itens[i]];
+                }
+
+                // Ajustar pronúncia para IPA aproximado (simplificado)
+                itens.forEach(item => {
+                    let pron = item.name
+                        .replace(/a/g, 'æ')
+                        .replace(/e/g, 'ɛ')
+                        .replace(/i/g, 'ɪ')
+                        .replace(/o/g, 'ɒ')
+                        .replace(/u/g, 'ʌ')
+                        .replace(/ch/g, 'tʃ')
+                        .replace(/sh/g, 'ʃ')
+                        .replace(/th/g, 'θ')
+                        .replace(/ng/g, 'ŋ')
+                        .replace(/ee/g, 'iː')
+                        .replace(/oo/g, 'uː')
+                        .replace(/ai/g, 'aɪ')
+                        .replace(/au/g, 'aʊ')
+                        .replace(/oi/g, 'ɔɪ')
+                        .replace(/ou/g, 'oʊ');
+                    item.pron = '/' + pron + '/';
+                });
+
+                return itens;
+            }
+
+            const itemList = gerarItens();
+
+            // ─── RENDER ITEMS ────────────────────────────────────────────────────
+            function renderItems(filter = '') {
+                const grid = document.getElementById('itemGrid');
+                const counter = document.getElementById('itemCounter');
+                const badge = document.getElementById('itemCountBadge');
+                if (!grid) return;
+
+                const filtered = itemList.filter(item =>
+                    item.name.toLowerCase().includes(filter.toLowerCase()) ||
+                    item.category.toLowerCase().includes(filter.toLowerCase())
+                );
+
+                grid.innerHTML = '';
+                filtered.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="emoji">${item.emoji}</div>
+                        <div class="name">${item.name}</div>
+                        <div class="pron">${item.pron}</div>
+                        <div class="category">${item.category}</div>
+                        <button class="speak-btn" data-text="${item.name}">🔊 Listen</button>
+                    `;
+                    const btn = card.querySelector('.speak-btn');
+                    btn.addEventListener('click', () => speakText(item.name));
+                    grid.appendChild(card);
+                });
+
+                counter.textContent = `Mostrando ${filtered.length} de ${itemList.length}`;
+                badge.textContent = itemList.length;
+            }
+
+            // ─── EXERCÍCIOS IN/ON/AT ────────────────────────────────────────────
+            const prepQuestions = [
+                { q: "I live ______ Brazil.", hint: "país (lugar fechado)", correct: "in" },
+                { q: "The book is ______ the table.", hint: "superfície", correct: "on" },
+                { q: "I wake up ______ 7 AM.", hint: "horário", correct: "at" },
+                { q: "She works ______ a hospital.", hint: "lugar fechado", correct: "in" },
+                { q: "The picture is ______ the wall.", hint: "superfície vertical", correct: "on" },
+                { q: "We'll meet ______ the corner.", hint: "ponto específico", correct: "at" },
+                { q: "He was born ______ 1990.", hint: "ano", correct: "in" },
+                { q: "I have a meeting ______ Monday.", hint: "dia da semana", correct: "on" },
+                { q: "They are ______ the cinema.", hint: "lugar fechado", correct: "at" },
+                { q: "There's a spider ______ the ceiling.", hint: "superfície", correct: "on" },
+                { q: "She lives ______ New York.", hint: "cidade", correct: "in" },
+                { q: "I'll call you ______ 5 PM.", hint: "horário", correct: "at" },
+                { q: "The keys are ______ the car.", hint: "dentro de um veículo", correct: "in" },
+                { q: "The letter is ______ the desk.", hint: "superfície", correct: "on" },
+                { q: "We'll have dinner ______ a restaurant.", hint: "lugar específico", correct: "at" },
+                { q: "He studies ______ the university.", hint: "instituição", correct: "at" },
+                { q: "She arrived ______ the airport.", hint: "ponto específico", correct: "at" },
+                { q: "The cat is sleeping ______ the sofa.", hint: "superfície", correct: "on" },
+                { q: "They got married ______ June.", hint: "mês", correct: "in" },
+                { q: "I'll see you ______ the weekend.", hint: "período", correct: "at" },
+                { q: "There is a fly ______ the room.", hint: "dentro de um espaço", correct: "in" },
+                { q: "The store is ______ Main Street.", hint: "localização em rua", correct: "on" },
+                { q: "We arrived ______ 8:30.", hint: "horário", correct: "at" },
+                { q: "She left ______ a hurry.", hint: "expressão fixa", correct: "in" },
+                { q: "He's ______ the phone right now.", hint: "expressão fixa", correct: "on" },
+                { q: "They are ______ the beach.", hint: "lugar aberto", correct: "at" },
+            ];
+
+            function renderPreps() {
+                const container = document.getElementById('prepExercises');
+                if (!container) return;
+                container.innerHTML = '';
+                prepQuestions.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'question';
+                    div.innerHTML = `
+                        <span class="q-text">${item.q}</span>
+                        <span class="q-hint">💡 ${item.hint}</span>
+                        <select id="prepSelect_${idx}">
+                            <option value="in">in</option>
+                            <option value="on">on</option>
+                            <option value="at">at</option>
+                        </select>
+                        <button class="check-btn" data-idx="${idx}">Verificar</button>
+                        <span class="feedback" id="prepFeedback_${idx}"></span>
+                        <button class="speak-small" data-text="${item.q.replace('______', '_____')}">🔊</button>
+                    `;
+                    const checkBtn = div.querySelector('.check-btn');
+                    const speakBtn = div.querySelector('.speak-small');
+                    speakBtn.addEventListener('click', () => {
+                        const text = item.q.replace('______', '_____');
+                        speakText(text);
+                    });
+                    checkBtn.addEventListener('click', function() {
+                        const select = document.getElementById(`prepSelect_${idx}`);
+                        const feedback = document.getElementById(`prepFeedback_${idx}`);
+                        const chosen = select.value;
+                        const correct = item.correct;
+                        if (chosen === correct) {
+                            feedback.textContent = '✅ Correto!';
+                            feedback.className = 'feedback correct';
+                        } else {
+                            feedback.textContent = `❌ Incorreto. Resposta: ${correct}`;
+                            feedback.className = 'feedback wrong';
+                        }
+                    });
+                    container.appendChild(div);
+                });
+            }
+
+            // ─── TABS ──────────────────────────────────────────────────────────────
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            function switchTab(tabId) {
+                tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+                contents.forEach(section => section.classList.toggle('active', section.id === tabId));
+                if (tabId === 'items') {
+                    const search = document.getElementById('itemSearch');
+                    if (search) renderItems(search.value);
+                }
+            }
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    switchTab(tabId);
+                    window.location.hash = tabId;
+                });
+            });
+
+            // ─── SEARCH ────────────────────────────────────────────────────────────
+            const searchInput = document.getElementById('itemSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    renderItems(this.value);
+                });
+            }
+
+            // ─── INIT ──────────────────────────────────────────────────────────────
+            renderItems('');
+            renderPreps();
+
+            // Hash navigation
+            if (window.location.hash) {
+                const hash = window.location.hash.replace('#', '');
+                const target = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
+                if (target) switchTab(hash);
+            }
+
+            // Escape to cancel speech
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && window.speechSynthesis) window.speechSynthesis.cancel();
+            });
+
+            console.log(`🛒 Página carregada com ${itemList.length} itens de supermercado com figuras!`);
+        })();
+    </script>
+
+</body>
+</html>
