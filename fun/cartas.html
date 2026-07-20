@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartas 7x7 - Linha na Diagonal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d3b1a 0%, #1a5f23 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #FFD700;
+        }
+        
+        .message-container {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .input-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: white;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .input-section h3 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .input-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-width: 200px;
+            text-align: right;
+        }
+        
+        .number-input {
+            width: 80px;
+            height: 50px;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #0d3b1a;
+            font-weight: bold;
+        }
+        
+        .number-input:focus {
+            outline: none;
+            border-color: #ffed4e;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+        }
+        
+        .submit-button {
+            padding: 12px 30px;
+            background-color: #FFD700;
+            color: #0d3b1a;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .submit-button:hover {
+            background-color: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .submit-button:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .position-info {
+            font-size: 0.9rem;
+            color: #ccc;
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .selected-position {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #FFD700;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 25px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 12px 24px;
+            background-color: #FFD700;
+            color: #0d3b1a;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
+        }
+        
+        button:hover {
+            background-color: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .matrix-view {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .matrix-container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 500px;
+        }
+        
+        /* Classe dinâmica para a matriz - será atualizada pelo JavaScript */
+        .dynamic-matrix {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 400px;
+        }
+        
+        .card {
+            width: 100%;
+            aspect-ratio: 2.5/3.5;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Estilo para carta com verso (sem mostrar a figura) */
+        .card-back {
+            background: linear-gradient(45deg, #1a237e, #283593);
+            color: white;
+            border: 2px solid #FFD700;
+        }
+        
+        .card-back .card-corner,
+        .card-back .card-center,
+        .card-back .card-corner-bottom {
+            display: none;
+        }
+        
+        .card-back::before {
+            content: "?";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
+        .card-revealed {
+            background-color: white;
+        }
+        
+        .card-highlighted {
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        
+        .card-corner {
+            font-size: 1.2rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .card-center {
+            font-size: 2rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-corner-bottom {
+            transform: rotate(180deg);
+        }
+        
+        /* Cores dos naipes */
+        .hearts, .diamonds {
+            color: #e53935;
+        }
+        
+        .clubs, .spades {
+            color: #2c2c2c;
+        }
+        
+        .footer {
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            font-size: 0.9rem;
+            max-width: 800px;
+        }
+        
+        /* Visualização de transposição */
+        .transposition-view {
+            display: none;
+        }
+        
+        .transposition-view.active {
+            display: block;
+        }
+        
+        /* Visualização da interseção */
+        .intersection-view {
+            display: none;
+        }
+        
+        .intersection-view.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Botão voltar específico para segunda página */
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .back-button:hover {
+            background-color: #45a049;
+        }
+        
+        /* Botão para ver interseção */
+        .intersection-button {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .intersection-button:hover {
+            background-color: #1976D2;
+        }
+        
+        /* Carta de interseção (grande) */
+        .intersection-card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .intersection-card {
+            width: 200px;
+            height: 280px;
+            background-color: white;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            margin: 20px 0;
+        }
+        
+        .intersection-card-corner {
+            font-size: 2rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .intersection-card-center {
+            font-size: 4rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .intersection-card-corner-bottom {
+            transform: rotate(180deg);
+        }
+        
+        .intersection-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        
+        .intersection-info h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        
+        .coordinates {
+            font-size: 1.4rem;
+            margin: 15px 0;
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .card-name {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Indicadores de linha */
+        .row-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            position: absolute;
+            left: -40px;
+            top: 0;
+            height: 100%;
+            justify-content: space-around;
+        }
+        
+        .row-label {
+            color: white;
+            font-weight: bold;
+            height: calc(100% / 7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Indicadores de coluna */
+        .col-indicator {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 10px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .col-label {
+            width: calc(100% / 7);
+            text-align: center;
+            padding: 5px;
+        }
+        
+        /* Container para matriz com indicadores */
+        .matrix-with-indicators {
+            display: flex;
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .matrix-wrapper {
+            width: 100%;
+        }
+        
+        .choice-message {
+            background: rgba(255, 215, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            max-width: 600px;
+        }
+        
+        .choice-options {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .choice-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            min-width: 150px;
+        }
+        
+        .row-choice-button {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .row-choice-button:hover {
+            background-color: #1976D2;
+        }
+        
+        .col-choice-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .col-choice-button:hover {
+            background-color: #45a049;
+        }
+        
+        .removed-message {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            max-width: 600px;
+        }
+        
+        .remaining-cards {
+            font-size: 1.3rem;
+            color: #FFD700;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .matrix-info {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .matrix-container {
+                gap: 5px;
+                padding: 10px;
+            }
+            
+            .dynamic-matrix {
+                gap: 8px;
+                padding: 15px;
+            }
+            
+            .card-corner {
+                font-size: 1rem;
+            }
+            
+            .card-center {
+                font-size: 1.5rem;
+            }
+            
+            .card-back::before {
+                font-size: 2rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .message-container {
+                font-size: 1rem;
+                padding: 10px;
+            }
+            
+            .input-section {
+                padding: 15px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .input-label {
+                text-align: center;
+                min-width: auto;
+            }
+            
+            .number-input {
+                width: 70px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .intersection-card {
+                width: 150px;
+                height: 210px;
+            }
+            
+            .intersection-card-corner {
+                font-size: 1.5rem;
+            }
+            
+            .intersection-card-center {
+                font-size: 3rem;
+            }
+            
+            .row-indicator {
+                left: -30px;
+            }
+            
+            .choice-message {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+            
+            .choice-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .choice-button {
+                width: 90%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 90%;
+            }
+            
+            .input-section {
+                padding: 10px;
+            }
+            
+            .row-indicator {
+                left: -25px;
+            }
+            
+            .row-label {
+                font-size: 0.8rem;
+            }
+            
+            .col-label {
+                font-size: 0.8rem;
+                padding: 3px;
+            }
+            
+            .choice-message {
+                font-size: 1.1rem;
+                padding: 12px;
+            }
+            
+            .dynamic-matrix {
+                gap: 5px;
+                padding: 10px;
+            }
+            
+            .card-back::before {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .card-highlighted {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes revealCard {
+            0% { 
+                transform: rotateY(0deg);
+                background: linear-gradient(45deg, #1a237e, #283593);
+            }
+            50% { 
+                transform: rotateY(90deg);
+                background: linear-gradient(45deg, #1a237e, #283593);
+            }
+            100% { 
+                transform: rotateY(0deg);
+                background-color: white;
+            }
+        }
+        
+        .card-revealed {
+            animation: revealCard 1s ease forwards;
+        }
+        
+        /* Feedback de erro */
+        .error-message {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .input-with-error {
+            border-color: #ff6b6b !important;
+        }
+        
+        /* Estilos para controle de exibição de botões */
+        .controls button {
+            display: block; /* Para que possamos controlar a visibilidade com display */
+        }
+        
+        /* Botões da segunda página */
+        #viewIntersection {
+            display: none; /* Inicialmente escondido */
+        }
+        
+        #backFromSecond {
+            display: block; /* Inicialmente visível */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Cartas 7x7 - Linha na Diagonal</h1>
+        
+        <div class="message-container" id="messageDisplay">
+            Observe as cartas e digite a linha (1-7) onde está a carta que você escolheu
+        </div>
+        
+        <!-- Input de LINHA da primeira página -->
+        <div class="input-section" id="firstPageInput">
+            <h3>Escolha uma Carta e Informe sua Linha</h3>
+            <div class="input-container">
+                <div class="input-group">
+                    <div class="input-label">Número da Linha (1 a 7):</div>
+                    <input type="number" id="rowInput" class="number-input" min="1" max="7" placeholder="1-7">
+                </div>
+                <button id="submitRow" class="submit-button">Confirmar Linha</button>
+                <div id="rowError" class="error-message"></div>
+            </div>
+            
+            <div class="position-info">
+                Escolha mentalmente uma carta na matriz acima e digite a linha onde ela está
+            </div>
+            
+            <div id="selectedRowDisplay" style="display: none;">
+                <div class="selected-position">
+                    Linha escolhida: <span id="rowValue">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Input de COLUNA da segunda página -->
+        <div class="input-section" id="secondPageInput" style="display: none;">
+            <h3>Escolha uma Coluna na Nova Matriz</h3>
+            <div class="input-container">
+                <div class="input-group">
+                    <div class="input-label">Número da Coluna (1 a 7):</div>
+                    <input type="number" id="columnInput" class="number-input" min="1" max="7" placeholder="1-7">
+                </div>
+                <button id="submitColumn" class="submit-button">Confirmar Coluna</button>
+                <div id="columnError" class="error-message"></div>
+            </div>
+            
+            <div class="position-info">
+                As cartas da linha que você escolheu estão na DIAGONAL PRINCIPAL. Escolha uma coluna.
+            </div>
+            
+            <div id="selectedColumnDisplay" style="display: none;">
+                <div class="selected-position">
+                    Coluna escolhida: <span id="columnValue">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Input para escolher linha ou coluna na terceira página -->
+        <div class="input-section" id="thirdPageChoice" style="display: none;">
+            <h3>Encontre sua Carta</h3>
+            <div class="matrix-info" id="matrixSizeInfo">
+                Matriz atual: <span id="currentRows">4</span> x <span id="currentCols">4</span>
+            </div>
+            <div class="choice-message" id="choiceInstruction">
+                Todas as cartas estão viradas. Escolha uma LINHA ou COLUNA que você acha que NÃO contém sua carta:
+            </div>
+            
+            <div class="choice-options">
+                <button id="chooseRowButton" class="choice-button row-choice-button">Escolher uma Linha</button>
+                <button id="chooseColumnButton" class="choice-button col-choice-button">Escolher uma Coluna</button>
+            </div>
+            
+            <!-- Input para linha (aparece quando o usuário escolhe "Escolher uma Linha") -->
+            <div class="input-container" id="rowChoiceInput" style="display: none;">
+                <div class="input-group">
+                    <div class="input-label">Escolha uma Linha (1 a <span id="maxRowChoice">4</span>):</div>
+                    <input type="number" id="rowChoice" class="number-input" min="1" max="4" placeholder="1-4">
+                </div>
+                <button id="submitRowChoice" class="submit-button">Confirmar Linha</button>
+                <div id="rowChoiceError" class="error-message"></div>
+            </div>
+            
+            <!-- Input para coluna (aparece quando o usuário escolhe "Escolher uma Coluna") -->
+            <div class="input-container" id="columnChoiceInput" style="display: none;">
+                <div class="input-group">
+                    <div class="input-label">Escolha uma Coluna (1 a <span id="maxColChoice">4</span>):</div>
+                    <input type="number" id="columnChoice" class="number-input" min="1" max="4" placeholder="1-4">
+                </div>
+                <button id="submitColumnChoice" class="submit-button">Confirmar Coluna</button>
+                <div id="columnChoiceError" class="error-message"></div>
+            </div>
+            
+            <div id="removedInfo" style="display: none;">
+                <div class="removed-message" id="removedMessage">
+                    <!-- Mensagem sobre cartas removidas será inserida aqui -->
+                </div>
+                <div class="remaining-cards" id="remainingCards">
+                    Cartas restantes: <span id="remainingCount">16</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controles da primeira página -->
+        <div class="controls" id="firstPageControls">
+            <button id="shuffle">Embaralhar Todas</button>
+            <button id="nextStep" disabled>Próximo Passo</button>
+            <button id="reset">Novo Jogo</button>
+        </div>
+        
+        <!-- Controles da segunda página (inicialmente escondidos) -->
+        <div class="controls" id="secondPageControls" style="display: none;">
+            <button id="viewIntersection" class="intersection-button" disabled>Ver Minha Carta</button>
+            <button id="backFromSecond" class="back-button">Voltar para Nova Distribuição</button>
+        </div>
+        
+        <!-- Controles da terceira página (inicialmente escondidos) -->
+        <div class="controls" id="thirdPageControls" style="display: none;">
+            <button id="revealCard" class="intersection-button" style="display: none;">Revelar Minha Carta</button>
+            <button id="backFromThird" class="back-button">Voltar para Nova Distribuição</button>
+        </div>
+    </div>
+    
+    <!-- Visualização da matriz original (primeira página) -->
+    <div class="matrix-view" id="originalView">
+        <div class="matrix-with-indicators">
+            <!-- Indicadores de linha -->
+            <div class="row-indicator">
+                <div class="row-label">Linha 1</div>
+                <div class="row-label">Linha 2</div>
+                <div class="row-label">Linha 3</div>
+                <div class="row-label">Linha 4</div>
+                <div class="row-label">Linha 5</div>
+                <div class="row-label">Linha 6</div>
+                <div class="row-label">Linha 7</div>
+            </div>
+            
+            <div class="matrix-wrapper">
+                <div class="matrix-container" id="matrixContainer">
+                    <!-- Cartas serão inseridas aqui pelo JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visualização da matriz com diagonal (segunda página) -->
+    <div class="matrix-view transposition-view" id="transposedView">
+        <!-- Indicadores de coluna -->
+        <div class="col-indicator" id="colIndicator">
+            <div class="col-label">Col 1</div>
+            <div class="col-label">Col 2</div>
+            <div class="col-label">Col 3</div>
+            <div class="col-label">Col 4</div>
+            <div class="col-label">Col 5</div>
+            <div class="col-label">Col 6</div>
+            <div class="col-label">Col 7</div>
+        </div>
+        
+        <div class="matrix-container" id="transposedMatrixContainer">
+            <!-- Matriz com diagonal será inserida aqui -->
+        </div>
+    </div>
+    
+    <!-- Visualização da matriz dinâmica na terceira página -->
+    <div class="matrix-view intersection-view" id="intersectionView">
+        <div class="intersection-info">
+            <h3>Como Funcionou?</h3>
+            <p>Você escolheu a linha <span id="displayRow" style="color: #FFD700; font-weight: bold;">-</span></p>
+            <p>As cartas dessa linha foram colocadas na <strong>DIAGONAL PRINCIPAL</strong> na segunda página</p>
+            <p>Você escolheu a coluna <span id="displayColumn" style="color: #FFD700; font-weight: bold;">-</span></p>
+            <p>A carta na <strong>DIAGONAL PRINCIPAL</strong> na coluna <span id="displayColumn2" style="color: #FFD700; font-weight: bold;">-</span> é sua carta!</p>
+            <p style="margin-top: 15px; font-style: italic;">Todas as cartas estão viradas. Elimine linhas ou colunas para encontrar sua carta!</p>
+        </div>
+        
+        <div class="dynamic-matrix" id="dynamicMatrixContainer" style="grid-template-columns: repeat(4, 1fr);">
+            <!-- Cartas serão inseridas aqui dinamicamente pelo JavaScript -->
+        </div>
+        
+        <!-- Carta revelada (inicialmente escondida) -->
+        <div class="intersection-card-container" id="revealedCardContainer" style="display: none;">
+            <h3 style="color: white; margin-bottom: 20px;">Sua Carta Escolhida</h3>
+            <div class="intersection-card" id="intersectionCard">
+                <!-- Carta de interseção será inserida aqui -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Página 1: Escolha uma carta e digite sua linha (1-7) → Clique em "Próximo Passo"</p>
+        <p>Página 2: As cartas da linha escolhida estão na <strong>DIAGONAL PRINCIPAL</strong>. Escolha uma coluna (1-7) → Clique em "Ver Minha Carta"</p>
+        <p>Página 3: Todas as cartas estão viradas. Escolha uma linha ou coluna que NÃO contém sua carta → A matriz será redimensionada até que sua carta seja revelada</p>
+    </div>
+
+    <script>
+        // Definindo o baralho completo
+        const suits = [
+            { symbol: '♥', name: 'hearts', colorClass: 'hearts', ptName: 'Copas' },
+            { symbol: '♦', name: 'diamonds', colorClass: 'diamonds', ptName: 'Ouros' },
+            { symbol: '♣', name: 'clubs', colorClass: 'clubs', ptName: 'Paus' },
+            { symbol: '♠', name: 'spades', colorClass: 'spades', ptName: 'Espadas' }
+        ];
+        
+        const values = [
+            { symbol: 'A', name: 'Ás', rank: 1 },
+            { symbol: '2', name: 'Dois', rank: 2 },
+            { symbol: '3', name: 'Três', rank: 3 },
+            { symbol: '4', name: 'Quatro', rank: 4 },
+            { symbol: '5', name: 'Cinco', rank: 5 },
+            { symbol: '6', name: 'Seis', rank: 6 },
+            { symbol: '7', name: 'Sete', rank: 7 },
+            { symbol: '8', name: 'Oito', rank: 8 },
+            { symbol: '9', name: 'Nove', rank: 9 },
+            { symbol: '10', name: 'Dez', rank: 10 },
+            { symbol: 'J', name: 'Valete', rank: 11 },
+            { symbol: 'Q', name: 'Dama', rank: 12 },
+            { symbol: 'K', name: 'Rei', rank: 13 }
+        ];
+        
+        // Matriz 7x7 para armazenar as cartas
+        let cardMatrix = [];
+        let currentCards = [];
+        let currentPage = 1; // 1 = primeira, 2 = segunda, 3 = terceira
+        let selectedRow = null;    // Linha escolhida na PRIMEIRA página
+        let selectedColumn = null; // Coluna escolhida na SEGUNDA página
+        let intersectionCard = null; // Carta na interseção (a carta escolhida)
+        let originalCardsFromRow = []; // Cartas originais da linha escolhida
+        let diagonalCards = []; // Cartas que vão para a diagonal (já embaralhadas)
+        let currentMatrix = []; // Matriz dinâmica atual para a terceira página
+        let currentRows = 4; // Número atual de linhas na matriz
+        let currentCols = 4; // Número atual de colunas na matriz
+        let chosenCardPosition = null; // Posição da carta escolhida na matriz atual
+        let remainingCards = 16; // Número de cartas restantes na terceira página
+        let choiceType = null; // 'row' ou 'column' - o que o usuário escolheu
+        let isRevealing = false; // Controla se estamos no processo de revelação
+        
+        // Função para criar o baralho completo
+        function createDeck() {
+            const deck = [];
+            for (const suit of suits) {
+                for (const value of values) {
+                    deck.push({
+                        suit: suit.symbol,
+                        suitName: suit.name,
+                        suitPtName: suit.ptName,
+                        suitColorClass: suit.colorClass,
+                        value: value.symbol,
+                        rank: value.rank,
+                        name: value.name,
+                        id: `${value.symbol}-${suit.name}`
+                    });
+                }
+            }
+            return deck;
+        }
+        
+        // Função para embaralhar um array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // Função para distribuir cartas na matriz 7x7
+        function distributeCards() {
+            // Criar baralho completo e embaralhar
+            const fullDeck = createDeck();
+            const shuffledDeck = shuffleArray([...fullDeck]);
+            
+            // Selecionar 49 cartas para a matriz
+            currentCards = shuffledDeck.slice(0, 49);
+            
+            // Inicializar matriz 7x7
+            cardMatrix = Array(7).fill().map(() => Array(7).fill(null));
+            
+            // Preencher a matriz 7x7
+            let index = 0;
+            for (let row = 0; row < 7; row++) {
+                for (let col = 0; col < 7; col++) {
+                    cardMatrix[row][col] = {
+                        ...currentCards[index],
+                        row: row,
+                        col: col,
+                        matrix: 'original'
+                    };
+                    index++;
+                }
+            }
+            
+            // Resetar seleções
+            selectedRow = null;
+            selectedColumn = null;
+            intersectionCard = null;
+            originalCardsFromRow = [];
+            diagonalCards = [];
+            currentMatrix = [];
+            currentRows = 4;
+            currentCols = 4;
+            chosenCardPosition = null;
+            remainingCards = 16;
+            choiceType = null;
+            isRevealing = false;
+            
+            // Resetar inputs e displays
+            resetInputs();
+            resetDisplays();
+            updateMessage();
+            updateNextStepButton();
+            updateViewIntersectionButton();
+            
+            // Mostrar novamente os botões "Embaralhar Todas" e "Novo Jogo"
+            document.getElementById('shuffle').style.display = 'block';
+            document.getElementById('reset').style.display = 'block';
+            
+            // Ir para a primeira página
+            goToPage(1);
+            
+            // Renderizar
+            renderFirstPage();
+        }
+        
+        // Função para resetar inputs
+        function resetInputs() {
+            document.getElementById('rowInput').value = '';
+            document.getElementById('columnInput').value = '';
+            document.getElementById('rowChoice').value = '';
+            document.getElementById('columnChoice').value = '';
+            document.getElementById('rowError').textContent = '';
+            document.getElementById('columnError').textContent = '';
+            document.getElementById('rowChoiceError').textContent = '';
+            document.getElementById('columnChoiceError').textContent = '';
+            document.getElementById('rowInput').classList.remove('input-with-error');
+            document.getElementById('columnInput').classList.remove('input-with-error');
+            document.getElementById('rowChoice').classList.remove('input-with-error');
+            document.getElementById('columnChoice').classList.remove('input-with-error');
+            
+            // Resetar escolhas da terceira página
+            document.getElementById('rowChoiceInput').style.display = 'none';
+            document.getElementById('columnChoiceInput').style.display = 'none';
+            document.getElementById('removedInfo').style.display = 'none';
+            document.getElementById('chooseRowButton').disabled = false;
+            document.getElementById('chooseColumnButton').disabled = false;
+        }
+        
+        // Função para resetar displays
+        function resetDisplays() {
+            document.getElementById('selectedRowDisplay').style.display = 'none';
+            document.getElementById('selectedColumnDisplay').style.display = 'none';
+            document.getElementById('thirdPageChoice').style.display = 'none';
+            document.getElementById('revealedCardContainer').style.display = 'none';
+            document.getElementById('revealCard').style.display = 'none';
+        }
+        
+        // Função para validar número de entrada
+        function validateInput(value, min, max) {
+            const num = parseInt(value);
+            if (isNaN(num)) {
+                return { valid: false, message: 'Por favor, digite um número' };
+            }
+            if (num < min || num > max) {
+                return { valid: false, message: `Digite um número entre ${min} e ${max}` };
+            }
+            return { valid: true, value: num };
+        }
+        
+        // Função para criar o elemento HTML de uma carta (com ou sem figura)
+        function createCardElement(card, showFace = false, isHighlighted = false) {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card';
+            
+            if (showFace) {
+                cardElement.classList.add('card-revealed');
+                if (isHighlighted) {
+                    cardElement.classList.add('card-highlighted');
+                }
+            } else {
+                cardElement.classList.add('card-back');
+            }
+            
+            cardElement.dataset.cardId = card.id;
+            cardElement.dataset.row = card.row;
+            cardElement.dataset.col = card.col;
+            
+            const colorClass = card.suitColorClass;
+            
+            if (showFace) {
+                cardElement.innerHTML = `
+                    <div class="card-corner ${colorClass}">
+                        <div>${card.value}</div>
+                        <div>${card.suit}</div>
+                    </div>
+                    <div class="card-center ${colorClass}"></div>
+                    <div class="card-corner ${colorClass} card-corner-bottom">
+                        <div>${card.value}</div>
+                        <div>${card.suit}</div>
+                    </div>
+                `;
+            } else {
+                // Carta virada - conteúdo será adicionado via CSS
+                cardElement.innerHTML = '';
+            }
+            
+            return cardElement;
+        }
+        
+        // Função para criar carta de interseção (grande)
+        function createIntersectionCardElement(card) {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'intersection-card';
+            
+            const colorClass = card.suitColorClass;
+            
+            cardElement.innerHTML = `
+                <div class="intersection-card-corner ${colorClass}">
+                    <div>${card.value}</div>
+                    <div>${card.suit}</div>
+                </div>
+                <div class="intersection-card-center ${colorClass}"></div>
+                <div class="intersection-card-corner ${colorClass} intersection-card-corner-bottom">
+                    <div>${card.value}</div>
+                    <div>${card.suit}</div>
+                </div>
+            `;
+            
+            return cardElement;
+        }
+        
+        // Função para atualizar os displays de posição
+        function updateDisplays() {
+            // Atualizar display da linha (primeira página)
+            if (selectedRow !== null) {
+                document.getElementById('selectedRowDisplay').style.display = 'block';
+                document.getElementById('rowValue').textContent = selectedRow + 1;
+            }
+            
+            // Atualizar display da coluna (segunda página)
+            if (selectedColumn !== null) {
+                document.getElementById('selectedColumnDisplay').style.display = 'block';
+                document.getElementById('columnValue').textContent = selectedColumn + 1;
+            }
+        }
+        
+        // Função para atualizar a mensagem
+        function updateMessage() {
+            const messageDisplay = document.getElementById('messageDisplay');
+            
+            if (currentPage === 3) {
+                if (remainingCards === 1 && !isRevealing) {
+                    messageDisplay.textContent = 'Parabéns! Você encontrou sua carta!';
+                } else if (isRevealing) {
+                    messageDisplay.textContent = 'Revelando sua carta...';
+                } else {
+                    messageDisplay.textContent = `Elimine linhas ou colunas para encontrar sua carta. Cartas restantes: ${remainingCards}`;
+                }
+            } else if (currentPage === 2) {
+                if (selectedColumn !== null) {
+                    messageDisplay.textContent = `Coluna ${selectedColumn + 1} registrada. Clique em "Ver Minha Carta" para continuar.`;
+                } else {
+                    messageDisplay.textContent = 'As cartas da linha que você escolheu estão na DIAGONAL PRINCIPAL. Escolha uma coluna (1-7)';
+                }
+            } else {
+                if (selectedRow !== null) {
+                    messageDisplay.textContent = `Linha ${selectedRow + 1} registrada. As cartas desta linha serão colocadas na DIAGONAL PRINCIPAL. Clique em "Próximo Passo" para continuar.`;
+                } else {
+                    messageDisplay.textContent = 'Observe as cartas e digite a linha (1-7) onde está a carta que você escolheu';
+                }
+            }
+        }
+        
+        // Função para atualizar o botão "Próximo Passo"
+        function updateNextStepButton() {
+            const nextStepButton = document.getElementById('nextStep');
+            
+            // Habilitar o botão apenas se uma LINHA foi selecionada (primeira página)
+            if (currentPage === 1 && selectedRow !== null) {
+                nextStepButton.disabled = false;
+            } else {
+                nextStepButton.disabled = true;
+            }
+        }
+        
+        // Função para atualizar o botão "Ver Minha Carta"
+        function updateViewIntersectionButton() {
+            const viewIntersectionButton = document.getElementById('viewIntersection');
+            const backFromSecondButton = document.getElementById('backFromSecond');
+            
+            // Habilitar o botão apenas se uma COLUNA foi selecionada (segunda página)
+            if (currentPage === 2 && selectedColumn !== null) {
+                viewIntersectionButton.disabled = false;
+                // Mostrar botão "Ver Minha Carta"
+                viewIntersectionButton.style.display = 'block';
+                // Esconder botão "Voltar para Nova Distribuição"
+                backFromSecondButton.style.display = 'none';
+            } else {
+                viewIntersectionButton.disabled = true;
+                // Esconder botão "Ver Minha Carta" inicialmente
+                viewIntersectionButton.style.display = 'none';
+                // Mostrar botão "Voltar para Nova Distribuição" inicialmente
+                backFromSecondButton.style.display = 'block';
+            }
+        }
+        
+        // Função para renderizar a primeira página
+        function renderFirstPage() {
+            const container = document.getElementById('matrixContainer');
+            container.innerHTML = '';
+            
+            for (let row = 0; row < 7; row++) {
+                for (let col = 0; col < 7; col++) {
+                    const card = cardMatrix[row][col];
+                    if (card) {
+                        const cardElement = createCardElement(card, true, false);
+                        container.appendChild(cardElement);
+                    }
+                }
+            }
+        }
+        
+        // Função para PREPARAR a segunda página (chamada quando o usuário clica em "Próximo Passo")
+        function prepareSecondPage() {
+            // Salvar as cartas da linha escolhida
+            originalCardsFromRow = [];
+            if (selectedRow !== null) {
+                for (let col = 0; col < 7; col++) {
+                    originalCardsFromRow.push({...cardMatrix[selectedRow][col]});
+                }
+            }
+            
+            // EMBARALHAR as cartas da linha escolhida entre si ANTES de mostrar para o usuário
+            diagonalCards = shuffleArray([...originalCardsFromRow]);
+        }
+        
+        // Função para criar a matriz da segunda página (com cartas da diagonal já embaralhadas)
+        function createSecondPageMatrix() {
+            // Se diagonalCards ainda não foi preparado, preparar agora
+            if (diagonalCards.length === 0 && selectedRow !== null) {
+                prepareSecondPage();
+            }
+            
+            // Coletar TODAS as cartas exceto as da linha escolhida
+            let otherCards = [];
+            for (let row = 0; row < 7; row++) {
+                // Pular a linha escolhida
+                if (row === selectedRow) continue;
+                
+                for (let col = 0; col < 7; col++) {
+                    otherCards.push({...cardMatrix[row][col]});
+                }
+            }
+            
+            // Embaralhar as outras cartas
+            const shuffledOtherCards = shuffleArray(otherCards);
+            
+            // Criar nova matriz 7x7
+            const newMatrix = Array(7).fill().map(() => Array(7).fill(null));
+            
+            // Colocar as cartas EMBARALHADAS da linha escolhida na DIAGONAL PRINCIPAL (row = col)
+            if (diagonalCards.length > 0) {
+                for (let i = 0; i < 7; i++) {
+                    newMatrix[i][i] = {
+                        ...diagonalCards[i],
+                        row: i,
+                        col: i,
+                        fromSelectedRow: true,
+                        isOnDiagonal: true
+                    };
+                }
+            }
+            
+            // Preencher o resto da matriz com as cartas embaralhadas
+            let otherIndex = 0;
+            for (let row = 0; row < 7; row++) {
+                for (let col = 0; col < 7; col++) {
+                    // Pular diagonal (já preenchida com as cartas da linha escolhida embaralhadas)
+                    if (row === col && selectedRow !== null) continue;
+                    
+                    if (otherIndex < shuffledOtherCards.length) {
+                        newMatrix[row][col] = {
+                            ...shuffledOtherCards[otherIndex],
+                            row: row,
+                            col: col,
+                            fromSelectedRow: false,
+                            isOnDiagonal: false
+                        };
+                        otherIndex++;
+                    }
+                }
+            }
+            
+            return newMatrix;
+        }
+        
+        // Função para renderizar a segunda página
+        function renderSecondPage() {
+            const container = document.getElementById('transposedMatrixContainer');
+            container.innerHTML = '';
+            
+            // Criar matriz da segunda página
+            const secondPageMatrix = createSecondPageMatrix();
+            
+            // Renderizar a matriz
+            for (let row = 0; row < 7; row++) {
+                for (let col = 0; col < 7; col++) {
+                    const card = secondPageMatrix[row][col];
+                    if (card) {
+                        const cardElement = createCardElement(card, true, false);
+                        container.appendChild(cardElement);
+                    }
+                }
+            }
+        }
+        
+        // Função para encontrar a carta de interseção (carta na diagonal principal na coluna escolhida)
+        function findIntersectionCard() {
+            // Na segunda página, as cartas da linha escolhida (EMBARALHADAS) estão na DIAGONAL PRINCIPAL
+            // A interseção é a carta na DIAGONAL PRINCIPAL na coluna escolhida pelo usuário
+            if (selectedColumn !== null) {
+                // Criar a matriz da segunda página
+                const secondPageMatrix = createSecondPageMatrix();
+                
+                // A carta de interseção está na DIAGONAL PRINCIPAL (row = col)
+                // na posição da coluna escolhida pelo usuário
+                const diagonalRow = selectedColumn; // Na diagonal, row = col
+                const diagonalCol = selectedColumn;
+                
+                // Obter a carta na DIAGONAL PRINCIPAL na posição da coluna escolhida
+                intersectionCard = secondPageMatrix[diagonalRow][diagonalCol];
+                
+                // Atualizar displays da terceira página
+                if (intersectionCard) {
+                    document.getElementById('displayRow').textContent = selectedRow + 1;
+                    document.getElementById('displayColumn').textContent = selectedColumn + 1;
+                    document.getElementById('displayColumn2').textContent = selectedColumn + 1;
+                }
+            }
+        }
+        
+        // Função para criar a matriz inicial 4x4 com 16 cartas (incluindo a carta escolhida)
+        function createInitialMatrix() {
+            // Encontrar a carta de interseção primeiro
+            findIntersectionCard();
+            
+            if (!intersectionCard) return null;
+            
+            // Criar um baralho completo
+            const fullDeck = createDeck();
+            
+            // Remover a carta de interseção do baralho
+            const deckWithoutIntersection = fullDeck.filter(card => 
+                card.id !== intersectionCard.id
+            );
+            
+            // Embaralhar o baralho sem a carta de interseção
+            const shuffledDeck = shuffleArray([...deckWithoutIntersection]);
+            
+            // Selecionar 15 cartas aleatórias
+            const otherCards = shuffledDeck.slice(0, 15);
+            
+            // Adicionar a carta de interseção às 15 cartas
+            const allCards = [...otherCards, {...intersectionCard}];
+            
+            // Embaralhar todas as 16 cartas
+            const shuffledAllCards = shuffleArray(allCards);
+            
+            // Criar matriz 4x4
+            const matrix4x4 = Array(4).fill().map(() => Array(4).fill(null));
+            
+            // Preencher a matriz 4x4
+            let index = 0;
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    const card = shuffledAllCards[index];
+                    const isChosenCard = card.id === intersectionCard.id;
+                    matrix4x4[row][col] = {
+                        ...card,
+                        row: row,
+                        col: col,
+                        isChosenCard: isChosenCard
+                    };
+                    
+                    // Guardar a posição da carta escolhida
+                    if (isChosenCard) {
+                        chosenCardPosition = { row, col };
+                    }
+                    
+                    index++;
+                }
+            }
+            
+            return matrix4x4;
+        }
+        
+        // Função para renderizar a matriz dinâmica
+        function renderDynamicMatrix(showFaces = false) {
+            const container = document.getElementById('dynamicMatrixContainer');
+            container.innerHTML = '';
+            
+            // Atualizar CSS grid para a dimensão atual
+            container.style.gridTemplateColumns = `repeat(${currentCols}, 1fr)`;
+            
+            // Atualizar informação da matriz
+            document.getElementById('currentRows').textContent = currentRows;
+            document.getElementById('currentCols').textContent = currentCols;
+            
+            // Atualizar limites dos inputs
+            document.getElementById('maxRowChoice').textContent = currentRows;
+            document.getElementById('maxColChoice').textContent = currentCols;
+            
+            // Renderizar a matriz
+            for (let row = 0; row < currentRows; row++) {
+                for (let col = 0; col < currentCols; col++) {
+                    const card = currentMatrix[row][col];
+                    if (card) {
+                        // Mostrar a face apenas se showFaces for true E for a carta escolhida
+                        const shouldShowFace = showFaces && card.isChosenCard;
+                        const isHighlighted = remainingCards === 1 && card.isChosenCard;
+                        const cardElement = createCardElement(card, shouldShowFace, isHighlighted);
+                        container.appendChild(cardElement);
+                    }
+                }
+            }
+            
+            // Atualizar contador de cartas restantes
+            updateRemainingCards();
+        }
+        
+        // Função para atualizar o contador de cartas restantes
+        function updateRemainingCards() {
+            remainingCards = currentRows * currentCols;
+            document.getElementById('remainingCount').textContent = remainingCards;
+            
+            // Se só restar uma carta, mostrar o botão de revelar
+            if (remainingCards === 1) {
+                showRevealButton();
+            }
+        }
+        
+        // Função para mostrar o botão de revelar a carta
+        function showRevealButton() {
+            document.getElementById('chooseRowButton').disabled = true;
+            document.getElementById('chooseColumnButton').disabled = true;
+            document.getElementById('rowChoiceInput').style.display = 'none';
+            document.getElementById('columnChoiceInput').style.display = 'none';
+            document.getElementById('revealCard').style.display = 'block';
+            document.getElementById('choiceInstruction').textContent = 'Parabéns! Você encontrou sua carta! Clique no botão abaixo para revelá-la.';
+            
+            // Atualizar mensagem
+            updateMessage();
+        }
+        
+        // Função para remover uma linha da matriz e redimensioná-la
+        function removeRow(rowIndex) {
+            // Verificar se a linha contém a carta escolhida
+            let containsChosenCard = false;
+            for (let col = 0; col < currentCols; col++) {
+                if (currentMatrix[rowIndex][col] && currentMatrix[rowIndex][col].isChosenCard) {
+                    containsChosenCard = true;
+                    break;
+                }
+            }
+            
+            // Se a linha contém a carta escolhida, não podemos removê-la
+            if (containsChosenCard) {
+                return { success: false, message: `A linha ${rowIndex + 1} contém sua carta! Escolha outra linha.` };
+            }
+            
+            // Criar uma nova matriz sem a linha removida
+            const newMatrix = [];
+            let newRowIndex = 0;
+            
+            for (let oldRow = 0; oldRow < currentRows; oldRow++) {
+                if (oldRow !== rowIndex) {
+                    newMatrix[newRowIndex] = [];
+                    for (let col = 0; col < currentCols; col++) {
+                        if (currentMatrix[oldRow][col]) {
+                            // Atualizar a posição da carta escolhida se necessário
+                            const card = {...currentMatrix[oldRow][col]};
+                            card.row = newRowIndex;
+                            card.col = col;
+                            
+                            if (card.isChosenCard) {
+                                chosenCardPosition = { row: newRowIndex, col: col };
+                            }
+                            
+                            newMatrix[newRowIndex][col] = card;
+                        }
+                    }
+                    newRowIndex++;
+                }
+            }
+            
+            // Atualizar a matriz atual
+            currentMatrix = newMatrix;
+            currentRows--;
+            
+            // Re-renderizar a matriz (todas as cartas continuam viradas)
+            renderDynamicMatrix(false);
+            
+            return { 
+                success: true, 
+                message: `Linha ${rowIndex + 1} removida! A matriz agora tem ${currentRows} linhas e ${currentCols} colunas.`,
+                removedCount: currentCols
+            };
+        }
+        
+        // Função para remover uma coluna da matriz e redimensioná-la
+        function removeColumn(colIndex) {
+            // Verificar se a coluna contém a carta escolhida
+            let containsChosenCard = false;
+            for (let row = 0; row < currentRows; row++) {
+                if (currentMatrix[row][colIndex] && currentMatrix[row][colIndex].isChosenCard) {
+                    containsChosenCard = true;
+                    break;
+                }
+            }
+            
+            // Se a coluna contém a carta escolhida, não podemos removê-la
+            if (containsChosenCard) {
+                return { success: false, message: `A coluna ${colIndex + 1} contém sua carta! Escolha outra coluna.` };
+            }
+            
+            // Criar uma nova matriz sem a coluna removida
+            const newMatrix = Array(currentRows).fill().map(() => Array(currentCols - 1).fill(null));
+            
+            for (let row = 0; row < currentRows; row++) {
+                let newColIndex = 0;
+                for (let oldCol = 0; oldCol < currentCols; oldCol++) {
+                    if (oldCol !== colIndex) {
+                        if (currentMatrix[row][oldCol]) {
+                            // Atualizar a posição da carta escolhida se necessário
+                            const card = {...currentMatrix[row][oldCol]};
+                            card.row = row;
+                            card.col = newColIndex;
+                            
+                            if (card.isChosenCard) {
+                                chosenCardPosition = { row: row, col: newColIndex };
+                            }
+                            
+                            newMatrix[row][newColIndex] = card;
+                        }
+                        newColIndex++;
+                    }
+                }
+            }
+            
+            // Atualizar a matriz atual
+            currentMatrix = newMatrix;
+            currentCols--;
+            
+            // Re-renderizar a matriz (todas as cartas continuam viradas)
+            renderDynamicMatrix(false);
+            
+            return { 
+                success: true, 
+                message: `Coluna ${colIndex + 1} removida! A matriz agora tem ${currentRows} linhas e ${currentCols} colunas.`,
+                removedCount: currentRows
+            };
+        }
+        
+        // Função para processar a escolha de linha ou coluna
+        function processChoice() {
+            let result;
+            
+            if (choiceType === 'row') {
+                const rowChoiceInput = document.getElementById('rowChoice');
+                const rowChoiceError = document.getElementById('rowChoiceError');
+                
+                // Validar entrada
+                const validation = validateInput(rowChoiceInput.value, 1, currentRows);
+                
+                if (!validation.valid) {
+                    rowChoiceError.textContent = validation.message;
+                    rowChoiceInput.classList.add('input-with-error');
+                    return;
+                }
+                
+                // Processar remoção da linha (subtrair 1 porque arrays começam em 0)
+                const rowIndex = validation.value - 1;
+                result = removeRow(rowIndex);
+                
+                // Limpar erro
+                rowChoiceError.textContent = '';
+                rowChoiceInput.classList.remove('input-with-error');
+                rowChoiceInput.value = '';
+                
+            } else if (choiceType === 'column') {
+                const columnChoiceInput = document.getElementById('columnChoice');
+                const columnChoiceError = document.getElementById('columnChoiceError');
+                
+                // Validar entrada
+                const validation = validateInput(columnChoiceInput.value, 1, currentCols);
+                
+                if (!validation.valid) {
+                    columnChoiceError.textContent = validation.message;
+                    columnChoiceInput.classList.add('input-with-error');
+                    return;
+                }
+                
+                // Processar remoção da coluna (subtrair 1 porque arrays começam em 0)
+                const colIndex = validation.value - 1;
+                result = removeColumn(colIndex);
+                
+                // Limpar erro
+                columnChoiceError.textContent = '';
+                columnChoiceInput.classList.remove('input-with-error');
+                columnChoiceInput.value = '';
+            }
+            
+            // Mostrar resultado
+            if (result) {
+                const removedMessage = document.getElementById('removedMessage');
+                removedMessage.textContent = result.message;
+                document.getElementById('removedInfo').style.display = 'block';
+                
+                // Se a remoção foi bem-sucedida, esconder o input
+                if (result.success) {
+                    document.getElementById('rowChoiceInput').style.display = 'none';
+                    document.getElementById('columnChoiceInput').style.display = 'none';
+                    document.getElementById('chooseRowButton').disabled = false;
+                    document.getElementById('chooseColumnButton').disabled = false;
+                    
+                    // Atualizar mensagem
+                    updateMessage();
+                }
+            }
+        }
+        
+        // Função para revelar a carta escolhida na terceira página
+        function revealChosenCard() {
+            isRevealing = true;
+            updateMessage();
+            
+            // Mostrar a face da carta escolhida na matriz
+            setTimeout(() => {
+                renderDynamicMatrix(true);
+                
+                // Mostrar a carta revelada em grande
+                const revealedContainer = document.getElementById('revealedCardContainer');
+                revealedContainer.style.display = 'flex';
+                
+                const intersectionCardElement = document.getElementById('intersectionCard');
+                intersectionCardElement.innerHTML = '';
+                const bigCardElement = createIntersectionCardElement(intersectionCard);
+                intersectionCardElement.appendChild(bigCardElement);
+                
+                // Desabilitar o botão de revelar
+                document.getElementById('revealCard').disabled = true;
+                
+                isRevealing = false;
+                updateMessage();
+            }, 500);
+        }
+        
+        // Função para processar input de LINHA (primeira página)
+        function processRowInput() {
+            const rowInput = document.getElementById('rowInput');
+            const rowError = document.getElementById('rowError');
+            
+            // Validar entrada
+            const validation = validateInput(rowInput.value, 1, 7);
+            
+            if (!validation.valid) {
+                rowError.textContent = validation.message;
+                rowInput.classList.add('input-with-error');
+                return;
+            }
+            
+            // Salvar linha (subtrair 1 porque arrays começam em 0)
+            selectedRow = validation.value - 1;
+            
+            // Limpar erro
+            rowError.textContent = '';
+            rowInput.classList.remove('input-with-error');
+            
+            // Esconder os botões "Embaralhar Todas" e "Novo Jogo"
+            document.getElementById('shuffle').style.display = 'none';
+            document.getElementById('reset').style.display = 'none';
+            
+            // Atualizar interface
+            updateDisplays();
+            updateMessage();
+            updateNextStepButton();
+            renderFirstPage();
+        }
+        
+        // Função para processar input de COLUNA (segunda página)
+        function processColumnInput() {
+            const columnInput = document.getElementById('columnInput');
+            const columnError = document.getElementById('columnError');
+            
+            // Validar entrada
+            const validation = validateInput(columnInput.value, 1, 7);
+            
+            if (!validation.valid) {
+                columnError.textContent = validation.message;
+                columnInput.classList.add('input-with-error');
+                return;
+            }
+            
+            // Salvar coluna (subtrair 1 porque arrays começam em 0)
+            selectedColumn = validation.value - 1;
+            
+            // Limpar erro
+            columnError.textContent = '';
+            columnInput.classList.remove('input-with-error');
+            
+            // Mostrar botão "Ver Minha Carta" após confirmar coluna
+            updateViewIntersectionButton();
+            
+            // Atualizar interface
+            updateDisplays();
+            updateMessage();
+            renderSecondPage();
+        }
+        
+        // Função para embaralhar todas as cartas (primeira página)
+        function shuffleAllCards() {
+            // Só funciona na primeira página
+            if (currentPage !== 1) return;
+            
+            // Embaralhar todas as cartas
+            const shuffled = shuffleArray([...currentCards]);
+            
+            // Redistribuir na matriz
+            let index = 0;
+            for (let row = 0; row < 7; row++) {
+                for (let col = 0; col < 7; col++) {
+                    cardMatrix[row][col] = {
+                        ...shuffled[index],
+                        row: row,
+                        col: col,
+                        matrix: 'original'
+                    };
+                    index++;
+                }
+            }
+            
+            // Renderizar
+            renderFirstPage();
+        }
+        
+        // Função para navegar entre páginas
+        function goToPage(pageNumber) {
+            const originalView = document.getElementById('originalView');
+            const transposedView = document.getElementById('transposedView');
+            const intersectionView = document.getElementById('intersectionView');
+            
+            const firstPageControls = document.getElementById('firstPageControls');
+            const secondPageControls = document.getElementById('secondPageControls');
+            const thirdPageControls = document.getElementById('thirdPageControls');
+            
+            const firstPageInput = document.getElementById('firstPageInput');
+            const secondPageInput = document.getElementById('secondPageInput');
+            const thirdPageChoice = document.getElementById('thirdPageChoice');
+            
+            // Esconder todas as visualizações
+            originalView.style.display = 'none';
+            transposedView.classList.remove('active');
+            intersectionView.classList.remove('active');
+            
+            // Esconder todos os controles
+            firstPageControls.style.display = 'none';
+            secondPageControls.style.display = 'none';
+            thirdPageControls.style.display = 'none';
+            
+            // Esconder todos os inputs/infos
+            firstPageInput.style.display = 'none';
+            secondPageInput.style.display = 'none';
+            thirdPageChoice.style.display = 'none';
+            
+            // Atualizar estado
+            currentPage = pageNumber;
+            
+            // Mostrar a página correta
+            if (pageNumber === 1) {
+                originalView.style.display = 'flex';
+                firstPageControls.style.display = 'flex';
+                firstPageInput.style.display = 'block';
+                
+                // Mostrar novamente os botões "Embaralhar Todas" e "Novo Jogo" quando voltar à primeira página
+                document.getElementById('shuffle').style.display = 'block';
+                document.getElementById('reset').style.display = 'block';
+            } else if (pageNumber === 2) {
+                // PREPARAR as cartas da diagonal ANTES de mostrar a página
+                prepareSecondPage();
+                
+                transposedView.classList.add('active');
+                secondPageControls.style.display = 'flex';
+                secondPageInput.style.display = 'block';
+                
+                // Configurar visibilidade dos botões na segunda página
+                const viewIntersectionButton = document.getElementById('viewIntersection');
+                const backFromSecondButton = document.getElementById('backFromSecond');
+                
+                // Inicialmente esconder "Ver Minha Carta" e mostrar "Voltar"
+                viewIntersectionButton.style.display = 'none';
+                backFromSecondButton.style.display = 'block';
+                
+                renderSecondPage();
+            } else if (pageNumber === 3) {
+                intersectionView.classList.add('active');
+                thirdPageControls.style.display = 'flex';
+                thirdPageChoice.style.display = 'block';
+                
+                // Criar matriz inicial 4x4
+                currentMatrix = createInitialMatrix();
+                currentRows = 4;
+                currentCols = 4;
+                
+                // Renderizar a matriz dinâmica (todas as cartas viradas)
+                renderDynamicMatrix(false);
+                
+                // Esconder o botão de revelar inicialmente
+                document.getElementById('revealCard').style.display = 'none';
+                document.getElementById('revealCard').disabled = false;
+                
+                // Atualizar mensagem
+                document.getElementById('choiceInstruction').textContent = 'Todas as cartas estão viradas. Escolha uma LINHA ou COLUNA que você acha que NÃO contém sua carta:';
+            }
+            
+            // Atualizar mensagem
+            updateMessage();
+        }
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            // Distribuir cartas inicialmente
+            distributeCards();
+            
+            // Adicionar event listeners
+            // Submit de LINHA (primeira página)
+            document.getElementById('submitRow').addEventListener('click', processRowInput);
+            document.getElementById('rowInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    processRowInput();
+                }
+            });
+            
+            // Submit de COLUNA (segunda página)
+            document.getElementById('submitColumn').addEventListener('click', processColumnInput);
+            document.getElementById('columnInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    processColumnInput();
+                }
+            });
+            
+            // Botões de navegação
+            document.getElementById('nextStep').addEventListener('click', () => goToPage(2));
+            document.getElementById('viewIntersection').addEventListener('click', () => goToPage(3));
+            document.getElementById('backFromSecond').addEventListener('click', distributeCards);
+            document.getElementById('backFromThird').addEventListener('click', distributeCards);
+            
+            // Botões de escolha na terceira página
+            document.getElementById('chooseRowButton').addEventListener('click', () => {
+                choiceType = 'row';
+                document.getElementById('rowChoiceInput').style.display = 'flex';
+                document.getElementById('columnChoiceInput').style.display = 'none';
+                document.getElementById('chooseRowButton').disabled = true;
+                document.getElementById('chooseColumnButton').disabled = false;
+                
+                // Atualizar max do input
+                document.getElementById('rowChoice').max = currentRows;
+            });
+            
+            document.getElementById('chooseColumnButton').addEventListener('click', () => {
+                choiceType = 'column';
+                document.getElementById('columnChoiceInput').style.display = 'flex';
+                document.getElementById('rowChoiceInput').style.display = 'none';
+                document.getElementById('chooseColumnButton').disabled = true;
+                document.getElementById('chooseRowButton').disabled = false;
+                
+                // Atualizar max do input
+                document.getElementById('columnChoice').max = currentCols;
+            });
+            
+            // Submit de escolha de linha ou coluna na terceira página
+            document.getElementById('submitRowChoice').addEventListener('click', processChoice);
+            document.getElementById('rowChoice').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    processChoice();
+                }
+            });
+            
+            document.getElementById('submitColumnChoice').addEventListener('click', processChoice);
+            document.getElementById('columnChoice').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    processChoice();
+                }
+            });
+            
+            // Botão para revelar a carta na terceira página
+            document.getElementById('revealCard').addEventListener('click', revealChosenCard);
+            
+            // Botões de controle
+            document.getElementById('shuffle').addEventListener('click', shuffleAllCards);
+            document.getElementById('reset').addEventListener('click', () => {
+                // Só funciona na primeira página
+                if (currentPage !== 1) return;
+                distributeCards();
+            });
+        });
+    </script>
+</body>
+</html>
