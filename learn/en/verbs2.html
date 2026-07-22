@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Completo: Have, Cold, Might, Gotten, Do, Will, Would</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f4f7fc;
+            color: #1e293b;
+            padding: 20px;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 45px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #0f172a;
+            border-left: 8px solid #3b82f6;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #475569;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            padding-left: 28px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #eff6ff, #ffffff);
+            padding: 8px 0 8px 18px;
+            border-radius: 0 12px 12px 0;
+            border-left: 6px solid #2563eb;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 28px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h3 span {
+            background: #3b82f6;
+            color: white;
+            font-size: 0.8rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        .explicacao {
+            background: #f8fafc;
+            padding: 16px 22px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 18px;
+        }
+
+        ul, ol {
+            padding-left: 28px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fef9c3;
+            color: #854d0e;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .word-highlight {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: #ffffff;
+            border: 1px dashed #94a3b8;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin: 10px 0 16px 0;
+        }
+
+        .example-box strong {
+            color: #1d4ed8;
+        }
+
+        .exercise-section {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 28px 30px;
+            margin-top: 40px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .exercise-section h2 {
+            background: none;
+            border-left: 6px solid #f59e0b;
+            padding-left: 18px;
+            margin-top: 0;
+        }
+
+        .btn-answer {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 15px 0 20px 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-answer:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-answer.oculto {
+            background: #64748b;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-answer.oculto:hover {
+            background: #475569;
+        }
+
+        .answer-box {
+            display: none;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-top: 10px;
+            border: 2px solid #22c55e;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.12);
+        }
+
+        .answer-box.visible {
+            display: block;
+        }
+
+        .answer-box h4 {
+            color: #15803d;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .answer-box h4::before {
+            content: "✅";
+        }
+
+        .correction-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .correction-item:last-child {
+            border-bottom: none;
+        }
+
+        .correction-item strong {
+            color: #b45309;
+        }
+
+        .badge {
+            background: #e2e8f0;
+            color: #334155;
+            font-size: 0.7rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .grid-examples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 18px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .grid-examples {
+                grid-template-columns: 1fr;
+            }
+            .exercise-section {
+                padding: 20px 16px;
+            }
+        }
+
+        footer {
+            margin-top: 50px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 25px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .inline-code {
+            background: #eef2f6;
+            padding: 0 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <h1>📘 Modos, Tempos e Verbais em Ação</h1>
+        <div class="subtitle">
+            Foco nas palavras: <span class="highlight">Have</span>, <span class="highlight">Cold</span>, <span class="highlight">Might</span>, <span class="highlight">Gotten</span>, <span class="highlight">Do</span>, <span class="highlight">Will</span>, <span class="highlight">Would</span> — com dezenas de exemplos e exercícios com correção interativa.
+        </div>
+
+        <!-- ======================== 1. HAVE + GOTTEN ======================== -->
+        <h2>1. HAVE / HAS + GOTTEN</h2>
+        <div class="explicacao">
+            <p><strong>Uso:</strong> Indica ações no passado com relevância no presente (Present Perfect) ou que <em>se tornaram</em> algo. <strong>Gotten</strong> é o particípio passado de <em>get</em> (comum nos EUA). No Reino Unido, usa-se mais <em>got</em>.</p>
+        </div>
+        <ul>
+            <li><span class="word-highlight">I have gotten</span> a terrible cold. <span class="badge">Consequência agora</span></li>
+            <li><span class="word-highlight">She has gotten</span> much better at English. <span class="badge">Tornou-se</span></li>
+            <li><span class="word-highlight">We have gotten</span> all the information we need. <span class="badge">Obtivemos</span></li>
+            <li><span class="word-highlight">Have you gotten</span> the results yet?</li>
+            <li><span class="word-highlight">He has gotten</span> cold feet about the wedding. <span class="badge">Expressão: ficou com medo</span></li>
+            <li>By the time we arrived, they <span class="word-highlight">had already gotten</span> there. <span class="badge">Past Perfect</span></li>
+        </ul>
+
+        <!-- ======================== 2. MIGHT ======================== -->
+        <h2>2. MIGHT (Possibilidade)</h2>
+        <div class="explicacao">
+            <p><strong>Uso:</strong> Possibilidade no presente/futuro (menos certeza que <em>may</em>) ou passado com <strong>might have + gotten</strong>.</p>
+        </div>
+        <ul>
+            <li>It <span class="word-highlight">might</span> get cold tonight, bring a jacket.</li>
+            <li>She <span class="word-highlight">might have gotten</span> lost on the way here.</li>
+            <li>I <span class="word-highlight">might not have gotten</span> the job, but I tried.</li>
+            <li>If you don’t take medicine, your cold <span class="word-highlight">might</span> get worse.</li>
+            <li>They <span class="word-highlight">might</span> do the presentation tomorrow.</li>
+            <li>He <span class="word-highlight">might have gotten</span> a promotion, but he didn't tell anyone.</li>
+        </ul>
+
+        <!-- ======================== 3. WILL ======================== -->
+        <h2>3. WILL (Futuro e Certeza)</h2>
+        <div class="explicacao">
+            <p><strong>Uso:</strong> Futuro certo, promessas, decisões espontâneas e previsões baseadas em opinião.</p>
+        </div>
+        <ul>
+            <li>I <span class="word-highlight">will</span> have a cup of tea for my cold. <span class="badge">Decisão</span></li>
+            <li>It <span class="word-highlight">will</span> be cold tomorrow, wear a coat. <span class="badge">Previsão</span></li>
+            <li>Don't worry, you <span class="word-highlight">will</span> get better soon. <span class="badge">Promessa</span></li>
+            <li><span class="word-highlight">Will</span> you do me a favor? <span class="badge">Pedido</span></li>
+            <li>By next winter, I <span class="word-highlight">will have gotten</span> used to the cold. <span class="badge">Futuro Perfeito</span></li>
+            <li>If you take this syrup, your cough <span class="word-highlight">will</span> go away. <span class="badge">1ª Condicional</span></li>
+        </ul>
+
+        <!-- ======================== 4. WOULD ======================== -->
+        <h2>4. WOULD (Condicional, Hábito e Cortesia)</h2>
+        <div class="explicacao">
+            <p><strong>Uso:</strong> Hipóteses (2ª e 3ª Condicionais), ações repetidas no passado e pedidos educados.</p>
+        </div>
+        <ul>
+            <li>If I had a cold, I <span class="word-highlight">would</span> stay home. <span class="badge">2ª Condicional</span></li>
+            <li>I <span class="word-highlight">would have gotten</span> the vaccine, but I was traveling. <span class="badge">3ª Condicional</span></li>
+            <li><span class="word-highlight">Would</span> you mind if I closed the window? <span class="badge">Pedido educado</span></li>
+            <li>When I was a kid, I <span class="word-highlight">would</span> get a cold every winter. <span class="badge">Hábito passado</span></li>
+            <li>If I were you, I <span class="word-highlight">would</span> do the test again. <span class="badge">Conselho</span></li>
+            <li>She said she <span class="word-highlight">would have gotten</span> here earlier, but the train was late. <span class="badge">Discurso indireto</span></li>
+        </ul>
+
+        <!-- ======================== 5. DO ======================== -->
+        <h2>5. DO (Auxiliar e Verbo Principal)</h2>
+        <div class="explicacao">
+            <p><strong>Uso:</strong> Perguntas, negativas, ênfase e como verbo <em>fazer</em>.</p>
+        </div>
+        <ul>
+            <li><span class="word-highlight">Do</span> you have a cold? <span class="badge">Pergunta</span></li>
+            <li>I <span class="word-highlight">do not</span> (don't) think it will be cold today. <span class="badge">Negação</span></li>
+            <li>I <span class="word-highlight">do</span> want to go, even with a cold. <span class="badge">Ênfase</span></li>
+            <li>What <span class="word-highlight">do</span> you usually <span class="word-highlight">do</span> when you get a cold? <span class="badge">Aux + Verbo</span></li>
+            <li>She doesn't have the keys; she might have gotten them stolen.</li>
+            <li><span class="word-highlight">Did</span> you get the cold from your brother? <span class="badge">Passado</span></li>
+        </ul>
+
+        <!-- ======================== 6. COLD ======================== -->
+        <h2>6. COLD (Adjetivo e Substantivo)</h2>
+        <div class="explicacao">
+            <p><strong>Uso:</strong> Pode significar <em>frio</em> (temperatura) ou <em>resfriado</em> (doença).</p>
+        </div>
+        <ul>
+            <li><strong>Presente:</strong> I have a <span class="word-highlight">cold</span>, so I feel <span class="word-highlight">cold</span> all the time.</li>
+            <li><strong>Passado:</strong> It was so <span class="word-highlight">cold</span> yesterday that I wore two sweaters.</li>
+            <li><strong>Futuro:</strong> It <span class="word-highlight">will</span> be very <span class="word-highlight">cold</span> in New York next week.</li>
+            <li><strong>Condicional:</strong> If it gets <span class="word-highlight">cold</span>, I <span class="word-highlight">would</span> turn on the heater.</li>
+            <li><strong>Hipótese passada:</strong> I <span class="word-highlight">might have gotten</span> sick because of the <span class="word-highlight">cold</span> weather.</li>
+            <li><strong>Com "do":</strong> <span class="word-highlight">Do</span> you feel <span class="word-highlight">cold</span>, or is it just me?</li>
+        </ul>
+
+        <!-- ======================== 7. QUADRO RESUMO (15 FRASES) ======================== -->
+        <h2>7. 🌟 15 Frases Mistas (Leia e identifique os tempos)</h2>
+        <div class="grid-examples">
+            <div class="example-box">1. <strong>Have</strong> you ever <strong>gotten</strong> a really bad <strong>cold</strong> during a vacation?</div>
+            <div class="example-box">2. I <strong>will</strong> probably <strong>have gotten</strong> home by 10 PM.</div>
+            <div class="example-box">3. She <strong>might</strong> not <strong>do</strong> well in the test if she has a <strong>cold</strong>.</div>
+            <div class="example-box">4. If I <strong>had</strong> known it was going to be this <strong>cold</strong>, I <strong>would</strong> have brought a heavier jacket.</div>
+            <div class="example-box">5. They <strong>do</strong> say that chicken soup helps when you <strong>have</strong> a <strong>cold</strong>.</div>
+            <div class="example-box">6. <strong>Would</strong> you like some hot tea for your <strong>cold</strong>?</div>
+            <div class="example-box">7. He <strong>has gotten</strong> into the habit of jogging in the <strong>cold</strong> morning air.</div>
+            <div class="example-box">8. I <strong>don't</strong> think I <strong>will</strong> go out; I <strong>have gotten</strong> worse overnight.</div>
+            <div class="example-box">9. By 2030, we <strong>will have gotten</strong> rid of many viruses, but the common <strong>cold</strong> might persist.</div>
+            <div class="example-box">10. My parents <strong>would</strong> always tell me to cover my head so I wouldn't get a <strong>cold</strong>.</div>
+            <div class="example-box">11. If you <strong>do</strong> take that medicine, your symptoms <strong>might</strong> improve quickly.</div>
+            <div class="example-box">12. She <strong>has gotten</strong> a promotion, but she <strong>will</strong> still work in the <strong>cold</strong> storage room.</div>
+            <div class="example-box">13. We <strong>might have gotten</strong> the wrong address, because the house looks <strong>cold</strong> and empty.</div>
+            <div class="example-box">14. <strong>Will</strong> you <strong>do</strong> me a favor and pass me that blanket? It's freezing.</div>
+            <div class="example-box">15. If I <strong>had</strong> more money, I <strong>would</strong> move to a place where it never gets <strong>cold</strong>.</div>
+        </div>
+
+        <!-- ======================== 8. EXERCÍCIOS ======================== -->
+        <div class="exercise-section">
+            <h2>📝 Exercício 1: Complete com a palavra correta</h2>
+            <p>Palavras disponíveis: <span class="highlight">have, has, might, will, would, do, did, gotten</span></p>
+            <ol>
+                <li>If she ___________ studied harder, she ___________ have passed the exam.</li>
+                <li>I ___________ never ___________ such a terrible cold in my life!</li>
+                <li>___________ you think it ___________ rain tomorrow? I hope not.</li>
+                <li>He ___________ not want to go to the hospital, but he ___________ have to if the fever continues.</li>
+                <li>Where ___________ you ___________ that information? I need it now!</li>
+                <li>If I were you, I ___________ take a week off to recover from that cold.</li>
+                <li>She ___________ have arrived by now, but her flight was canceled.</li>
+            </ol>
+            <button class="btn-answer" onclick="toggleAnswers('answer1')">📌 Mostrar Correções</button>
+            <div id="answer1" class="answer-box">
+                <h4>Correção Comentada</h4>
+                <div class="correction-item">1. <strong>had</strong> / <strong>would</strong> — (3ª Condicional: arrependimento).</div>
+                <div class="correction-item">2. <strong>have</strong> / <strong>gotten</strong> — (Present Perfect: experiência de vida).</div>
+                <div class="correction-item">3. <strong>Do</strong> / <strong>will</strong> — (Pergunta no presente + futuro).</div>
+                <div class="correction-item">4. <strong>does</strong> / <strong>will</strong> — (Negativa no presente + futuro).</div>
+                <div class="correction-item">5. <strong>did</strong> / <strong>get</strong> — (Atenção! Com "did", o verbo volta ao infinitivo: GET).</div>
+                <div class="correction-item">6. <strong>would</strong> — (2ª Condicional: conselho).</div>
+                <div class="correction-item">7. <strong>would</strong> (ou might) — (Ela teria chegado, mas o voo cancelou).</div>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h2>📝 Exercício 2: Múltipla Escolha</h2>
+            <ol>
+                <li>"I'm feeling terrible." - "You ___________ have gotten the flu." <br> a) will &nbsp; b) might &nbsp; c) do &nbsp; d) would</li>
+                <li>If it ___________ so cold yesterday, we ___________ gone to the beach. <br> a) hadn't been / would have &nbsp; b) isn't / will &nbsp; c) wasn't / would &nbsp; d) hasn't been / might</li>
+                <li>He ___________ his homework yet, but he promises he ___________ do it later. <br> a) haven't done / will &nbsp; b) hasn't gotten / do &nbsp; c) hasn't done / will &nbsp; d) didn't do / would</li>
+                <li>When I lived in Canada, I ___________ often get sick during the winter. <br> a) would &nbsp; b) will &nbsp; c) might &nbsp; d) have</li>
+                <li>We ___________ need to bring extra blankets because the hotel ___________ not have heating. <br> a) might / do &nbsp; b) will / might &nbsp; c) would / has &nbsp; d) do / will</li>
+            </ol>
+            <button class="btn-answer" onclick="toggleAnswers('answer2')">📌 Mostrar Correções</button>
+            <div id="answer2" class="answer-box">
+                <h4>Correção Comentada</h4>
+                <div class="correction-item">1. <strong>b) might</strong> — Possibilidade (Talvez tenha pego a gripe).</div>
+                <div class="correction-item">2. <strong>a) hadn't been / would have</strong> — 3ª Condicional.</div>
+                <div class="correction-item">3. <strong>c) hasn't done / will</strong> — Present Perfect negativa + promessa futura.</div>
+                <div class="correction-item">4. <strong>a) would</strong> — Hábito no passado.</div>
+                <div class="correction-item">5. <strong>b) will / might</strong> — Certeza (vamos precisar) + possibilidade (talvez não tenha).</div>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h2>📝 Exercício 3: Reescreva as frases</h2>
+            <ol>
+                <li>Perhaps she caught a cold at the party. (use: <strong>MIGHT HAVE GOTTEN</strong>)</li>
+                <li>I promise to call you when I arrive. (use: <strong>WILL</strong>)</li>
+                <li>He refused to do the exercise because he was tired. (use: <strong>WOULDN'T</strong>)</li>
+                <li>I really think you should take this seriously. (use: <strong>DO</strong> para ênfase)</li>
+                <li>It was possible that the weather turned cold, but I didn't check. (use: <strong>MIGHT HAVE GOTTEN</strong>)</li>
+            </ol>
+            <button class="btn-answer" onclick="toggleAnswers('answer3')">📌 Mostrar Correções</button>
+            <div id="answer3" class="answer-box">
+                <h4>Correção Comentada</h4>
+                <div class="correction-item">1. <strong>She might have gotten a cold at the party.</strong></div>
+                <div class="correction-item">2. <strong>I will call you when I arrive.</strong></div>
+                <div class="correction-item">3. <strong>He wouldn't do the exercise because he was tired.</strong></div>
+                <div class="correction-item">4. <strong>I do think you should take this seriously.</strong></div>
+                <div class="correction-item">5. <strong>The weather might have gotten cold, but I didn't check.</strong></div>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h2>📝 Exercício 4: Corrija os erros</h2>
+            <ol>
+                <li>I have get a cold last week.</li>
+                <li>If I will have a cold, I would stay home.</li>
+                <li>She might got the job, but she decided not to take it.</li>
+                <li>Do you would like some hot soup?</li>
+                <li>He doesn't have got any money.</li>
+            </ol>
+            <button class="btn-answer" onclick="toggleAnswers('answer4')">📌 Mostrar Correções</button>
+            <div id="answer4" class="answer-box">
+                <h4>Correção Comentada</h4>
+                <div class="correction-item">1. <strong>I got a cold last week.</strong> (Passado definido <em>last week</em> exige Simple Past, não Present Perfect).</div>
+                <div class="correction-item">2. <strong>If I have a cold, I will stay home.</strong> (1ª Condicional - real) ou <strong>If I had a cold, I would stay home.</strong> (2ª Condicional - hipótese). Em condicionais, não usamos <em>will</em> na parte do "if".</div>
+                <div class="correction-item">3. <strong>She might have gotten the job, but she decided not to take it.</strong> (Depois de <em>might</em> usamos infinitivo perfeito: <em>have gotten</em>).</div>
+                <div class="correction-item">4. <strong>Would you like some hot soup?</strong> (Não se junta <em>do</em> com <em>would</em> em perguntas. <em>Would</em> já é o auxiliar).</div>
+                <div class="correction-item">5. <strong>He hasn't got any money.</strong> (Britânico) ou <strong>He doesn't have any money.</strong> (Americano/Correto). A estrutura <em>doesn't have got</em> está incorreta.</div>
+            </div>
+        </div>
+
+        <!-- ======================== DICA DE OURO ORIGINAL ======================== -->
+        <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); padding: 24px 28px; border-radius: 20px; margin-top: 40px; border: 2px solid #86efac;">
+            <h3 style="margin-top: 0; color: #166534;">💡 Dica de Ouro: Decore estas 5 frases</h3>
+            <ul style="list-style: none; padding-left: 0; font-weight: 500;">
+                <li style="margin-bottom: 10px;">🔹 <span class="word-highlight">I have gotten</span> a cold.</li>
+                <li style="margin-bottom: 10px;">🔹 <span class="word-highlight">I might have gotten</span> a cold.</li>
+                <li style="margin-bottom: 10px;">🔹 <span class="word-highlight">I will have gotten</span> better by then.</li>
+                <li style="margin-bottom: 10px;">🔹 <span class="word-highlight">I would have gotten</span> worse, but I took medicine.</li>
+                <li style="margin-bottom: 0;">🔹 <span class="word-highlight">Do</span> you think it <span class="word-highlight">will</span> be <span class="word-highlight">cold</span>?</li>
+            </ul>
+        </div>
+
+        <!-- ======================== NOVA SEÇÃO: DICAS ANTI-ERRO (INTEGRADA) ======================== -->
+        <div style="background: linear-gradient(135deg, #fef2f2, #fee2e2); padding: 28px 32px; border-radius: 24px; margin-top: 40px; border: 2px solid #fca5a5; box-shadow: 0 8px 20px rgba(239, 68, 68, 0.08);">
+            <h2 style="border-left-color: #dc2626; color: #991b1b;">🚨 Dicas de Ouro para Não Errar</h2>
+            <p style="color: #7f1d1d; font-weight: 500; margin-bottom: 24px;">Os 6 pecados capitais da gramática com <em>have, cold, might, gotten, do, will, would</em> — e como evitá-los para sempre!</p>
+
+            <!-- Dica 1 -->
+            <div style="background: white; padding: 16px 20px; border-radius: 14px; margin-bottom: 16px; border-left: 6px solid #2563eb;">
+                <h4 style="margin: 0 0 6px 0; color: #1e3a8a;">1️⃣ HAVE GOT x HAVE GOTTEN</h4>
+                <p style="margin: 0;"><strong>❌ Erro:</strong> "I have gotten a car" (para dizer que tem um carro). <br>
+                <strong>✅ Certo:</strong> <span style="background: #dbeafe; padding: 2px 8px; border-radius: 6px;">I have <u>got</u> a car</span> (posse) / <span style="background: #dbeafe; padding: 2px 8px; border-radius: 6px;">I have <u>gotten</u> a car</span> (consegui/comprei). <br>
+                <span style="color: #dc2626; font-weight: 600;">💡 Macete:</span> <u>Tenho</u> = HAVE GOT. <u>Peguei/Me tornei</u> = HAVE GOTTEN.</p>
+            </div>
+
+            <!-- Dica 2 -->
+            <div style="background: white; padding: 16px 20px; border-radius: 14px; margin-bottom: 16px; border-left: 6px solid #16a34a;">
+                <h4 style="margin: 0 0 6px 0; color: #14532d;">2️⃣ NUNCA use WILL com IF</h4>
+                <p style="margin: 0;"><strong>❌ Erro:</strong> "If I <u>will</u> have a cold, I will stay." <br>
+                <strong>✅ Certo:</strong> <span style="background: #dcfce7; padding: 2px 8px; border-radius: 6px;">If I <u>have</u> a cold, I will stay.</span> (Presente + Futuro) <br>
+                <span style="color: #dc2626; font-weight: 600;">💡 Macete:</span> Na parte do <strong>"IF"</strong> o verbo fica no <strong>PRESENTE</strong> (para futuro real) ou no <strong>PASSADO</strong> (para hipótese). Will e Would ficam na OUTRA parte da frase.</p>
+            </div>
+
+            <!-- Dica 3 -->
+            <div style="background: white; padding: 16px 20px; border-radius: 14px; margin-bottom: 16px; border-left: 6px solid #d97706;">
+                <h4 style="margin: 0 0 6px 0; color: #78350f;">3️⃣ MIGHT no passado = MIGHT HAVE GOTTEN</h4>
+                <p style="margin: 0;"><strong>❌ Erro:</strong> "She might <u>got</u> the job." <br>
+                <strong>✅ Certo:</strong> <span style="background: #fef3c7; padding: 2px 8px; border-radius: 6px;">She might <u>have gotten</u> the job.</span> <br>
+                <span style="color: #dc2626; font-weight: 600;">💡 Macete:</span> Decore o pacote: <strong>MIGHT + HAVE + PARTICÍPIO (GOTTEN)</strong>. É um trio inseparável para o passado!</p>
+            </div>
+
+            <!-- Dica 4 -->
+            <div style="background: white; padding: 16px 20px; border-radius: 14px; margin-bottom: 16px; border-left: 6px solid #7c3aed;">
+                <h4 style="margin: 0 0 6px 0; color: #4c1d95;">4️⃣ DO e WOULD não se misturam</h4>
+                <p style="margin: 0;"><strong>❌ Erro:</strong> "Do you would like some tea?" <br>
+                <strong>✅ Certo:</strong> <span style="background: #ede9fe; padding: 2px 8px; border-radius: 6px;">Would you like some tea?</span> (oferecimento) ou <span style="background: #ede9fe; padding: 2px 8px; border-radius: 6px;">Do you like tea?</span> (gosto). <br>
+                <span style="color: #dc2626; font-weight: 600;">💡 Macete:</span> <u>Educado/Hipotético</u> = <strong>WOULD</strong> sozinho. <u>Fato/Presente</u> = <strong>DO</strong> sozinho. Escolha UM!</p>
+            </div>
+
+            <!-- Dica 5 -->
+            <div style="background: white; padding: 16px 20px; border-radius: 14px; margin-bottom: 16px; border-left: 6px solid #dc2626;">
+                <h4 style="margin: 0 0 6px 0; color: #7f1d1d;">5️⃣ CUIDADO com o "COLD" (doença x temperatura)</h4>
+                <p style="margin: 0;"><strong>❌ Erro:</strong> "I have cold" (sem o 'a') ou "I am a cold". <br>
+                <strong>✅ Certo:</strong> <span style="background: #fee2e2; padding: 2px 8px; border-radius: 6px;">I have <u>a</u> cold</span> (doença) / <span style="background: #fee2e2; padding: 2px 8px; border-radius: 6px;">I am cold</span> (sentindo frio). <br>
+                <span style="color: #dc2626; font-weight: 600;">💡 Macete:</span> <u>Resfriado</u> = tem <strong>"A"</strong> (um). <u>Temperatura</u> = sem <strong>"A"</strong>.</p>
+            </div>
+
+            <!-- Dica 6 -->
+            <div style="background: white; padding: 16px 20px; border-radius: 14px; margin-bottom: 16px; border-left: 6px solid #0891b2;">
+                <h4 style="margin: 0 0 6px 0; color: #164e63;">6️⃣ Datas específicas exigem PASSADO SIMPLES (GOT)</h4>
+                <p style="margin: 0;"><strong>❌ Erro:</strong> "I have gotten a cold <u>last week</u>." <br>
+                <strong>✅ Certo:</strong> <span style="background: #cffafe; padding: 2px 8px; border-radius: 6px;">I <u>got</u> a cold last week.</span> (passado definido) <br>
+                <span style="color: #dc2626; font-weight: 600;">💡 Macete:</span> <u>Yesterday, last week, in 2010</u> = <strong>GOT</strong>. <u>Ever, never, yet, already</u> = <strong>HAVE GOTTEN</strong>.</p>
+            </div>
+
+            <!-- Dica Bônus -->
+            <div style="background: #1e293b; padding: 18px 24px; border-radius: 14px; color: white; margin-top: 10px;">
+                <h4 style="margin: 0 0 4px 0; color: #facc15;">🎯 BÔNUS: WOULD para hábitos no passado</h4>
+                <p style="margin: 0; color: #e2e8f0;">Se você quer dizer que <strong>costumava</strong> fazer algo repetidamente no passado, pode usar <strong>WOULD</strong>. Ex: <em>"When I was a kid, I <u>would</u> get a cold every winter."</em> (Mas cuidado: se for um estado, tipo "ser alto", use ONLY "used to").</p>
+            </div>
+        </div>
+
+        <!-- ======================== RODAPÉ ======================== -->
+        <footer>
+            Página criada para estudo intensivo de gramática inglesa. Pratique todos os dias!
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleAnswers(id) {
+            const box = document.getElementById(id);
+            const button = box.previousElementSibling; // pega o botão imediatamente anterior
+
+            if (box.classList.contains('visible')) {
+                box.classList.remove('visible');
+                button.textContent = '📌 Mostrar Correções';
+                button.classList.remove('oculto');
+            } else {
+                box.classList.add('visible');
+                button.textContent = '🙈 Ocultar Correções';
+                button.classList.add('oculto');
+            }
+        }
+    </script>
+
+</body>
+</html>
