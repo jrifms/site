@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📘 Colocação Pronominal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f8f4ff;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #0f172a, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            -webkit-text-fill-color: #64748b;
+            background: none;
+            color: #64748b;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.05rem;
+            border-left: 4px solid #7c3aed;
+            padding-left: 18px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 2px solid #e9edf2;
+            padding-bottom: 14px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #475569;
+            transition: 0.2s;
+        }
+        .nav-tabs button:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .nav-tabs button.active {
+            background: #0f172a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            from {
+                opacity: 0.4;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .theory-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf2;
+            transition: 0.15s;
+        }
+        .theory-card:hover {
+            border-color: #cbd5e1;
+        }
+        .theory-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .theory-card h3 .badge {
+            font-size: 0.7rem;
+            background: #7c3aed;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .theory-card h4 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin: 16px 0 6px;
+        }
+        .theory-card p,
+        .theory-card li {
+            color: #334155;
+        }
+        .theory-card ul,
+        .theory-card ol {
+            padding-left: 24px;
+            margin: 8px 0 12px;
+        }
+        .theory-card li {
+            margin-bottom: 3px;
+        }
+        .highlight-box {
+            background: #ede9fe;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border-left: 5px solid #7c3aed;
+        }
+        .highlight-box strong {
+            color: #5b21b6;
+        }
+        .example {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 8px 0 12px;
+            font-style: italic;
+            border: 1px dashed #94a3b8;
+        }
+        .example::before {
+            content: "📌 ";
+            font-style: normal;
+        }
+        .mnemonic {
+            background: #fef9c3;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #fde047;
+            margin: 10px 0;
+        }
+        .mnemonic strong {
+            color: #854d0e;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 680px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.8rem;
+                flex-wrap: wrap;
+            }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th,
+        td {
+            border: 1px solid #d1d9e6;
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e9edf2;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        tr:nth-child(even) {
+            background: #fafcff;
+        }
+        .exercise-area {
+            margin-top: 12px;
+        }
+        .exercise-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 16px 20px;
+            border-radius: 18px;
+        }
+        .exercise-controls label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .exercise-controls select,
+        .exercise-controls input {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .exercise-controls button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 40px;
+            background: #0f172a;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .exercise-controls button:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+        .exercise-controls .score {
+            margin-left: auto;
+            font-weight: 700;
+            color: #0f172a;
+            background: white;
+            padding: 4px 18px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+        }
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px;
+            border: 1px solid #e9edf2;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .question-box .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+        .question-box .q-text .highlight {
+            background: #fef08a;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 8px;
+        }
+        .options button {
+            padding: 8px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 40px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .options button:hover:not(:disabled) {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+        .options button.selected {
+            border-color: #7c3aed;
+            background: #ede9fe;
+        }
+        .options button.correct {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #14532d;
+        }
+        .options button.wrong {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+        .options button:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+            border: 1px solid #e9edf2;
+            background: #f8fafc;
+        }
+        .feedback.show {
+            display: block;
+        }
+        .feedback.correct {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+        .feedback.wrong {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+        .feedback .explanation {
+            margin-top: 6px;
+            color: #475569;
+        }
+        .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 6px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 30px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .pagination button:hover {
+            background: #f1f5f9;
+        }
+        .pagination button.active-page {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9edf2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 6px 0 16px;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed, #4f46e5);
+            border-radius: 20px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        @media (max-width: 500px) {
+            .question-box {
+                padding: 16px;
+            }
+            .options button {
+                padding: 6px 14px;
+                font-size: 0.85rem;
+            }
+            .exercise-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .exercise-controls .score {
+                margin-left: 0;
+                text-align: center;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9edf2;
+            padding-top: 24px;
+        }
+        .footer-note strong {
+            color: #475569;
+        }
+        .destaque-regra {
+            font-weight: 700;
+            color: #7c3aed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+
+        <header>
+            <h1>
+                📘 Colocação Pronominal
+                <small>Próclise · Ênclise · Mesóclise</small>
+            </h1>
+            <div class="subtitle">
+                Teoria completa, macetes infalíveis e 1.000 exercícios interativos para dominar a posição dos pronomes átonos
+            </div>
+        </header>
+
+        <nav class="nav-tabs" id="navTabs">
+            <button class="active" data-tab="teoria">📖 Teoria</button>
+            <button data-tab="macetes">🧠 Macetes</button>
+            <button data-tab="exercicios">✏️ Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- TAB 1 – TEORIA -->
+        <!-- ============================================================ -->
+        <div class="tab-content active" id="tab-teoria">
+
+            <h2 style="font-size:1.8rem; margin-bottom:16px;">📖 Teoria da Colocação Pronominal</h2>
+
+            <div class="theory-card">
+                <h3>🔹 O que é Colocação Pronominal?</h3>
+                <p>A <strong>colocação pronominal</strong> estuda a posição dos <strong>pronomes oblíquos átonos</strong> (me, te, se, o, a, lhe, nos, vos, os, as, lhes) em relação ao verbo. Em português, eles podem aparecer em três posições:</p>
+                <ul>
+                    <li><strong>Próclise</strong> – antes do verbo.</li>
+                    <li><strong>Ênclise</strong> – depois do verbo.</li>
+                    <li><strong>Mesóclise</strong> – no meio do verbo (entre o radical e a desinência).</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>⏳ Regra de ouro:</strong> A posição correta depende da <strong>presença de palavras atrativas</strong>, do <strong>modo e tempo verbal</strong> e do <strong>contexto da frase</strong>.
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Próclise (pronome antes do verbo)</h3>
+                <p>Ocorre quando há uma <strong>palavra atrativa</strong> que "puxa" o pronome para antes do verbo. Essas palavras são chamadas de <strong>fatores de próclise</strong>.</p>
+
+                <h4>📌 Fatores de próclise (macete <strong>"N A P R I"</strong>):</h4>
+                <ul>
+                    <li><strong>N</strong> – Palavras <strong>negativas</strong>: não, nunca, jamais, nem, ninguém. <em>Ex: Não me diga.</em></li>
+                    <li><strong>A</strong> – <strong>Advérbios</strong> (não só os negativos): já, sempre, talvez, aqui, hoje, ontem. <em>Ex: Sempre te amei.</em></li>
+                    <li><strong>P</strong> – <strong>Pronomes</strong> relativos (que, quem, cujo), indefinidos (tudo, alguém, todos) e interrogativos (quem, qual). <em>Ex: Quem te viu? / Tudo me lembra você.</em></li>
+                    <li><strong>R</strong> – <strong>Conjunções subordinativas</strong> (que, se, embora, porque, quando, logo que). <em>Ex: Embora lhe pareça estranho... / Se me permitir...</em></li>
+                    <li><strong>I</strong> – <strong>Infinitivo com preposição</strong> (ao + verbo, de + verbo, em + verbo, para + verbo). <em>Ex: Ao me ver, sorriu. / É bom para se pensar.</em></li>
+                </ul>
+                <div class="example">
+                    <strong>Exemplos de Próclise:</strong><br />
+                    <em>Não o encontrei.</em> (Negativa)<br />
+                    <em>Já lhe falei sobre isso.</em> (Advérbio)<br />
+                    <em>Que me perdoe.</em> (Conjunção integrante)
+                </div>
+                <div class="highlight-box">
+                    <strong>⚠️ Atenção:</strong> Em frases que começam com palavra atrativa, a próclise é <strong>obrigatória</strong> (exceto em raríssimas exceções literárias).
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Ênclise (pronome depois do verbo)</h3>
+                <p>Ocorre quando <strong>não há palavra atrativa</strong> e o verbo está em algumas formas específicas. É a posição padrão em frases afirmativas.</p>
+
+                <h4>📌 Casos de ênclise (macete <strong>"AII"</strong>):</h4>
+                <ul>
+                    <li><strong>A</strong> – Orações <strong>afirmativas</strong> (sem atrator). <em>Ex: Diga-me a verdade.</em></li>
+                    <li><strong>I</strong> – <strong>Imperativo afirmativo</strong> (ordem positiva). <em>Ex: Chame-me amanhã.</em></li>
+                    <li><strong>I</strong> – <strong>Infinitivo impessoal</strong> (sem preposição atrativa). <em>Ex: É proibido fumar. (mas: É proibido fumar-se? Nesse caso, o "se" é apassivador, mas a colocação segue a regra. Vamos usar: "Fumar é prejudicial" não tem pronome. Melhor: "Vou comprar-lhe um presente." (infinitivo impessoal com pronome)</em> – Na verdade, no infinitivo impessoal, se não houver atrator, a ênclise é usada. <em>Ex: Vou fazer-lhe uma visita.</em></li>
+                </ul>
+                <p>O <strong>gerúndio</strong> também aceita ênclise: <em>Fez tudo, dizendo-lhe a verdade.</em> (mas se houver atrator, vira próclise: "Não lhe dizendo a verdade...").</p>
+                <div class="example">
+                    <strong>Exemplos de Ênclise:</strong><br />
+                    <em>Chame-o agora.</em> (Afirmativa)<br />
+                    <em>Dê-me o livro.</em> (Imperativo afirmativo)<br />
+                    <em>Vou entregar-lhe o pacote.</em> (Infinitivo impessoal)
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Mesóclise (pronome no meio do verbo)</h3>
+                <p>Ocorre com <strong>verbos no futuro do presente</strong> e <strong>futuro do pretérito</strong>, em frases <strong>afirmativas</strong> (sem palavra atrativa). O pronome é intercalado entre o radical e a desinência verbal.</p>
+
+                <h4>📌 Regra da mesóclise:</h4>
+                <ul>
+                    <li><strong>Futuro do presente (cantarei, farei, direi):</strong> <em>Dar-lhe-ei</em> (dar + lhe + ei).</li>
+                    <li><strong>Futuro do pretérito (cantaria, faria, diria):</strong> <em>Dir-lhe-ia</em> (dir + lhe + ia).</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>⚠️ Atenção crucial:</strong> Se houver uma <strong>palavra atrativa</strong> antes do verbo no futuro, a mesóclise <strong>não pode</strong> ser usada – vira <strong>próclise</strong>.<br />
+                    <em>Não lhe darei</em> (e não "não dar-lhe-ei").<br />
+                    <em>Isso me faria bem</em> (e não "isso far-me-ia bem").
+                </div>
+                <div class="example">
+                    <strong>Exemplos de Mesóclise:</strong><br />
+                    <em>Dar-lhe-ei um presente.</em> (Futuro do presente)<br />
+                    <em>Dir-lhe-ia a verdade se pudesse.</em> (Futuro do pretérito)
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Resumo e Comparação</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Colocação</th>
+                                <th>Posição</th>
+                                <th>Quando usar</th>
+                                <th>Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Próclise</strong></td>
+                                <td>Antes do verbo</td>
+                                <td>Com palavras atrativas (N A P R I)</td>
+                                <td><em>Não <strong>me</strong> diga.</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ênclise</strong></td>
+                                <td>Depois do verbo</td>
+                                <td>Sem atratores + afirmativa / Imperativo afirmativo / Infinitivo impessoal</td>
+                                <td><em>Diga-<strong>me</strong>.</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mesóclise</strong></td>
+                                <td>No meio do verbo</td>
+                                <td>Sem atratores + verbos no Futuro do Presente / Futuro do Pretérito</td>
+                                <td><em>Dar-<strong>lhe</strong>-ei.</em></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 2 – MACETES -->
+        <!-- ============================================================ -->
+        <div class="tab-content" id="tab-macetes">
+
+            <h2 style="font-size:1.8rem; margin-bottom:16px;">🧠 Macetes &amp; Mnemônicos</h2>
+
+            <div class="theory-card">
+                <h3>📌 Próclise – "N A P R I"</h3>
+                <div class="mnemonic">
+                    <strong>N</strong>egativas (não, nunca)<br />
+                    <strong>A</strong>dvérbios (já, sempre, talvez)<br />
+                    <strong>P</strong>ronomes (relativos, indefinidos, interrogativos)<br />
+                    <strong>R</strong> (conjunções subordinativas – que, se, embora)<br />
+                    <strong>I</strong>nfinitivo com preposição (ao, de, em, para + verbo)<br />
+                    <span style="display:block; margin-top:8px; background:#ede9fe; padding:4px 12px; border-radius:20px; text-align:center;">
+                        Lembre: <strong>"NA PRI"</strong> – essas palavras "puxam" o pronome para <strong>PRÓ</strong>ximo do verbo (antes dele).
+                    </span>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 Ênclise – "AII"</h3>
+                <div class="mnemonic">
+                    <strong>A</strong>firmativas (sem atrator)<br />
+                    <strong>I</strong>mperativo afirmativo<br />
+                    <strong>I</strong>nfinitivo impessoal (sem preposição atrativa)<br />
+                    <span style="display:block; margin-top:8px; background:#dcfce7; padding:4px 12px; border-radius:20px; text-align:center;">
+                        Lembre: <strong>"AII"</strong> – são os casos em que o pronome fica <strong>depois</strong> (ÊNclise).
+                    </span>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 Mesóclise – "Futuro no meio"</h3>
+                <div class="mnemonic">
+                    <strong>MESÓclise</strong> = pronome no <strong>MEIO</strong> do verbo.<br />
+                    Só acontece no <strong>FUTURO</strong> (do presente ou do pretérito).<br />
+                    <span style="display:block; margin-top:8px; background:#fef3c7; padding:4px 12px; border-radius:20px; text-align:center;">
+                        Lembre: <strong>"Verbo no futuro, pronome no meio"</strong>.
+                    </span>
+                    <span style="display:block; margin-top:4px; color:#b45309;">
+                        ⚠️ Se tiver palavra atrativa, vira <strong>Próclise</strong>! <em>Não lhe darei</em> (e não "não dar-lhe-ei").
+                    </span>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 "O 'Não' é o rei da Próclise"</h3>
+                <div class="mnemonic">
+                    A palavra <strong>"não"</strong> (e todas as negativas) <strong>sempre</strong> atrai o pronome para antes do verbo. Não importa o tempo verbal.<br />
+                    <em>Não te vi.</em> / <em>Não lhe darei.</em> / <em>Não me diga.</em>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 "Dica do 'Que' e do 'Se'"</h3>
+                <div class="mnemonic">
+                    As conjunções <strong>"que"</strong> e <strong>"se"</strong> (e todas as subordinativas) são imãs de próclise.<br />
+                    <em>Espero que <strong>te</strong> encontre.</em> (e não "espero que encontre-te")<br />
+                    <em>Se <strong>me</strong> der tempo, vou.</em> (e não "se der-me tempo")
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 3 – EXERCÍCIOS -->
+        <!-- ============================================================ -->
+        <div class="tab-content" id="tab-exercicios">
+
+            <h2 style="font-size:1.8rem; margin-bottom:8px;">✏️ 1.000 Exercícios Interativos</h2>
+            <p style="color:#475569; margin-bottom:18px;">Pratique a identificação e a aplicação correta da Próclise, Ênclise e Mesóclise.</p>
+
+            <div class="exercise-controls">
+                <label for="qtySelect">Quantos por vez:</label>
+                <select id="qtySelect">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                <button id="newExerciseBtn">🔁 Nova rodada</button>
+                <span class="score" id="scoreDisplay">✅ 0 / 0</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="fill" id="progressFill" style="width:0%;"></div>
+            </div>
+
+            <div id="exerciseContainer" class="exercise-area">
+                <!-- gerado por JS -->
+            </div>
+
+            <div class="pagination" id="paginationContainer">
+                <!-- gerado por JS -->
+            </div>
+
+            <div style="margin-top:24px; text-align:center; color:#94a3b8; font-size:0.9rem;">
+                <span id="totalExercisesLabel">Total de exercícios disponíveis: 1000</span>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            <strong>📘 Domine a Colocação Pronominal</strong> · Teoria · Macetes · 1.000 exercícios com correção automática
+        </div>
+    </div>
+
+    <script>
+        // ======================================================================
+        //   GERADOR DE 1.000 EXERCÍCIOS – COLOCAÇÃO PRONOMINAL
+        // ======================================================================
+
+        (function() {
+            'use strict';
+
+            function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+            function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = randInt(0, i);
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function pickN(arr, n) {
+                const copy = [...arr];
+                shuffle(copy);
+                return copy.slice(0, n);
+            }
+
+            // ---------- BANCOS DE DADOS ----------
+            const PRONOMES = ['me', 'te', 'se', 'o', 'a', 'lhe', 'nos', 'vos', 'os', 'as', 'lhes'];
+            const PRONOMES_MESO = ['lhe', 'lhes', 'me', 'te', 'nos', 'vos']; // mais comuns na mesóclise
+
+            const VERBOS_REG = {
+                'dar': { radical: 'dar', futuro_presente: 'darei', futuro_pret: 'daria' },
+                'fazer': { radical: 'faz', futuro_presente: 'farei', futuro_pret: 'faria' },
+                'dizer': { radical: 'dir', futuro_presente: 'direi', futuro_pret: 'diria' },
+                'ver': { radical: 'ver', futuro_presente: 'verei', futuro_pret: 'veria' },
+                'comprar': { radical: 'comprar', futuro_presente: 'comprarei', futuro_pret: 'compraria' },
+                'vender': { radical: 'vender', futuro_presente: 'venderei', futuro_pret: 'venderia' },
+                'partir': { radical: 'partir', futuro_presente: 'partirei', futuro_pret: 'partiria' },
+                'entregar': { radical: 'entregar', futuro_presente: 'entregarei', futuro_pret: 'entregaria' },
+                'contar': { radical: 'contar', futuro_presente: 'contarei', futuro_pret: 'contaria' },
+                'explicar': { radical: 'explicar', futuro_presente: 'explicarei', futuro_pret: 'explicaria' }
+            };
+
+            const ATRATORES = [
+                { palavra: 'não', tipo: 'Negativa' },
+                { palavra: 'nunca', tipo: 'Negativa' },
+                { palavra: 'jamais', tipo: 'Negativa' },
+                { palavra: 'já', tipo: 'Advérbio' },
+                { palavra: 'sempre', tipo: 'Advérbio' },
+                { palavra: 'talvez', tipo: 'Advérbio' },
+                { palavra: 'que', tipo: 'Conjunção/Relativo' },
+                { palavra: 'quem', tipo: 'Pronome' },
+                { palavra: 'se', tipo: 'Conjunção' },
+                { palavra: 'embora', tipo: 'Conjunção' },
+                { palavra: 'tudo', tipo: 'Pronome Indefinido' },
+                { palavra: 'alguém', tipo: 'Pronome Indefinido' },
+                { palavra: 'todos', tipo: 'Pronome Indefinido' },
+                { palavra: 'ao', tipo: 'Preposição+Infinitivo' },
+                { palavra: 'de', tipo: 'Preposição+Infinitivo' },
+                { palavra: 'em', tipo: 'Preposição+Infinitivo' },
+                { palavra: 'para', tipo: 'Preposição+Infinitivo' }
+            ];
+
+            // ---------- GERAR EXERCÍCIOS ----------
+
+            // 1. Classificar a colocação (Próclise, Ênclise, Mesóclise)
+            function genClassificar() {
+                const tipo = rand(['proclise', 'enclise', 'mesoclise']);
+                let frase, answer, explanation;
+
+                if (tipo === 'proclise') {
+                    const atrator = rand(ATRATORES);
+                    const pronome = rand(PRONOMES);
+                    const verb = rand(['digo', 'falo', 'vejo', 'amo', 'como', 'bebo']);
+                    frase = `${atrator.palavra} ${pronome} ${verb}.`;
+                    answer = 'Próclise';
+                    explanation =
+                        `A palavra "${atrator.palavra}" (${atrator.tipo}) atrai o pronome para antes do verbo, caracterizando a Próclise.`;
+                } else if (tipo === 'enclise') {
+                    const verb = rand(['Diga', 'Faça', 'Veja', 'Coma', 'Beba', 'Vá']);
+                    const pronome = rand(PRONOMES);
+                    frase = `${verb}-${pronome}.`;
+                    answer = 'Ênclise';
+                    explanation =
+                        `Não há palavra atrativa e a frase é afirmativa (ou imperativo afirmativo), portanto o pronome fica depois do verbo (Ênclise).`;
+                } else {
+                    const v = rand(Object.keys(VERBOS_REG));
+                    const dados = VERBOS_REG[v];
+                    const pronome = rand(PRONOMES_MESO);
+                    const tempo = rand(['futuro_presente', 'futuro_pret']);
+                    const forma = dados[tempo];
+                    // Construir a mesóclise: radical + pronome + desinência
+                    // Ex: dar + lhe + ei = dar-lhe-ei
+                    const radical = dados.radical;
+                    let desinencia = '';
+                    if (tempo === 'futuro_presente') {
+                        desinencia = forma.replace(radical, '');
+                    } else {
+                        desinencia = forma.replace(radical, '');
+                    }
+                    // Para verbos irregulares como "fazer" -> farei (radical "fa" ou "faz"? Vamos simplificar)
+                    // Vamos criar uma forma genérica: pegamos o futuro e inserimos o pronome antes da última parte.
+                    // Melhor: usar uma função específica.
+                    // Vamos construir manualmente para os verbos mais comuns.
+                    const mapa = {
+                        'dar': { fut_pres: 'darei', fut_pret: 'daria' },
+                        'fazer': { fut_pres: 'farei', fut_pret: 'faria' },
+                        'dizer': { fut_pres: 'direi', fut_pret: 'diria' },
+                        'ver': { fut_pres: 'verei', fut_pret: 'veria' },
+                        'comprar': { fut_pres: 'comprarei', fut_pret: 'compraria' },
+                        'vender': { fut_pres: 'venderei', fut_pret: 'venderia' }
+                    };
+                    if (v in mapa) {
+                        const formaFut = tempo === 'futuro_presente' ? mapa[v].fut_pres : mapa[v].fut_pret;
+                        // Inserir pronome: pegar a forma e colocar o pronome antes da última sílaba
+                        // Ex: darei -> dar + ei. Inserir "lhe" entre: dar-lhe-ei
+                        // Vamos fazer uma lógica simples: separar radical + desinência
+                        let radical2 = '';
+                        let desinencia2 = '';
+                        if (v === 'dar') { radical2 = 'dar';
+                            desinencia2 = tempo === 'futuro_presente' ? 'ei' : 'ia'; } else if (v === 'fazer') { radical2 =
+                                'far';
+                            desinencia2 = tempo === 'futuro_presente' ? 'ei' : 'ia'; } else if (v === 'dizer') { radical2 =
+                                'dir';
+                            desinencia2 = tempo === 'futuro_presente' ? 'ei' : 'ia'; } else if (v === 'ver') { radical2 =
+                                'ver';
+                            desinencia2 = tempo === 'futuro_presente' ? 'ei' : 'ia'; } else if (v === 'comprar') { radical2 =
+                                'comprar';
+                            desinencia2 = tempo === 'futuro_presente' ? 'ei' : 'ia'; } else { radical2 = 'vend';
+                                desinencia2 = tempo === 'futuro_presente' ? 'erei' : 'eria'; }
+                        // Ajuste para "vender": radical "vend", desinência "erei" -> "venderei"
+                        // Melhor usar um mapeamento direto do radical + desinência.
+                        // Vou usar uma abordagem mais simples: criar a frase com a mesóclise pronta.
+                        const mapaMeso = {
+                            'dar': { fut_pres: `dar-${pronome}-ei`, fut_pret: `dar-${pronome}-ia` },
+                            'fazer': { fut_pres: `far-${pronome}-ei`, fut_pret: `far-${pronome}-ia` },
+                            'dizer': { fut_pres: `dir-${pronome}-ei`, fut_pret: `dir-${pronome}-ia` },
+                            'ver': { fut_pres: `ver-${pronome}-ei`, fut_pret: `ver-${pronome}-ia` },
+                            'comprar': { fut_pres: `comprar-${pronome}-ei`, fut_pret: `comprar-${pronome}-ia` },
+                            'vender': { fut_pres: `vender-${pronome}-ei`, fut_pret: `vender-${pronome}-ia` }
+                        };
+                        if (v in mapaMeso) {
+                            const formaMeso = tempo === 'futuro_presente' ? mapaMeso[v].fut_pres : mapaMeso[v].fut_pret;
+                            frase = `${formaMeso} ${rand(['um presente', 'a verdade', 'isso', 'tudo', 'amanhã'])}.`;
+                            answer = 'Mesóclise';
+                            explanation =
+                                `Verbo no futuro (${tempo === 'futuro_presente' ? 'Futuro do Presente' : 'Futuro do Pretérito'}) sem palavra atrativa, pronome inserido no meio (Mesóclise).`;
+                        } else {
+                            // fallback
+                            frase = `Dar-${pronome}-ei um presente.`;
+                            answer = 'Mesóclise';
+                            explanation = 'Verbo no futuro, pronome no meio (Mesóclise).';
+                        }
+                    } else {
+                        frase = `Dar-${pronome}-ei um presente.`;
+                        answer = 'Mesóclise';
+                        explanation = 'Verbo no futuro, pronome no meio (Mesóclise).';
+                    }
+                }
+
+                const opts = shuffle(['Próclise', 'Ênclise', 'Mesóclise']);
+                return {
+                    question: `Classifique a colocação do pronome destacado:\n\n"${frase}"`,
+                    options: opts,
+                    answer,
+                    explanation,
+                    type: 'classificar'
+                };
+            }
+
+            // 2. Escolher a opção correta (Próclise ou Ênclise)
+            function genEscolher() {
+                const tipo = rand(['proclise', 'enclise']);
+                const pronome = rand(PRONOMES);
+                const verb = rand(['dig', 'fal', 'compr', 'vend', 'entreg', 'explic']);
+                const sufixo = rand(['o', 'a', 'e', 'ou']);
+                let frase, opcoes, answer, explanation;
+
+                // Gerar uma frase com atrator ou sem
+                if (tipo === 'proclise') {
+                    const atrator = rand(ATRATORES);
+                    const forma = verb + (rand([true, false]) ? 'o' : 'e');
+                    frase = `${atrator.palavra} _____ ${forma}.`;
+                    const correta = `${atrator.palavra} ${pronome} ${forma}`;
+                    const errada = `${atrator.palavra} ${forma}-${pronome}`;
+                    opcoes = shuffle([correta, errada, `${atrator.palavra} ${forma} ${pronome}`]);
+                    answer = correta;
+                    explanation =
+                        `A palavra "${atrator.palavra}" atrai o pronome para antes do verbo (Próclise). A forma correta é "${correta}".`;
+                } else {
+                    const forma = verb + 'a';
+                    frase = `_____ ${forma} agora.`;
+                    const correta = `${forma}-${pronome}`;
+                    const errada = `${pronome} ${forma}`;
+                    opcoes = shuffle([correta, errada, `${forma} ${pronome}`]);
+                    answer = correta;
+                    explanation = `Não há palavra atrativa, portanto o pronome fica depois do verbo (Ênclise). A forma correta é "${correta}".`;
+                }
+
+                return {
+                    question: `Escolha a opção correta para a colocação pronominal:\n\n"${frase}"`,
+                    options: opcoes,
+                    answer,
+                    explanation,
+                    type: 'escolher'
+                };
+            }
+
+            // 3. Identificar a palavra atrativa (para Próclise)
+            function genAtrator() {
+                const atrator = rand(ATRATORES);
+                const pronome = rand(PRONOMES);
+                const verb = rand(['disse', 'fez', 'viu', 'quis', 'pôde', 'teve']);
+                const frase = `${atrator.palavra} ${pronome} ${verb}.`;
+                const opts = shuffle([atrator.palavra, 'nenhuma', rand(ATRATORES).palavra, rand(ATRATORES).palavra]);
+                return {
+                    question: `Qual é a palavra que atrai o pronome para antes do verbo (Próclise)?\n\n"${frase}"`,
+                    options: opts,
+                    answer: atrator.palavra,
+                    explanation: `A palavra "${atrator.palavra}" (${atrator.tipo}) é a responsável pela Próclise.`,
+                    type: 'atrator'
+                };
+            }
+
+            // 4. Corrigir a colocação
+            function genCorrigir() {
+                const tipo = rand(['proclise', 'enclise']);
+                let frase_errada, frase_correta, answer, explanation;
+
+                if (tipo === 'proclise') {
+                    const atrator = rand(ATRATORES);
+                    const pronome = rand(PRONOMES);
+                    const verb = rand(['digo', 'falo', 'amo', 'como']);
+                    // Errada: usar ênclise mesmo com atrator
+                    frase_errada = `${atrator.palavra} ${verb}-${pronome}.`;
+                    frase_correta = `${atrator.palavra} ${pronome} ${verb}.`;
+                    answer = frase_correta;
+                    explanation =
+                        `A palavra "${atrator.palavra}" exige Próclise. A correção é: "${frase_correta}".`;
+                } else {
+                    const verb = rand(['Diga', 'Faça', 'Veja', 'Coma']);
+                    const pronome = rand(PRONOMES);
+                    // Errada: usar próclise sem atrator
+                    frase_errada = `${pronome} ${verb}.`;
+                    frase_correta = `${verb}-${pronome}.`;
+                    answer = frase_correta;
+                    explanation =
+                        `Não há palavra atrativa, portanto a colocação correta é Ênclise: "${frase_correta}".`;
+                }
+
+                const opts = shuffle([frase_correta, frase_errada, `${rand(PRONOMES)} ${rand(['digo', 'faz'])}`]);
+                return {
+                    question: `Qual é a forma correta da frase?\n\n"${frase_errada}" (incorreta)`,
+                    options: opts,
+                    answer,
+                    explanation,
+                    type: 'corrigir'
+                };
+            }
+
+            // 5. Mesóclise ou Próclise? (com atrator)
+            function genMesoOuPro() {
+                const pronome = rand(PRONOMES_MESO);
+                const verbo = rand(['dar', 'fazer', 'dizer']);
+                const tempo = rand(['Futuro do Presente', 'Futuro do Pretérito']);
+                const temAtrator = rand([true, false]);
+
+                let frase, answer, options, explanation;
+                let forma = '';
+                let formaMeso = '';
+                const mapa = {
+                    'dar': { pres: 'dar-ei', pret: 'dar-ia' },
+                    'fazer': { pres: 'far-ei', pret: 'far-ia' },
+                    'dizer': { pres: 'dir-ei', pret: 'dir-ia' }
+                };
+                const base = mapa[verbo];
+                const sufixo = tempo === 'Futuro do Presente' ? base.pres : base.pret;
+                // Mesóclise: insere o pronome antes do sufixo
+                const parts = sufixo.split('-');
+                formaMeso = `${parts[0]}-${pronome}-${parts[1]}`;
+                forma = sufixo; // sem pronome
+
+                if (temAtrator) {
+                    const atrator = rand(ATRATORES);
+                    // Correto: Próclise (não pode mesóclise com atrator)
+                    frase = `${atrator.palavra} ${pronome} ${forma}`;
+                    answer = 'Próclise';
+                    options = shuffle(['Próclise', 'Mesóclise', 'Ênclise']);
+                    explanation =
+                        `A palavra "${atrator.palavra}" atrai o pronome, transformando a Mesóclise em Próclise. A forma correta é "${frase}".`;
+                } else {
+                    frase = `${formaMeso} ${rand(['um presente', 'a verdade', 'isso'])}.`;
+                    answer = 'Mesóclise';
+                    options = shuffle(['Mesóclise', 'Próclise', 'Ênclise']);
+                    explanation =
+                        `Verbo no ${tempo} sem palavra atrativa, o pronome deve ficar no meio (Mesóclise): "${formaMeso}".`;
+                }
+
+                return {
+                    question: `Qual a colocação correta para o pronome na frase?\n\n"${frase}"`,
+                    options: options,
+                    answer,
+                    explanation,
+                    type: 'meso_ou_pro'
+                };
+            }
+
+            // ---------- GERAR 1000 EXERCÍCIOS ----------
+            function generateExercises(count = 1000) {
+                const exercises = [];
+                const generators = [
+                    genClassificar,
+                    genEscolher,
+                    genAtrator,
+                    genCorrigir,
+                    genMesoOuPro
+                ];
+
+                for (let i = 0; i < count; i++) {
+                    const gen = rand(generators);
+                    exercises.push(gen());
+                }
+                return exercises;
+            }
+
+            // ---------- ESTADO E RENDERIZAÇÃO ----------
+            let allExercises = [];
+            let currentPage = 0;
+            let pageSize = 10;
+            let answered = {};
+            let userAnswers = {};
+            let score = { correct: 0, total: 0 };
+
+            function renderExercises() {
+                const container = document.getElementById('exerciseContainer');
+                const pagContainer = document.getElementById('paginationContainer');
+                const progressFill = document.getElementById('progressFill');
+                const scoreDisplay = document.getElementById('scoreDisplay');
+
+                if (allExercises.length === 0) {
+                    container.innerHTML =
+                        `<p style="text-align:center; padding:40px; color:#64748b;">🔍 Clique em "Nova rodada" para gerar os exercícios.</p>`;
+                    pagContainer.innerHTML = '';
+                    return;
+                }
+
+                const total = allExercises.length;
+                const totalPages = Math.ceil(total / pageSize);
+                const start = currentPage * pageSize;
+                const end = Math.min(start + pageSize, total);
+                const pageExercises = allExercises.slice(start, end);
+
+                const answeredCount = Object.keys(answered).length;
+                const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+                progressFill.style.width = pct + '%';
+                scoreDisplay.textContent = `✅ ${score.correct} / ${score.total}`;
+
+                let html = '';
+                pageExercises.forEach((ex, idx) => {
+                    const globalIdx = start + idx;
+                    const isAnswered = answered[globalIdx] !== undefined;
+                    const userAns = userAnswers[globalIdx] || '';
+                    const isCorrect = answered[globalIdx] === true;
+                    const isWrong = answered[globalIdx] === false;
+
+                    html += `<div class="question-box" data-idx="${globalIdx}">`;
+                    html += `<div class="q-text">${ex.question.replace(/\n/g, '<br>')}</div>`;
+
+                    html += `<div class="options">`;
+                    ex.options.forEach(opt => {
+                        let cls = '';
+                        let disabled = false;
+                        if (isAnswered) {
+                            disabled = true;
+                            if (opt === ex.answer) cls = 'correct';
+                            if (opt === userAns && opt !== ex.answer) cls = 'wrong';
+                            if (opt === userAns) cls += ' selected';
+                        } else if (opt === userAns) {
+                            cls = 'selected';
+                        }
+                        html +=
+                            `<button class="${cls}" data-global="${globalIdx}" data-opt="${opt}" ${disabled ? 'disabled' : ''}>${opt}</button>`;
+                    });
+                    html += `</div>`;
+
+                    if (isAnswered) {
+                        const fbClass = isCorrect ? 'correct' : 'wrong';
+                        html += `<div class="feedback show ${fbClass}">`;
+                        html += `<div class="explanation">${ex.explanation}</div>`;
+                        html += `</div>`;
+                    } else {
+                        html += `<div class="feedback" id="fb-${globalIdx}"></div>`;
+                    }
+
+                    html += `</div>`;
+                });
+
+                container.innerHTML = html;
+
+                container.querySelectorAll('.options button:not([disabled])').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        const globalIdx = parseInt(this.dataset.global);
+                        const selected = this.dataset.opt;
+                        handleAnswer(globalIdx, selected);
+                    });
+                });
+
+                let pagHtml = '';
+                for (let p = 0; p < totalPages; p++) {
+                    pagHtml +=
+                        `<button class="${p === currentPage ? 'active-page' : ''}" data-page="${p}">${p+1}</button>`;
+                }
+                pagContainer.innerHTML = pagHtml;
+                pagContainer.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (page !== currentPage) {
+                            currentPage = page;
+                            renderExercises();
+                        }
+                    });
+                });
+
+                document.getElementById('totalExercisesLabel').textContent =
+                    `Total de exercícios disponíveis: ${total}`;
+            }
+
+            function handleAnswer(globalIdx, selected) {
+                if (answered[globalIdx] !== undefined) return;
+
+                const ex = allExercises[globalIdx];
+                const isCorrect = selected === ex.answer;
+
+                answered[globalIdx] = isCorrect;
+                userAnswers[globalIdx] = selected;
+                if (isCorrect) score.correct++;
+                score.total++;
+
+                renderExercises();
+
+                const qBox = document.querySelector(`.question-box[data-idx="${globalIdx}"]`);
+                if (qBox) qBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            function newRound() {
+                const qty = parseInt(document.getElementById('qtySelect').value);
+                allExercises = generateExercises(qty);
+                currentPage = 0;
+                answered = {};
+                userAnswers = {};
+                score = { correct: 0, total: 0 };
+                renderExercises();
+            }
+
+            // ---------- INICIALIZAR ----------
+            document.addEventListener('DOMContentLoaded', function() {
+                const navBtns = document.querySelectorAll('#navTabs button');
+                const tabContents = {
+                    teoria: document.getElementById('tab-teoria'),
+                    macetes: document.getElementById('tab-macetes'),
+                    exercicios: document.getElementById('tab-exercicios')
+                };
+
+                navBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const tab = this.dataset.tab;
+                        navBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        Object.keys(tabContents).forEach(key => {
+                            tabContents[key].classList.toggle('active', key === tab);
+                        });
+                    });
+                });
+
+                document.getElementById('newExerciseBtn').addEventListener('click', newRound);
+                document.getElementById('qtySelect').addEventListener('change', function() {
+                    if (allExercises.length > 0) newRound();
+                });
+
+                setTimeout(() => { newRound(); }, 100);
+            });
+
+        })();
+    </script>
+
+</body>
+</html>i
