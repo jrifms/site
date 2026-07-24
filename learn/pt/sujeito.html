@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📘 Gramática: Reduzidas, Absolutas & Sujeito</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #0f172a, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            -webkit-text-fill-color: #64748b;
+            background: none;
+            color: #64748b;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.05rem;
+            border-left: 4px solid #8b5cf6;
+            padding-left: 18px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 2px solid #e9edf2;
+            padding-bottom: 14px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #475569;
+            transition: 0.2s;
+        }
+        .nav-tabs button:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .nav-tabs button.active {
+            background: #0f172a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0.4; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .theory-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf2;
+            transition: 0.15s;
+        }
+        .theory-card:hover {
+            border-color: #cbd5e1;
+        }
+        .theory-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .theory-card h3 .badge {
+            font-size: 0.7rem;
+            background: #8b5cf6;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .theory-card h4 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin: 16px 0 6px;
+        }
+        .theory-card p, .theory-card li {
+            color: #334155;
+        }
+        .theory-card ul, .theory-card ol {
+            padding-left: 24px;
+            margin: 8px 0 12px;
+        }
+        .theory-card li {
+            margin-bottom: 3px;
+        }
+        .highlight-box {
+            background: #ede9fe;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border-left: 5px solid #7c3aed;
+        }
+        .highlight-box strong {
+            color: #5b21b6;
+        }
+        .example {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 8px 0 12px;
+            font-style: italic;
+            border: 1px dashed #94a3b8;
+        }
+        .example::before {
+            content: "📌 ";
+            font-style: normal;
+        }
+        .mnemonic {
+            background: #fef9c3;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #fde047;
+            margin: 10px 0;
+        }
+        .mnemonic strong {
+            color: #854d0e;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 680px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .container { padding: 16px; }
+            h1 { font-size: 1.8rem; flex-wrap: wrap; }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d1d9e6;
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e9edf2;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        /* ===== EXERCÍCIOS ===== */
+        .exercise-area { margin-top: 12px; }
+        .exercise-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 16px 20px;
+            border-radius: 18px;
+        }
+        .exercise-controls label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .exercise-controls select, .exercise-controls input {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .exercise-controls button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 40px;
+            background: #0f172a;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .exercise-controls button:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+        .exercise-controls .score {
+            margin-left: auto;
+            font-weight: 700;
+            color: #0f172a;
+            background: white;
+            padding: 4px 18px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+        }
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px;
+            border: 1px solid #e9edf2;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .question-box .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+        .question-box .q-text .highlight {
+            background: #fef08a;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 8px;
+        }
+        .options button {
+            padding: 8px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 40px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .options button:hover:not(:disabled) {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+        .options button.selected {
+            border-color: #7c3aed;
+            background: #ede9fe;
+        }
+        .options button.correct {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #14532d;
+        }
+        .options button.wrong {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+        .options button:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .feedback.show { display: block; }
+        .feedback.correct {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #14532d;
+        }
+        .feedback.wrong {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #7f1d1d;
+        }
+        .feedback .explanation {
+            margin-top: 6px;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+        .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 6px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 30px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .pagination button:hover {
+            background: #f1f5f9;
+        }
+        .pagination button.active-page {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9edf2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 6px 0 16px;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+            border-radius: 20px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        @media (max-width: 500px) {
+            .question-box { padding: 16px; }
+            .options button { padding: 6px 14px; font-size: 0.85rem; }
+            .exercise-controls { flex-direction: column; align-items: stretch; }
+            .exercise-controls .score { margin-left: 0; text-align: center; }
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9edf2;
+            padding-top: 24px;
+        }
+        .footer-note strong { color: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+    <header>
+        <h1>
+            📘 Gramática Avançada
+            <small>Reduzidas · Absolutas · Sujeito</small>
+        </h1>
+        <div class="subtitle">
+            Teoria completa, macetes infalíveis e 1.000 exercícios interativos
+        </div>
+    </header>
+
+    <nav class="nav-tabs" id="navTabs">
+        <button class="active" data-tab="teoria">📖 Teoria</button>
+        <button data-tab="macetes">🧠 Macetes</button>
+        <button data-tab="exercicios">✏️ Exercícios</button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1 – TEORIA -->
+    <!-- ============================================================ -->
+    <div class="tab-content active" id="tab-teoria">
+
+        <h2 style="font-size:1.8rem; margin-bottom:16px;">📖 Teoria Completa</h2>
+
+        <!-- SUJEITO -->
+        <div class="theory-card">
+            <h3>🔹 Sujeito: Simples, Composto, Oculto e Indeterminado</h3>
+            <p>O sujeito é o termo com o qual o verbo concorda. Classifica‑se em quatro tipos:</p>
+
+            <h4>📌 Sujeito Simples</h4>
+            <p>Possui <strong>apenas um núcleo</strong> (substantivo, pronome, etc.).</p>
+            <div class="example"><em>O menino</em> correu muito.</div>
+
+            <h4>📌 Sujeito Composto</h4>
+            <p>Possui <strong>dois ou mais núcleos</strong>.</p>
+            <div class="example"><em>O menino e a menina</em> correram.</div>
+
+            <h4>📌 Sujeito Oculto (Elíptico ou Desinencial)</h4>
+            <p>Não está explícito, mas é <strong>identificado pela desinência verbal</strong> ou pelo contexto. Pode ser de qualquer pessoa (<strong>eu, tu, ele, nós, vós, eles</strong>).</p>
+            <div class="example"><em>Corremos</em> pela praia. → sujeito oculto: <strong>nós</strong> (desinência -mos).</div>
+            <div class="example"><em>Entraram</em> na sala. → se o contexto já mencionou <em>os alunos</em>, o sujeito é oculto <strong>eles</strong>.</div>
+
+            <h4>📌 Sujeito Indeterminado</h4>
+            <p>Quando <strong>não se sabe ou não se quer</strong> identificar o agente. Ocorre de duas formas:</p>
+            <ul>
+                <li><strong>Verbo na 3ª pessoa do plural</strong> (sem referente claro): <em>Falaram</em> mal de você. → quem falou? Indeterminado.</li>
+                <li><strong>Verbo na 3ª pessoa do singular + pronome "se"</strong> (índice de indeterminação – IIS): <em>Precisa‑se</em> de funcionários. / <em>Vive‑se</em> bem aqui.</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>⚠️ Atenção à diferença:</strong> Se o verbo for <strong>transitivo direto</strong> e vier com "se", o sujeito é <strong>simples</strong> (partícula apassivadora). Ex: <em>Vendem‑se</em> casas. → sujeito: <strong>casas</strong> (simples).<br />
+                Já se o verbo for intransitivo, transitivo indireto ou de ligação, o "se" é índice de indeterminação e a oração fica sem sujeito determinado.
+            </div>
+            <div class="highlight-box" style="border-left-color:#dc2626; background:#fee2e2;">
+                <strong>📌 Importante:</strong> A 3ª pessoa do plural <strong>só é indeterminada</strong> quando não há referente no contexto. Se houver referente, o sujeito é <strong>oculto</strong>. Ex: <em>Os alunos chegaram. <strong>Entraram</strong> na sala.</em> → "Entraram" tem sujeito oculto <strong>eles</strong> (os alunos).
+            </div>
+        </div>
+
+        <!-- ORAÇÕES REDUZIDAS -->
+        <div class="theory-card">
+            <h3>🔸 Orações Reduzidas</h3>
+            <p>Verbo em <strong>forma nominal</strong> (infinitivo, gerúndio ou particípio) e sem conjunção. Equivalem a orações desenvolvidas.</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Tipo</th><th>Forma nominal</th><th>Exemplo</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Substantiva</strong></td><td>Infinitivo</td><td><em>É importante <strong>estudar</strong>.</em></td></tr>
+                        <tr><td><strong>Adjetiva</strong></td><td>Infinitivo, gerúndio, particípio</td><td><em>Tenho um livro <strong>para ler</strong>.</em></td></tr>
+                        <tr><td><strong>Adverbial</strong></td><td>Infinitivo (com prep.), gerúndio, particípio</td><td><em><strong>Ao chegar</strong>, avise‑me.</em></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ORAÇÕES ABSOLUTAS -->
+        <div class="theory-card">
+            <h3>🔸 Orações Absolutas</h3>
+            <p>Orações <strong>sem sujeito</strong>, com verbos impessoais ou na 3ª pessoa do singular sem referente.</p>
+            <ul>
+                <li><strong>Fenômenos naturais:</strong> <em>Choveu</em> muito.</li>
+                <li><strong>Haver (existir):</strong> <em>Há</em> pessoas.</li>
+                <li><strong>Fazer (tempo):</strong> <em>Faz</em> dois anos.</li>
+                <li><strong>Ser (hora/data):</strong> <em>É</em> tarde.</li>
+                <li><strong>Infinitivo impessoal:</strong> <em>É proibido fumar</em>.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2 – MACETES -->
+    <!-- ============================================================ -->
+    <div class="tab-content" id="tab-macetes">
+
+        <h2 style="font-size:1.8rem; margin-bottom:16px;">🧠 Macetes &amp; Mnemônicos</h2>
+
+        <div class="theory-card">
+            <h3>📌 Sujeito – "S, C, O, I"</h3>
+            <div class="mnemonic">
+                <strong>S</strong>imples (1 núcleo) · <strong>C</strong>omposto (+1 núcleo) · <strong>O</strong>culto (desinência) · <strong>I</strong>ndeterminado (3º plural sem referente ou 3º sing + SE)<br />
+                → Decore: <strong>"SCOI"</strong> (soa como "escolhi").
+            </div>
+            <div class="mnemonic" style="margin-top:10px;">
+                <strong>Oculto vs Indeterminado:</strong><br />
+                ✓ Se a desinência verbal permite encaixar um pronome (eu, tu, ele, nós, vós, eles) <strong>e há referente no contexto</strong> → <strong>Oculto</strong>.<br />
+                ✓ Se não há referente possível e o verbo está na 3ª plural (sem referência) ou 3ª sing + SE (IIS) → <strong>Indeterminado</strong>.
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 Reduzidas – "INF, GER, PAR"</h3>
+            <div class="mnemonic">
+                <strong>INF</strong>initivo · <strong>GER</strong>úndio · <strong>PAR</strong>ticípio → reduzida!
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 Absolutas – "F H F S"</h3>
+            <div class="mnemonic">
+                <strong>F</strong>enômenos · <strong>H</strong>aver · <strong>F</strong>azer · <strong>S</strong>er
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3 – EXERCÍCIOS -->
+    <!-- ============================================================ -->
+    <div class="tab-content" id="tab-exercicios">
+
+        <h2 style="font-size:1.8rem; margin-bottom:8px;">✏️ 1.000 Exercícios Interativos</h2>
+        <p style="color:#475569; margin-bottom:18px;">Pratique identificação, classificação e transformação de orações reduzidas, absolutas e tipos de sujeito.</p>
+
+        <div class="exercise-controls">
+            <label for="qtySelect">Quantos por vez:</label>
+            <select id="qtySelect">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            <button id="newExerciseBtn">🔁 Nova rodada</button>
+            <span class="score" id="scoreDisplay">✅ 0 / 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="fill" id="progressFill" style="width:0%;"></div>
+        </div>
+
+        <div id="exerciseContainer" class="exercise-area">
+            <!-- gerado por JS -->
+        </div>
+
+        <div class="pagination" id="paginationContainer">
+            <!-- gerado por JS -->
+        </div>
+
+        <div style="margin-top:24px; text-align:center; color:#94a3b8; font-size:0.9rem;">
+            <span id="totalExercisesLabel">Total de exercícios disponíveis: 1000</span>
+        </div>
+
+    </div>
+
+    <div class="footer-note">
+        <strong>📚 Domine a gramática</strong> · Reduzidas · Absolutas · Sujeito
+    </div>
+</div>
+
+<script>
+    // ======================================================================
+    //   GERADOR DE 1.000 EXERCÍCIOS – CORRIGIDO (SUJEITO OCULTO)
+    // ======================================================================
+
+    (function() {
+        'use strict';
+
+        function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = randInt(0, i);
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+        function pickN(arr, n) {
+            const copy = [...arr];
+            shuffle(copy);
+            return copy.slice(0, n);
+        }
+
+        // ---------- BANCOS DE DADOS ----------
+        const SUJEITOS_SIMPLES = ['O menino', 'A menina', 'O professor', 'A professora', 'João', 'Maria', 'O time', 'A equipe', 'Meu pai', 'Minha mãe'];
+        const VERBOS = ['correu', 'estudou', 'trabalhou', 'viajou', 'cantou', 'dançou', 'escreveu', 'leu', 'cozinhou', 'desenhou'];
+        const VERBOS_PLURAL = ['correram', 'estudaram', 'trabalharam', 'viajaram', 'cantaram', 'dançaram', 'escreveram', 'leram', 'cozinharam', 'desenharam'];
+        const VERBOS_3PL = ['Falaram', 'Disseram', 'Pensaram', 'Acreditaram', 'Contaram', 'Comentaram'];
+        const VERBOS_IIS = ['Precisa-se', 'Vive-se', 'Trabalha-se', 'Estuda-se', 'Viaja-se', 'Dança-se', 'Confia-se', 'Necessita-se'];
+        const COMPLEMENTOS = ['muito', 'bem', 'rápido', 'ontem', 'na escola', 'feliz', 'com entusiasmo', 'todos os dias', 'sem parar'];
+        const OBJETOS = ['o livro', 'a música', 'o poema', 'o trabalho', 'a prova', 'o concurso', 'a viagem', 'o jantar', 'o filme', 'a arte'];
+        const LOCAIS = ['na escola', 'em casa', 'no trabalho', 'no parque', 'na biblioteca', 'no cinema', 'no teatro', 'na praia', 'na montanha'];
+        const TEMPOS = ['hoje', 'ontem', 'amanhã', 'agora', 'sempre', 'nunca', 'às vezes', 'já', 'ainda'];
+        const ADJETIVOS = ['bom', 'ótimo', 'difícil', 'fácil', 'interessante', 'chato', 'divertido', 'cansativo', 'emocionante', 'triste', 'alegre'];
+
+        // ---------- GERADORES (REDUZIDAS / ABSOLUTAS) ----------
+
+        function genReduzidaTipo() {
+            const forma = rand(['infinitivo', 'gerundio', 'participio']);
+            let frase, answer, explanation, options;
+            const suj = rand(SUJEITOS_SIMPLES);
+            const verb = rand(VERBOS);
+            const obj = rand(OBJETOS);
+            const suj2 = rand(SUJEITOS_SIMPLES);
+            const verb2 = rand(VERBOS);
+            const obj2 = rand(OBJETOS);
+            const adj = rand(ADJETIVOS);
+            const local = rand(LOCAIS);
+            const tempo = rand(TEMPOS);
+
+            if (forma === 'infinitivo') {
+                const subTipo = rand(['substantiva', 'adjetiva', 'adverbial']);
+                if (subTipo === 'substantiva') {
+                    frase = `É importante ${verb} ${obj}.`;
+                    answer = 'Substantiva';
+                    explanation = 'A oração reduzida de infinitivo exerce função de sujeito (substantiva).';
+                } else if (subTipo === 'adjetiva') {
+                    frase = `Tenho um ${rand(OBJETOS)} para ${verb}.`;
+                    answer = 'Adjetiva';
+                    explanation = 'Equivale a uma adjetiva restritiva.';
+                } else {
+                    frase = `Ao ${verb} ${obj}, ${suj} ${verb2} ${obj2}.`;
+                    answer = 'Adverbial';
+                    explanation = 'Infinitivo com preposição "ao" equivale a uma adverbial temporal.';
+                }
+                options = shuffle(['Substantiva', 'Adjetiva', 'Adverbial']);
+            } else if (forma === 'gerundio') {
+                const subTipo = rand(['adverbial', 'adjetiva']);
+                if (subTipo === 'adverbial') {
+                    frase = `${suj} saiu ${verb} ${obj}.`;
+                    answer = 'Adverbial';
+                    explanation = 'Gerúndio expressa circunstância – adverbial.';
+                } else {
+                    frase = `Vi ${suj2} ${verb} ${obj} ${local}.`;
+                    answer = 'Adjetiva';
+                    explanation = 'Gerúndio equivale a uma adjetiva (vi o menino que brincava).';
+                }
+                options = shuffle(['Adjetiva', 'Adverbial']);
+            } else {
+                const subTipo = rand(['adjetiva', 'adverbial']);
+                if (subTipo === 'adjetiva') {
+                    const p = rand(['feito', 'escrito', 'cantado', 'dançado', 'comido', 'bebido']);
+                    frase = `O trabalho ${p} ficou ${adj}.`;
+                    answer = 'Adjetiva';
+                    explanation = 'Particípio equivale a uma adjetiva (o trabalho que foi feito).';
+                } else {
+                    const p = rand(['terminado', 'chegado', 'partido', 'acabado']);
+                    frase = `${p} o ${rand(OBJETOS)}, ${suj} foi embora.`;
+                    answer = 'Adverbial';
+                    explanation = 'Particípio equivale a uma adverbial temporal (depois que terminou).';
+                }
+                options = shuffle(['Adjetiva', 'Adverbial']);
+            }
+            if (!options.includes(answer)) { options[0] = answer; shuffle(options); }
+            return { question: `Identifique o tipo da oração reduzida:\n\n"${frase}"`, options, answer, explanation, type: 'red-tipo' };
+        }
+
+        function genTransformar() {
+            const suj = rand(SUJEITOS_SIMPLES);
+            const verb = rand(VERBOS);
+            const obj = rand(OBJETOS);
+            const suj2 = rand(SUJEITOS_SIMPLES);
+            const verb2 = rand(VERBOS);
+            const obj2 = rand(OBJETOS);
+            const tipo = rand(['temporal', 'causal', 'condicional', 'final', 'concessiva']);
+            let conj, fraseReduzida, fraseDesenvolvida, answer, explanation;
+            switch (tipo) {
+                case 'temporal':
+                    conj = rand(['quando', 'enquanto', 'logo que', 'assim que']);
+                    fraseReduzida = `Ao ${verb} ${obj}, ${suj} ${verb2} ${obj2}.`;
+                    fraseDesenvolvida = `${conj} ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                    break;
+                case 'causal':
+                    conj = rand(['porque', 'pois', 'visto que', 'já que']);
+                    fraseReduzida = `Por ${verb} ${obj}, ${suj} ${verb2} ${obj2}.`;
+                    fraseDesenvolvida = `${conj} ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                    break;
+                case 'condicional':
+                    conj = rand(['se', 'caso', 'contanto que']);
+                    fraseReduzida = `${verb} ${obj}, ${suj} ${verb2} ${obj2}.`;
+                    fraseDesenvolvida = `${conj} ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                    break;
+                case 'final':
+                    conj = rand(['para que', 'a fim de que']);
+                    fraseReduzida = `${suj} ${verb2} ${obj2} para ${verb} ${obj}.`;
+                    fraseDesenvolvida = `${suj} ${verb2} ${obj2} ${conj} ${suj2} ${verb} ${obj}.`;
+                    break;
+                case 'concessiva':
+                    conj = rand(['embora', 'ainda que', 'mesmo que']);
+                    fraseReduzida = `Mesmo ${verb} ${obj}, ${suj} ${verb2} ${obj2}.`;
+                    fraseDesenvolvida = `${conj} ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                    break;
+            }
+            const allConjs = ['quando', 'enquanto', 'logo que', 'assim que', 'porque', 'pois', 'visto que', 'já que',
+                'se', 'caso', 'contanto que', 'para que', 'a fim de que', 'embora', 'ainda que', 'mesmo que'
+            ];
+            const wrongs = pickN(allConjs.filter(c => c !== conj), 3);
+            const options = shuffle([conj, ...wrongs]);
+            answer = conj;
+            explanation = `A conjunção correta é "${conj}", que expressa ${tipo}.`;
+            return {
+                question: `Qual conjunção substitui a forma nominal para transformar a reduzida em desenvolvida?\n\nReduzida: "${fraseReduzida}"\nDesenvolvida: "${fraseDesenvolvida.replace(conj, '_____')}"`,
+                options,
+                answer,
+                explanation,
+                type: 'transformar'
+            };
+        }
+
+        function genReduzidaOuDesenv() {
+            const tipo = rand(['reduzida', 'desenvolvida']);
+            let frase, answer, explanation, options;
+            const suj = rand(SUJEITOS_SIMPLES);
+            const verb = rand(VERBOS);
+            const obj = rand(OBJETOS);
+            const suj2 = rand(SUJEITOS_SIMPLES);
+            const verb2 = rand(VERBOS);
+            const obj2 = rand(OBJETOS);
+            const conj = rand(['quando', 'porque', 'se', 'embora', 'para que']);
+            if (tipo === 'reduzida') {
+                frase = `Ao ${verb} ${obj}, ${suj} ${verb2} ${obj2}.`;
+                answer = 'Reduzida';
+                explanation = 'Está no infinitivo com preposição, sem conjunção – reduzida.';
+            } else {
+                frase = `${conj} ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                answer = 'Desenvolvida';
+                explanation = 'É introduzida por conjunção subordinativa – desenvolvida.';
+            }
+            options = shuffle(['Reduzida', 'Desenvolvida']);
+            return { question: `A oração é reduzida ou desenvolvida?\n\n"${frase}"`, options, answer, explanation, type: 'red-desenv' };
+        }
+
+        function genAbsoluta() {
+            const tipos = ['fenômeno', 'haver', 'fazer', 'ser', 'infinitivo impessoal'];
+            const tipo = rand(tipos);
+            let frase, answer, explanation, options;
+            switch (tipo) {
+                case 'fenômeno':
+                    frase = rand(['Choveu muito ontem.', 'Trovejou durante a noite.', 'Nevou na serra.']);
+                    answer = 'Absoluta (fenômeno)';
+                    explanation = 'Verbo de fenômeno natural, sem sujeito.';
+                    break;
+                case 'haver':
+                    frase = `Há ${randInt(1,10)} ${rand(OBJETOS)} na mesa.`;
+                    answer = 'Absoluta (haver)';
+                    explanation = 'Verbo "haver" no sentido de existir.';
+                    break;
+                case 'fazer':
+                    frase = `Faz ${randInt(1,10)} anos que não o vejo.`;
+                    answer = 'Absoluta (fazer)';
+                    explanation = 'Verbo "fazer" indicando tempo.';
+                    break;
+                case 'ser':
+                    frase = rand(['É tarde.', 'São três horas.', 'É longe daqui.']);
+                    answer = 'Absoluta (ser)';
+                    explanation = 'Verbo "ser" indicando hora ou distância.';
+                    break;
+                case 'infinitivo impessoal':
+                    frase = `É proibido ${rand(VERBOS)} ${rand(OBJETOS)}.`;
+                    answer = 'Absoluta (infinitivo)';
+                    explanation = 'Infinitivo impessoal sem sujeito.';
+                    break;
+            }
+            const allOptions = ['Absoluta (fenômeno)', 'Absoluta (haver)', 'Absoluta (fazer)', 'Absoluta (ser)',
+                'Absoluta (infinitivo)', 'Não é absoluta'
+            ];
+            const wrongs = pickN(allOptions.filter(o => o !== answer), 4);
+            options = shuffle([answer, ...wrongs]);
+            return { question: `A frase contém uma oração absoluta? Se sim, qual tipo?\n\n"${frase}"`, options, answer, explanation, type: 'absoluta' };
+        }
+
+        function genFuncaoReduzida() {
+            const funcoes = ['sujeito', 'objeto direto', 'objeto indireto', 'complemento nominal', 'adjunto adverbial', 'adjunto adnominal'];
+            const func = rand(funcoes);
+            let frase, answer, explanation, options;
+            const suj = rand(SUJEITOS_SIMPLES);
+            const verb = rand(VERBOS);
+            const obj = rand(OBJETOS);
+            const suj2 = rand(SUJEITOS_SIMPLES);
+            const verb2 = rand(VERBOS);
+            const obj2 = rand(OBJETOS);
+            switch (func) {
+                case 'sujeito':
+                    frase = `É importante ${verb} ${obj}.`;
+                    answer = 'Sujeito';
+                    explanation = 'A reduzida é sujeito do verbo "é".';
+                    break;
+                case 'objeto direto':
+                    frase = `Desejo ${verb} ${obj}.`;
+                    answer = 'Objeto direto';
+                    explanation = 'A reduzida é objeto direto de "desejo".';
+                    break;
+                case 'objeto indireto':
+                    frase = `Gosto de ${verb} ${obj}.`;
+                    answer = 'Objeto indireto';
+                    explanation = 'A reduzida é objeto indireto (com preposição "de").';
+                    break;
+                case 'complemento nominal':
+                    frase = `Tenho certeza de ${verb} ${obj}.`;
+                    answer = 'Complemento nominal';
+                    explanation = 'A reduzida completa o sentido de "certeza".';
+                    break;
+                case 'adjunto adverbial':
+                    frase = `Ao ${verb} ${obj}, ${suj} ${verb2} ${obj2}.`;
+                    answer = 'Adjunto adverbial';
+                    explanation = 'A reduzida expressa circunstância de tempo.';
+                    break;
+                case 'adjunto adnominal':
+                    frase = `Tenho um ${rand(OBJETOS)} para ${verb}.`;
+                    answer = 'Adjunto adnominal';
+                    explanation = 'A reduzida equivale a um adjunto adnominal (restritiva).';
+                    break;
+            }
+            const allFuncs = ['Sujeito', 'Objeto direto', 'Objeto indireto', 'Complemento nominal', 'Adjunto adverbial', 'Adjunto adnominal'];
+            const wrongs = pickN(allFuncs.filter(f => f !== answer), 4);
+            options = shuffle([answer, ...wrongs]);
+            return { question: `Qual a função sintática da oração reduzida?\n\n"${frase}"`, options, answer, explanation, type: 'funcao' };
+        }
+
+        // ---------- NOVOS GERADORES DE SUJEITO (CORRIGIDOS) ----------
+
+        // 1. Classificação completa do sujeito
+        function genSubjectFullClassification() {
+            const tipos = ['Simples', 'Composto', 'Oculto', 'Indeterminado'];
+            const tipo = rand(tipos);
+            let frase, answer, explanation, options;
+
+            const s1 = rand(SUJEITOS_SIMPLES);
+            const s2 = rand(SUJEITOS_SIMPLES);
+            const v = rand(VERBOS);
+            const vp = rand(VERBOS_PLURAL);
+            const c = rand(COMPLEMENTOS);
+            const obj = rand(OBJETOS);
+
+            if (tipo === 'Simples') {
+                frase = `${s1} ${v} ${c}.`;
+                answer = 'Sujeito Simples';
+                explanation = 'Possui apenas um núcleo: ' + s1.split(' ').pop() + '.';
+            } else if (tipo === 'Composto') {
+                frase = `${s1} e ${s2} ${vp} ${c}.`;
+                answer = 'Sujeito Composto';
+                explanation = 'Possui dois núcleos: ' + s1.split(' ').pop() + ' e ' + s2.split(' ').pop() + '.';
+            } else if (tipo === 'Oculto') {
+                // Escolhe uma pessoa e um verbo que revele a desinência
+                const pessoa = rand(['Eu', 'Tu', 'Ele', 'Nós', 'Vós', 'Eles']);
+                const vOculto = {
+                    'Eu': rand(['Corri', 'Estudei', 'Trabalhei', 'Viajei', 'Cantei', 'Falei']),
+                    'Tu': rand(['Correste', 'Estudaste', 'Trabalhaste', 'Viajaste', 'Cantaste', 'Falaste']),
+                    'Ele': rand(['Correu', 'Estudou', 'Trabalhou', 'Viajou', 'Cantou', 'Falou']),
+                    'Nós': rand(['Corremos', 'Estudamos', 'Trabalhamos', 'Viajamos', 'Cantamos', 'Falamos']),
+                    'Vós': rand(['Correstes', 'Estudastes', 'Trabalhastes', 'Viajastes', 'Cantastes', 'Falastes']),
+                    'Eles': rand(['Correram', 'Estudaram', 'Trabalharam', 'Viajaram', 'Cantaram', 'Falaram'])
+                };
+                frase = `${vOculto[pessoa]} ${c}.`;
+                answer = 'Sujeito Oculto (Elíptico)';
+                explanation = `O sujeito está oculto, mas é identificado pela desinência verbal: ${pessoa}.`;
+            } else { // Indeterminado
+                const subTipo = rand(['3pl', 'iis']);
+                if (subTipo === '3pl') {
+                    frase = `${rand(VERBOS_3PL)} ${c} ${rand(['de você', 'sobre ele', 'muito bem', 'ontem'])}.`;
+                    answer = 'Sujeito Indeterminado';
+                    explanation = 'Verbo na 3ª pessoa do plural sem referente claro – sujeito indeterminado.';
+                } else {
+                    frase = `${rand(VERBOS_IIS)} ${c}.`;
+                    answer = 'Sujeito Indeterminado';
+                    explanation = 'Verbo na 3ª pessoa do singular + "se" (índice de indeterminação) – sujeito indeterminado.';
+                }
+            }
+
+            const allTypes = ['Sujeito Simples', 'Sujeito Composto', 'Sujeito Oculto (Elíptico)', 'Sujeito Indeterminado'];
+            const wrongs = pickN(allTypes.filter(t => t !== answer), 3);
+            options = shuffle([answer, ...wrongs]);
+            return { question: `Classifique o sujeito da frase:\n\n"${frase}"`, options, answer, explanation, type: 'sujeito-class' };
+        }
+
+        // 2. Sujeito oculto ou indeterminado? (agora com contexto claro)
+        function genSubjectHiddenIndet() {
+            const tipo = rand(['Oculto', 'Indeterminado']);
+            let frase, answer, explanation, options;
+            const c = rand(COMPLEMENTOS);
+
+            if (tipo === 'Oculto') {
+                // Cria um contexto com referente claro
+                const sujRef = rand(SUJEITOS_SIMPLES);
+                const pessoa = rand(['Eu', 'Tu', 'Ele', 'Nós', 'Vós', 'Eles']);
+                const vOculto = {
+                    'Eu': rand(['Corri', 'Estudei', 'Trabalhei', 'Viajei', 'Cantei', 'Falei']),
+                    'Tu': rand(['Correste', 'Estudaste', 'Trabalhaste', 'Viajaste', 'Cantaste', 'Falaste']),
+                    'Ele': rand(['Correu', 'Estudou', 'Trabalhou', 'Viajou', 'Cantou', 'Falou']),
+                    'Nós': rand(['Corremos', 'Estudamos', 'Trabalhamos', 'Viajamos', 'Cantamos', 'Falamos']),
+                    'Vós': rand(['Correstes', 'Estudastes', 'Trabalhastes', 'Viajastes', 'Cantastes', 'Falastes']),
+                    'Eles': rand(['Correram', 'Estudaram', 'Trabalharam', 'Viajaram', 'Cantaram', 'Falaram'])
+                };
+                // Contexto: "Os alunos chegaram." -> depois "Entraram na sala." (oculto "eles")
+                // Vamos criar uma frase composta para dar contexto
+                const context = rand([
+                    `Os alunos chegaram. ${vOculto['Eles']} ${c}.`,
+                    `A equipe se preparou. ${vOculto['Eles']} ${c}.`,
+                    `As meninas cantaram. ${vOculto['Eles']} ${c}.`,
+                    `Os professores discutiram. ${vOculto['Eles']} ${c}.`
+                ]);
+                frase = context;
+                answer = 'Oculto (Elíptico)';
+                explanation = 'O sujeito está oculto, mas o contexto (os alunos, a equipe...) indica "eles" – é oculto, não indeterminado.';
+            } else {
+                const subTipo = rand(['3pl', 'iis']);
+                if (subTipo === '3pl') {
+                    frase = `${rand(VERBOS_3PL)} ${c} ${rand(['de você', 'sobre ele', 'muito bem', 'ontem'])}.`;
+                    answer = 'Indeterminado';
+                    explanation = 'Verbo na 3ª plural sem referente – indeterminado.';
+                } else {
+                    frase = `${rand(VERBOS_IIS)} ${c}.`;
+                    answer = 'Indeterminado';
+                    explanation = 'Verbo na 3ª singular + "se" – indeterminado.';
+                }
+            }
+            options = shuffle(['Oculto (Elíptico)', 'Indeterminado']);
+            return { question: `O sujeito da frase é oculto ou indeterminado?\n\n"${frase}"`, options, answer, explanation, type: 'sujeito-hidden-indet' };
+        }
+
+        // 3. Sujeito simples ou composto?
+        function genSubjectSimpleCompound() {
+            const tipo = rand(['Simples', 'Composto']);
+            let frase, answer, explanation, options;
+            const s1 = rand(SUJEITOS_SIMPLES);
+            const s2 = rand(SUJEITOS_SIMPLES);
+            const v = rand(VERBOS);
+            const vp = rand(VERBOS_PLURAL);
+            const c = rand(COMPLEMENTOS);
+
+            if (tipo === 'Simples') {
+                frase = `${s1} ${v} ${c}.`;
+                answer = 'Simples';
+                explanation = 'Apenas um núcleo: ' + s1.split(' ').pop() + '.';
+            } else {
+                frase = `${s1} e ${s2} ${vp} ${c}.`;
+                answer = 'Composto';
+                explanation = 'Dois núcleos: ' + s1.split(' ').pop() + ' e ' + s2.split(' ').pop() + '.';
+            }
+            options = shuffle(['Simples', 'Composto']);
+            return { question: `O sujeito é simples ou composto?\n\n"${frase}"`, options, answer, explanation, type: 'sujeito-simples-composto' };
+        }
+
+        // 4. Identificar o núcleo do sujeito
+        function genSubjectNucleus() {
+            const s1 = rand(SUJEITOS_SIMPLES);
+            const s2 = rand(SUJEITOS_SIMPLES);
+            const v = rand(VERBOS);
+            const vp = rand(VERBOS_PLURAL);
+            const c = rand(COMPLEMENTOS);
+
+            const tipo = rand(['simples', 'composto']);
+            let frase, answer, options, explanation;
+
+            if (tipo === 'simples') {
+                const nucleo = s1.split(' ').pop();
+                frase = `${s1} ${v} ${c}.`;
+                answer = nucleo;
+                explanation = `O núcleo do sujeito é "${nucleo}".`;
+                const allNucleos = ['menino', 'menina', 'professor', 'professora', 'João', 'Maria', 'time', 'equipe', 'pai', 'mãe'];
+                const wrongs = pickN(allNucleos.filter(n => n !== nucleo), 3);
+                options = shuffle([nucleo, ...wrongs]);
+            } else {
+                const n1 = s1.split(' ').pop();
+                const n2 = s2.split(' ').pop();
+                frase = `${s1} e ${s2} ${vp} ${c}.`;
+                answer = `${n1} e ${n2}`;
+                explanation = `Os núcleos do sujeito composto são "${n1}" e "${n2}".`;
+                const allNucleos = ['menino', 'menina', 'professor', 'professora', 'João', 'Maria', 'time', 'equipe', 'pai', 'mãe'];
+                const wrongs = pickN(allNucleos.filter(n => n !== n1 && n !== n2), 3);
+                options = shuffle([answer, ...wrongs.map(w => `${w} e ${rand(allNucleos)}`)]);
+            }
+            return { question: `Identifique o(s) núcleo(s) do sujeito na frase:\n\n"${frase}"`, options, answer, explanation, type: 'sujeito-nucleo' };
+        }
+
+        // ---------- GERADOR PRINCIPAL ----------
+        function generateExercises(count = 1000) {
+            const exercises = [];
+            const generators = [
+                genReduzidaTipo,
+                genTransformar,
+                genReduzidaOuDesenv,
+                genAbsoluta,
+                genFuncaoReduzida,
+                genSubjectFullClassification,
+                genSubjectHiddenIndet,
+                genSubjectSimpleCompound,
+                genSubjectNucleus
+            ];
+
+            for (let i = 0; i < count; i++) {
+                const gen = rand(generators);
+                exercises.push(gen());
+            }
+            return exercises;
+        }
+
+        // ---------- ESTADO E RENDERIZAÇÃO ----------
+        let allExercises = [];
+        let currentPage = 0;
+        let pageSize = 10;
+        let answered = {};
+        let userAnswers = {};
+        let score = { correct: 0, total: 0 };
+
+        function renderExercises() {
+            const container = document.getElementById('exerciseContainer');
+            const pagContainer = document.getElementById('paginationContainer');
+            const progressFill = document.getElementById('progressFill');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+
+            if (allExercises.length === 0) {
+                container.innerHTML =
+                    `<p style="text-align:center; padding:40px; color:#64748b;">🔍 Clique em "Nova rodada" para gerar os exercícios.</p>`;
+                pagContainer.innerHTML = '';
+                return;
+            }
+
+            const total = allExercises.length;
+            const totalPages = Math.ceil(total / pageSize);
+            const start = currentPage * pageSize;
+            const end = Math.min(start + pageSize, total);
+            const pageExercises = allExercises.slice(start, end);
+
+            const answeredCount = Object.keys(answered).length;
+            const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+            progressFill.style.width = pct + '%';
+            scoreDisplay.textContent = `✅ ${score.correct} / ${score.total}`;
+
+            let html = '';
+            pageExercises.forEach((ex, idx) => {
+                const globalIdx = start + idx;
+                const isAnswered = answered[globalIdx] !== undefined;
+                const userAns = userAnswers[globalIdx] || '';
+                const isCorrect = answered[globalIdx] === true;
+                const isWrong = answered[globalIdx] === false;
+
+                html += `<div class="question-box" data-idx="${globalIdx}">`;
+                html += `<div class="q-text">${ex.question.replace(/\n/g, '<br>')}</div>`;
+
+                html += `<div class="options">`;
+                ex.options.forEach(opt => {
+                    let cls = '';
+                    let disabled = false;
+                    if (isAnswered) {
+                        disabled = true;
+                        if (opt === ex.answer) cls = 'correct';
+                        if (opt === userAns && opt !== ex.answer) cls = 'wrong';
+                        if (opt === userAns) cls += ' selected';
+                    } else if (opt === userAns) {
+                        cls = 'selected';
+                    }
+                    html +=
+                        `<button class="${cls}" data-global="${globalIdx}" data-opt="${opt}" ${disabled ? 'disabled' : ''}>${opt}</button>`;
+                });
+                html += `</div>`;
+
+                if (isAnswered) {
+                    const fbClass = isCorrect ? 'correct' : 'wrong';
+                    html += `<div class="feedback show ${fbClass}">`;
+                    html += `<strong>${isCorrect ? '✅ Correto!' : '❌ Incorreto.'}</strong> ${ex.explanation}`;
+                    html += `</div>`;
+                } else {
+                    html += `<div class="feedback" id="fb-${globalIdx}"></div>`;
+                }
+
+                html += `</div>`;
+            });
+
+            container.innerHTML = html;
+
+            container.querySelectorAll('.options button:not([disabled])').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const globalIdx = parseInt(this.dataset.global);
+                    const selected = this.dataset.opt;
+                    handleAnswer(globalIdx, selected);
+                });
+            });
+
+            let pagHtml = '';
+            for (let p = 0; p < totalPages; p++) {
+                pagHtml +=
+                    `<button class="${p === currentPage ? 'active-page' : ''}" data-page="${p}">${p+1}</button>`;
+            }
+            pagContainer.innerHTML = pagHtml;
+            pagContainer.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = parseInt(this.dataset.page);
+                    if (page !== currentPage) {
+                        currentPage = page;
+                        renderExercises();
+                    }
+                });
+            });
+
+            document.getElementById('totalExercisesLabel').textContent =
+                `Total de exercícios disponíveis: ${total}`;
+        }
+
+        function handleAnswer(globalIdx, selected) {
+            if (answered[globalIdx] !== undefined) return;
+
+            const ex = allExercises[globalIdx];
+            const isCorrect = selected === ex.answer;
+
+            answered[globalIdx] = isCorrect;
+            userAnswers[globalIdx] = selected;
+            if (isCorrect) score.correct++;
+            score.total++;
+
+            renderExercises();
+
+            const qBox = document.querySelector(`.question-box[data-idx="${globalIdx}"]`);
+            if (qBox) qBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function newRound() {
+            const qty = parseInt(document.getElementById('qtySelect').value);
+            allExercises = generateExercises(qty);
+            currentPage = 0;
+            answered = {};
+            userAnswers = {};
+            score = { correct: 0, total: 0 };
+            renderExercises();
+        }
+
+        // ---------- INICIALIZAR ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            const navBtns = document.querySelectorAll('#navTabs button');
+            const tabContents = {
+                teoria: document.getElementById('tab-teoria'),
+                macetes: document.getElementById('tab-macetes'),
+                exercicios: document.getElementById('tab-exercicios')
+            };
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    Object.keys(tabContents).forEach(key => {
+                        tabContents[key].classList.toggle('active', key === tab);
+                    });
+                });
+            });
+
+            document.getElementById('newExerciseBtn').addEventListener('click', newRound);
+            document.getElementById('qtySelect').addEventListener('change', function() {
+                if (allExercises.length > 0) newRound();
+            });
+
+            setTimeout(() => { newRound(); }, 100);
+        });
+
+    })();
+</script>
+</body>
+</html>
