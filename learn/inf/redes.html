@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redes de Computadores · Concurso Técnico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4fa;
+            color: #1a2639;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.07);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b2b44;
+            border-left: 8px solid #e67e22;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .subtitle {
+            color: #3f5a77;
+            font-size: 1.1rem;
+            padding-left: 28px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e2eaf1;
+            padding-bottom: 15px;
+        }
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        nav button {
+            background: none;
+            border: none;
+            padding: 10px 26px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3a5470;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: #e4ecf6;
+        }
+        nav button.active {
+            background: #d35400;
+            color: white;
+            box-shadow: 0 4px 12px rgba(211, 84, 0, 0.3);
+        }
+        .section {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.3;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== TEORIA COM GRÁFICOS ========== */
+        .teoria-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 800px) {
+            .teoria-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .teoria-card {
+            background: #fafcff;
+            border-radius: 18px;
+            padding: 20px 22px;
+            border: 1px solid #e4edf6;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            transition: 0.15s;
+        }
+        .teoria-card:hover {
+            border-color: #f0b27a;
+        }
+        .teoria-card h3 {
+            color: #0b2b44;
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+            border-bottom: 2px dashed #d4e0ed;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .teoria-card ul {
+            padding-left: 22px;
+            margin: 8px 0 12px;
+        }
+        .teoria-card li {
+            margin-bottom: 6px;
+        }
+        .macete-box {
+            background: #fef5e7;
+            border-left: 6px solid #e67e22;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 16px 0 8px;
+        }
+        .macete-box strong {
+            color: #a04000;
+        }
+        .graphic-container {
+            background: #f4f8ff;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 18px 0 10px;
+            text-align: center;
+            border: 1px solid #d7e4f2;
+        }
+        .graphic-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .graphic-container .legenda {
+            font-size: 0.85rem;
+            color: #2f4b6e;
+            margin-top: 6px;
+        }
+        .dica-extra {
+            background: #fef6e6;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border-left: 4px solid #f0b34b;
+            margin-top: 12px;
+        }
+        .dica-extra strong {
+            color: #a76f1a;
+        }
+
+        /* ========== EXERCÍCIOS ========== */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+        .quiz-controls .info {
+            font-size: 0.95rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+            color: #0b2b44;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a2a3f;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background: #dce5f0;
+        }
+        .btn-primary {
+            background: #d35400;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #a04000;
+        }
+        .btn-success {
+            background: #1f8b4c;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #16703d;
+        }
+        .btn-danger {
+            background: #b33c3c;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #922e2e;
+        }
+        .questao {
+            background: #fbfdff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e4ecf5;
+            transition: 0.15s;
+        }
+        .questao:hover {
+            border-color: #f0b27a;
+        }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 8px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .questao .opcao:hover {
+            background: #fef5e7;
+        }
+        .questao .opcao input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #d35400;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 0;
+        }
+        .questao .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 500;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 6px;
+        }
+        .questao.resolvida .opcao {
+            opacity: 0.85;
+        }
+        .questao.resolvida .opcao input[type="radio"] {
+            pointer-events: none;
+        }
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .paginacao .page-btn:hover {
+            background: #d4dfec;
+        }
+        .paginacao .page-btn.active-page {
+            background: #d35400;
+            color: white;
+        }
+        .stats {
+            background: #fef5e7;
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #a04000;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6a7e97;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .questao {
+                padding: 16px;
+            }
+            .btn-group .btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Redes de Computadores & Internet <span style="font-size:1rem; font-weight:400; color:#3f5a77;">· Técnico Administrativo</span></h1>
+        <div class="subtitle">Teoria visual + macetes + 1000 exercícios com correção automática</div>
+
+        <nav>
+            <button class="active" data-section="teoria">📘 Teoria & Macetes</button>
+            <button data-section="exercicios">📝 Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO TEORIA COM GRÁFICOS E DICAS                               -->
+        <!-- ============================================================ -->
+        <section id="teoria" class="section active">
+            <div class="teoria-grid">
+
+                <!-- 1. Conceitos básicos e topologias -->
+                <div class="teoria-card">
+                    <h3>🔷 Conceitos & Topologias</h3>
+                    <ul>
+                        <li><strong>Rede:</strong> conjunto de dispositivos interconectados.</li>
+                        <li><strong>Topologia física:</strong> como os cabos estão dispostos (estrela, barramento, anel, malha).</li>
+                        <li><strong>Topologia lógica:</strong> como os dados trafegam (ex: Ethernet é lógica de barramento).</li>
+                        <li><strong>LAN, MAN, WAN:</strong> área local, metropolitana, ampla.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Estrela -->
+                            <circle cx="50" cy="40" r="12" fill="#d35400" />
+                            <circle cx="20" cy="15" r="8" fill="#2980b9" />
+                            <circle cx="80" cy="15" r="8" fill="#2980b9" />
+                            <circle cx="20" cy="65" r="8" fill="#2980b9" />
+                            <circle cx="80" cy="65" r="8" fill="#2980b9" />
+                            <line x1="50" y1="40" x2="20" y2="15" stroke="#2c3e50" stroke-width="2" />
+                            <line x1="50" y1="40" x2="80" y2="15" stroke="#2c3e50" stroke-width="2" />
+                            <line x1="50" y1="40" x2="20" y2="65" stroke="#2c3e50" stroke-width="2" />
+                            <line x1="50" y1="40" x2="80" y2="65" stroke="#2c3e50" stroke-width="2" />
+                            <text x="40" y="92" font-size="9" fill="#7f8c8d">Estrela (hub/switch)</text>
+                            <!-- Anel -->
+                            <circle cx="200" cy="40" r="10" fill="#d35400" />
+                            <circle cx="230" cy="15" r="8" fill="#2980b9" />
+                            <circle cx="260" cy="40" r="8" fill="#2980b9" />
+                            <circle cx="230" cy="65" r="8" fill="#2980b9" />
+                            <path d="M200 40 L230 15 L260 40 L230 65 Z" fill="none" stroke="#2c3e50" stroke-width="2" />
+                            <text x="205" y="92" font-size="9" fill="#7f8c8d">Anel (token ring)</text>
+                        </svg>
+                        <div class="legenda">Topologias: estrela (hub/switch) e anel (token ring).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Estrela = ponto central (switch), Anel = cada um conecta ao próximo, Barramento = todos compartilham o mesmo cabo.”<br>
+                        📌 <strong>Decore:</strong> Ethernet usa topologia lógica de barramento, mas física em estrela (com switch).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Em uma topologia em estrela, a falha de um nó não afeta os outros, mas a falha do hub/switch derruba a rede.”
+                    </div>
+                </div>
+
+                <!-- 2. Modelo OSI e TCP/IP -->
+                <div class="teoria-card">
+                    <h3>📡 Modelos OSI e TCP/IP</h3>
+                    <ul>
+                        <li><strong>OSI (7 camadas):</strong> Física, Enlace, Rede, Transporte, Sessão, Apresentação, Aplicação.</li>
+                        <li><strong>TCP/IP (4 camadas):</strong> Acesso à Rede, Internet, Transporte, Aplicação.</li>
+                        <li><strong>Principais protocolos:</strong> IP (Rede), TCP/UDP (Transporte), HTTP/FTP/SMTP (Aplicação).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="130" height="18" rx="4" fill="#fad7a0" stroke="#d35400" />
+                            <text x="30" y="18" font-size="10" fill="#7a4a0e">Aplicação (HTTP, FTP, DNS)</text>
+                            <rect x="10" y="27" width="130" height="18" rx="4" fill="#f5cba7" stroke="#d35400" />
+                            <text x="35" y="40" font-size="10" fill="#7a4a0e">Transporte (TCP, UDP)</text>
+                            <rect x="10" y="49" width="130" height="18" rx="4" fill="#f0b27a" stroke="#d35400" />
+                            <text x="40" y="62" font-size="10" fill="#7a4a0e">Internet (IP, ICMP)</text>
+                            <rect x="10" y="71" width="130" height="18" rx="4" fill="#e8a87c" stroke="#d35400" />
+                            <text x="25" y="84" font-size="10" fill="#7a4a0e">Acesso à Rede (Ethernet)</text>
+                            <text x="20" y="98" font-size="9" fill="#7f8c8d">Modelo TCP/IP (4 camadas)</text>
+                            <rect x="170" y="20" width="110" height="60" rx="6" fill="#d6eaf8" stroke="#2980b9" />
+                            <text x="180" y="40" font-size="10" fill="#1a5276">OSI (7 camadas)</text>
+                            <text x="180" y="55" font-size="8" fill="#2c3e50">Aplicação, Apresentação,</text>
+                            <text x="180" y="67" font-size="8" fill="#2c3e50">Sessão, Transporte, Rede,</text>
+                            <text x="180" y="79" font-size="8" fill="#2c3e50">Enlace, Física</text>
+                        </svg>
+                        <div class="legenda">Comparativo TCP/IP (4 camadas) e OSI (7 camadas).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “<strong>P</strong>ara <strong>T</strong>ransportar <strong>A</strong>lguém <strong>I</strong>mportante, <strong>E</strong>spere <strong>F</strong>ielmente” – decore as camadas OSI: <strong>P</strong>hysical, <strong>D</strong>ata Link, <strong>N</strong>etwork, <strong>T</strong>ransport, <strong>S</strong>ession, <strong>P</strong>resentation, <strong>A</strong>pplication.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O TCP é orientado à conexão (confiável), o UDP é não orientado (mais rápido, mas não confiável).”
+                    </div>
+                </div>
+
+                <!-- 3. Endereçamento IP e máscaras -->
+                <div class="teoria-card">
+                    <h3>🔢 IP e Sub-redes</h3>
+                    <ul>
+                        <li><strong>IPv4:</strong> 32 bits (4 octetos) – ex: 192.168.1.1</li>
+                        <li><strong>IPv6:</strong> 128 bits (hexadecimal) – ex: 2001:0db8:85a3::8a2e:0370:7334</li>
+                        <li><strong>Máscara de sub-rede:</strong> define a porção da rede e do host. Ex: /24 = 255.255.255.0</li>
+                        <li><strong>Classes:</strong> A (0-127), B (128-191), C (192-223), D (multicast), E (experimental).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="280" height="30" rx="6" fill="#d5d8dc" stroke="#2c3e50" />
+                            <text x="20" y="24" font-size="12" fill="#1a2639">192 . 168 . 1 . 1</text>
+                            <text x="150" y="24" font-size="12" fill="#7f8c8d">→ 11000000 . 10101000 . 00000001 . 00000001</text>
+                            <text x="20" y="52" font-size="10" fill="#2c3e50">Máscara /24 → 255.255.255.0 → parte rede: 192.168.1, parte host: 1</text>
+                        </svg>
+                        <div class="legenda">IPv4: 4 octetos, máscara define rede e host.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Classe A = /8, B = /16, C = /24” – decore os prefixos padrão.<br>
+                        📌 <strong>Decore:</strong> 192.168.x.x e 10.x.x.x são IPs privados (não roteáveis na internet).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Para calcular o número de hosts: 2^(32 - bits_mascara) - 2 (subtrai rede e broadcast).”
+                    </div>
+                </div>
+
+                <!-- 4. Dispositivos de rede -->
+                <div class="teoria-card">
+                    <h3>🖧 Dispositivos de Interconexão</h3>
+                    <ul>
+                        <li><strong>Hub:</strong> repetidor multicanal (trabalha na camada física).</li>
+                        <li><strong>Switch:</strong> comutador (camada de enlace – MAC).</li>
+                        <li><strong>Roteador:</strong> interliga redes (camada de rede – IP).</li>
+                        <li><strong>Modem:</strong> modula/demodula sinal para acesso à internet.</li>
+                        <li><strong>Access Point:</strong> ponto de acesso Wi-Fi.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 70" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="25" rx="6" fill="#f5cba7" stroke="#d35400" />
+                            <text x="18" y="22" font-size="11" fill="#7a4a0e">Hub</text>
+                            <rect x="90" y="5" width="60" height="25" rx="6" fill="#f0b27a" stroke="#d35400" />
+                            <text x="94" y="22" font-size="11" fill="#7a4a0e">Switch</text>
+                            <rect x="170" y="5" width="60" height="25" rx="6" fill="#e8a87c" stroke="#d35400" />
+                            <text x="172" y="22" font-size="11" fill="#7a4a0e">Roteador</text>
+                            <rect x="250" y="5" width="40" height="25" rx="6" fill="#d6eaf8" stroke="#2980b9" />
+                            <text x="254" y="22" font-size="11" fill="#1a5276">AP</text>
+                            <text x="10" y="52" font-size="9" fill="#2c3e50">Hub (física), Switch (enlace), Roteador (rede), AP (Wi-Fi)</text>
+                            <text x="10" y="65" font-size="9" fill="#7f8c8d">↑ cada um opera em uma camada diferente do modelo OSI ↑</text>
+                        </svg>
+                        <div class="legenda">Dispositivos e suas camadas de atuação.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Hub é burro (repite), Switch é inteligente (aprende MAC), Roteador é sábio (encaminha IP).”<br>
+                        📌 <strong>Decore:</strong> Switch segmenta colisões, Roteador segmenta domínios de broadcast.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Para interligar redes diferentes (ex: LAN e WAN) usa-se roteador.”
+                    </div>
+                </div>
+
+                <!-- 5. Protocolos e portas -->
+                <div class="teoria-card">
+                    <h3>📬 Protocolos & Portas</h3>
+                    <ul>
+                        <li><strong>HTTP</strong> – 80 (web), <strong>HTTPS</strong> – 443 (web segura).</li>
+                        <li><strong>FTP</strong> – 20/21 (transferência de arquivos).</li>
+                        <li><strong>SMTP</strong> – 25 (envio de e-mail), <strong>POP3</strong> – 110, <strong>IMAP</strong> – 143.</li>
+                        <li><strong>DNS</strong> – 53 (resolução de nomes).</li>
+                        <li><strong>DHCP</strong> – 67/68 (configuração automática de IP).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="130" height="20" rx="6" fill="#fad7a0" stroke="#d35400" />
+                            <text x="15" y="18" font-size="10" fill="#7a4a0e">HTTP 80 | HTTPS 443</text>
+                            <rect x="10" y="30" width="130" height="20" rx="6" fill="#f5cba7" stroke="#d35400" />
+                            <text x="15" y="43" font-size="10" fill="#7a4a0e">FTP 20/21 | DNS 53</text>
+                            <rect x="160" y="5" width="130" height="20" rx="6" fill="#f0b27a" stroke="#d35400" />
+                            <text x="165" y="18" font-size="10" fill="#7a4a0e">SMTP 25 | POP3 110</text>
+                            <rect x="160" y="30" width="130" height="20" rx="6" fill="#e8a87c" stroke="#d35400" />
+                            <text x="165" y="43" font-size="10" fill="#7a4a0e">DHCP 67/68 | IMAP 143</text>
+                            <text x="10" y="58" font-size="8" fill="#2c3e50">Portas mais cobradas em concursos</text>
+                        </svg>
+                        <div class="legenda">Protocolos e suas portas padrão (TCP/UDP).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “<strong>H</strong>ttp <strong>H</strong>ttps, <strong>F</strong>tp, <strong>S</strong>mtp, <strong>P</strong>op3, <strong>D</strong>ns” – decore as portas: 80, 443, 21, 25, 110, 53.<br>
+                        📌 <strong>Decore:</strong> “443 é o primo do 80, só que seguro (HTTPS).”
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O DNS usa porta 53, e pode ser TCP ou UDP (geralmente UDP para consultas).”
+                    </div>
+                </div>
+
+                <!-- 6. Internet, intranet, extranet, VPN -->
+                <div class="teoria-card">
+                    <h3>🌍 Internet, Intranet, Extranet, VPN</h3>
+                    <ul>
+                        <li><strong>Internet:</strong> rede pública mundial.</li>
+                        <li><strong>Intranet:</strong> rede privada interna (ex: corporativa).</li>
+                        <li><strong>Extranet:</strong> extensão da intranet para parceiros externos.</li>
+                        <li><strong>VPN:</strong> rede privada virtual sobre a internet (túnel criptografado).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="30" r="25" fill="#d6eaf8" stroke="#2980b9" stroke-width="2" />
+                            <text x="30" y="27" font-size="11" fill="#1a5276">Internet</text>
+                            <text x="34" y="40" font-size="8" fill="#2c3e50">(pública)</text>
+                            <rect x="120" y="10" width="70" height="40" rx="8" fill="#fad7a0" stroke="#d35400" />
+                            <text x="128" y="30" font-size="11" fill="#7a4a0e">Intranet</text>
+                            <text x="125" y="45" font-size="8" fill="#7a4a0e">(privada)</text>
+                            <rect x="210" y="10" width="70" height="40" rx="8" fill="#f5cba7" stroke="#d35400" />
+                            <text x="218" y="30" font-size="11" fill="#7a4a0e">Extranet</text>
+                            <text x="215" y="45" font-size="8" fill="#7a4a0e">(parceiros)</text>
+                        </svg>
+                        <div class="legenda">Internet (pública), Intranet (privada) e Extranet (parceiros).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Internet = todos, Intranet = só nós, Extranet = nós + alguns, VPN = túnel seguro.”<br>
+                        📌 <strong>Decore:</strong> VPN usa criptografia (IPsec, SSL/TLS) para garantir segurança.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “A intranet é acessada apenas por usuários autorizados dentro da organização.”
+                    </div>
+                </div>
+
+                <!-- 7. Segurança em redes -->
+                <div class="teoria-card">
+                    <h3>🔒 Segurança em Redes</h3>
+                    <ul>
+                        <li><strong>Firewall:</strong> controla tráfego com base em regras (filtro de pacotes).</li>
+                        <li><strong>IDS/IPS:</strong> detecção/prevenção de intrusão.</li>
+                        <li><strong>WPA2/WPA3:</strong> segurança para Wi-Fi.</li>
+                        <li><strong>Principais ataques:</strong> Phishing, DoS/DDoS, Man-in-the-Middle, Spoofing.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="50" height="30" rx="4" fill="#e74c3c" />
+                            <text x="14" y="23" font-size="11" fill="white">Firewall</text>
+                            <rect x="80" y="5" width="50" height="30" rx="4" fill="#f39c12" />
+                            <text x="88" y="23" font-size="11" fill="white">IDS</text>
+                            <rect x="150" y="5" width="50" height="30" rx="4" fill="#2ecc71" />
+                            <text x="158" y="23" font-size="11" fill="white">IPS</text>
+                            <rect x="220" y="5" width="70" height="30" rx="4" fill="#3498db" />
+                            <text x="225" y="23" font-size="11" fill="white">WPA2/WPA3</text>
+                        </svg>
+                        <div class="legenda">Ferramentas de segurança: Firewall, IDS, IPS, WPA2/3.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Firewall filtra, IDS avisa, IPS bloqueia, WPA protege o Wi-Fi.”<br>
+                        📌 <strong>Decore:</strong> DDoS = ataque distribuído de negação de serviço (sobrecarga).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O firewall pode ser de hardware ou software, e atua nas camadas 3, 4 e 7 (alguns).”
+                    </div>
+                </div>
+
+                <!-- 8. Camadas adicionais: DNS, DHCP, NAT -->
+                <div class="teoria-card">
+                    <h3>🧩 DNS, DHCP, NAT</h3>
+                    <ul>
+                        <li><strong>DNS:</strong> traduz nomes (ex: google.com) para IPs.</li>
+                        <li><strong>DHCP:</strong> atribui IP automaticamente aos dispositivos.</li>
+                        <li><strong>NAT:</strong> traduz IPs privados para público (economia de IPv4).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="70" height="30" rx="6" fill="#d5d8dc" stroke="#2c3e50" />
+                            <text x="22" y="24" font-size="11" fill="#1a2639">DNS</text>
+                            <rect x="100" y="5" width="70" height="30" rx="6" fill="#d5d8dc" stroke="#2c3e50" />
+                            <text x="108" y="24" font-size="11" fill="#1a2639">DHCP</text>
+                            <rect x="190" y="5" width="70" height="30" rx="6" fill="#d5d8dc" stroke="#2c3e50" />
+                            <text x="202" y="24" font-size="11" fill="#1a2639">NAT</text>
+                            <text x="20" y="46" font-size="9" fill="#2c3e50">DNS: nome → IP | DHCP: IP automático | NAT: privado → público</text>
+                        </svg>
+                        <div class="legenda">Serviços essenciais para funcionamento da internet.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “DNS é a agenda de telefone, DHCP é o porteiro que dá o número, NAT é o tradutor.”<br>
+                        📌 <strong>Decore:</strong> NAT é usado em roteadores domésticos para compartilhar um IP público com vários dispositivos.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O DHCP usa UDP e as portas 67 (servidor) e 68 (cliente).”
+                    </div>
+                </div>
+
+            </div> <!-- fim teoria-grid -->
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO EXERCÍCIOS (1000 questões)                               -->
+        <!-- ============================================================ -->
+        <section id="exercicios" class="section">
+            <div class="quiz-controls">
+                <div class="info">
+                    <span id="acertos">0</span> acertos · 
+                    <span id="totalRespondidas">0</span> respondidas de 
+                    <span id="totalQuestoes">1000</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                    <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                    <button class="btn btn-danger" id="btnLimpar">🧹 Limpar respostas</button>
+                </div>
+            </div>
+            <div id="questoesContainer"></div>
+            <div class="paginacao" id="paginacao"></div>
+            <div style="text-align:center; margin-top:10px;">
+                <span class="stats" id="statsProgresso">Progresso: 0%</span>
+            </div>
+        </section>
+
+        <div class="footer">
+            Desenvolvido para concursos · 1000 questões · Teoria visual + macetes · Boa sorte!
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================================
+            // 1. GERADOR DE 1000 QUESTÕES SOBRE REDES
+            // ============================================================
+            const TOTAL_QUESTOES = 1000;
+
+            const templates = [
+                // 1) Topologias
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual topologia utiliza um dispositivo central (hub/switch) para conectar todos os nós?',
+                            ops: ['Estrela', 'Anel', 'Barramento', 'Malha'], corr: 'Estrela',
+                            exp: 'Na topologia estrela, todos os nós se conectam a um elemento central (hub/switch).' },
+                        { e: 'Em qual topologia cada nó se conecta a exatamente dois outros, formando um círculo?',
+                            ops: ['Estrela', 'Anel', 'Barramento', 'Árvore'], corr: 'Anel',
+                            exp: 'Na topologia anel, os nós formam um ciclo, cada um conectado ao próximo.' },
+                        { e: 'Qual topologia é a mais comum em redes Ethernet atuais (fisicamente)?', ops: ['Estrela', 'Anel',
+                                'Barramento', 'Malha'
+                            ], corr: 'Estrela', exp: 'Ethernet moderna usa switch como ponto central (estrela).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 2) Modelo OSI e TCP/IP
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual camada do modelo OSI é responsável pelo roteamento de pacotes?', ops: ['Física', 'Enlace',
+                                'Rede', 'Transporte'
+                            ], corr: 'Rede', exp: 'A camada de Rede (3) trata do endereçamento lógico (IP) e roteamento.' },
+                        { e: 'Qual camada do modelo TCP/IP equivale à camada de Rede do OSI?', ops: ['Acesso à Rede',
+                                'Internet', 'Transporte', 'Aplicação'
+                            ], corr: 'Internet', exp: 'A camada Internet do TCP/IP corresponde à camada de Rede do OSI.' },
+                        { e: 'Qual protocolo da camada de Transporte é orientado à conexão?', ops: ['TCP', 'UDP', 'IP',
+                                'ICMP'
+                            ], corr: 'TCP', exp: 'TCP estabelece conexão antes de transmitir (3-way handshake).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 3) IP e máscaras
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual é o IP de broadcast para a rede 192.168.1.0/24?', ops: ['192.168.1.0', '192.168.1.1',
+                                '192.168.1.255', '192.168.1.254'
+                            ], corr: '192.168.1.255', exp: 'Broadcast é o último endereço da sub-rede: 192.168.1.255.' },
+                        { e: 'Quantos hosts válidos existem em uma rede /24 (máscara 255.255.255.0)?', ops: ['254', '255',
+                                '256', '253'
+                            ], corr: '254', exp: '2^(32-24) - 2 = 256 - 2 = 254 hosts.' },
+                        { e: 'Qual classe de IP corresponde ao intervalo 192.0.0.0 a 223.255.255.255?', ops: ['Classe A',
+                                'Classe B', 'Classe C', 'Classe D'
+                            ], corr: 'Classe C', exp: 'Classe C: 192–223, com máscara padrão /24.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 4) Dispositivos
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual dispositivo opera na camada de enlace (MAC) e aprende os endereços para encaminhar frames?',
+                            ops: ['Hub', 'Switch', 'Roteador', 'Modem'], corr: 'Switch',
+                            exp: 'Switch atua na camada 2 (enlace), utilizando endereços MAC.' },
+                        { e: 'Qual dispositivo interliga redes diferentes (camada de rede)?', ops: ['Hub', 'Switch',
+                                'Roteador', 'Access Point'
+                            ], corr: 'Roteador', exp: 'Roteador opera na camada 3 (rede) e encaminha pacotes entre redes.' },
+                        { e: 'Qual dispositivo apenas repete o sinal, sem filtrar tráfego?', ops: ['Hub', 'Switch',
+                                'Roteador', 'Bridge'
+                            ], corr: 'Hub', exp: 'Hub é um repetidor multicanal, não inteligente.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 5) Protocolos e portas
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual porta padrão é usada pelo HTTPS?', ops: ['80', '443', '21', '25'], corr: '443',
+                            exp: 'HTTPS usa a porta 443, enquanto HTTP usa 80.' },
+                        { e: 'Qual protocolo é usado para enviar e-mails (envio)?', ops: ['POP3', 'IMAP', 'SMTP', 'FTP'],
+                            corr: 'SMTP', exp: 'SMTP (Simple Mail Transfer Protocol) envia e-mails.' },
+                        { e: 'Qual porta é usada pelo DNS (geralmente)?', ops: ['53', '67', '110', '143'], corr: '53',
+                            exp: 'DNS usa a porta 53 (UDP normalmente, TCP para transferências).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 6) Internet, intranet, VPN
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Uma rede privada que utiliza a infraestrutura da internet de forma segura é chamada de:',
+                            ops: ['Intranet', 'Extranet', 'VPN', 'LAN'], corr: 'VPN',
+                            exp: 'VPN (Virtual Private Network) cria um túnel criptografado sobre a internet.' },
+                        { e: 'Qual rede é de uso interno de uma organização, restrita a funcionários?', ops: ['Internet',
+                                'Intranet', 'Extranet', 'WAN'
+                            ], corr: 'Intranet', exp: 'Intranet é uma rede privada interna.' },
+                        { e: 'A Extranet é uma extensão da:', ops: ['Internet', 'Intranet', 'VPN', 'LAN'], corr: 'Intranet',
+                            exp: 'Extranet estende a intranet para parceiros externos autorizados.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 7) Segurança
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual dispositivo filtra tráfego com base em regras (portas, IPs)?', ops: ['Firewall', 'IDS',
+                                'IPS', 'Proxy'
+                            ], corr: 'Firewall', exp: 'Firewall controla o tráfego permitido ou bloqueado.' },
+                        { e: 'Qual ataque consiste em sobrecarregar um servidor com requisições?', ops: ['Phishing',
+                                'DDoS', 'Spoofing', 'Man-in-the-Middle'
+                            ], corr: 'DDoS', exp: 'DDoS (Distributed Denial of Service) é um ataque de negação de serviço.' },
+                        { e: 'Qual protocolo de segurança é usado em redes Wi-Fi modernas?', ops: ['WEP', 'WPA2', 'WPA',
+                                'WPA3'
+                            ], corr: 'WPA2', exp: 'WPA2 e WPA3 são os padrões atuais de segurança Wi-Fi (WEP é obsoleto).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 8) DNS, DHCP, NAT
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual serviço traduz nomes de domínio para endereços IP?', ops: ['DNS', 'DHCP', 'NAT',
+                                'ARP'
+                            ], corr: 'DNS', exp: 'DNS (Domain Name System) resolve nomes para IPs.' },
+                        { e: 'Qual protocolo atribui automaticamente IPs a dispositivos na rede?', ops: ['DNS', 'DHCP',
+                                'NAT', 'ICMP'
+                            ], corr: 'DHCP', exp: 'DHCP (Dynamic Host Configuration Protocol) distribui IPs dinamicamente.' },
+                        { e: 'Qual técnica permite que vários dispositivos compartilhem um único IP público?', ops: ['DNS',
+                                'DHCP', 'NAT', 'ARP'
+                            ], corr: 'NAT', exp: 'NAT (Network Address Translation) traduz IPs privados para público.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                }
+            ];
+
+            const questoes = [];
+            for (let i = 0; i < TOTAL_QUESTOES; i++) {
+                const template = templates[i % templates.length];
+                const q = template(i);
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                for (let k = q.opcoes.length - 1; k > 0; k--) {
+                    const j = Math.floor(Math.random() * (k + 1));
+                    [q.opcoes[k], q.opcoes[j]] = [q.opcoes[j], q.opcoes[k]];
+                }
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                questoes.push({
+                    id: i,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false,
+                });
+            }
+
+            // ============================================================
+            // 2. RENDERIZAÇÃO E CONTROLE (mesmo da página anterior)
+            // ============================================================
+            const ITENS_POR_PAGINA = 10;
+            let paginaAtual = 1;
+            let questoesPorPagina = [];
+            let acertos = 0,
+                respondidas = 0;
+
+            const container = document.getElementById('questoesContainer');
+            const paginacaoDiv = document.getElementById('paginacao');
+            const spanAcertos = document.getElementById('acertos');
+            const spanTotalRes = document.getElementById('totalRespondidas');
+            const spanTotalQ = document.getElementById('totalQuestoes');
+            const statsProgresso = document.getElementById('statsProgresso');
+
+            function atualizarStats() {
+                let acc = 0,
+                    resp = 0;
+                for (const q of questoes) {
+                    if (q.selecionada !== null) {
+                        resp++;
+                        if (q.opcoes[q.selecionada] === q.correta) acc++;
+                    }
+                }
+                acertos = acc;
+                respondidas = resp;
+                spanAcertos.textContent = acertos;
+                spanTotalRes.textContent = respondidas;
+                const pct = Math.round((respondidas / questoes.length) * 100);
+                statsProgresso.textContent = `Progresso: ${pct}%`;
+            }
+
+            function renderizarPagina() {
+                const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+                const fim = Math.min(inicio + ITENS_POR_PAGINA, questoes.length);
+                questoesPorPagina = questoes.slice(inicio, fim);
+
+                let html = '';
+                for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                    const q = questoesPorPagina[idx];
+                    const globalIdx = inicio + idx;
+                    const opcoesHtml = q.opcoes.map((op, oi) => {
+                        const checked = (q.selecionada === oi) ? 'checked' : '';
+                        return `
+                            <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                                <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                                <label for="q${globalIdx}_${oi}">${op}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let feedbackHtml = '';
+                    if (q.selecionada !== null) {
+                        const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                        const classe = isCerto ? 'certo' : 'errado';
+                        const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                        feedbackHtml = `
+                            <div class="feedback ${classe}">${texto}</div>
+                            <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                        `;
+                    }
+
+                    const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+
+                    html += `
+                        <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                            <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                            <div class="opcoes">
+                                ${opcoesHtml}
+                            </div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function(e) {
+                        const questaoDiv = this.closest('.questao');
+                        const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                        const opcaoIdx = parseInt(this.value);
+                        const q = questoes[globalIdx];
+                        if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                            q.selecionada = opcaoIdx;
+                            q.resolvida = true;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                const totalPaginas = Math.ceil(questoes.length / ITENS_POR_PAGINA);
+                let pagHtml = '';
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    if (p === paginaAtual) {
+                        pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                    } else if (p <= 3 || p > totalPaginas - 3 || Math.abs(p - paginaAtual) <= 1) {
+                        pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                    } else if (p === 4 && paginaAtual > 5) {
+                        pagHtml += `<span>…</span>`;
+                    } else if (p === totalPaginas - 3 && paginaAtual < totalPaginas - 4) {
+                        pagHtml += `<span>…</span>`;
+                    }
+                }
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+                paginacaoDiv.innerHTML = pagHtml;
+
+                document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                            paginaAtual = page;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                atualizarStats();
+            }
+
+            // ============================================================
+            // 3. BOTÕES
+            // ============================================================
+            document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+                for (const q of questoesPorPagina) {
+                    if (q.selecionada === null) {
+                        q.selecionada = 0;
+                        q.resolvida = true;
+                    }
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnLimpar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnReiniciar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                paginaAtual = 1;
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            // ============================================================
+            // 4. NAVEGAÇÃO ENTRE SEÇÕES
+            // ============================================================
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.section;
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            // ============================================================
+            // 5. INICIALIZAÇÃO
+            // ============================================================
+            spanTotalQ.textContent = TOTAL_QUESTOES;
+            renderizarPagina();
+            atualizarStats();
+
+        })();
+    </script>
+</body>
+</html>
