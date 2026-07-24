@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📚 Portal de Estudos – Gramática Avançada</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 40px 45px 55px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f172a, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            display: inline-block;
+        }
+
+        .subtitle {
+            color: #475569;
+            font-size: 1.1rem;
+            border-top: 2px solid #e9edf2;
+            border-bottom: 2px solid #e9edf2;
+            padding: 12px 0;
+            margin: 16px auto 0;
+            max-width: 600px;
+        }
+
+        .subtitle strong {
+            color: #5b21b6;
+        }
+
+        /* ===== MENU / GRID DE CARDS ===== */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 24px 22px 28px;
+            border: 1px solid #e9edf2;
+            transition: 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #8b5cf6;
+            box-shadow: 0 16px 32px rgba(139, 92, 246, 0.12);
+            background: white;
+        }
+
+        .card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            color: #475569;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 14px;
+        }
+
+        .card .badge {
+            display: inline-block;
+            background: #ede9fe;
+            color: #5b21b6;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            align-self: flex-start;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .card .arrow {
+            margin-top: 12px;
+            font-weight: 600;
+            color: #8b5cf6;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .card:hover .arrow {
+            gap: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            margin-top: 45px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9edf2;
+            padding-top: 28px;
+        }
+
+        footer strong {
+            color: #475569;
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 680px) {
+            .container {
+                padding: 20px 18px 30px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            .container {
+                border-radius: 24px;
+            }
+        }
+
+        /* ===== DESTAQUE PARA O CARD PRINCIPAL ===== */
+        .card.featured {
+            background: linear-gradient(135deg, #f8fafc, #ede9fe);
+            border-color: #8b5cf6;
+            border-width: 2px;
+        }
+
+        .card.featured .badge {
+            background: #8b5cf6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>📚 Portal de Estudos</h1>
+            <div class="subtitle">
+                <strong>Gramática Avançada</strong> · Teoria, macetes e 1.000 exercícios interativos por tópico
+            </div>
+        </header>
+
+        <!-- ===== GRID DE CARDS ===== -->
+        <div class="menu-grid">
+
+            <!-- 1. Orações Coordenativas e Subordinativas -->
+            <a href="oracoes-coordenativas-subordinativas.html" class="card">
+                <div class="icon">🔗</div>
+                <h3>Orações Coordenativas &amp; Subordinativas</h3>
+                <p>Classificação, conjunções, macetes e exercícios para dominar os períodos compostos.</p>
+                <span class="badge">Teoria + 1000 exercícios</span>
+                <span class="arrow">Acessar →</span>
+            </a>
+
+            <!-- 2. Orações Reduzidas e Absolutas -->
+            <a href="sujeito.html" class="card">
+                <div class="icon">✂️</div>
+                <h3>Orações Reduzidas &amp; Absolutas</h3>
+                <p>Infinitivo, gerúndio, particípio e orações sem sujeito. Transformação e classificação.</p>
+                <span class="badge">Teoria + 1000 exercícios</span>
+                <span class="arrow">Acessar →</span>
+            </a>
+
+            <!-- 3. Orações Reduzidas, Absolutas e Sujeito -->
+            <a href="oracoes.html" class="card featured">
+                <div class="icon">🧑‍🏫</div>
+                <h3>Reduzidas · Absolutas · Sujeito</h3>
+                <p>Versão completa com sujeito simples, composto, oculto e indeterminado — tudo integrado.</p>
+                <span class="badge">Versão estendida</span>
+                <span class="arrow">Acessar →</span>
+            </a>
+
+            <!-- 4. Crase -->
+            <a href="crase.html" class="card">
+                <div class="icon">`</div>
+                <h3>Crase</h3>
+                <p>Regras de uso, casos facultativos, proibições e o infalível teste do "ao".</p>
+                <span class="badge">Teoria + 1000 exercícios</span>
+                <span class="arrow">Acessar →</span>
+            </a>
+
+            <!-- 5. Complemento Verbal e Nominal -->
+            <a href="complemento.html" class="card">
+                <div class="icon">🎯</div>
+                <h3>Complemento Verbal &amp; Nominal</h3>
+                <p>Objeto direto, indireto, complemento nominal – diferenças e como identificar.</p>
+                <span class="badge">Teoria + 1000 exercícios</span>
+                <span class="arrow">Acessar →</span>
+            </a>
+
+            <!-- 6. Verbos – Todos os Estados -->
+            <a href="verbos.html" class="card">
+                <div class="icon">⚡</div>
+                <h3>Verbos – Todos os Estados</h3>
+                <p>Modos, tempos, vozes, formas nominais e classificação completa dos verbos.</p>
+                <span class="badge">Teoria + 1000 exercícios</span>
+                <span class="arrow">Acessar →</span>
+            </a>
+
+        </div>
+
+        <footer>
+            <strong>📚 Domine a gramática</strong> · 7 módulos interativos com teoria, macetes e 1.000 exercícios cada
+        </footer>
+
+    </div>
+
+</body>
+</html>
