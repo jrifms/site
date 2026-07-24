@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📘 Gramática: Crase – Teoria, Macetes e 1000 Exercícios</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #0f172a, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            -webkit-text-fill-color: #64748b;
+            background: none;
+            color: #64748b;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.05rem;
+            border-left: 4px solid #8b5cf6;
+            padding-left: 18px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 2px solid #e9edf2;
+            padding-bottom: 14px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #475569;
+            transition: 0.2s;
+        }
+        .nav-tabs button:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .nav-tabs button.active {
+            background: #0f172a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0.4; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .theory-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf2;
+            transition: 0.15s;
+        }
+        .theory-card:hover {
+            border-color: #cbd5e1;
+        }
+        .theory-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .theory-card h3 .badge {
+            font-size: 0.7rem;
+            background: #8b5cf6;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .theory-card h4 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin: 16px 0 6px;
+        }
+        .theory-card p, .theory-card li {
+            color: #334155;
+        }
+        .theory-card ul, .theory-card ol {
+            padding-left: 24px;
+            margin: 8px 0 12px;
+        }
+        .theory-card li {
+            margin-bottom: 3px;
+        }
+        .highlight-box {
+            background: #ede9fe;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border-left: 5px solid #7c3aed;
+        }
+        .highlight-box strong {
+            color: #5b21b6;
+        }
+        .example {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 8px 0 12px;
+            font-style: italic;
+            border: 1px dashed #94a3b8;
+        }
+        .example::before {
+            content: "📌 ";
+            font-style: normal;
+        }
+        .mnemonic {
+            background: #fef9c3;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #fde047;
+            margin: 10px 0;
+        }
+        .mnemonic strong {
+            color: #854d0e;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 680px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .container { padding: 16px; }
+            h1 { font-size: 1.8rem; flex-wrap: wrap; }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d1d9e6;
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e9edf2;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        /* ===== EXERCÍCIOS ===== */
+        .exercise-area { margin-top: 12px; }
+        .exercise-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 16px 20px;
+            border-radius: 18px;
+        }
+        .exercise-controls label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .exercise-controls select, .exercise-controls input {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .exercise-controls button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 40px;
+            background: #0f172a;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .exercise-controls button:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+        .exercise-controls .score {
+            margin-left: auto;
+            font-weight: 700;
+            color: #0f172a;
+            background: white;
+            padding: 4px 18px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+        }
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px;
+            border: 1px solid #e9edf2;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .question-box .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+        .question-box .q-text .highlight {
+            background: #fef08a;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 8px;
+        }
+        .options button {
+            padding: 8px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 40px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .options button:hover:not(:disabled) {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+        .options button.selected {
+            border-color: #7c3aed;
+            background: #ede9fe;
+        }
+        .options button.correct {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #14532d;
+        }
+        .options button.wrong {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+        .options button:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .feedback.show { display: block; }
+        .feedback.correct {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #14532d;
+        }
+        .feedback.wrong {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #7f1d1d;
+        }
+        .feedback .explanation {
+            margin-top: 6px;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+        .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 6px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 30px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .pagination button:hover {
+            background: #f1f5f9;
+        }
+        .pagination button.active-page {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9edf2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 6px 0 16px;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+            border-radius: 20px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        @media (max-width: 500px) {
+            .question-box { padding: 16px; }
+            .options button { padding: 6px 14px; font-size: 0.85rem; }
+            .exercise-controls { flex-direction: column; align-items: stretch; }
+            .exercise-controls .score { margin-left: 0; text-align: center; }
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9edf2;
+            padding-top: 24px;
+        }
+        .footer-note strong { color: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+    <header>
+        <h1>
+            📘 Gramática: Crase
+            <small>Teoria, Macetes e 1.000 Exercícios</small>
+        </h1>
+        <div class="subtitle">
+            Domine o uso da crase com explicações claras, truques infalíveis e prática intensiva
+        </div>
+    </header>
+
+    <nav class="nav-tabs" id="navTabs">
+        <button class="active" data-tab="teoria">📖 Teoria</button>
+        <button data-tab="macetes">🧠 Macetes</button>
+        <button data-tab="exercicios">✏️ Exercícios</button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1 – TEORIA -->
+    <!-- ============================================================ -->
+    <div class="tab-content active" id="tab-teoria">
+
+        <h2 style="font-size:1.8rem; margin-bottom:16px;">📖 Teoria da Crase</h2>
+
+        <div class="theory-card">
+            <h3>🔹 O que é crase?</h3>
+            <p>A <strong>crase</strong> é a fusão da preposição <strong>a</strong> com o artigo definido feminino <strong>a</strong> (ou com os pronomes <strong>a</strong> e <strong>as</strong>). É indicada pelo acento grave: <strong>`a</strong> (à) ou <strong>`as</strong> (às).</p>
+            <div class="example"><em>Fui <strong>à</strong> escola.</em> (preposição a + artigo a = à)</div>
+            <p>A crase também pode ocorrer com a combinação da preposição <strong>a</strong> com os pronomes demonstrativos <strong>aquele(s), aquela(s), aquilo</strong>:</p>
+            <div class="example"><em>Refiro-me <strong>àquela</strong> aluna.</em></div>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Regras básicas: quando usar crase</h3>
+            <p>A crase ocorre quando há:</p>
+            <ul>
+                <li><strong>Regra 1:</strong> Preposição <strong>a</strong> (exigida pelo termo anterior) + artigo feminino <strong>a(s)</strong> (presente no termo posterior).</li>
+                <li><strong>Regra 2:</strong> Preposição <strong>a</strong> + pronome demonstrativo <strong>aquele(s), aquela(s), aquilo</strong>.</li>
+                <li><strong>Regra 3:</strong> Preposição <strong>a</strong> + palavra feminina que admite o artigo.</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>⏳ Dica de ouro:</strong> Substitua a palavra feminina por uma masculina equivalente. Se aparecer <strong>"ao"</strong>, há crase; se aparecer <strong>"a"</strong> (sem artigo), não há crase.
+                <br /><br />
+                Ex: <em>Vou <strong>à</strong> praia</em> → Vou <strong>ao</strong> clube (crase).<br />
+                <em>Vou <strong>a</strong> Brasília</em> → Vou <strong>a</strong> Recife (sem crase, pois não se usa artigo com a cidade).
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Casos facultativos</h3>
+            <ul>
+                <li><strong>Antes de nomes próprios femininos:</strong> <em>Entregue a (à) Maria.</em> (ambas as formas são corretas)</li>
+                <li><strong>Antes de pronomes possessivos femininos:</strong> <em>Referi-me a (à) sua irmã.</em></li>
+                <li><strong>Antes da palavra <em>casa</em></strong> (quando significa "lar"): <em>Voltei a (à) casa.</em> (facultativo, mas sem crase é mais comum)</li>
+                <li><strong>Antes da palavra <em>terra</em></strong> (oposto de "mar"): <em>Os marinheiros desceram a (à) terra.</em></li>
+            </ul>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Casos proibidos (sem crase)</h3>
+            <ul>
+                <li><strong>Antes de palavra masculina:</strong> <em>Fui a pé.</em></li>
+                <li><strong>Antes de verbo:</strong> <em>Começou a cantar.</em></li>
+                <li><strong>Antes de pronomes pessoais (exceto aqueles já mencionados):</strong> <em>Pedi a ele.</em></li>
+                <li><strong>Antes de nomes de cidade que não admitem artigo:</strong> <em>Vou a São Paulo.</em> (se admitir, há crase: <em>Vou à Bahia</em>)</li>
+                <li><strong>Em expressões com palavras repetidas (locuções adverbiais femininas sem artigo):</strong> <em>cara a cara, gota a gota, face a face.</em></li>
+                <li><strong>Antes da palavra <em>casa</em></strong> quando significa "lar" (sem artigo): <em>Fui a casa.</em> (se especificado, com artigo: <em>Fui à casa da avó</em> – crase)</li>
+                <li><strong>Antes de <em>terra</em></strong> quando significa "chão firme" (oposto de "ar" ou "mar"): <em>Os aviadores voltaram a terra.</em></li>
+                <li><strong>Nas locuções prepositivas com pronome:</strong> <em>segundo a, conforme a, perante a</em> (não se usa artigo depois dessas preposições).</li>
+            </ul>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Dicas para não errar</h3>
+            <ul>
+                <li><strong>Troque a palavra feminina por uma masculina:</strong> se aparecer <strong>"ao"</strong>, use crase; se aparecer <strong>"a"</strong> sem artigo, não use.</li>
+                <li><strong>Substitua o termo regente por um verbo que exija preposição diferente:</strong> ex: <em>Preciso de ajuda</em> → não há crase.</li>
+                <li><strong>Memorize as locuções adverbiais com crase:</strong> <em>às vezes, à noite, à tarde, à vontade, à direita, à esquerda, às pressas, à toa</em>, etc.</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>🧠 Macete fundamental:</strong> <br />
+                Se o termo regente pede preposição "a" E o termo seguinte é feminino E admite artigo "a", então CRASE. <br />
+                Teste: substitua por "ao" (masculino). Se ficar natural, crase; se não, sem crase.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2 – MACETES -->
+    <!-- ============================================================ -->
+    <div class="tab-content" id="tab-macetes">
+
+        <h2 style="font-size:1.8rem; margin-bottom:16px;">🧠 Macetes &amp; Mnemônicos</h2>
+
+        <div class="theory-card">
+            <h3>📌 "A + A = À" – a fusão</h3>
+            <div class="mnemonic">
+                <strong>A</strong> (preposição) + <strong>A</strong> (artigo) = <strong>À</strong> (crase).<br />
+                Lembre: "A crase é a união de duas vogais iguais".
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 Teste do "ao"</h3>
+            <div class="mnemonic">
+                Substitua a palavra feminina por uma masculina:<br />
+                <ul>
+                    <li>Se aparecer <strong>"ao"</strong> → crase.</li>
+                    <li>Se aparecer <strong>"a"</strong> (sem artigo) → sem crase.</li>
+                </ul>
+                <div class="example"><em>Vou à praia</em> → Vou <strong>ao</strong> clube → crase.</div>
+                <div class="example"><em>Vou a festa</em> → Vou <strong>a</strong> evento (seria "ao evento"? não, "a evento" soa estranho, mas é possível) → normalmente se usa "à festa" porque "festa" admite artigo.</div>
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 "ÀS" – plural e horários</h3>
+            <div class="mnemonic">
+                Use <strong>à</strong> para singular e <strong>às</strong> para plural.<br />
+                <em>À uma hora</em> (singular), <em>Às duas horas</em> (plural).
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 Locuções com crase – "À MODA DE"</h3>
+            <div class="mnemonic">
+                Muitas locuções adverbiais femininas levam crase porque subentendem "à moda de".<br />
+                Ex: <em>à francesa</em> (à moda francesa), <em>à vontade</em> (à moda de vontade?), na verdade são expressões fixas.<br />
+                Decore as principais: <strong>à noite, à tarde, à direita, à esquerda, às vezes, às pressas, à toa, à vontade, à moda de</strong>.
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 "CASA" e "TERRA" – dica</h3>
+            <div class="mnemonic">
+                <ul>
+                    <li><strong>Casa</strong> (lar) → sem artigo, sem crase: <em>Fui a casa.</em> (mas <em>à casa da avó</em> → com crase porque especifica)</li>
+                    <li><strong>Terra</strong> (chão) → sem crase: <em>Descemos a terra.</em> (mas <em>à terra natal</em> → com crase porque especifica)</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3 – EXERCÍCIOS -->
+    <!-- ============================================================ -->
+    <div class="tab-content" id="tab-exercicios">
+
+        <h2 style="font-size:1.8rem; margin-bottom:8px;">✏️ 1.000 Exercícios Interativos</h2>
+        <p style="color:#475569; margin-bottom:18px;">Pratique a identificação e o uso correto da crase com exercícios variados.</p>
+
+        <div class="exercise-controls">
+            <label for="qtySelect">Quantos por vez:</label>
+            <select id="qtySelect">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            <button id="newExerciseBtn">🔁 Nova rodada</button>
+            <span class="score" id="scoreDisplay">✅ 0 / 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="fill" id="progressFill" style="width:0%;"></div>
+        </div>
+
+        <div id="exerciseContainer" class="exercise-area">
+            <!-- gerado por JS -->
+        </div>
+
+        <div class="pagination" id="paginationContainer">
+            <!-- gerado por JS -->
+        </div>
+
+        <div style="margin-top:24px; text-align:center; color:#94a3b8; font-size:0.9rem;">
+            <span id="totalExercisesLabel">Total de exercícios disponíveis: 1000</span>
+        </div>
+
+    </div>
+
+    <div class="footer-note">
+        <strong>📚 Domine a crase</strong> · Teoria · Macetes · 1.000 exercícios com correção automática
+    </div>
+</div>
+
+<script>
+    // ======================================================================
+    //   GERADOR DE 1.000 EXERCÍCIOS SOBRE CRASE
+    // ======================================================================
+
+    (function() {
+        'use strict';
+
+        function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = randInt(0, i);
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+        function pickN(arr, n) {
+            const copy = [...arr];
+            shuffle(copy);
+            return copy.slice(0, n);
+        }
+
+        // ---------- BANCOS DE DADOS ----------
+        const SUJEITOS = ['Eu', 'Tu', 'Ele', 'Ela', 'Nós', 'Vós', 'Eles', 'Elas', 'João', 'Maria', 'O menino', 'A menina', 'O professor', 'A professora'];
+        const VERBOS_CRASE = [
+            { v: 'ir', prep: 'a' },
+            { v: 'chegar', prep: 'a' },
+            { v: 'voltar', prep: 'a' },
+            { v: 'referir-se', prep: 'a' },
+            { v: 'assistir', prep: 'a' },
+            { v: 'obedecer', prep: 'a' },
+            { v: 'pertencer', prep: 'a' },
+            { v: 'visitar', prep: 'a' }
+        ];
+        const SUBSTANTIVOS_FEM = ['escola', 'praia', 'casa', 'igreja', 'festa', 'reunião', 'entrevista', 'aula', 'palestra', 'cerimônia', 'loja', 'padaria', 'farmácia', 'biblioteca', 'academia'];
+        const SUBSTANTIVOS_MASC = ['clube', 'colégio', 'parque', 'shopping', 'teatro', 'cinema', 'restaurante', 'museu', 'estádio', 'hospital'];
+        const NOMES_PROPIOS_FEM = ['Maria', 'Ana', 'Paula', 'Clara', 'Sofia', 'Marta', 'Carla', 'Julia', 'Rosa', 'Beatriz'];
+        const NOMES_CIDADES_COM_ARTIGO = ['Bahia', 'Paraíba', 'Alagoas', 'Sergipe', 'Pernambuco', 'Rio de Janeiro', 'Minas Gerais', 'São Paulo? (sem artigo)'];
+        const NOMES_CIDADES_SEM_ARTIGO = ['São Paulo', 'Recife', 'Fortaleza', 'Belo Horizonte', 'Porto Alegre', 'Curitiba', 'Salvador? (com artigo?)'];
+        const LOCUCOES_CRASE = ['à noite', 'à tarde', 'à direita', 'à esquerda', 'às vezes', 'às pressas', 'à toa', 'à vontade', 'à moda de'];
+        const LOCUCOES_SEM_CRASE = ['cara a cara', 'gota a gota', 'face a face', 'a pé', 'a cavalo', 'a portas fechadas'];
+
+        // ---------- GERADORES DE PERGUNTAS ----------
+
+        // 1. Preencher com crase (à / às) ou sem crase (a / as)
+        function genFillCrase() {
+            // Gera uma frase com um espaço para preencher
+            const tipo = rand(['verbo+subst', 'locucao', 'cidade', 'casa_terra', 'pronome_dem']);
+            let frase, answer, options, explanation;
+
+            if (tipo === 'verbo+subst') {
+                const verboObj = rand(VERBOS_CRASE);
+                const verbo = verboObj.v;
+                const prep = verboObj.prep;
+                const fem = rand(SUBSTANTIVOS_FEM);
+                const masc = rand(SUBSTANTIVOS_MASC);
+                // Decide se o substantivo admite artigo
+                const comArtigo = rand([true, false]);
+                // Se comArtigo for true, usamos crase; senão, sem crase (mas precisamos que o verbo exija preposição)
+                // Para simplificar, geramos frases onde a presença de artigo é determinada
+                const usarCrase = rand([true, false]);
+                let fraseFinal;
+                if (usarCrase) {
+                    fraseFinal = `${rand(SUJEITOS)} foi ${prep}${' '}_____ ${fem}.`;
+                    answer = 'à';
+                    explanation = `O verbo "${verbo}" exige preposição "${prep}" e a palavra "${fem}" admite artigo "a", formando crase.`;
+                } else {
+                    // Sem crase: usamos um substantivo que não admite artigo (ou usamos sem artigo)
+                    // Pode ser um masculino, ou um feminino sem artigo (ex: "casa" sem artigo)
+                    if (rand([true, false])) {
+                        fraseFinal = `${rand(SUJEITOS)} foi ${prep} _____ ${masc}.`;
+                        answer = 'a';
+                        explanation = `A palavra é masculina, portanto não há crase (não há artigo feminino).`;
+                    } else {
+                        // Usa um feminino mas sem artigo (ex: "a casa" quando significa lar)
+                        const semArtigo = rand(['casa', 'terra']);
+                        fraseFinal = `${rand(SUJEITOS)} foi ${prep} _____ ${semArtigo}.`;
+                        answer = 'a';
+                        explanation = `"${semArtigo}" pode ser usado sem artigo (sentido genérico), portanto não há crase.`;
+                    }
+                }
+                options = shuffle(['à', 'a', 'às', 'as']);
+            } else if (tipo === 'locucao') {
+                // Locução adverbial
+                const locCom = rand(LOCUCOES_CRASE);
+                const locSem = rand(LOCUCOES_SEM_CRASE);
+                const usarCrase = rand([true, false]);
+                if (usarCrase) {
+                    frase = `Ela chegou _____ ${locCom.split(' ').slice(1).join(' ')}.`;
+                    answer = locCom.split(' ')[0];
+                    explanation = `A locução "${locCom}" é fixa e leva crase.`;
+                } else {
+                    frase = `Eles lutaram _____ ${locSem.split(' ').slice(1).join(' ')}.`;
+                    answer = locSem.split(' ')[0];
+                    explanation = `A locução "${locSem}" não leva crase (palavras repetidas sem artigo).`;
+                }
+                options = shuffle(['à', 'a', 'às', 'as']);
+            } else if (tipo === 'cidade') {
+                const cidadeCom = rand(['Bahia', 'Paraíba', 'Alagoas', 'Sergipe', 'Pernambuco', 'Rio de Janeiro', 'Minas Gerais']);
+                const cidadeSem = rand(['São Paulo', 'Recife', 'Fortaleza', 'Belo Horizonte', 'Porto Alegre', 'Curitiba']);
+                const usarCrase = rand([true, false]);
+                if (usarCrase) {
+                    frase = `Vou _____ ${cidadeCom}.`;
+                    answer = 'à';
+                    explanation = `A cidade "${cidadeCom}" admite artigo feminino, portanto há crase.`;
+                } else {
+                    frase = `Vou _____ ${cidadeSem}.`;
+                    answer = 'a';
+                    explanation = `A cidade "${cidadeSem}" não admite artigo, portanto não há crase.`;
+                }
+                options = shuffle(['à', 'a']);
+            } else if (tipo === 'casa_terra') {
+                const palavra = rand(['casa', 'terra']);
+                const comArtigo = rand([true, false]);
+                if (comArtigo) {
+                    frase = `Fui _____ ${palavra} da minha avó.`;
+                    answer = 'à';
+                    explanation = `"${palavra}" especificada (com determinante) admite artigo, logo crase.`;
+                } else {
+                    frase = `Fui _____ ${palavra}.`;
+                    answer = 'a';
+                    explanation = `"${palavra}" em sentido genérico (lar/chão) não admite artigo, logo sem crase.`;
+                }
+                options = shuffle(['à', 'a']);
+            } else { // pronome demonstrativo
+                const pron = rand(['aquele', 'aquela', 'aquilo']);
+                const fem = rand(['aluna', 'professora', 'amiga', 'colega']);
+                frase = `Refiro-me _____ ${pron} ${fem}.`;
+                answer = 'àquela';
+                explanation = `Preposição "a" + pronome demonstrativo "aquela" = àquela.`;
+                options = shuffle(['àquela', 'aquela', 'a aquela', 'a']);
+            }
+
+            // Ajustar a frase para exibir o espaço em branco
+            const displayFrase = frase.replace('_____', '______');
+            return {
+                question: `Preencha com a opção correta:\n\n"${displayFrase}"`,
+                options,
+                answer,
+                explanation,
+                type: 'fill'
+            };
+        }
+
+        // 2. Escolher a opção correta (com crase, sem crase, facultativo)
+        function genChoiceCrase() {
+            const tipos = ['obrigatorio', 'proibido', 'facultativo'];
+            const tipo = rand(tipos);
+            let frase, answer, options, explanation;
+
+            if (tipo === 'obrigatorio') {
+                const verboObj = rand(VERBOS_CRASE);
+                const fem = rand(SUBSTANTIVOS_FEM);
+                frase = `${rand(SUJEITOS)} foi _____ ${fem}.`;
+                answer = 'Com crase (à)';
+                explanation = `O verbo exige preposição "a" e o substantivo admite artigo, portanto crase obrigatória.`;
+            } else if (tipo === 'proibido') {
+                const masc = rand(SUBSTANTIVOS_MASC);
+                frase = `${rand(SUJEITOS)} foi _____ ${masc}.`;
+                answer = 'Sem crase (a)';
+                explanation = `A palavra é masculina, não há artigo feminino, portanto crase proibida.`;
+            } else {
+                const nome = rand(NOMES_PROPIOS_FEM);
+                frase = `Entregue o livro _____ ${nome}.`;
+                answer = 'Facultativo (à ou a)';
+                explanation = `Antes de nomes próprios femininos, o uso da crase é facultativo.`;
+            }
+
+            const opts = shuffle(['Com crase (à)', 'Sem crase (a)', 'Facultativo (à ou a)']);
+            return {
+                question: `Na frase abaixo, o uso da crase é:\n\n"${frase}"`,
+                options: opts,
+                answer,
+                explanation,
+                type: 'choice'
+            };
+        }
+
+        // 3. Identificar se a frase está correta ou errada
+        function genCorretoErrado() {
+            const verboObj = rand(VERBOS_CRASE);
+            const fem = rand(SUBSTANTIVOS_FEM);
+            const masc = rand(SUBSTANTIVOS_MASC);
+            const useCrase = rand([true, false]);
+            let frase, answer, explanation, options;
+
+            if (useCrase) {
+                frase = `${rand(SUJEITOS)} foi à ${fem}.`;
+                answer = 'Correta';
+                explanation = `Uso correto da crase: preposição + artigo.`;
+            } else {
+                // Caso sem crase: usar masculino ou feminino sem artigo
+                if (rand([true, false])) {
+                    frase = `${rand(SUJEITOS)} foi a ${masc}.`;
+                    answer = 'Correta';
+                    explanation = `Palavra masculina, crase não se aplica.`;
+                } else {
+                    // Erro proposital: usar crase onde não cabe
+                    const errado = rand([true, false]);
+                    if (errado) {
+                        frase = `${rand(SUJEITOS)} foi à ${masc}.`;
+                        answer = 'Errada';
+                        explanation = `Crase antes de palavra masculina é proibida.`;
+                    } else {
+                        frase = `${rand(SUJEITOS)} foi a ${fem}.`;
+                        answer = 'Correta';
+                        explanation = `Sem crase, pois a palavra "${fem}" pode ser usada sem artigo (ou não há preposição).`;
+                    }
+                }
+            }
+            options = shuffle(['Correta', 'Errada']);
+            return {
+                question: `A frase abaixo está correta quanto ao uso da crase?\n\n"${frase}"`,
+                options,
+                answer,
+                explanation,
+                type: 'correct'
+            };
+        }
+
+        // 4. Completar com a locução correta (com/sem crase)
+        function genLocucao() {
+            const com = rand(LOCUCOES_CRASE);
+            const sem = rand(LOCUCOES_SEM_CRASE);
+            const usar = rand([true, false]);
+            let frase, answer, options, explanation;
+
+            if (usar) {
+                frase = `Ela agiu _____ ${com.replace(/^à /, '').replace(/^às /, '')}.`;
+                // Extrair a primeira palavra da locução (à ou às)
+                const first = com.split(' ')[0];
+                answer = first;
+                explanation = `A locução "${com}" é fixa com crase.`;
+            } else {
+                frase = `Eles lutaram _____ ${sem.replace(/^a /, '').replace(/^as /, '')}`;
+                const first = sem.split(' ')[0];
+                answer = first;
+                explanation = `A locução "${sem}" é fixa sem crase.`;
+            }
+            options = shuffle(['à', 'a', 'às', 'as']);
+            return {
+                question: `Complete com a forma adequada:\n\n"${frase}"`,
+                options,
+                answer,
+                explanation,
+                type: 'locucao'
+            };
+        }
+
+        // ---------- GERAR 1000 EXERCÍCIOS ----------
+        function generateExercises(count = 1000) {
+            const exercises = [];
+            const generators = [
+                genFillCrase,
+                genChoiceCrase,
+                genCorretoErrado,
+                genLocucao
+            ];
+
+            for (let i = 0; i < count; i++) {
+                const gen = rand(generators);
+                exercises.push(gen());
+            }
+            return exercises;
+        }
+
+        // ---------- ESTADO E RENDERIZAÇÃO ----------
+        let allExercises = [];
+        let currentPage = 0;
+        let pageSize = 10;
+        let answered = {};
+        let userAnswers = {};
+        let score = { correct: 0, total: 0 };
+
+        function renderExercises() {
+            const container = document.getElementById('exerciseContainer');
+            const pagContainer = document.getElementById('paginationContainer');
+            const progressFill = document.getElementById('progressFill');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+
+            if (allExercises.length === 0) {
+                container.innerHTML =
+                    `<p style="text-align:center; padding:40px; color:#64748b;">🔍 Clique em "Nova rodada" para gerar os exercícios.</p>`;
+                pagContainer.innerHTML = '';
+                return;
+            }
+
+            const total = allExercises.length;
+            const totalPages = Math.ceil(total / pageSize);
+            const start = currentPage * pageSize;
+            const end = Math.min(start + pageSize, total);
+            const pageExercises = allExercises.slice(start, end);
+
+            const answeredCount = Object.keys(answered).length;
+            const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+            progressFill.style.width = pct + '%';
+            scoreDisplay.textContent = `✅ ${score.correct} / ${score.total}`;
+
+            let html = '';
+            pageExercises.forEach((ex, idx) => {
+                const globalIdx = start + idx;
+                const isAnswered = answered[globalIdx] !== undefined;
+                const userAns = userAnswers[globalIdx] || '';
+                const isCorrect = answered[globalIdx] === true;
+                const isWrong = answered[globalIdx] === false;
+
+                html += `<div class="question-box" data-idx="${globalIdx}">`;
+                html += `<div class="q-text">${ex.question.replace(/\n/g, '<br>')}</div>`;
+
+                html += `<div class="options">`;
+                ex.options.forEach(opt => {
+                    let cls = '';
+                    let disabled = false;
+                    if (isAnswered) {
+                        disabled = true;
+                        if (opt === ex.answer) cls = 'correct';
+                        if (opt === userAns && opt !== ex.answer) cls = 'wrong';
+                        if (opt === userAns) cls += ' selected';
+                    } else if (opt === userAns) {
+                        cls = 'selected';
+                    }
+                    html +=
+                        `<button class="${cls}" data-global="${globalIdx}" data-opt="${opt}" ${disabled ? 'disabled' : ''}>${opt}</button>`;
+                });
+                html += `</div>`;
+
+                if (isAnswered) {
+                    const fbClass = isCorrect ? 'correct' : 'wrong';
+                    html += `<div class="feedback show ${fbClass}">`;
+                    html += `<strong>${isCorrect ? '✅ Correto!' : '❌ Incorreto.'}</strong> ${ex.explanation}`;
+                    html += `</div>`;
+                } else {
+                    html += `<div class="feedback" id="fb-${globalIdx}"></div>`;
+                }
+
+                html += `</div>`;
+            });
+
+            container.innerHTML = html;
+
+            container.querySelectorAll('.options button:not([disabled])').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const globalIdx = parseInt(this.dataset.global);
+                    const selected = this.dataset.opt;
+                    handleAnswer(globalIdx, selected);
+                });
+            });
+
+            let pagHtml = '';
+            for (let p = 0; p < totalPages; p++) {
+                pagHtml +=
+                    `<button class="${p === currentPage ? 'active-page' : ''}" data-page="${p}">${p+1}</button>`;
+            }
+            pagContainer.innerHTML = pagHtml;
+            pagContainer.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = parseInt(this.dataset.page);
+                    if (page !== currentPage) {
+                        currentPage = page;
+                        renderExercises();
+                    }
+                });
+            });
+
+            document.getElementById('totalExercisesLabel').textContent =
+                `Total de exercícios disponíveis: ${total}`;
+        }
+
+        function handleAnswer(globalIdx, selected) {
+            if (answered[globalIdx] !== undefined) return;
+
+            const ex = allExercises[globalIdx];
+            const isCorrect = selected === ex.answer;
+
+            answered[globalIdx] = isCorrect;
+            userAnswers[globalIdx] = selected;
+            if (isCorrect) score.correct++;
+            score.total++;
+
+            renderExercises();
+
+            const qBox = document.querySelector(`.question-box[data-idx="${globalIdx}"]`);
+            if (qBox) qBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function newRound() {
+            const qty = parseInt(document.getElementById('qtySelect').value);
+            allExercises = generateExercises(qty);
+            currentPage = 0;
+            answered = {};
+            userAnswers = {};
+            score = { correct: 0, total: 0 };
+            renderExercises();
+        }
+
+        // ---------- INICIALIZAR ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            const navBtns = document.querySelectorAll('#navTabs button');
+            const tabContents = {
+                teoria: document.getElementById('tab-teoria'),
+                macetes: document.getElementById('tab-macetes'),
+                exercicios: document.getElementById('tab-exercicios')
+            };
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    Object.keys(tabContents).forEach(key => {
+                        tabContents[key].classList.toggle('active', key === tab);
+                    });
+                });
+            });
+
+            document.getElementById('newExerciseBtn').addEventListener('click', newRound);
+            document.getElementById('qtySelect').addEventListener('change', function() {
+                if (allExercises.length > 0) newRound();
+            });
+
+            setTimeout(() => { newRound(); }, 100);
+        });
+    })();
+</script>
+</body>
+</html>
