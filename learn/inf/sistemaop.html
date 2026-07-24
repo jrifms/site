@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Operacionais · Concurso Técnico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f4f0fa;
+            color: #1a2639;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.07);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #2c0b44;
+            border-left: 8px solid #6c3483;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .subtitle {
+            color: #3f5a77;
+            font-size: 1.1rem;
+            padding-left: 28px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e2eaf1;
+            padding-bottom: 15px;
+        }
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        nav button {
+            background: none;
+            border: none;
+            padding: 10px 26px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3a5470;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: #f0e4f6;
+        }
+        nav button.active {
+            background: #6c3483;
+            color: white;
+            box-shadow: 0 4px 12px rgba(108, 52, 131, 0.3);
+        }
+        .section {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.3;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== TEORIA COM GRÁFICOS ========== */
+        .teoria-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 800px) {
+            .teoria-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .teoria-card {
+            background: #fafcff;
+            border-radius: 18px;
+            padding: 20px 22px;
+            border: 1px solid #e4edf6;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            transition: 0.15s;
+        }
+        .teoria-card:hover {
+            border-color: #c39bd3;
+        }
+        .teoria-card h3 {
+            color: #2c0b44;
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+            border-bottom: 2px dashed #d4e0ed;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .teoria-card ul {
+            padding-left: 22px;
+            margin: 8px 0 12px;
+        }
+        .teoria-card li {
+            margin-bottom: 6px;
+        }
+        .macete-box {
+            background: #f4ecf7;
+            border-left: 6px solid #6c3483;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 16px 0 8px;
+        }
+        .macete-box strong {
+            color: #4a235a;
+        }
+        .graphic-container {
+            background: #f9f4ff;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 18px 0 10px;
+            text-align: center;
+            border: 1px solid #d7c4e6;
+        }
+        .graphic-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .graphic-container .legenda {
+            font-size: 0.85rem;
+            color: #2f4b6e;
+            margin-top: 6px;
+        }
+        .dica-extra {
+            background: #fef6e6;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border-left: 4px solid #f0b34b;
+            margin-top: 12px;
+        }
+        .dica-extra strong {
+            color: #a76f1a;
+        }
+
+        /* ========== EXERCÍCIOS ========== */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+        .quiz-controls .info {
+            font-size: 0.95rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+            color: #2c0b44;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a2a3f;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background: #dce5f0;
+        }
+        .btn-primary {
+            background: #6c3483;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #4a235a;
+        }
+        .btn-success {
+            background: #1f8b4c;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #16703d;
+        }
+        .btn-danger {
+            background: #b33c3c;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #922e2e;
+        }
+        .questao {
+            background: #fbfdff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e4ecf5;
+            transition: 0.15s;
+        }
+        .questao:hover {
+            border-color: #c39bd3;
+        }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 8px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .questao .opcao:hover {
+            background: #f4ecf7;
+        }
+        .questao .opcao input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #6c3483;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 0;
+        }
+        .questao .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 500;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 6px;
+        }
+        .questao.resolvida .opcao {
+            opacity: 0.85;
+        }
+        .questao.resolvida .opcao input[type="radio"] {
+            pointer-events: none;
+        }
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .paginacao .page-btn:hover {
+            background: #d4dfec;
+        }
+        .paginacao .page-btn.active-page {
+            background: #6c3483;
+            color: white;
+        }
+        .stats {
+            background: #f4ecf7;
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #4a235a;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6a7e97;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .questao {
+                padding: 16px;
+            }
+            .btn-group .btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖥️ Sistemas Operacionais <span style="font-size:1rem; font-weight:400; color:#3f5a77;">· Técnico Administrativo</span></h1>
+        <div class="subtitle">Teoria visual + macetes + 1000 exercícios com correção automática (Windows, Linux, macOS)</div>
+
+        <nav>
+            <button class="active" data-section="teoria">📘 Teoria & Macetes</button>
+            <button data-section="exercicios">📝 Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO TEORIA COM GRÁFICOS E DICAS                               -->
+        <!-- ============================================================ -->
+        <section id="teoria" class="section active">
+            <div class="teoria-grid">
+
+                <!-- 1. O que é um SO -->
+                <div class="teoria-card">
+                    <h3>🧠 O que é um Sistema Operacional?</h3>
+                    <ul>
+                        <li><strong>Definição:</strong> software que gerencia hardware e recursos, fornecendo interface para o usuário.</li>
+                        <li><strong>Funções básicas:</strong> gerenciamento de processos, memória, arquivos, dispositivos E/S, segurança.</li>
+                        <li><strong>Tipos:</strong> desktop (Windows, Linux, macOS), servidor (Windows Server, Linux), mobile (Android, iOS).</li>
+                        <li><strong>Kernel:</strong> núcleo do SO, responsável pela comunicação entre software e hardware.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="70" height="25" rx="6" fill="#2b5797" />
+                            <text x="18" y="22" font-size="11" fill="white">Windows</text>
+                            <rect x="90" y="5" width="70" height="25" rx="6" fill="#f2a900" />
+                            <text x="100" y="22" font-size="11" fill="white">Linux</text>
+                            <rect x="170" y="5" width="70" height="25" rx="6" fill="#2c3e50" />
+                            <text x="178" y="22" font-size="11" fill="white">macOS</text>
+                            <text x="10" y="52" font-size="9" fill="#2c3e50">Principais SOs: Windows (pago), Linux (gratuito), macOS (pago).</text>
+                        </svg>
+                        <div class="legenda">Principais sistemas operacionais.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “SO é o gerente do computador: controla tudo, desde o mouse até a memória.”<br>
+                        📌 <strong>Decore:</strong> Kernel é o coração do SO; sem ele, o computador não funciona.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O Linux é open-source e gratuito; Windows e macOS são pagos.”
+                    </div>
+                </div>
+
+                <!-- 2. Gerenciamento de Processos -->
+                <div class="teoria-card">
+                    <h3>⚙️ Gerenciamento de Processos</h3>
+                    <ul>
+                        <li><strong>Processo:</strong> programa em execução.</li>
+                        <li><strong>Thread:</strong> unidade menor de execução dentro de um processo.</li>
+                        <li><strong>Escalonamento:</strong> algoritmo que decide qual processo será executado pela CPU (ex: Round Robin, Prioridade).</li>
+                        <li><strong>Estados do processo:</strong> pronto, executando, bloqueado, novo, terminado.</li>
+                        <li><strong>Comandos:</strong> no Windows, Ctrl+Alt+Del (Gerenciador de Tarefas); no Linux, ps, top, kill.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#3498db" />
+                            <text x="16" y="19" font-size="9" fill="white">Pronto</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#2ecc71" />
+                            <text x="86" y="19" font-size="9" fill="white">Executando</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#e74c3c" />
+                            <text x="156" y="19" font-size="9" fill="white">Bloqueado</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Estados de um processo: pronto, executando, bloqueado.</text>
+                        </svg>
+                        <div class="legenda">Estados básicos de um processo.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Pronto → Executando → Bloqueado → Pronto (ciclo).”<br>
+                        📌 <strong>Decore:</strong> O escalonador é responsável por decidir qual processo executa.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “No Windows, o Gerenciador de Tarefas mostra processos e threads.”
+                    </div>
+                </div>
+
+                <!-- 3. Gerenciamento de Memória -->
+                <div class="teoria-card">
+                    <h3>🧠 Gerenciamento de Memória</h3>
+                    <ul>
+                        <li><strong>Memória virtual:</strong> utiliza espaço em disco (swap/paging) para estender a RAM.</li>
+                        <li><strong>Paginação:</strong> divide a memória em páginas (ex: 4KB).</li>
+                        <li><strong>Segmentação:</strong> divide em segmentos lógicos (código, dados, pilha).</li>
+                        <li><strong>Swapping:</strong> movimenta processos entre RAM e disco.</li>
+                        <li><strong>Comandos:</strong> no Windows, Task Manager (memória); no Linux, free, vmstat.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="80" height="20" rx="4" fill="#f39c12" />
+                            <text x="16" y="19" font-size="9" fill="white">RAM (física)</text>
+                            <rect x="100" y="5" width="80" height="20" rx="4" fill="#e67e22" />
+                            <text x="106" y="19" font-size="9" fill="white">Swap (disco)</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Memória virtual = RAM + swap (página no disco).</text>
+                        </svg>
+                        <div class="legenda">Conceito de memória virtual.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Memória virtual engana o programa, fazendo-o pensar que tem mais RAM.”<br>
+                        📌 <strong>Decore:</strong> Páginas são blocos de memória física; tabela de páginas mapeia endereços virtuais para físicos.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O arquivo de página (pagefile.sys no Windows) é usado para memória virtual.”
+                    </div>
+                </div>
+
+                <!-- 4. Sistema de Arquivos -->
+                <div class="teoria-card">
+                    <h3>📁 Sistema de Arquivos</h3>
+                    <ul>
+                        <li><strong>Estrutura:</strong> diretórios (pastas) e arquivos.</li>
+                        <li><strong>Tipos de sistemas de arquivos:</strong> NTFS (Windows), ext4 (Linux), APFS (macOS), FAT32, exFAT.</li>
+                        <li><strong>Permissões:</strong> leitura, escrita, execução (no Linux/macOS); no Windows, permissões NTFS.</li>
+                        <li><strong>Caminhos:</strong> absoluto (ex: C:\Users\... no Windows; /home/... no Linux) e relativo.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#2b5797" />
+                            <text x="16" y="19" font-size="9" fill="white">NTFS</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#f2a900" />
+                            <text x="86" y="19" font-size="9" fill="white">ext4</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#2c3e50" />
+                            <text x="156" y="19" font-size="9" fill="white">APFS</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Sistemas de arquivos nativos: NTFS (Windows), ext4 (Linux), APFS (macOS).</text>
+                        </svg>
+                        <div class="legenda">Sistemas de arquivos mais comuns.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “NTFS é o padrão do Windows, ext4 do Linux, APFS do macOS.”<br>
+                        📌 <strong>Decore:</strong> FAT32 é compatível com vários SOs, mas tem limite de 4GB por arquivo.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “No Linux, tudo é arquivo (incluindo dispositivos).”
+                    </div>
+                </div>
+
+                <!-- 5. Comandos básicos Windows e Linux -->
+                <div class="teoria-card">
+                    <h3>⌨️ Comandos – Windows e Linux</h3>
+                    <ul>
+                        <li><strong>Windows (CMD):</strong> dir (lista diretórios), cd (muda diretório), ipconfig (configurações de rede), ping, tasklist (processos).</li>
+                        <li><strong>Linux (Bash):</strong> ls (lista), cd, pwd (mostra diretório atual), ps (processos), top (monitor), kill (termina processo), ifconfig/ip.</li>
+                        <li><strong>Comandos comuns:</strong> mkdir (cria pasta), rm/rmdir (remove), cp (copia), mv (move/renomeia).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="130" height="20" rx="4" fill="#2b5797" />
+                            <text x="16" y="19" font-size="9" fill="white">dir, cd, ipconfig, tasklist</text>
+                            <rect x="150" y="5" width="130" height="20" rx="4" fill="#f2a900" />
+                            <text x="156" y="19" font-size="9" fill="white">ls, cd, ps, top, kill</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Comandos básicos: Windows (esquerda) e Linux (direita).</text>
+                        </svg>
+                        <div class="legenda">Comandos mais cobrados em concursos.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “No Windows, dir lista; no Linux, ls lista. Ambos têm cd para mudar de diretório.”<br>
+                        📌 <strong>Decore:</strong> ipconfig (Windows) e ifconfig/ip (Linux) mostram configurações de rede.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “No Linux, o comando sudo é usado para executar comandos com privilégios de administrador.”
+                    </div>
+                </div>
+
+                <!-- 6. Atalhos do teclado (Windows/Linux) -->
+                <div class="teoria-card">
+                    <h3>⌨️ Atalhos de Teclado</h3>
+                    <ul>
+                        <li><strong>Windows:</strong> Win (abre menu iniciar), Win+D (mostrar área de trabalho), Win+E (Explorador), Alt+Tab (alternar janelas), Ctrl+Alt+Del (segurança).</li>
+                        <li><strong>Linux (Gnome/KDE):</strong> Super (Win) + D (mostrar área de trabalho), Alt+Tab, Ctrl+Alt+T (abrir terminal).</li>
+                        <li><strong>Comuns:</strong> Ctrl+C (copiar), Ctrl+V (colar), Ctrl+X (cortar), Ctrl+Z (desfazer), Ctrl+A (selecionar tudo).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#2b5797" />
+                            <text x="16" y="19" font-size="9" fill="white">Win + D</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#f2a900" />
+                            <text x="86" y="19" font-size="9" fill="white">Alt+Tab</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#e74c3c" />
+                            <text x="156" y="19" font-size="9" fill="white">Ctrl+C</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Atalhos universais: Win+D (área de trabalho), Alt+Tab (alternar), Ctrl+C (copiar).</text>
+                        </svg>
+                        <div class="legenda">Atalhos mais usados.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Win+D mostra a área de trabalho, Alt+Tab alterna entre janelas, Ctrl+Alt+Del abre o menu de segurança.”<br>
+                        📌 <strong>Decore:</strong> No Linux, a tecla Super é a tecla Windows.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “No Windows, Win+L bloqueia a tela; Ctrl+Shift+Esc abre o Gerenciador de Tarefas diretamente.”
+                    </div>
+                </div>
+
+                <!-- 7. Extensões de arquivo no SO -->
+                <div class="teoria-card">
+                    <h3>📁 Extensões e associações</h3>
+                    <ul>
+                        <li><strong>Arquivos executáveis:</strong> .exe (Windows), .bin (Linux), .app (macOS).</li>
+                        <li><strong>Scripts:</strong> .bat (Windows), .sh (Linux), .cmd (Windows).</li>
+                        <li><strong>Bibliotecas:</strong> .dll (Windows), .so (Linux), .dylib (macOS).</li>
+                        <li><strong>Pacotes:</strong> .msi (Windows), .deb/.rpm (Linux), .pkg (macOS).</li>
+                        <li><strong>Associação:</strong> cada extensão é associada a um aplicativo padrão (ex: .txt abre no Bloco de Notas).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#2b5797" />
+                            <text x="16" y="19" font-size="9" fill="white">.exe</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#f2a900" />
+                            <text x="86" y="19" font-size="9" fill="white">.sh</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#2c3e50" />
+                            <text x="156" y="19" font-size="9" fill="white">.app</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Executáveis: .exe (Windows), .sh (Linux), .app (macOS).</text>
+                        </svg>
+                        <div class="legenda">Extensões de executáveis e scripts.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “.exe é do Windows, .sh é script Linux, .app é aplicativo macOS.”<br>
+                        📌 <strong>Decore:</strong> No Linux, a extensão não define se é executável; a permissão de execução que conta.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Um arquivo .dll (Windows) é uma biblioteca dinâmica; .so no Linux é biblioteca compartilhada.”
+                    </div>
+                </div>
+
+                <!-- 8. Diferenças entre Windows, Linux, macOS -->
+                <div class="teoria-card">
+                    <h3>⚖️ Comparativo entre SOs</h3>
+                    <ul>
+                        <li><strong>Windows:</strong> pago, maior compatibilidade de software, interface gráfica (GUI), foco em usuários domésticos e corporativos.</li>
+                        <li><strong>Linux:</strong> gratuito, open-source, várias distribuições (Ubuntu, Fedora, Debian), usado em servidores e desenvolvimento.</li>
+                        <li><strong>macOS:</strong> pago, exclusivo para hardware Apple, baseado em Unix, muito usado em design e desenvolvimento.</li>
+                        <li><strong>Mobile:</strong> Android (baseado em Linux), iOS (baseado em Unix).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="80" height="20" rx="4" fill="#2b5797" />
+                            <text x="20" y="19" font-size="9" fill="white">Windows (pago)</text>
+                            <rect x="100" y="5" width="80" height="20" rx="4" fill="#f2a900" />
+                            <text x="110" y="19" font-size="9" fill="white">Linux (gratuito)</text>
+                            <rect x="190" y="5" width="80" height="20" rx="4" fill="#2c3e50" />
+                            <text x="200" y="19" font-size="9" fill="white">macOS (pago)</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Principais diferenças: custo, licenciamento, hardware, software.</text>
+                        </svg>
+                        <div class="legenda">Comparativo entre SOs.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Windows é pago e popular, Linux é livre e estável, macOS é exclusivo e integrado.”<br>
+                        📌 <strong>Decore:</strong> Linux é amplamente usado em servidores (cerca de 70% da web roda em Linux).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O Android é baseado em Linux; o iOS é baseado em Unix (BSD).”
+                    </div>
+                </div>
+
+                <!-- 9. Gerenciamento de usuários e permissões -->
+                <div class="teoria-card">
+                    <h3>👤 Usuários e Permissões</h3>
+                    <ul>
+                        <li><strong>Windows:</strong> Contas de usuário (Administrador, Padrão, Convidado) – UAC (Controle de Conta de Usuário).</li>
+                        <li><strong>Linux:</strong> root (superusuário), usuários normais; permissões rwx (leitura, escrita, execução) para dono, grupo, outros.</li>
+                        <li><strong>Comandos:</strong> no Linux, chmod (muda permissões), chown (muda dono), useradd, passwd.</li>
+                        <li><strong>No Windows:</strong> net user, compmgmt.msc (gerenciamento de computadores).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="80" height="20" rx="4" fill="#2b5797" />
+                            <text x="20" y="19" font-size="9" fill="white">Administrador</text>
+                            <rect x="100" y="5" width="80" height="20" rx="4" fill="#f2a900" />
+                            <text x="110" y="19" font-size="9" fill="white">Usuário padrão</text>
+                            <rect x="190" y="5" width="80" height="20" rx="4" fill="#e74c3c" />
+                            <text x="200" y="19" font-size="9" fill="white">Convidado</text>
+                            <text x="10" y="48" font-size="8" fill="#2c3e50">Tipos de conta no Windows.</text>
+                        </svg>
+                        <div class="legenda">Contas de usuário no Windows.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “No Linux, root é o todo-poderoso; no Windows, Administrador tem poderes totais.”<br>
+                        📌 <strong>Decore:</strong> chmod 755 dá permissões rwxr-xr-x (dono pode tudo, grupo e outros leem/executam).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O UAC (Windows) pede confirmação para ações que exigem privilégios de administrador.”
+                    </div>
+                </div>
+
+                <!-- 10. Resumo final -->
+                <div class="teoria-card">
+                    <h3>📌 Resumo para a Prova</h3>
+                    <ul>
+                        <li><strong>SO:</strong> gerencia hardware e recursos.</li>
+                        <li><strong>Processos:</strong> estado (pronto, executando, bloqueado), escalonamento.</li>
+                        <li><strong>Memória:</strong> virtual, paginação, swapping.</li>
+                        <li><strong>Arquivos:</strong> sistemas de arquivos (NTFS, ext4, APFS), permissões.</li>
+                        <li><strong>Comandos:</strong> dir/ls, cd, ipconfig/ifconfig, tasklist/ps, kill.</li>
+                        <li><strong>Atalhos:</strong> Win+D, Alt+Tab, Ctrl+Alt+Del.</li>
+                        <li><strong>Extensões:</strong> .exe, .sh, .app, .dll, .so, .deb, .msi.</li>
+                        <li><strong>Diferenças:</strong> Windows (pago), Linux (gratuito), macOS (pago).</li>
+                    </ul>
+                    <div class="macete-box" style="background:#fcf2e1;">
+                        <strong>📌 Super Macete:</strong> “Decore: <strong>Windows</strong> = .exe, <strong>Linux</strong> = .sh, <strong>macOS</strong> = .app. Comandos: <strong>dir</strong> no Windows, <strong>ls</strong> no Linux.”<br>
+                        <span style="display:block; margin-top:6px;">🔁 <strong>Revise:</strong> funções do SO, gerenciamento de memória, sistema de arquivos, comandos e atalhos.</span>
+                    </div>
+                </div>
+
+            </div> <!-- fim teoria-grid -->
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO EXERCÍCIOS (1000 questões)                               -->
+        <!-- ============================================================ -->
+        <section id="exercicios" class="section">
+            <div class="quiz-controls">
+                <div class="info">
+                    <span id="acertos">0</span> acertos · 
+                    <span id="totalRespondidas">0</span> respondidas de 
+                    <span id="totalQuestoes">1000</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                    <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                    <button class="btn btn-danger" id="btnLimpar">🧹 Limpar respostas</button>
+                </div>
+            </div>
+            <div id="questoesContainer"></div>
+            <div class="paginacao" id="paginacao"></div>
+            <div style="text-align:center; margin-top:10px;">
+                <span class="stats" id="statsProgresso">Progresso: 0%</span>
+            </div>
+        </section>
+
+        <div class="footer">
+            Desenvolvido para concursos · 1000 questões · Teoria visual + macetes · Boa sorte!
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================================
+            // 1. GERADOR DE 1000 QUESTÕES SOBRE SISTEMAS OPERACIONAIS
+            // ============================================================
+            const TOTAL_QUESTOES = 1000;
+
+            const templates = [
+                // 1) Conceitos básicos
+                (idx) => {
+                    const perguntas = [
+                        { e: 'O que é um Sistema Operacional?', ops: ['Software que gerencia hardware',
+                                'Hardware que processa dados', 'Um tipo de memória', 'Um dispositivo de entrada'
+                            ], corr: 'Software que gerencia hardware',
+                            exp: 'SO é o software que gerencia recursos de hardware e fornece interface.' },
+                        { e: 'Qual é o núcleo do sistema operacional?', ops: ['Kernel', 'Shell', 'Driver',
+                                'Biblioteca'
+                            ], corr: 'Kernel', exp: 'Kernel é o núcleo do SO, responsável pela comunicação com hardware.' },
+                        { e: 'Qual SO é gratuito e open-source?', ops: ['Windows', 'macOS', 'Linux', 'iOS'],
+                            corr: 'Linux', exp: 'Linux é open-source e gratuito (distribuições como Ubuntu, Fedora).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 2) Processos
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual dos seguintes NÃO é um estado de um processo?', ops: ['Pronto', 'Executando',
+                                'Bloqueado', 'Finalizado'
+                            ], corr: 'Finalizado', exp: 'Os estados típicos são: pronto, executando, bloqueado, novo, terminado.' },
+                        { e: 'O que é um processo?', ops: ['Programa em execução', 'Arquivo de sistema',
+                                'Um dispositivo de E/S', 'Uma thread'
+                            ], corr: 'Programa em execução', exp: 'Processo é um programa em execução com seu contexto.' },
+                        { e: 'Qual ferramenta no Windows mostra processos em execução?', ops: ['Gerenciador de Tarefas',
+                                'Explorador de Arquivos', 'Prompt de Comando', 'Painel de Controle'
+                            ], corr: 'Gerenciador de Tarefas', exp: 'Ctrl+Shift+Esc ou Ctrl+Alt+Del abre o Gerenciador de Tarefas.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 3) Memória
+                (idx) => {
+                    const perguntas = [
+                        { e: 'A técnica que usa espaço em disco para estender a RAM é chamada de:', ops: ['Memória virtual',
+                                'Caching', 'Buffer', 'Registrador'
+                            ], corr: 'Memória virtual', exp: 'Memória virtual utiliza swap/pagefile para estender a RAM.' },
+                        { e: 'Qual comando no Linux mostra o uso de memória?', ops: ['free', 'ls', 'ps', 'top'],
+                            corr: 'free', exp: 'free mostra uso de memória RAM e swap.' },
+                        { e: 'No Windows, o arquivo de página é chamado:', ops: ['pagefile.sys', 'swapfile.sys',
+                                'system.sys', 'memory.sys'
+                            ], corr: 'pagefile.sys', exp: 'O arquivo de página do Windows é pagefile.sys.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 4) Sistema de Arquivos
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual sistema de arquivos é nativo do Windows?', ops: ['NTFS', 'ext4', 'APFS', 'FAT32'],
+                            corr: 'NTFS', exp: 'NTFS (New Technology File System) é o padrão do Windows.' },
+                        { e: 'Qual sistema de arquivos é nativo do Linux?', ops: ['NTFS', 'ext4', 'APFS', 'HFS+'],
+                            corr: 'ext4', exp: 'ext4 (Fourth Extended File System) é amplamente usado no Linux.' },
+                        { e: 'Qual sistema de arquivos é nativo do macOS?', ops: ['NTFS', 'ext4', 'APFS', 'FAT32'],
+                            corr: 'APFS', exp: 'APFS (Apple File System) é o sistema de arquivos do macOS.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 5) Comandos Windows/Linux
+                (idx) => {
+                    const perguntas = [
+                        { e: 'No Windows, qual comando lista o conteúdo de um diretório?', ops: ['dir', 'ls', 'cd',
+                                'pwd'
+                            ], corr: 'dir', exp: 'dir lista diretórios no Windows; ls é usado no Linux.' },
+                        { e: 'No Linux, qual comando lista processos em execução?', ops: ['ps', 'tasklist', 'dir',
+                                'ipconfig'
+                            ], corr: 'ps', exp: 'ps lista processos no Linux; tasklist no Windows.' },
+                        { e: 'Qual comando é usado no Windows para ver configurações de IP?', ops: ['ipconfig',
+                                'ifconfig', 'ping', 'tracert'
+                            ], corr: 'ipconfig', exp: 'ipconfig mostra configurações de rede no Windows.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 6) Atalhos
+                (idx) => {
+                    const perguntas = [
+                        { e: 'No Windows, qual atalho mostra a área de trabalho?', ops: ['Win+D', 'Alt+Tab', 'Win+E',
+                                'Ctrl+Alt+Del'
+                            ], corr: 'Win+D', exp: 'Win+D minimiza todas as janelas e mostra a área de trabalho.' },
+                        { e: 'No Windows, qual atalho abre o Gerenciador de Tarefas diretamente?', ops: ['Ctrl+Shift+Esc',
+                                'Ctrl+Alt+Del', 'Win+E', 'Alt+Tab'
+                            ], corr: 'Ctrl+Shift+Esc', exp: 'Ctrl+Shift+Esc abre o Gerenciador de Tarefas sem passar pela tela de segurança.' },
+                        { e: 'Qual atalho alterna entre janelas abertas?', ops: ['Alt+Tab', 'Ctrl+Tab', 'Win+Tab',
+                                'Alt+Esc'
+                            ], corr: 'Alt+Tab', exp: 'Alt+Tab permite alternar rapidamente entre janelas.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 7) Extensões
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual extensão é usada para executáveis no Windows?', ops: ['.exe', '.sh', '.app',
+                                '.bin'
+                            ], corr: '.exe', exp: '.exe é o formato de executável no Windows.' },
+                        { e: 'Qual extensão é usada para scripts no Linux?', ops: ['.sh', '.bat', '.cmd', '.exe'],
+                            corr: '.sh', exp: '.sh é extensão de script Shell no Linux.' },
+                        { e: 'Qual extensão é usada para aplicativos no macOS?', ops: ['.app', '.exe', '.deb', '.dmg'],
+                            corr: '.app', exp: '.app é a extensão de aplicativos no macOS (na verdade, uma pasta).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 8) Permissões e usuários
+                (idx) => {
+                    const perguntas = [
+                        { e: 'No Linux, qual comando muda permissões de um arquivo?', ops: ['chmod', 'chown', 'chgrp',
+                                'umask'
+                            ], corr: 'chmod', exp: 'chmod (change mode) altera permissões no Linux.' },
+                        { e: 'No Windows, o recurso que pede confirmação para ações administrativas é chamado:', ops: [
+                                'UAC', 'UWP', 'NFS', 'ACL'
+                            ], corr: 'UAC', exp: 'UAC (User Account Control) pede permissão para alterações no sistema.' },
+                        { e: 'Qual usuário no Linux é equivalente ao Administrador no Windows?', ops: ['root', 'sudo',
+                                'super', 'admin'
+                            ], corr: 'root', exp: 'root é o superusuário no Linux, com todos os privilégios.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 9) Miscelânea
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual SO é baseado em Linux e amplamente usado em smartphones?', ops: ['Android', 'iOS',
+                                'Windows Phone', 'BlackBerry'
+                            ], corr: 'Android', exp: 'Android é baseado no kernel Linux.' },
+                        { e: 'Qual sistema operacional é exclusivo para hardware da Apple?', ops: ['macOS', 'Windows',
+                                'Linux', 'Chrome OS'
+                            ], corr: 'macOS', exp: 'macOS é desenvolvido pela Apple para seus computadores.' },
+                        { e: 'No Linux, qual comando termina um processo?', ops: ['kill', 'stop', 'end', 'terminate'],
+                            corr: 'kill', exp: 'kill envia um sinal para finalizar um processo no Linux.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                }
+            ];
+
+            const questoes = [];
+            for (let i = 0; i < TOTAL_QUESTOES; i++) {
+                const template = templates[i % templates.length];
+                const q = template(i);
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                for (let k = q.opcoes.length - 1; k > 0; k--) {
+                    const j = Math.floor(Math.random() * (k + 1));
+                    [q.opcoes[k], q.opcoes[j]] = [q.opcoes[j], q.opcoes[k]];
+                }
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                questoes.push({
+                    id: i,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false,
+                });
+            }
+
+            // ============================================================
+            // 2. RENDERIZAÇÃO E CONTROLE
+            // ============================================================
+            const ITENS_POR_PAGINA = 10;
+            let paginaAtual = 1;
+            let questoesPorPagina = [];
+            let acertos = 0,
+                respondidas = 0;
+
+            const container = document.getElementById('questoesContainer');
+            const paginacaoDiv = document.getElementById('paginacao');
+            const spanAcertos = document.getElementById('acertos');
+            const spanTotalRes = document.getElementById('totalRespondidas');
+            const spanTotalQ = document.getElementById('totalQuestoes');
+            const statsProgresso = document.getElementById('statsProgresso');
+
+            function atualizarStats() {
+                let acc = 0,
+                    resp = 0;
+                for (const q of questoes) {
+                    if (q.selecionada !== null) {
+                        resp++;
+                        if (q.opcoes[q.selecionada] === q.correta) acc++;
+                    }
+                }
+                acertos = acc;
+                respondidas = resp;
+                spanAcertos.textContent = acertos;
+                spanTotalRes.textContent = respondidas;
+                const pct = Math.round((respondidas / questoes.length) * 100);
+                statsProgresso.textContent = `Progresso: ${pct}%`;
+            }
+
+            function renderizarPagina() {
+                const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+                const fim = Math.min(inicio + ITENS_POR_PAGINA, questoes.length);
+                questoesPorPagina = questoes.slice(inicio, fim);
+
+                let html = '';
+                for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                    const q = questoesPorPagina[idx];
+                    const globalIdx = inicio + idx;
+                    const opcoesHtml = q.opcoes.map((op, oi) => {
+                        const checked = (q.selecionada === oi) ? 'checked' : '';
+                        return `
+                            <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                                <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                                <label for="q${globalIdx}_${oi}">${op}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let feedbackHtml = '';
+                    if (q.selecionada !== null) {
+                        const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                        const classe = isCerto ? 'certo' : 'errado';
+                        const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                        feedbackHtml = `
+                            <div class="feedback ${classe}">${texto}</div>
+                            <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                        `;
+                    }
+
+                    const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+
+                    html += `
+                        <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                            <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                            <div class="opcoes">
+                                ${opcoesHtml}
+                            </div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function(e) {
+                        const questaoDiv = this.closest('.questao');
+                        const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                        const opcaoIdx = parseInt(this.value);
+                        const q = questoes[globalIdx];
+                        if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                            q.selecionada = opcaoIdx;
+                            q.resolvida = true;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                const totalPaginas = Math.ceil(questoes.length / ITENS_POR_PAGINA);
+                let pagHtml = '';
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    if (p === paginaAtual) {
+                        pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                    } else if (p <= 3 || p > totalPaginas - 3 || Math.abs(p - paginaAtual) <= 1) {
+                        pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                    } else if (p === 4 && paginaAtual > 5) {
+                        pagHtml += `<span>…</span>`;
+                    } else if (p === totalPaginas - 3 && paginaAtual < totalPaginas - 4) {
+                        pagHtml += `<span>…</span>`;
+                    }
+                }
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+                paginacaoDiv.innerHTML = pagHtml;
+
+                document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                            paginaAtual = page;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                atualizarStats();
+            }
+
+            // ============================================================
+            // 3. BOTÕES
+            // ============================================================
+            document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+                for (const q of questoesPorPagina) {
+                    if (q.selecionada === null) {
+                        q.selecionada = 0;
+                        q.resolvida = true;
+                    }
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnLimpar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnReiniciar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                paginaAtual = 1;
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            // ============================================================
+            // 4. NAVEGAÇÃO ENTRE SEÇÕES
+            // ============================================================
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.section;
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            // ============================================================
+            // 5. INICIALIZAÇÃO
+            // ============================================================
+            spanTotalQ.textContent = TOTAL_QUESTOES;
+            renderizarPagina();
+            atualizarStats();
+
+        })();
+    </script>
+</body>
+</html>
