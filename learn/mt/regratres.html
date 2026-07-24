@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📐 Regra de Três Simples – Setas e Passo a Passo</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f8ff;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #0f172a, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            -webkit-text-fill-color: #64748b;
+            background: none;
+            color: #64748b;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.05rem;
+            border-left: 4px solid #f59e0b;
+            padding-left: 18px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 2px solid #e9edf2;
+            padding-bottom: 14px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #475569;
+            transition: 0.2s;
+        }
+        .nav-tabs button:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .nav-tabs button.active {
+            background: #0f172a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            from {
+                opacity: 0.4;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .theory-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf2;
+            transition: 0.15s;
+        }
+        .theory-card:hover {
+            border-color: #cbd5e1;
+        }
+        .theory-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .theory-card h3 .badge {
+            font-size: 0.7rem;
+            background: #f59e0b;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .theory-card h4 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin: 16px 0 6px;
+        }
+        .theory-card p,
+        .theory-card li {
+            color: #334155;
+        }
+        .theory-card ul,
+        .theory-card ol {
+            padding-left: 24px;
+            margin: 8px 0 12px;
+        }
+        .theory-card li {
+            margin-bottom: 3px;
+        }
+        .highlight-box {
+            background: #fef3c7;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border-left: 5px solid #f59e0b;
+        }
+        .highlight-box strong {
+            color: #b45309;
+        }
+        .example {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 8px 0 12px;
+            border: 1px dashed #94a3b8;
+        }
+        .example::before {
+            content: "📌 ";
+            font-style: normal;
+        }
+        .mnemonic {
+            background: #fef9c3;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #fde047;
+            margin: 10px 0;
+        }
+        .mnemonic strong {
+            color: #854d0e;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 680px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.8rem;
+                flex-wrap: wrap;
+            }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th,
+        td {
+            border: 1px solid #d1d9e6;
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e9edf2;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        /* ===== DIAGRAMAS DE SETAS ===== */
+        .diagrama {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 0;
+            font-weight: 600;
+        }
+        .diagrama .linha {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .diagrama .seta {
+            font-size: 1.8rem;
+            line-height: 1;
+            color: #f59e0b;
+        }
+        .diagrama .seta-inv {
+            font-size: 1.8rem;
+            line-height: 1;
+            color: #dc2626;
+            transform: rotate(180deg);
+            display: inline-block;
+        }
+        .diagrama .rotulo {
+            font-weight: 400;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+        .diagrama .destaque {
+            background: #fef3c7;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        .seta-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== EXERCÍCIOS ===== */
+        .exercise-area {
+            margin-top: 12px;
+        }
+        .exercise-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 16px 20px;
+            border-radius: 18px;
+        }
+        .exercise-controls label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .exercise-controls select,
+        .exercise-controls input {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .exercise-controls button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 40px;
+            background: #0f172a;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .exercise-controls button:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+        .exercise-controls .score {
+            margin-left: auto;
+            font-weight: 700;
+            color: #0f172a;
+            background: white;
+            padding: 4px 18px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+        }
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px;
+            border: 1px solid #e9edf2;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .question-box .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 8px;
+        }
+        .options button {
+            padding: 8px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 40px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .options button:hover:not(:disabled) {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+        .options button.selected {
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+        .options button.correct {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #14532d;
+        }
+        .options button.wrong {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+        .options button:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        /* ===== FEEDBACK COM RESOLUÇÃO ===== */
+        .feedback {
+            margin-top: 12px;
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+            border: 1px solid #e9edf2;
+            background: #f8fafc;
+        }
+        .feedback.show {
+            display: block;
+        }
+        .feedback.correct {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+        .feedback.wrong {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+        .feedback .resolucao {
+            margin-top: 10px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .feedback .resolucao .passo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .feedback .resolucao .seta-grafica {
+            font-size: 1.4rem;
+            color: #f59e0b;
+            font-weight: 700;
+        }
+        .feedback .resolucao .seta-grafica-inv {
+            font-size: 1.4rem;
+            color: #dc2626;
+            font-weight: 700;
+            transform: rotate(180deg);
+            display: inline-block;
+        }
+        .feedback .resolucao .destaque-res {
+            background: #fef3c7;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+        .feedback .explanation {
+            margin-top: 6px;
+            color: #475569;
+        }
+
+        .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 6px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 30px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .pagination button:hover {
+            background: #f1f5f9;
+        }
+        .pagination button.active-page {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9edf2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 6px 0 16px;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            border-radius: 20px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        @media (max-width: 500px) {
+            .question-box {
+                padding: 16px;
+            }
+            .options button {
+                padding: 6px 14px;
+                font-size: 0.85rem;
+            }
+            .exercise-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .exercise-controls .score {
+                margin-left: 0;
+                text-align: center;
+            }
+            .feedback .resolucao .passo {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9edf2;
+            padding-top: 24px;
+        }
+        .footer-note strong {
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+
+        <header>
+            <h1>
+                📐 Regra de Três Simples
+                <small>Direta · Inversa · Setas · Passo a Passo</small>
+            </h1>
+            <div class="subtitle">
+                Teoria com diagramas, macetes e 1.000 exercícios com resolução detalhada
+            </div>
+        </header>
+
+        <nav class="nav-tabs" id="navTabs">
+            <button class="active" data-tab="teoria">📖 Teoria</button>
+            <button data-tab="macetes">🧠 Macetes</button>
+            <button data-tab="exercicios">✏️ Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- TAB 1 – TEORIA -->
+        <!-- ============================================================ -->
+        <div class="tab-content active" id="tab-teoria">
+
+            <h2 style="font-size:1.8rem; margin-bottom:16px;">📖 Teoria da Regra de Três Simples</h2>
+
+            <div class="theory-card">
+                <h3>🔹 O que é Regra de Três Simples?</h3>
+                <p>A <strong>regra de três simples</strong> é um método prático para resolver problemas que envolvem <strong>quatro valores</strong>, dos quais três são conhecidos e um é desconhecido, e que apresentam uma <strong>relação de proporcionalidade</strong> entre duas grandezas.</p>
+                <div class="highlight-box">
+                    <strong>⏳ Dica de ouro:</strong> A regra de três é usada quando você tem duas grandezas que se relacionam de forma <strong>direta</strong> ou <strong>inversamente</strong> proporcional.
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Grandezas Diretamente Proporcionais</h3>
+                <p>Duas grandezas são <strong>diretamente proporcionais</strong> quando, <strong>aumentando uma delas, a outra aumenta na mesma proporção</strong> (e vice‑versa).</p>
+
+                <div class="highlight-box">
+                    <strong>Exemplo:</strong> Velocidade × Distância (tempo constante) – quanto maior a velocidade, maior a distância percorrida.
+                </div>
+
+                <div class="diagrama">
+                    <div class="linha">
+                        <span>Grandeza A</span>
+                        <span class="seta-wrapper">
+                            <span class="seta">⬇</span>
+                            <span class="rotulo">mesmo sentido</span>
+                            <span class="seta">⬇</span>
+                        </span>
+                        <span>Grandeza B</span>
+                    </div>
+                    <div style="font-size:0.9rem; color:#475569;">
+                        Se A <strong>aumenta</strong>, B <strong>aumenta</strong> — setas para o mesmo lado
+                    </div>
+                </div>
+
+                <div class="example">
+                    <strong>Problema:</strong> Um carro percorre 300 km com 40 litros. Quantos litros para 450 km?<br />
+                    <div style="margin-top:8px; font-weight:600;">
+                        Montagem com setas (mesmo sentido → direta):
+                    </div>
+                    <div style="display:flex; gap:30px; justify-content:center; padding:8px 0; flex-wrap:wrap;">
+                        <span>300 km ⬇</span>
+                        <span style="font-size:1.5rem; color:#f59e0b;">⟶</span>
+                        <span>40 L ⬇</span>
+                    </div>
+                    <div style="display:flex; gap:30px; justify-content:center; padding:8px 0; flex-wrap:wrap;">
+                        <span>450 km ⬇</span>
+                        <span style="font-size:1.5rem; color:#f59e0b;">⟶</span>
+                        <span>x L ⬇</span>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <strong>Resolução:</strong> 300/450 = 40/x → 300x = 450·40 → x = (450·40)/300 = <strong>60 L</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Grandezas Inversamente Proporcionais</h3>
+                <p>Duas grandezas são <strong>inversamente proporcionais</strong> quando, <strong>aumentando uma delas, a outra diminui na mesma proporção</strong> (e vice‑versa).</p>
+
+                <div class="highlight-box">
+                    <strong>Exemplo:</strong> Velocidade × Tempo (distância constante) – quanto maior a velocidade, menor o tempo gasto.
+                </div>
+
+                <div class="diagrama">
+                    <div class="linha">
+                        <span>Grandeza A</span>
+                        <span class="seta-wrapper">
+                            <span class="seta">⬇</span>
+                            <span class="rotulo">sentidos opostos</span>
+                            <span class="seta-inv">⬆</span>
+                        </span>
+                        <span>Grandeza B</span>
+                    </div>
+                    <div style="font-size:0.9rem; color:#475569;">
+                        Se A <strong>aumenta</strong>, B <strong>diminui</strong> — setas invertidas
+                    </div>
+                </div>
+
+                <div class="example">
+                    <strong>Problema:</strong> Um trem a 80 km/h leva 3 horas. Se aumentar para 120 km/h, quanto tempo levará?<br />
+                    <div style="margin-top:8px; font-weight:600;">
+                        Montagem com setas (sentidos opostos → inversa):
+                    </div>
+                    <div style="display:flex; gap:30px; justify-content:center; padding:8px 0; flex-wrap:wrap;">
+                        <span>80 km/h ⬇</span>
+                        <span style="font-size:1.5rem; color:#dc2626;">⟷</span>
+                        <span>3 h ⬆</span>
+                    </div>
+                    <div style="display:flex; gap:30px; justify-content:center; padding:8px 0; flex-wrap:wrap;">
+                        <span>120 km/h ⬇</span>
+                        <span style="font-size:1.5rem; color:#dc2626;">⟷</span>
+                        <span>x h ⬆</span>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <strong>Resolução (invertemos uma razão):</strong> 80/120 = x/3 → 120x = 80·3 → x = (80·3)/120 = <strong>2 h</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Como identificar direta ou inversa?</h3>
+                <ul>
+                    <li><strong>Direta:</strong> uma aumenta → a outra aumenta; uma diminui → a outra diminui.</li>
+                    <li><strong>Inversa:</strong> uma aumenta → a outra diminui; uma diminui → a outra aumenta.</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>🧠 Dica prática:</strong> Pergunte: "Se eu dobrar a primeira, o que acontece com a segunda?" Se também dobra → direta; se cai pela metade → inversa.
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>🔸 Passo a passo com setas</h3>
+                <ol>
+                    <li><strong>Identifique</strong> as duas grandezas.</li>
+                    <li><strong>Determine</strong> se é direta ou inversa (pense no efeito de aumentar uma grandeza).</li>
+                    <li><strong>Monte</strong> a tabela com os valores e desenhe as setas (mesmo sentido → direta; sentidos opostos → inversa).</li>
+                    <li><strong>Monte a proporção:</strong> se for direta, razões no mesmo sentido; se for inversa, inverta uma das razões.</li>
+                    <li><strong>Multiplique cruzado</strong> e resolva a equação.</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 2 – MACETES -->
+        <!-- ============================================================ -->
+        <div class="tab-content" id="tab-macetes">
+
+            <h2 style="font-size:1.8rem; margin-bottom:16px;">🧠 Macetes &amp; Mnemônicos</h2>
+
+            <div class="theory-card">
+                <h3>📌 "D = D" – Direta</h3>
+                <div class="mnemonic">
+                    <strong>D</strong>ireta → <strong>D</strong>obro (se uma dobra, a outra também dobra).<br />
+                    Lembre: "Direta = mesma direção" (setas para o mesmo lado).
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 "I = Contrária" – Inversa</h3>
+                <div class="mnemonic">
+                    <strong>I</strong>nversa → <strong>I</strong>nvertida (se uma dobra, a outra cai pela metade).<br />
+                    Lembre: "Inversa = setas invertidas".
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 "Regra do 'Se' "</h3>
+                <div class="mnemonic">
+                    <ul>
+                        <li><strong>Se</strong> aumentar uma grandeza e a outra <strong>aumentar</strong> → direta.</li>
+                        <li><strong>Se</strong> aumentar uma grandeza e a outra <strong>diminuir</strong> → inversa.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 "Multiplicação em Cruz"</h3>
+                <div class="mnemonic">
+                    <strong>Direta:</strong> a/b = c/x → a·x = b·c → x = (b·c)/a<br />
+                    <strong>Inversa:</strong> a/b = x/c → a·c = b·x → x = (a·c)/b
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 "Tabelinha das Setas"</h3>
+                <div class="mnemonic">
+                    Escreva os dados em colunas, coloque setas <strong>para baixo</strong> em ambas. Se as setas estiverem no <strong>mesmo sentido</strong> → direta. Se <strong>sentidos opostos</strong> → inversa (inverta uma das razões).
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 3 – EXERCÍCIOS -->
+        <!-- ============================================================ -->
+        <div class="tab-content" id="tab-exercicios">
+
+            <h2 style="font-size:1.8rem; margin-bottom:8px;">✏️ 1.000 Exercícios Interativos</h2>
+            <p style="color:#475569; margin-bottom:18px;">Pratique e veja a resolução completa com setas e passo a passo.</p>
+
+            <div class="exercise-controls">
+                <label for="qtySelect">Quantos por vez:</label>
+                <select id="qtySelect">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                <button id="newExerciseBtn">🔁 Nova rodada</button>
+                <span class="score" id="scoreDisplay">✅ 0 / 0</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="fill" id="progressFill" style="width:0%;"></div>
+            </div>
+
+            <div id="exerciseContainer" class="exercise-area">
+                <!-- gerado por JS -->
+            </div>
+
+            <div class="pagination" id="paginationContainer">
+                <!-- gerado por JS -->
+            </div>
+
+            <div style="margin-top:24px; text-align:center; color:#94a3b8; font-size:0.9rem;">
+                <span id="totalExercisesLabel">Total de exercícios disponíveis: 1000</span>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            <strong>📐 Domine a Regra de Três</strong> · Teoria com setas · Macetes · 1.000 exercícios com resolução detalhada
+        </div>
+    </div>
+
+    <script>
+        // ======================================================================
+        //   GERADOR DE 1.000 EXERCÍCIOS – REGRA DE TRÊS SIMPLES
+        //   COM RESOLUÇÃO PASSO A PASSO E DIAGRAMAS DE SETAS
+        // ======================================================================
+
+        (function() {
+            'use strict';
+
+            function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+            function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = randInt(0, i);
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function pickN(arr, n) {
+                const copy = [...arr];
+                shuffle(copy);
+                return copy.slice(0, n);
+            }
+
+            // ---------- BANCOS DE DADOS PARA GERAR PROBLEMAS ----------
+            const contextos = [
+                { g1: 'km', g2: 'litros', dir: 'direta', nome1: 'distância', nome2: 'combustível' },
+                { g1: 'km/h', g2: 'horas', dir: 'inversa', nome1: 'velocidade', nome2: 'tempo' },
+                { g1: 'trabalhadores', g2: 'dias', dir: 'inversa', nome1: 'funcionários', nome2: 'dias' },
+                { g1: 'kg', g2: 'preço (R$)', dir: 'direta', nome1: 'peso', nome2: 'preço' },
+                { g1: 'metros', g2: 'segundos', dir: 'direta', nome1: 'distância', nome2: 'tempo' },
+                { g1: 'páginas', g2: 'minutos', dir: 'direta', nome1: 'páginas', nome2: 'minutos' },
+                { g1: 'litros', g2: 'km', dir: 'direta', nome1: 'combustível', nome2: 'distância' },
+                { g1: 'máquinas', g2: 'horas', dir: 'inversa', nome1: 'máquinas', nome2: 'horas' },
+                { g1: 'alunos', g2: 'merenda (kg)', dir: 'direta', nome1: 'alunos', nome2: 'merenda' },
+                { g1: 'velocidade', g2: 'tempo', dir: 'inversa', nome1: 'velocidade', nome2: 'tempo' },
+                { g1: 'dias', g2: 'kg de ração', dir: 'direta', nome1: 'dias', nome2: 'ração' },
+                { g1: 'torneiras', g2: 'horas para encher', dir: 'inversa', nome1: 'torneiras', nome2: 'horas' }
+            ];
+
+            // ---------- GERAR UM EXERCÍCIO ----------
+            function gerarExercicio() {
+                const ctx = rand(contextos);
+                const tipo = ctx.dir; // 'direta' ou 'inversa'
+                const g1 = ctx.g1;
+                const g2 = ctx.g2;
+                const nome1 = ctx.nome1;
+                const nome2 = ctx.nome2;
+
+                let a, b, c, x;
+
+                // Gerar números que resultem em x inteiro
+                if (tipo === 'direta') {
+                    do {
+                        a = randInt(2, 10);
+                        b = randInt(2, 10);
+                        c = randInt(2, 10);
+                    } while ((b * c) % a !== 0);
+                    x = (b * c) / a;
+                } else { // inversa
+                    do {
+                        a = randInt(2, 10);
+                        b = randInt(2, 10);
+                        c = randInt(2, 10);
+                    } while ((a * c) % b !== 0);
+                    x = (a * c) / b;
+                }
+
+                // Montar o texto do problema
+                let frase = '';
+                const un1 = g1;
+                const un2 = g2;
+
+                // Construir narrativa variada
+                const sujeitos = ['um carro', 'um trem', 'um ônibus', 'uma moto', 'um avião', 'um navio', 'um ciclista',
+                    'um pedestre', 'um foguete', 'um submarino'
+                ];
+                const suj = rand(sujeitos);
+
+                if (g1 === 'km' && g2 === 'litros') {
+                    frase =
+                        `${suj.charAt(0).toUpperCase() + suj.slice(1)} percorre ${a} km com ${b} litros de combustível. Quantos litros são necessários para percorrer ${c} km?`;
+                } else if (g1 === 'km/h' && g2 === 'horas') {
+                    frase =
+                        `${suj.charAt(0).toUpperCase() + suj.slice(1)} viaja a ${a} km/h e leva ${b} horas para chegar. Se aumentar a velocidade para ${c} km/h, quanto tempo levará?`;
+                } else if (g1 === 'trabalhadores' && g2 === 'dias') {
+                    frase =
+                        `${a} trabalhadores constroem uma casa em ${b} dias. Quantos dias ${c} trabalhadores levariam para construir a mesma casa?`;
+                } else if (g1 === 'kg' && g2 === 'preço (R$)') {
+                    frase =
+                        `${a} kg de um produto custam R$ ${b}. Quanto custariam ${c} kg desse mesmo produto?`;
+                } else if (g1 === 'metros' && g2 === 'segundos') {
+                    frase =
+                        `${suj.charAt(0).toUpperCase() + suj.slice(1)} percorre ${a} metros em ${b} segundos. Em ${c} segundos, quantos metros percorrerá (mesma velocidade)?`;
+                } else if (g1 === 'páginas' && g2 === 'minutos') {
+                    frase =
+                        `Um aluno lê ${a} páginas em ${b} minutos. Em ${c} minutos, quantas páginas lerá (mesmo ritmo)?`;
+                } else if (g1 === 'litros' && g2 === 'km') {
+                    frase =
+                        `${suj.charAt(0).toUpperCase() + suj.slice(1)} faz ${a} km com ${b} litros. Com ${c} litros, quantos km fará?`;
+                } else if (g1 === 'máquinas' && g2 === 'horas') {
+                    frase =
+                        `${a} máquinas produzem um lote em ${b} horas. Em quantas horas ${c} máquinas produzem o mesmo lote?`;
+                } else if (g1 === 'alunos' && g2 === 'merenda (kg)') {
+                    frase =
+                        `${a} alunos consomem ${b} kg de merenda por dia. Para ${c} alunos, quantos kg serão necessários?`;
+                } else if (g1 === 'velocidade' && g2 === 'tempo') {
+                    frase =
+                        `${suj.charAt(0).toUpperCase() + suj.slice(1)} a ${a} km/h leva ${b} horas. Se viajar a ${c} km/h, quanto tempo levará?`;
+                } else if (g1 === 'dias' && g2 === 'kg de ração') {
+                    frase =
+                        `${a} dias de viagem consomem ${b} kg de ração. Para ${c} dias, quantos kg de ração são necessários?`;
+                } else if (g1 === 'torneiras' && g2 === 'horas para encher') {
+                    frase =
+                        `${a} torneiras enchem um tanque em ${b} horas. Em quantas horas ${c} torneiras encherão o mesmo tanque?`;
+                } else {
+                    frase =
+                        `Se ${a} ${un1} correspondem a ${b} ${un2}, quantos ${un2} correspondem a ${c} ${un1}?`;
+                }
+
+                // Gerar opções
+                let opcoes = [x];
+                let tentativas = 0;
+                while (opcoes.length < 4 && tentativas < 100) {
+                    let errado = x + randInt(-5, 5);
+                    if (errado !== x && errado > 0 && !opcoes.includes(errado)) {
+                        opcoes.push(errado);
+                    }
+                    tentativas++;
+                }
+                while (opcoes.length < 4) {
+                    let errado = x + randInt(1, 10);
+                    if (errado !== x && errado > 0 && !opcoes.includes(errado)) {
+                        opcoes.push(errado);
+                    }
+                }
+                shuffle(opcoes);
+
+                // Construir explicação detalhada com setas e passo a passo
+                const tipoStr = tipo === 'direta' ? 'Diretamente proporcional' : 'Inversamente proporcional';
+                const seta1 = tipo === 'direta' ? '⬇' : '⬆';
+                const seta2 = tipo === 'direta' ? '⬇' : '⬆'; // na inversa, a segunda seta fica para cima na montagem
+                // Na inversa, a seta da segunda grandeza fica oposta à primeira
+                // Para a exibição, vamos construir um texto com as setas
+                let resolucaoHTML = '';
+
+                if (tipo === 'direta') {
+                    resolucaoHTML = `
+                        <div class="passo">
+                            <span><strong>1.</strong> Identificamos que é <span class="destaque-res">Diretamente Proporcional</span> (setas no mesmo sentido):</span>
+                        </div>
+                        <div style="display:flex; gap:20px; justify-content:center; padding:6px 0; flex-wrap:wrap; font-size:0.95rem;">
+                            <span>${a} ${un1} <span style="color:#f59e0b;">⬇</span></span>
+                            <span style="font-size:1.2rem; color:#f59e0b;">→</span>
+                            <span>${b} ${un2} <span style="color:#f59e0b;">⬇</span></span>
+                        </div>
+                        <div style="display:flex; gap:20px; justify-content:center; padding:6px 0; flex-wrap:wrap; font-size:0.95rem;">
+                            <span>${c} ${un1} <span style="color:#f59e0b;">⬇</span></span>
+                            <span style="font-size:1.2rem; color:#f59e0b;">→</span>
+                            <span>x ${un2} <span style="color:#f59e0b;">⬇</span></span>
+                        </div>
+                        <div class="passo">
+                            <span><strong>2.</strong> Montamos a proporção (mesmo sentido):</span>
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            ${a} / ${c} = ${b} / x
+                        </div>
+                        <div class="passo">
+                            <span><strong>3.</strong> Multiplicamos cruzado:</span>
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            ${a} · x = ${b} · ${c}
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            ${a}x = ${b*c}
+                        </div>
+                        <div class="passo">
+                            <span><strong>4.</strong> Isolamos x:</span>
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            x = ${b} · ${c} / ${a}
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem; font-weight:700; color:#b45309;">
+                            x = ${x}
+                        </div>
+                    `;
+                } else { // inversa
+                    resolucaoHTML = `
+                        <div class="passo">
+                            <span><strong>1.</strong> Identificamos que é <span class="destaque-res">Inversamente Proporcional</span> (setas em sentidos opostos):</span>
+                        </div>
+                        <div style="display:flex; gap:20px; justify-content:center; padding:6px 0; flex-wrap:wrap; font-size:0.95rem;">
+                            <span>${a} ${un1} <span style="color:#dc2626;">⬇</span></span>
+                            <span style="font-size:1.2rem; color:#dc2626;">⟷</span>
+                            <span>${b} ${un2} <span style="color:#dc2626;">⬆</span></span>
+                        </div>
+                        <div style="display:flex; gap:20px; justify-content:center; padding:6px 0; flex-wrap:wrap; font-size:0.95rem;">
+                            <span>${c} ${un1} <span style="color:#dc2626;">⬇</span></span>
+                            <span style="font-size:1.2rem; color:#dc2626;">⟷</span>
+                            <span>x ${un2} <span style="color:#dc2626;">⬆</span></span>
+                        </div>
+                        <div class="passo">
+                            <span><strong>2.</strong> Invertemos uma das razões (porque é inversa):</span>
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            ${a} / ${c} = x / ${b}
+                        </div>
+                        <div class="passo">
+                            <span><strong>3.</strong> Multiplicamos cruzado:</span>
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            ${a} · ${b} = ${c} · x
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            ${a*b} = ${c}x
+                        </div>
+                        <div class="passo">
+                            <span><strong>4.</strong> Isolamos x:</span>
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem;">
+                            x = ${a} · ${b} / ${c}
+                        </div>
+                        <div style="padding:4px 0; font-family:monospace; font-size:1rem; font-weight:700; color:#b45309;">
+                            x = ${x}
+                        </div>
+                    `;
+                }
+
+                const explicacaoCompleta = `
+                    <strong>${tipo === 'direta' ? '✅ Diretamente proporcional' : '🔄 Inversamente proporcional'}</strong><br />
+                    <div class="resolucao">
+                        ${resolucaoHTML}
+                    </div>
+                    <div style="margin-top:6px; color:#475569;">
+                        Resposta: <strong>${x}</strong> ${un2}
+                    </div>
+                `;
+
+                return {
+                    question: frase,
+                    options: opcoes.map(String),
+                    answer: String(x),
+                    explanation: explicacaoCompleta,
+                    type: 'regra3',
+                    // Guardar dados para uso futuro (não usado diretamente)
+                    _dados: { a, b, c, x, tipo, un1, un2 }
+                };
+            }
+
+            // ---------- GERAR 1000 EXERCÍCIOS ----------
+            function generateExercises(count = 1000) {
+                const exercises = [];
+                for (let i = 0; i < count; i++) {
+                    exercises.push(gerarExercicio());
+                }
+                return exercises;
+            }
+
+            // ---------- ESTADO E RENDERIZAÇÃO ----------
+            let allExercises = [];
+            let currentPage = 0;
+            let pageSize = 10;
+            let answered = {};
+            let userAnswers = {};
+            let score = { correct: 0, total: 0 };
+
+            function renderExercises() {
+                const container = document.getElementById('exerciseContainer');
+                const pagContainer = document.getElementById('paginationContainer');
+                const progressFill = document.getElementById('progressFill');
+                const scoreDisplay = document.getElementById('scoreDisplay');
+
+                if (allExercises.length === 0) {
+                    container.innerHTML =
+                        `<p style="text-align:center; padding:40px; color:#64748b;">🔍 Clique em "Nova rodada" para gerar os exercícios.</p>`;
+                    pagContainer.innerHTML = '';
+                    return;
+                }
+
+                const total = allExercises.length;
+                const totalPages = Math.ceil(total / pageSize);
+                const start = currentPage * pageSize;
+                const end = Math.min(start + pageSize, total);
+                const pageExercises = allExercises.slice(start, end);
+
+                const answeredCount = Object.keys(answered).length;
+                const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+                progressFill.style.width = pct + '%';
+                scoreDisplay.textContent = `✅ ${score.correct} / ${score.total}`;
+
+                let html = '';
+                pageExercises.forEach((ex, idx) => {
+                    const globalIdx = start + idx;
+                    const isAnswered = answered[globalIdx] !== undefined;
+                    const userAns = userAnswers[globalIdx] || '';
+                    const isCorrect = answered[globalIdx] === true;
+                    const isWrong = answered[globalIdx] === false;
+
+                    html += `<div class="question-box" data-idx="${globalIdx}">`;
+                    html += `<div class="q-text">${ex.question.replace(/\n/g, '<br>')}</div>`;
+
+                    html += `<div class="options">`;
+                    ex.options.forEach(opt => {
+                        let cls = '';
+                        let disabled = false;
+                        if (isAnswered) {
+                            disabled = true;
+                            if (opt === ex.answer) cls = 'correct';
+                            if (opt === userAns && opt !== ex.answer) cls = 'wrong';
+                            if (opt === userAns) cls += ' selected';
+                        } else if (opt === userAns) {
+                            cls = 'selected';
+                        }
+                        html +=
+                            `<button class="${cls}" data-global="${globalIdx}" data-opt="${opt}" ${disabled ? 'disabled' : ''}>${opt}</button>`;
+                    });
+                    html += `</div>`;
+
+                    if (isAnswered) {
+                        const fbClass = isCorrect ? 'correct' : 'wrong';
+                        html += `<div class="feedback show ${fbClass}">`;
+                        html += `<div class="explanation">${ex.explanation}</div>`;
+                        html += `</div>`;
+                    } else {
+                        html += `<div class="feedback" id="fb-${globalIdx}"></div>`;
+                    }
+
+                    html += `</div>`;
+                });
+
+                container.innerHTML = html;
+
+                container.querySelectorAll('.options button:not([disabled])').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        const globalIdx = parseInt(this.dataset.global);
+                        const selected = this.dataset.opt;
+                        handleAnswer(globalIdx, selected);
+                    });
+                });
+
+                let pagHtml = '';
+                for (let p = 0; p < totalPages; p++) {
+                    pagHtml +=
+                        `<button class="${p === currentPage ? 'active-page' : ''}" data-page="${p}">${p+1}</button>`;
+                }
+                pagContainer.innerHTML = pagHtml;
+                pagContainer.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (page !== currentPage) {
+                            currentPage = page;
+                            renderExercises();
+                        }
+                    });
+                });
+
+                document.getElementById('totalExercisesLabel').textContent =
+                    `Total de exercícios disponíveis: ${total}`;
+            }
+
+            function handleAnswer(globalIdx, selected) {
+                if (answered[globalIdx] !== undefined) return;
+
+                const ex = allExercises[globalIdx];
+                const isCorrect = selected === ex.answer;
+
+                answered[globalIdx] = isCorrect;
+                userAnswers[globalIdx] = selected;
+                if (isCorrect) score.correct++;
+                score.total++;
+
+                renderExercises();
+
+                const qBox = document.querySelector(`.question-box[data-idx="${globalIdx}"]`);
+                if (qBox) qBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            function newRound() {
+                const qty = parseInt(document.getElementById('qtySelect').value);
+                allExercises = generateExercises(qty);
+                currentPage = 0;
+                answered = {};
+                userAnswers = {};
+                score = { correct: 0, total: 0 };
+                renderExercises();
+            }
+
+            // ---------- INICIALIZAR ----------
+            document.addEventListener('DOMContentLoaded', function() {
+                const navBtns = document.querySelectorAll('#navTabs button');
+                const tabContents = {
+                    teoria: document.getElementById('tab-teoria'),
+                    macetes: document.getElementById('tab-macetes'),
+                    exercicios: document.getElementById('tab-exercicios')
+                };
+
+                navBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const tab = this.dataset.tab;
+                        navBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        Object.keys(tabContents).forEach(key => {
+                            tabContents[key].classList.toggle('active', key === tab);
+                        });
+                    });
+                });
+
+                document.getElementById('newExerciseBtn').addEventListener('click', newRound);
+                document.getElementById('qtySelect').addEventListener('change', function() {
+                    if (allExercises.length > 0) newRound();
+                });
+
+                setTimeout(() => { newRound(); }, 100);
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
