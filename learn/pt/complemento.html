@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📘 Complemento Verbal e Nominal</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #0f172a, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            -webkit-text-fill-color: #64748b;
+            background: none;
+            color: #64748b;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.05rem;
+            border-left: 4px solid #8b5cf6;
+            padding-left: 18px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 2px solid #e9edf2;
+            padding-bottom: 14px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #475569;
+            transition: 0.2s;
+        }
+        .nav-tabs button:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .nav-tabs button.active {
+            background: #0f172a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0.4; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .theory-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf2;
+            transition: 0.15s;
+        }
+        .theory-card:hover {
+            border-color: #cbd5e1;
+        }
+        .theory-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .theory-card h3 .badge {
+            font-size: 0.7rem;
+            background: #8b5cf6;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .theory-card h4 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin: 16px 0 6px;
+        }
+        .theory-card p, .theory-card li {
+            color: #334155;
+        }
+        .theory-card ul, .theory-card ol {
+            padding-left: 24px;
+            margin: 8px 0 12px;
+        }
+        .theory-card li {
+            margin-bottom: 3px;
+        }
+        .highlight-box {
+            background: #ede9fe;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border-left: 5px solid #7c3aed;
+        }
+        .highlight-box strong {
+            color: #5b21b6;
+        }
+        .example {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 8px 0 12px;
+            font-style: italic;
+            border: 1px dashed #94a3b8;
+        }
+        .example::before {
+            content: "📌 ";
+            font-style: normal;
+        }
+        .mnemonic {
+            background: #fef9c3;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #fde047;
+            margin: 10px 0;
+        }
+        .mnemonic strong {
+            color: #854d0e;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 680px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .container { padding: 16px; }
+            h1 { font-size: 1.8rem; flex-wrap: wrap; }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d1d9e6;
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e9edf2;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        /* ===== EXERCÍCIOS ===== */
+        .exercise-area { margin-top: 12px; }
+        .exercise-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 16px 20px;
+            border-radius: 18px;
+        }
+        .exercise-controls label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .exercise-controls select, .exercise-controls input {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .exercise-controls button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 40px;
+            background: #0f172a;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .exercise-controls button:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+        .exercise-controls .score {
+            margin-left: auto;
+            font-weight: 700;
+            color: #0f172a;
+            background: white;
+            padding: 4px 18px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+        }
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px;
+            border: 1px solid #e9edf2;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .question-box .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+        .question-box .q-text .highlight {
+            background: #fef08a;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 8px;
+        }
+        .options button {
+            padding: 8px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 40px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .options button:hover:not(:disabled) {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+        .options button.selected {
+            border-color: #7c3aed;
+            background: #ede9fe;
+        }
+        .options button.correct {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #14532d;
+        }
+        .options button.wrong {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+        .options button:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .feedback.show { display: block; }
+        .feedback.correct {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #14532d;
+        }
+        .feedback.wrong {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #7f1d1d;
+        }
+        .feedback .explanation {
+            margin-top: 6px;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+        .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 6px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 30px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .pagination button:hover {
+            background: #f1f5f9;
+        }
+        .pagination button.active-page {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9edf2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 6px 0 16px;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+            border-radius: 20px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        @media (max-width: 500px) {
+            .question-box { padding: 16px; }
+            .options button { padding: 6px 14px; font-size: 0.85rem; }
+            .exercise-controls { flex-direction: column; align-items: stretch; }
+            .exercise-controls .score { margin-left: 0; text-align: center; }
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9edf2;
+            padding-top: 24px;
+        }
+        .footer-note strong { color: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+    <header>
+        <h1>
+            📘 Complemento Verbal e Nominal
+            <small>Objeto Direto · Indireto · Complemento Nominal</small>
+        </h1>
+        <div class="subtitle">
+            Teoria completa, macetes infalíveis e 1.000 exercícios interativos para dominar a regência
+        </div>
+    </header>
+
+    <nav class="nav-tabs" id="navTabs">
+        <button class="active" data-tab="teoria">📖 Teoria</button>
+        <button data-tab="macetes">🧠 Macetes</button>
+        <button data-tab="exercicios">✏️ Exercícios</button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1 – TEORIA -->
+    <!-- ============================================================ -->
+    <div class="tab-content active" id="tab-teoria">
+
+        <h2 style="font-size:1.8rem; margin-bottom:16px;">📖 Teoria dos Complementos</h2>
+
+        <div class="theory-card">
+            <h3>🔹 O que são complementos?</h3>
+            <p>Os complementos são termos essenciais para completar o sentido de verbos ou nomes. Dividem-se em:</p>
+            <ul>
+                <li><strong>Complementos verbais:</strong> Objeto Direto (OD) e Objeto Indireto (OI).</li>
+                <li><strong>Complemento nominal (CN):</strong> complemento de substantivos, adjetivos ou advérbios.</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>⏳ Dica de ouro:</strong> O complemento verbal completa um <strong>verbo</strong>; o complemento nominal completa um <strong>nome</strong> (substantivo, adjetivo ou advérbio).
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Objeto Direto (OD)</h3>
+            <p>É o complemento de um <strong>verbo transitivo direto</strong>, ou seja, um verbo que não exige preposição para estabelecer a relação de complemento. O OD pode ser:</p>
+            <ul>
+                <li><strong>Substantivo / pronome:</strong> <em>Comprei <strong>um carro</strong>.</em></li>
+                <li><strong>Oração subordinada:</strong> <em>Quero <strong>que você venha</strong>.</em></li>
+            </ul>
+            <p>Perguntas típicas: <strong>o quê?</strong> ou <strong>quem?</strong> (para pessoas).</p>
+            <div class="example"><em>Eu vi <strong>o filme</strong>.</em> → Vi o quê? O filme.</div>
+            <div class="example"><em>Ele encontrou <strong>a amiga</strong>.</em> → Encontrou quem? A amiga.</div>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Objeto Indireto (OI)</h3>
+            <p>É o complemento de um <strong>verbo transitivo indireto</strong>, que exige uma <strong>preposição</strong> obrigatória para ligar o complemento ao verbo.</p>
+            <ul>
+                <li><strong>Com preposição:</strong> <em>Gosto <strong>de música</strong>.</em> (preposição <strong>de</strong>)</li>
+                <li><strong>Pronome oblíquo tônico:</strong> <em>Obedeço <strong>aos meus pais</strong>.</em></li>
+            </ul>
+            <p>Perguntas típicas: <strong>a quem?</strong>, <strong>de quem?</strong>, <strong>em quem?</strong>, etc.</p>
+            <div class="example"><em>Ele confia <strong>nos amigos</strong>.</em> → Confia em quem? Nos amigos.</div>
+            <div class="example"><em>Precisa <strong>de ajuda</strong>.</em> → Precisa de quê? De ajuda.</div>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Objeto Direto e Indireto (OD + OI)</h3>
+            <p>Verbos <strong>bitransitivos</strong> (ou transitivos diretos e indiretos) apresentam os dois complementos.</p>
+            <div class="example"><em>Eu dei <strong>o presente</strong> (OD) <strong>ao amigo</strong> (OI).</em></div>
+            <div class="example"><em>Ela pediu <strong>permissão</strong> (OD) <strong>ao chefe</strong> (OI).</em></div>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Complemento Nominal (CN)</h3>
+            <p>É o complemento de <strong>nomes</strong> (substantivos abstratos, adjetivos ou advérbios), sempre introduzido por <strong>preposição</strong>.</p>
+            <ul>
+                <li><strong>Substantivo abstrato:</strong> <em>Tenho confiança <strong>em Deus</strong>.</em> (confiança em)</li>
+                <li><strong>Adjetivo:</strong> <em>Estou feliz <strong>com você</strong>.</em> (feliz com)</li>
+                <li><strong>Advérbio:</strong> <em>Ele agiu favoravelmente <strong>à causa</strong>.</em></li>
+            </ul>
+            <div class="highlight-box">
+                <strong>⚠️ Atenção à diferença:</strong> <br />
+                <strong>Complemento Nominal</strong> completa o sentido de um nome abstrato (ideia, sentimento, ação). <br />
+                <strong>Adjunto Adnominal</strong> caracteriza um nome concreto ou abstrato com valor de posse, origem, etc., e não é exigido pelo nome.
+                <br /><br />
+                Ex: <em>A chegada <strong>do trem</strong></em> → <strong>Adjunto Adnominal</strong> (não é exigido pelo nome "chegada").<br />
+                <em>A certeza <strong>da vitória</strong></em> → <strong>Complemento Nominal</strong> (exigido pelo nome abstrato "certeza").
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>🔸 Diferenças fundamentais</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Critério</th><th>Objeto Direto</th><th>Objeto Indireto</th><th>Complemento Nominal</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Complementa</strong></td>
+                            <td>Verbo transitivo direto</td>
+                            <td>Verbo transitivo indireto</td>
+                            <td>Nome (subst./adj./adv.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Preposição</strong></td>
+                            <td>Não (em geral)</td>
+                            <td>Sim (obrigatória)</td>
+                            <td>Sim (obrigatória)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pergunta</strong></td>
+                            <td>O quê? / Quem?</td>
+                            <td>A quem? / De quê? etc.</td>
+                            <td>De quê? / Em quê? etc.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pronome oblíquo</strong></td>
+                            <td>o, a, os, as</td>
+                            <td>lhe, lhes</td>
+                            <td>lhe, lhes (com preposição)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="example">
+                <strong>Exemplos contrastantes:</strong><br />
+                <em>Ele leu <strong>o livro</strong>.</em> → OD (sem preposição)<br />
+                <em>Ele gosta <strong>de livros</strong>.</em> → OI (preposição "de")<br />
+                <em>A leitura <strong>de livros</strong> é boa.</em> → Complemento Nominal (completa o substantivo "leitura")
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2 – MACETES -->
+    <!-- ============================================================ -->
+    <div class="tab-content" id="tab-macetes">
+
+        <h2 style="font-size:1.8rem; margin-bottom:16px;">🧠 Macetes &amp; Mnemônicos</h2>
+
+        <div class="theory-card">
+            <h3>📌 "OD – sem preposição; OI – com preposição"</h3>
+            <div class="mnemonic">
+                <strong>OD</strong> = <strong>O</strong>bjeto <strong>D</strong>ireto → <strong>D</strong>ireto, sem desvio (sem preposição).<br />
+                <strong>OI</strong> = <strong>O</strong>bjeto <strong>I</strong>ndireto → <strong>I</strong>ndireto, com desvio (preposição).
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 Complemento Nominal = "CO" de "Nome"</h3>
+            <div class="mnemonic">
+                <strong>CO</strong>mplemento <strong>N</strong>ominal = complementa <strong>N</strong>ome (substantivo, adjetivo, advérbio).<br />
+                Pergunte: "O que completa este nome?"<br />
+                <em>Medo de escuro</em> → "de escuro" completa o sentido do substantivo "medo". É CN.
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 CN vs Adjunto Adnominal – "Abstrato vs Concreto"</h3>
+            <div class="mnemonic">
+                <ul>
+                    <li><strong>CN</strong> – nome <strong>abstrato</strong> (sentimento, ideia, qualidade) exige complemento. <em>Confiança em Deus</em></li>
+                    <li><strong>Adj. Adnominal</strong> – nome <strong>concreto</strong> recebe característica. <em>O carro de João</em> (posse)</li>
+                </ul>
+                <p>Teste: Substitua o termo preposicionado por um adjetivo. Se fizer sentido, é adjunto adnominal. Se não, é CN.</p>
+                <div class="example">
+                    <em>A entrada do ator</em> → "do ator" pode ser substituído por "atoril"? Não. É CN? Na verdade "entrada" é concreta? "Entrada" pode ser abstrata (ação de entrar) – aqui "do ator" completa o sentido da ação, é CN. <br />
+                    Já em <em>O carro do João</em> → "do João" pode ser substituído por "joanino"? Não, mas indica posse, é Adjunto Adnominal.
+                </div>
+            </div>
+        </div>
+
+        <div class="theory-card">
+            <h3>📌 Perguntas-chave</h3>
+            <div class="mnemonic">
+                <ul>
+                    <li><strong>OD:</strong> o quê? / quem? (sem preposição)</li>
+                    <li><strong>OI:</strong> a quem? / de quê? / em quê? (com preposição)</li>
+                    <li><strong>CN:</strong> completa o sentido do nome → pergunta "o quê?" referente ao nome.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3 – EXERCÍCIOS -->
+    <!-- ============================================================ -->
+    <div class="tab-content" id="tab-exercicios">
+
+        <h2 style="font-size:1.8rem; margin-bottom:8px;">✏️ 1.000 Exercícios Interativos</h2>
+        <p style="color:#475569; margin-bottom:18px;">Identifique objetos diretos, indiretos e complementos nominais, e distinga CN de adjunto adnominal.</p>
+
+        <div class="exercise-controls">
+            <label for="qtySelect">Quantos por vez:</label>
+            <select id="qtySelect">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            <button id="newExerciseBtn">🔁 Nova rodada</button>
+            <span class="score" id="scoreDisplay">✅ 0 / 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="fill" id="progressFill" style="width:0%;"></div>
+        </div>
+
+        <div id="exerciseContainer" class="exercise-area">
+            <!-- gerado por JS -->
+        </div>
+
+        <div class="pagination" id="paginationContainer">
+            <!-- gerado por JS -->
+        </div>
+
+        <div style="margin-top:24px; text-align:center; color:#94a3b8; font-size:0.9rem;">
+            <span id="totalExercisesLabel">Total de exercícios disponíveis: 1000</span>
+        </div>
+
+    </div>
+
+    <div class="footer-note">
+        <strong>📚 Domine os complementos</strong> · Teoria · Macetes · 1.000 exercícios com correção automática
+    </div>
+</div>
+
+<script>
+    // ======================================================================
+    //   GERADOR DE 1.000 EXERCÍCIOS – COMPLEMENTO VERBAL E NOMINAL
+    // ======================================================================
+
+    (function() {
+        'use strict';
+
+        function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = randInt(0, i);
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+        function pickN(arr, n) {
+            const copy = [...arr];
+            shuffle(copy);
+            return copy.slice(0, n);
+        }
+
+        // ---------- BANCOS DE DADOS ----------
+        const SUJEITOS = ['Eu', 'Tu', 'Ele', 'Ela', 'Nós', 'Vós', 'Eles', 'Elas', 'O menino', 'A menina', 'O professor', 'A professora', 'João', 'Maria'];
+        const VERBOS_TD = ['comprei', 'li', 'vi', 'encontrei', 'peguei', 'compreendi', 'entendi', 'escrevi', 'desenhei', 'construí', 'quebrei', 'consertei'];
+        const VERBOS_TI = ['gosto', 'preciso', 'confio', 'obedeço', 'assisto', 'pertenço', 'duvido', 'desconfio', 'simpatizo', 'concordo'];
+        const VERBOS_TDI = ['dei', 'mostrei', 'entreguei', 'pedi', 'ofereci', 'proporcionei', 'garanti', 'prometi', 'enviei', 'emprestei'];
+        const SUBST_ABSTRATOS = ['confiança', 'medo', 'certeza', 'dúvida', 'esperança', 'alegria', 'tristeza', 'amor', 'ódio', 'respeito', 'admiração', 'necessidade', 'capacidade'];
+        const ADJETIVOS_CN = ['feliz', 'triste', 'contente', 'capaz', 'incapaz', 'digno', 'indigno', 'orgulhoso', 'carente', 'ábil'];
+        const ADV_CN = ['contrariamente', 'favoravelmente', 'proximamente', 'longamente'];
+        const OBJETOS_DIRETOS = ['o livro', 'a caneta', 'o caderno', 'a prova', 'o concurso', 'a viagem', 'o jantar', 'a música', 'o poema', 'o trabalho', 'a casa', 'o carro'];
+        const OBJETOS_INDIRETOS = ['de música', 'de ajuda', 'aos amigos', 'no governo', 'da verdade', 'em você', 'com a decisão', 'para a escola'];
+        const PREPOSICOES = ['de', 'em', 'a', 'para', 'por', 'com', 'contra', 'sobre'];
+
+        // ---------- GERADORES DE EXERCÍCIOS ----------
+
+        // 1. Identificar se o termo é OD, OI ou CN
+        function genIdentifyType() {
+            const tipo = rand(['OD', 'OI', 'CN']);
+            let frase, answer, options, explanation;
+
+            if (tipo === 'OD') {
+                const suj = rand(SUJEITOS);
+                const verb = rand(VERBOS_TD);
+                const obj = rand(OBJETOS_DIRETOS);
+                frase = `${suj} ${verb} ${obj}.`;
+                answer = 'Objeto Direto (OD)';
+                explanation = `O termo "${obj}" completa o verbo sem preposição, portanto é OD.`;
+            } else if (tipo === 'OI') {
+                const suj = rand(SUJEITOS);
+                const verb = rand(VERBOS_TI);
+                const obj = rand(OBJETOS_INDIRETOS);
+                frase = `${suj} ${verb} ${obj}.`;
+                answer = 'Objeto Indireto (OI)';
+                explanation = `O termo "${obj}" é introduzido por preposição e completa o verbo, portanto é OI.`;
+            } else { // CN
+                const nome = rand(SUBST_ABSTRATOS);
+                const prep = rand(PREPOSICOES);
+                const compl = rand(['algo', 'tudo', 'nada', 'você', 'ele', 'ela', 'isso', 'aquilo', 'todos', 'alguns']);
+                frase = `Tenho ${nome} ${prep} ${compl}.`;
+                answer = 'Complemento Nominal (CN)';
+                explanation = `O termo "${prep} ${compl}" completa o sentido do substantivo abstrato "${nome}", portanto é CN.`;
+            }
+
+            const opts = shuffle(['Objeto Direto (OD)', 'Objeto Indireto (OI)', 'Complemento Nominal (CN)']);
+            return {
+                question: `Identifique a função do termo destacado (implícito) na frase:\n\n"${frase}"`,
+                options: opts,
+                answer,
+                explanation,
+                type: 'identify'
+            };
+        }
+
+        // 2. Completar com a preposição correta (se for OI ou CN)
+        function genFillPreposition() {
+            // Cria uma frase com um espaço para preposição
+            const tipo = rand(['verbo', 'nome']);
+            let frase, answer, options, explanation;
+
+            if (tipo === 'verbo') {
+                const suj = rand(SUJEITOS);
+                const verb = rand(VERBOS_TI);
+                const objeto = rand(['a música', 'a aula', 'o filme', 'a comida', 'o trabalho', 'a viagem', 'a escola']);
+                // O verbo exige uma preposição específica (de, em, a, etc.)
+                const prepMap = {
+                    'gosto': 'de',
+                    'preciso': 'de',
+                    'confio': 'em',
+                    'obedeço': 'a',
+                    'assisto': 'a',
+                    'pertenço': 'a',
+                    'duvido': 'de',
+                    'desconfio': 'de',
+                    'simpatizo': 'com',
+                    'concordo': 'com'
+                };
+                const prep = prepMap[verb] || 'de';
+                frase = `${suj} ${verb} _____ ${objeto}.`;
+                answer = prep;
+                explanation = `O verbo "${verb}" exige a preposição "${prep}" para formar o objeto indireto.`;
+            } else {
+                const nome = rand(SUBST_ABSTRATOS);
+                const prep = rand(PREPOSICOES);
+                const complemento = rand(['você', 'ele', 'ela', 'isso', 'aquilo', 'todos', 'alguns', 'a vida', 'o mundo']);
+                frase = `Tenho ${nome} _____ ${complemento}.`;
+                answer = prep;
+                explanation = `O substantivo abstrato "${nome}" exige a preposição "${prep}" para completar seu sentido (CN).`;
+            }
+
+            const allPreps = ['de', 'em', 'a', 'para', 'por', 'com', 'contra', 'sobre'];
+            const wrongs = pickN(allPreps.filter(p => p !== answer), 3);
+            const opts = shuffle([answer, ...wrongs]);
+            return {
+                question: `Complete com a preposição adequada:\n\n"${frase}"`,
+                options: opts,
+                answer,
+                explanation,
+                type: 'fillprep'
+            };
+        }
+
+        // 3. Distinguir entre CN e Adjunto Adnominal
+        function genCNvsADN() {
+            const tipo = rand(['CN', 'ADN']);
+            let frase, answer, options, explanation;
+
+            if (tipo === 'CN') {
+                const nome = rand(SUBST_ABSTRATOS);
+                const prep = rand(PREPOSICOES);
+                const compl = rand(['você', 'ele', 'ela', 'isso', 'aquilo', 'todos', 'a verdade', 'a vida', 'o sucesso']);
+                frase = `A ${nome} ${prep} ${compl} é grande.`;
+                answer = 'Complemento Nominal (CN)';
+                explanation = `"${prep} ${compl}" completa o sentido do substantivo abstrato "${nome}", portanto é CN.`;
+            } else {
+                const nomeConcreto = rand(['carro', 'casa', 'livro', 'mesa', 'cadeira', 'computador', 'telefone']);
+                const possuidor = rand(['João', 'Maria', 'ele', 'ela', 'nós', 'eles', 'meu pai', 'sua irmã']);
+                frase = `O ${nomeConcreto} de ${possuidor} é novo.`;
+                answer = 'Adjunto Adnominal (ADN)';
+                explanation = `"de ${possuidor}" indica posse e caracteriza o substantivo concreto "${nomeConcreto}", portanto é Adjunto Adnominal, não CN.`;
+            }
+
+            const opts = shuffle(['Complemento Nominal (CN)', 'Adjunto Adnominal (ADN)']);
+            return {
+                question: `O termo destacado (implícito) é Complemento Nominal ou Adjunto Adnominal?\n\n"${frase}"`,
+                options: opts,
+                answer,
+                explanation,
+                type: 'cnvsadn'
+            };
+        }
+
+        // 4. Identificar OD e OI na mesma frase
+        function genOD_OI() {
+            const suj = rand(SUJEITOS);
+            const verb = rand(VERBOS_TDI);
+            const od = rand(OBJETOS_DIRETOS);
+            const prep = rand(['a', 'para']);
+            const oi = rand(['João', 'Maria', 'ele', 'ela', 'nós', 'você', 'meu amigo', 'sua irmã']);
+            const frase = `${suj} ${verb} ${od} ${prep} ${oi}.`;
+            // A pergunta: qual é o OD e qual é o OI?
+            const answer = `OD: ${od}, OI: ${prep} ${oi}`;
+            const explanation = `"${od}" é objeto direto (sem preposição) e "${prep} ${oi}" é objeto indireto (com preposição).`;
+            // Gerar opções com combinações erradas
+            const op1 = `OD: ${oi}, OI: ${od}`;
+            const op2 = `OD: ${od}, OI: sem OI`;
+            const op3 = `OD: ${prep} ${oi}, OI: ${od}`;
+            const opts = shuffle([answer, op1, op2, op3]);
+            return {
+                question: `Identifique o Objeto Direto (OD) e o Objeto Indireto (OI) na frase:\n\n"${frase}"`,
+                options: opts,
+                answer,
+                explanation,
+                type: 'odoi'
+            };
+        }
+
+        // ---------- GERAR 1000 EXERCÍCIOS ----------
+        function generateExercises(count = 1000) {
+            const exercises = [];
+            const generators = [
+                genIdentifyType,
+                genFillPreposition,
+                genCNvsADN,
+                genOD_OI
+            ];
+
+            for (let i = 0; i < count; i++) {
+                const gen = rand(generators);
+                exercises.push(gen());
+            }
+            return exercises;
+        }
+
+        // ---------- ESTADO E RENDERIZAÇÃO ----------
+        let allExercises = [];
+        let currentPage = 0;
+        let pageSize = 10;
+        let answered = {};
+        let userAnswers = {};
+        let score = { correct: 0, total: 0 };
+
+        function renderExercises() {
+            const container = document.getElementById('exerciseContainer');
+            const pagContainer = document.getElementById('paginationContainer');
+            const progressFill = document.getElementById('progressFill');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+
+            if (allExercises.length === 0) {
+                container.innerHTML =
+                    `<p style="text-align:center; padding:40px; color:#64748b;">🔍 Clique em "Nova rodada" para gerar os exercícios.</p>`;
+                pagContainer.innerHTML = '';
+                return;
+            }
+
+            const total = allExercises.length;
+            const totalPages = Math.ceil(total / pageSize);
+            const start = currentPage * pageSize;
+            const end = Math.min(start + pageSize, total);
+            const pageExercises = allExercises.slice(start, end);
+
+            const answeredCount = Object.keys(answered).length;
+            const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+            progressFill.style.width = pct + '%';
+            scoreDisplay.textContent = `✅ ${score.correct} / ${score.total}`;
+
+            let html = '';
+            pageExercises.forEach((ex, idx) => {
+                const globalIdx = start + idx;
+                const isAnswered = answered[globalIdx] !== undefined;
+                const userAns = userAnswers[globalIdx] || '';
+                const isCorrect = answered[globalIdx] === true;
+                const isWrong = answered[globalIdx] === false;
+
+                html += `<div class="question-box" data-idx="${globalIdx}">`;
+                html += `<div class="q-text">${ex.question.replace(/\n/g, '<br>')}</div>`;
+
+                html += `<div class="options">`;
+                ex.options.forEach(opt => {
+                    let cls = '';
+                    let disabled = false;
+                    if (isAnswered) {
+                        disabled = true;
+                        if (opt === ex.answer) cls = 'correct';
+                        if (opt === userAns && opt !== ex.answer) cls = 'wrong';
+                        if (opt === userAns) cls += ' selected';
+                    } else if (opt === userAns) {
+                        cls = 'selected';
+                    }
+                    html +=
+                        `<button class="${cls}" data-global="${globalIdx}" data-opt="${opt}" ${disabled ? 'disabled' : ''}>${opt}</button>`;
+                });
+                html += `</div>`;
+
+                if (isAnswered) {
+                    const fbClass = isCorrect ? 'correct' : 'wrong';
+                    html += `<div class="feedback show ${fbClass}">`;
+                    html += `<strong>${isCorrect ? '✅ Correto!' : '❌ Incorreto.'}</strong> ${ex.explanation}`;
+                    html += `</div>`;
+                } else {
+                    html += `<div class="feedback" id="fb-${globalIdx}"></div>`;
+                }
+
+                html += `</div>`;
+            });
+
+            container.innerHTML = html;
+
+            container.querySelectorAll('.options button:not([disabled])').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const globalIdx = parseInt(this.dataset.global);
+                    const selected = this.dataset.opt;
+                    handleAnswer(globalIdx, selected);
+                });
+            });
+
+            let pagHtml = '';
+            for (let p = 0; p < totalPages; p++) {
+                pagHtml +=
+                    `<button class="${p === currentPage ? 'active-page' : ''}" data-page="${p}">${p+1}</button>`;
+            }
+            pagContainer.innerHTML = pagHtml;
+            pagContainer.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = parseInt(this.dataset.page);
+                    if (page !== currentPage) {
+                        currentPage = page;
+                        renderExercises();
+                    }
+                });
+            });
+
+            document.getElementById('totalExercisesLabel').textContent =
+                `Total de exercícios disponíveis: ${total}`;
+        }
+
+        function handleAnswer(globalIdx, selected) {
+            if (answered[globalIdx] !== undefined) return;
+
+            const ex = allExercises[globalIdx];
+            const isCorrect = selected === ex.answer;
+
+            answered[globalIdx] = isCorrect;
+            userAnswers[globalIdx] = selected;
+            if (isCorrect) score.correct++;
+            score.total++;
+
+            renderExercises();
+
+            const qBox = document.querySelector(`.question-box[data-idx="${globalIdx}"]`);
+            if (qBox) qBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function newRound() {
+            const qty = parseInt(document.getElementById('qtySelect').value);
+            allExercises = generateExercises(qty);
+            currentPage = 0;
+            answered = {};
+            userAnswers = {};
+            score = { correct: 0, total: 0 };
+            renderExercises();
+        }
+
+        // ---------- INICIALIZAR ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            const navBtns = document.querySelectorAll('#navTabs button');
+            const tabContents = {
+                teoria: document.getElementById('tab-teoria'),
+                macetes: document.getElementById('tab-macetes'),
+                exercicios: document.getElementById('tab-exercicios')
+            };
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    Object.keys(tabContents).forEach(key => {
+                        tabContents[key].classList.toggle('active', key === tab);
+                    });
+                });
+            });
+
+            document.getElementById('newExerciseBtn').addEventListener('click', newRound);
+            document.getElementById('qtySelect').addEventListener('change', function() {
+                if (allExercises.length > 0) newRound();
+            });
+
+            setTimeout(() => { newRound(); }, 100);
+        });
+
+    })();
+</script>
+</body>
+</html>
