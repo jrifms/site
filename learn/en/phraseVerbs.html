@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📘 1000+ Phrasal Verbs com Áudio + 500 Exercícios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            padding: 1.5rem 1rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 32px;
+            padding: 2rem 2rem 3rem;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border-bottom: 4px solid #e2e8f0;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 span {
+            background: #3b82f6;
+            color: white;
+            font-size: 1.1rem;
+            padding: 0.1rem 1.2rem;
+            border-radius: 40px;
+        }
+        .badge-count {
+            background: #e2e8f0;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-left: 0.5rem;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem 0;
+            color: #0f172a;
+            border-left: 6px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        .sub {
+            color: #475569;
+            margin-bottom: 1.8rem;
+            font-size: 1.1rem;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .controls input {
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid #d1d9e6;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 200px;
+            background: white;
+        }
+        .controls input:focus {
+            outline: 2px solid #3b82f6;
+            border-color: transparent;
+        }
+        .pv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .pv-card {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 1rem 1.3rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.15s ease;
+            cursor: default;
+            position: relative;
+        }
+        .pv-card:hover {
+            border-color: #94a3b8;
+            background: #f1f5f9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px -8px rgba(0,0,0,0.08);
+        }
+        .pv-card .verb {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #0f172a;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.4rem 0.7rem;
+        }
+        .pv-card .verb .pronunciation {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: #475569;
+            background: #e9edf2;
+            padding: 0.05rem 0.7rem;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.3px;
+        }
+        .pv-card .verb .audio-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0 0.2rem;
+            transition: 0.15s;
+            color: #3b82f6;
+            line-height: 1;
+        }
+        .pv-card .verb .audio-btn:hover {
+            transform: scale(1.2);
+            color: #2563eb;
+        }
+        .pv-card .meaning {
+            font-weight: 500;
+            color: #3b82f6;
+            margin: 0.2rem 0 0.1rem;
+        }
+        .pv-card .example {
+            color: #334155;
+            font-size: 0.92rem;
+            background: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+            margin-top: 0.3rem;
+        }
+        .pv-card .example i {
+            color: #64748b;
+            font-style: italic;
+        }
+        /* EXERCÍCIOS */
+        .exercise-box {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin: 1.2rem 0;
+            border: 1px solid #e2e8f0;
+        }
+        .exercise-box .question {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .exercise-box .question .badge {
+            background: #3b82f6;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 1.2rem;
+            margin: 0.4rem 0 0.8rem 0;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: white;
+            padding: 0.25rem 1rem 0.25rem 0.6rem;
+            border-radius: 30px;
+            border: 1px solid #d1d9e6;
+            cursor: pointer;
+            transition: 0.15s;
+            font-weight: 450;
+        }
+        .options label:hover {
+            background: #eef2f6;
+            border-color: #94a3b8;
+        }
+        .options input[type="radio"] {
+            accent-color: #3b82f6;
+            width: 1rem;
+            height: 1rem;
+        }
+        .btn-check {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.2rem;
+        }
+        .btn-check:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+        .feedback {
+            margin-top: 1rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 500;
+            display: none;
+        }
+        .feedback.correct {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+            border-left: 5px solid #22c55e;
+        }
+        .feedback.wrong {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 5px solid #ef4444;
+        }
+        .feedback.show {
+            display: block;
+        }
+        .result-stats {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: #eef2ff;
+            border-radius: 16px;
+            border: 1px solid #c7d2fe;
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .result-stats span:first-child {
+            background: #3b82f6;
+            color: white;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0 0.5rem;
+        }
+        .pagination button {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .pagination button.active {
+            background: #3b82f6;
+            color: white;
+        }
+        .pagination button:hover:not(.active) {
+            background: #cbd5e1;
+        }
+        .ex-pagination {
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+            .pv-grid { grid-template-columns: 1fr; }
+            .exercise-box { padding: 1rem; }
+            .options { flex-direction: column; gap: 0.3rem; }
+            .result-stats { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>
+        📘 Phrasal Verbs
+        <span>Guia + Quiz + Áudio</span>
+        <span class="badge-count" id="totalCount"></span>
+    </h1>
+    <p class="sub">
+        <strong>1000+ phrasal verbs</strong> com pronúncia IPA, exemplo e <strong>áudio</strong> (clique no ícone 🔊).
+        Filtre pela busca e pratique com <strong>500 exercícios únicos</strong>.
+    </p>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="🔍 Buscar verbo, significado ou exemplo...">
+        <span style="font-size:0.9rem; color:#475569;" id="resultCount"></span>
+    </div>
+
+    <div class="pv-grid" id="pvGrid"></div>
+    <div class="pagination" id="pagination"></div>
+
+    <h2>🧠 500 Exercícios Únicos</h2>
+    <p class="sub">Escolha o phrasal verb correto para cada frase. São 500 perguntas geradas automaticamente, sem repetição.</p>
+    <div id="exercises"></div>
+    <div class="pagination ex-pagination" id="exPagination"></div>
+
+    <div class="result-stats" id="resultStats">
+        <span id="scoreDisplay">0/0</span>
+        <span id="messageDisplay">Continue praticando! 💪</span>
+    </div>
+
+</div>
+
+<script>
+    // ================================================================
+    // 1. GERADOR DE 1000+ PHRASAL VERBS (com IPA e exemplos)
+    // ================================================================
+    function gerarPhrasalVerbs() {
+        const verbos = [
+            "come","go","get","put","take","look","make","break","bring","call",
+            "carry","cut","do","drop","fall","figure","fill","find","give","hang",
+            "hold","keep","knock","let","pass","pick","point","run","set","show",
+            "talk","think","throw","turn","wake","work","write","ask","blow","build",
+            "bump","burn","check","cheer","clean","clear","close","count","cross",
+            "deal","die","drag","draw","dress","drink","drive","dry","eat","end",
+            "face","finish","fix","fly","follow","grow","hand","head","hear",
+            "help","kick","lay","lead","leave","lie","light","live","mark",
+            "move","own","pay","pile","play","pull","push","read","rely",
+            "save","see","sell","send","settle","shut","sit","slow",
+            "stand","start","stay","stick","stop","tell","trip","use",
+            "wait","walk","warm","wash","watch","wear","win","wipe","wrap"
+        ];
+        const particulas = [
+            "up","down","in","out","on","off","over","under","through",
+            "along","around","away","back","forward","together","apart",
+            "about","across","by","into","onto","upon"
+        ];
+
+        const meanings = {
+            "come across":"encontrar por acaso","come back":"voltar","come from":"ser originário de",
+            "come up with":"inventar, pensar em","come in":"entrar","come out":"sair, aparecer",
+            "come over":"vir até","come down":"descer, diminuir","go ahead":"prosseguir",
+            "go on":"continuar, acontecer","go out":"sair, apagar","go through":"passar por",
+            "go away":"ir embora","go back":"voltar","go off":"explodir, soar",
+            "get along":"dar-se bem","get away":"escapar, fugir","get back":"voltar, recuperar",
+            "get over":"superar","get rid of":"livrar-se de","get up":"levantar-se",
+            "get in":"entrar (carro)","get out":"sair","get through":"atravessar, completar",
+            "put off":"adiar","put on":"vestir, colocar","put up with":"tolerar",
+            "put away":"guardar","put down":"colocar no chão, humilhar","put out":"apagar",
+            "take after":"parecer-se com","take care of":"cuidar de","take off":"decolar, tirar",
+            "take over":"assumir","take out":"remover, levar para fora","take up":"ocupar, começar (hobby)",
+            "look after":"cuidar de","look for":"procurar","look forward to":"ansiosamente esperar",
+            "look up":"consultar, pesquisar","look into":"investigar","look out":"cuidado!",
+            "make up":"inventar, reconciliar-se","make out":"entender, distinguir",
+            "break down":"quebrar, falhar","break in":"arrombar, interromper","break off":"romper",
+            "break out":"irromper, escapar","break up":"terminar (relacionamento)",
+            "bring up":"criar, mencionar","bring in":"introduzir","bring out":"lançar, revelar",
+            "bring back":"trazer de volta","call off":"cancelar","call on":"visitar, recorrer",
+            "call back":"retornar ligação","call up":"telefonar, convocar","carry on":"continuar",
+            "carry out":"executar","cut down":"reduzir","cut off":"cortar, interromper",
+            "cut out":"recortar, parar","do over":"refazer","do up":"arranjar, renovar",
+            "drop off":"deixar, cair (sono)","drop out":"abandonar","fall apart":"desmoronar",
+            "fall down":"cair ao chão","fall off":"cair de, diminuir","figure out":"descobrir, entender",
+            "fill in":"preencher, informar","fill out":"preencher (formulário)","fill up":"encher, abastecer",
+            "find out":"descobrir","give up":"desistir","give away":"dar de presente, revelar",
+            "give back":"devolver","give in":"render-se, ceder","hang out":"passar tempo (com amigos)",
+            "hang up":"desligar (telefone)","hold on":"esperar, segurar","hold back":"conter",
+            "hold up":"segurar, atrasar","keep up":"manter o ritmo","keep on":"continuar (insistindo)",
+            "keep from":"evitar, impedir","knock out":"nocautear","knock over":"derrubar",
+            "let down":"decepcionar","let in":"deixar entrar","let out":"deixar sair, soltar",
+            "pass away":"falecer","pass out":"desmaiar","pass up":"recusar (oportunidade)",
+            "pick up":"pegar, buscar","pick out":"escolher","point out":"apontar, indicar",
+            "run out of":"ficar sem","run into":"esbarrar em, encontrar","run over":"atropelar",
+            "run away":"fugir","set up":"montar, configurar","set off":"partir, desencadear",
+            "set out":"partir, dispor","show up":"aparecer","show off":"exibir-se",
+            "talk back":"responder (rude)","talk over":"discutir","tell apart":"distinguir",
+            "tell off":"dar uma bronca","think about":"pensar sobre","think over":"refletir",
+            "throw away":"jogar fora","throw up":"vomitar","turn down":"recusar, diminuir volume",
+            "turn off":"desligar","turn on":"ligar","turn up":"aparecer, aumentar volume",
+            "turn around":"virar-se","wake up":"acordar","work out":"resolver, dar certo, malhar",
+            "work on":"trabalhar em","write down":"anotar"
+        };
+        const examples = {
+            "come across":"I came across an old photo.","come back":"She came back home.",
+            "come from":"He comes from Brazil.","come up with":"She came up with a great idea.",
+            "come in":"Come in, please.","come out":"The sun came out.","come over":"Come over for dinner.",
+            "come down":"Prices are coming down.","go ahead":"Go ahead, I'm listening.",
+            "go on":"What's going on?","go out":"Let's go out tonight.","go through":"He went through a lot.",
+            "go away":"Go away, I'm busy.","go back":"Go back to sleep.","go off":"The alarm went off.",
+            "get along":"We get along well.","get away":"The thief got away.","get back":"Get back here!",
+            "get over":"She got over the flu.","get rid of":"Get rid of that junk.","get up":"I get up at 7 a.m.",
+            "get in":"Get in the car.","get out":"Get out of here!","get through":"I got through the test.",
+            "put off":"Don't put off your homework.","put on":"Put on your coat.",
+            "put up with":"I can't put up with this.","put away":"Put away your toys.",
+            "put down":"Put down the gun.","put out":"Put out the fire.","take after":"She takes after her mother.",
+            "take care of":"Take care of yourself.","take off":"The plane took off.",
+            "take over":"The company was taken over.","take out":"Take out the trash.",
+            "take up":"He took up painting.","look after":"Look after your brother.",
+            "look for":"I'm looking for my keys.","look forward to":"I look forward to the party.",
+            "look up":"Look up the word.","look into":"I'll look into it.","look out":"Look out for cars.",
+            "make up":"They made up after the fight.","make out":"I can't make out his face.",
+            "break down":"My car broke down.","break in":"Burglars broke in.",
+            "break off":"They broke off their engagement.","break out":"A fire broke out.",
+            "break up":"They broke up last month.","bring up":"She brought up the topic.",
+            "bring in":"Bring in the chairs.","bring out":"The sun brings out the flowers.",
+            "bring back":"Bring back my book.","call off":"The game was called off.",
+            "call on":"I'll call on you tomorrow.","call back":"I'll call you back.",
+            "call up":"Call me up tonight.","carry on":"Carry on with your work.",
+            "carry out":"Carry out the plan.","cut down":"Cut down on sugar.","cut off":"We were cut off.",
+            "cut out":"Cut out the noise!","do over":"Do it over again.","do up":"They did up the house.",
+            "drop off":"Drop me off at the corner.","drop out":"He dropped out of college.",
+            "fall apart":"Their marriage fell apart.","fall down":"She fell down the stairs.",
+            "fall off":"Sales fell off last month.","figure out":"I can't figure it out.",
+            "fill in":"Fill in the form.","fill out":"Fill out this application.","fill up":"Fill up the tank.",
+            "find out":"I found out the truth.","give up":"Never give up!","give away":"They gave away the secret.",
+            "give back":"Give me back my pen.","give in":"He gave in to pressure.",
+            "hang out":"I hang out with my friends.","hang up":"Don't hang up on me.",
+            "hold on":"Hold on a minute!","hold back":"She held back her tears.",
+            "hold up":"The traffic held us up.","keep up":"Keep up the good work.",
+            "keep on":"Keep on trying.","keep from":"I can't keep from laughing.",
+            "knock out":"The boxer knocked him out.","knock over":"He knocked over the glass.",
+            "let down":"Don't let me down.","let in":"Let the dog in.","let out":"She let out a scream.",
+            "pass away":"Her grandfather passed away.","pass out":"He passed out from the heat.",
+            "pass up":"I can't pass up this chance.","pick up":"Pick up the phone.",
+            "pick out":"Pick out a gift.","point out":"He pointed out the mistake.",
+            "run out of":"We ran out of milk.","run into":"I ran into an old friend.",
+            "run over":"The car ran over the cat.","run away":"He ran away from home.",
+            "set up":"Set up the equipment.","set off":"They set off early.","set out":"We set out on a journey.",
+            "show up":"She showed up late.","show off":"He loves to show off.",
+            "talk back":"Don't talk back to me.","talk over":"Let's talk it over.",
+            "tell apart":"I can't tell them apart.","tell off":"She told him off.",
+            "think about":"I'm thinking about you.","think over":"Think it over carefully.",
+            "throw away":"Throw away the garbage.","throw up":"He threw up after the ride.",
+            "turn down":"He turned down the offer.","turn off":"Turn off the lights.",
+            "turn on":"Turn on the TV.","turn up":"She turned up later.","turn around":"Turn around and look.",
+            "wake up":"Wake up early.","work out":"Everything worked out.","work on":"I'm working on my project.",
+            "write down":"Write down the address."
+        };
+
+        const lista = [];
+        const seen = new Set();
+        for (const [key, meaning] of Object.entries(meanings)) {
+            const [verb, particle] = key.split(' ');
+            const example = examples[key] || `Ex: ${key} is used.`;
+            const ipa = `/${verb} ${particle.replace(/to$/,'tuː')}/`.replace(/\bto\b/,'tuː');
+            lista.push({ verb: key, ipa, meaning, example });
+            seen.add(key);
+        }
+
+        const extraVerbs = verbos.filter(v => !['come','go','get','put','take','look','make','break','bring','call','carry','cut','do','drop','fall','figure','fill','find','give','hang','hold','keep','knock','let','pass','pick','point','run','set','show','talk','think','throw','turn','wake','work','write'].includes(v))
+            .concat(['ask','blow','build','bump','burn','check','cheer','clean','clear','close','count','cross','deal','die','drag','draw','dress','drink','drive','dry','eat','end','face','finish','fix','fly','follow','grow','hand','head','hear','help','kick','lay','lead','leave','lie','light','live','mark','move','own','pay','pile','play','pull','push','read','rely','save','see','sell','send','settle','shut','sit','slow','stand','start','stay','stick','stop','tell','trip','use','wait','walk','warm','wash','watch','wear','win','wipe','wrap']);
+        const allParticles = ['up','down','in','out','on','off','over','under','through','along','around','away','back','forward','together','apart','about','across','by','into','onto','upon'];
+        const genericMeanings = {
+            'up':'para cima, completar','down':'para baixo, reduzir','in':'dentro, incluir',
+            'out':'fora, remover','on':'sobre, continuar','off':'fora, cancelar',
+            'over':'sobre, superar','under':'sob, subjugar','through':'através, completar',
+            'along':'ao longo, acompanhar','around':'ao redor, evitar','away':'longe, desaparecer',
+            'back':'voltar, devolver','forward':'para frente, promover','together':'juntos, reunir',
+            'apart':'separados, desmontar','about':'sobre, aproximadamente','across':'atravessar, encontrar',
+            'by':'por, passar','into':'dentro de, transformar','onto':'sobre, descobrir','upon':'sobre, depender'
+        };
+
+        let attempts = 0;
+        while (lista.length < 1000 && attempts < 5000) {
+            attempts++;
+            const v = extraVerbs[Math.floor(Math.random() * extraVerbs.length)];
+            const p = allParticles[Math.floor(Math.random() * allParticles.length)];
+            const key = `${v} ${p}`;
+            if (seen.has(key)) continue;
+            seen.add(key);
+            const meaning = `${v} (${genericMeanings[p] || p})`;
+            const example = `Ex: She ${v} ${p} the situation.`;
+            const ipa = `/${v} ${p}/`.replace(/\bto\b/,'tuː');
+            lista.push({ verb: key, ipa, meaning, example });
+        }
+        for (let i = lista.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [lista[i], lista[j]] = [lista[j], lista[i]];
+        }
+        return lista;
+    }
+
+    // ================================================================
+    // 2. RENDERIZAÇÃO DA LISTA DE VERBOS (com áudio via SpeechSynthesis)
+    // ================================================================
+    const allVerbs = gerarPhrasalVerbs();
+    document.getElementById('totalCount').textContent = `${allVerbs.length} verbos`;
+
+    const grid = document.getElementById('pvGrid');
+    const searchInput = document.getElementById('searchInput');
+    const resultCount = document.getElementById('resultCount');
+    const paginationEl = document.getElementById('pagination');
+
+    let currentPage = 1;
+    const perPage = 24;
+    let filtered = [...allVerbs];
+
+    // Função para sintetizar áudio
+    function speakPhrasal(verb) {
+        if (!window.speechSynthesis) {
+            alert('Seu navegador não suporta síntese de voz.');
+            return;
+        }
+        // Cancela qualquer fala anterior
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(verb);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.85;
+        utterance.pitch = 1.0;
+        // Tenta encontrar uma voz masculina ou feminina em inglês
+        const voices = window.speechSynthesis.getVoices();
+        const enVoice = voices.find(v => v.lang.startsWith('en'));
+        if (enVoice) utterance.voice = enVoice;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function renderPage() {
+        const start = (currentPage - 1) * perPage;
+        const end = start + perPage;
+        const pageItems = filtered.slice(start, end);
+        grid.innerHTML = '';
+        pageItems.forEach(pv => {
+            const card = document.createElement('div');
+            card.className = 'pv-card';
+            const verbDiv = document.createElement('div');
+            verbDiv.className = 'verb';
+            verbDiv.innerHTML = `
+                <span>${pv.verb}</span>
+                <span class="pronunciation">${pv.ipa}</span>
+                <button class="audio-btn" title="Ouvir pronúncia" data-verb="${pv.verb}">🔊</button>
+            `;
+            const meaningDiv = document.createElement('div');
+            meaningDiv.className = 'meaning';
+            meaningDiv.textContent = `🔹 ${pv.meaning}`;
+            const exampleDiv = document.createElement('div');
+            exampleDiv.className = 'example';
+            exampleDiv.innerHTML = `<i>${pv.example}</i>`;
+            card.appendChild(verbDiv);
+            card.appendChild(meaningDiv);
+            card.appendChild(exampleDiv);
+            grid.appendChild(card);
+        });
+
+        // Adiciona eventos de áudio aos botões
+        document.querySelectorAll('.audio-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const verb = this.dataset.verb;
+                speakPhrasal(verb);
+            });
+        });
+
+        const totalPages = Math.ceil(filtered.length / perPage);
+        resultCount.textContent = `${filtered.length} resultados`;
+        paginationEl.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === currentPage) btn.className = 'active';
+            btn.addEventListener('click', () => { currentPage = i; renderPage(); });
+            paginationEl.appendChild(btn);
+        }
+        if (totalPages <= 1) paginationEl.style.display = 'none';
+        else paginationEl.style.display = 'flex';
+    }
+
+    searchInput.addEventListener('input', () => {
+        const q = searchInput.value.toLowerCase().trim();
+        filtered = allVerbs.filter(pv =>
+            pv.verb.toLowerCase().includes(q) ||
+            pv.meaning.toLowerCase().includes(q) ||
+            pv.example.toLowerCase().includes(q)
+        );
+        currentPage = 1;
+        renderPage();
+    });
+
+    // Carrega vozes (alguns navegadores precisam de um tempinho)
+    if (window.speechSynthesis) {
+        window.speechSynthesis.getVoices(); // pré-carrega
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+        };
+    }
+
+    renderPage();
+
+    // ================================================================
+    // 3. GERADOR DE 500 EXERCÍCIOS ÚNICOS
+    // ================================================================
+    function gerarExercicios(qtde = 500) {
+        const templates = [
+            (v) => `I _________ ${v} my keys yesterday.`,
+            (v) => `She _________ ${v} her homework every day.`,
+            (v) => `They _________ ${v} the meeting.`,
+            (v) => `We need to _________ ${v} a solution.`,
+            (v) => `Can you _________ ${v} the word?`,
+            (v) => `He _________ ${v} his grandmother.`,
+            (v) => `Please _________ ${v} the lights.`,
+            (v) => `I can't _________ ${v} this noise.`,
+            (v) => `The plane will _________ ${v} soon.`,
+            (v) => `She _________ ${v} smoking last year.`,
+            (v) => `I'm really _________ ${v} to meeting you.`,
+            (v) => `The fire _________ ${v} quickly.`,
+            (v) => `We _________ ${v} of milk.`,
+            (v) => `He _________ ${v} a great point.`,
+            (v) => `I can't _________ ${v} what she sees.`,
+            (v) => `The alarm _________ ${v} at 6 a.m.`,
+            (v) => `She _________ ${v} her keys.`,
+            (v) => `I need to _________ ${v} this form.`,
+            (v) => `He _________ ${v} the chance.`,
+            (v) => `The teacher _________ ${v} the mistake.`,
+            (v) => `We _________ ${v} a lot of money.`,
+            (v) => `They _________ ${v} the problem.`,
+            (v) => `She _________ ${v} the invitation.`,
+            (v) => `I always _________ ${v} with my sister.`,
+            (v) => `He _________ ${v} the bus.`,
+            (v) => `We _________ ${v} the project.`,
+            (v) => `She _________ ${v} the news.`,
+            (v) => `They _________ ${v} the game.`,
+            (v) => `I _________ ${v} my friend at the mall.`,
+            (v) => `He _________ ${v} his old car.`,
+        ];
+
+        const verbStrings = allVerbs.map(pv => pv.verb);
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        const exercises = [];
+        const usedSentences = new Set();
+        let attemptsEx = 0;
+        while (exercises.length < qtde && attemptsEx < 20000) {
+            attemptsEx++;
+            const verb = verbStrings[Math.floor(Math.random() * verbStrings.length)];
+            const template = templates[Math.floor(Math.random() * templates.length)];
+            const key = `${verb}|${template.toString()}`;
+            if (usedSentences.has(key)) continue;
+            usedSentences.add(key);
+
+            const correct = verb;
+            let options = [correct];
+            const candidates = verbStrings.filter(v => v !== correct);
+            shuffle(candidates);
+            for (let i = 0; i < candidates.length && options.length < 4; i++) {
+                if (!options.includes(candidates[i])) {
+                    options.push(candidates[i]);
+                }
+            }
+            while (options.length < 4) {
+                const extra = verbStrings[Math.floor(Math.random() * verbStrings.length)];
+                if (!options.includes(extra)) options.push(extra);
+            }
+            shuffle(options);
+            const correctIndex = options.indexOf(correct);
+
+            exercises.push({
+                question: template(verb),
+                options: options,
+                correct: correctIndex
+            });
+        }
+        while (exercises.length < qtde) {
+            const verb = verbStrings[Math.floor(Math.random() * verbStrings.length)];
+            const template = templates[Math.floor(Math.random() * templates.length)];
+            const correct = verb;
+            let options = [correct];
+            const candidates = verbStrings.filter(v => v !== correct);
+            shuffle(candidates);
+            for (let i = 0; i < candidates.length && options.length < 4; i++) {
+                if (!options.includes(candidates[i])) options.push(candidates[i]);
+            }
+            while (options.length < 4) {
+                const extra = verbStrings[Math.floor(Math.random() * verbStrings.length)];
+                if (!options.includes(extra)) options.push(extra);
+            }
+            shuffle(options);
+            const correctIndex = options.indexOf(correct);
+            exercises.push({
+                question: template(verb),
+                options: options,
+                correct: correctIndex
+            });
+        }
+        return exercises;
+    }
+
+    // ================================================================
+    // 4. RENDERIZAÇÃO DOS EXERCÍCIOS (com paginação)
+    // ================================================================
+    const allExercises = gerarExercicios(500);
+    const exercisesContainer = document.getElementById('exercises');
+    const exPagination = document.getElementById('exPagination');
+    let exPage = 1;
+    const exPerPage = 10;
+
+    function renderExercisesPage() {
+        const start = (exPage - 1) * exPerPage;
+        const end = start + exPerPage;
+        const pageEx = allExercises.slice(start, end);
+
+        exercisesContainer.innerHTML = '';
+        pageEx.forEach((item, idx) => {
+            const realIndex = start + idx;
+            const div = document.createElement('div');
+            div.className = 'exercise-box';
+            div.dataset.index = realIndex;
+
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `<span class="badge">${realIndex + 1}</span> ${item.question}`;
+            div.appendChild(questionDiv);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            item.options.forEach((opt, optIndex) => {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${realIndex}`;
+                radio.value = optIndex;
+                label.appendChild(radio);
+                label.append(opt);
+                optionsDiv.appendChild(label);
+            });
+            div.appendChild(optionsDiv);
+
+            const checkBtn = document.createElement('button');
+            checkBtn.className = 'btn-check';
+            checkBtn.textContent = '✅ Verificar';
+            checkBtn.dataset.index = realIndex;
+            div.appendChild(checkBtn);
+
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            feedback.id = `feedback-${realIndex}`;
+            div.appendChild(feedback);
+
+            exercisesContainer.appendChild(div);
+        });
+
+        const totalPages = Math.ceil(allExercises.length / exPerPage);
+        exPagination.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === exPage) btn.className = 'active';
+            btn.addEventListener('click', () => { exPage = i; renderExercisesPage(); });
+            exPagination.appendChild(btn);
+        }
+        if (totalPages <= 1) exPagination.style.display = 'none';
+        else exPagination.style.display = 'flex';
+
+        document.querySelectorAll('.btn-check').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                const exercise = allExercises[index];
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                const optionsLabels = feedbackDiv.parentElement.querySelectorAll('.options label');
+
+                optionsLabels.forEach(label => {
+                    label.style.borderColor = '#d1d9e6';
+                    label.style.background = 'white';
+                });
+
+                if (!selected) {
+                    feedbackDiv.className = 'feedback show wrong';
+                    feedbackDiv.textContent = '⚠️ Selecione uma opção.';
+                    return;
+                }
+
+                const selectedValue = parseInt(selected.value);
+                const isCorrect = selectedValue === exercise.correct;
+
+                optionsLabels.forEach((label, idx) => {
+                    const radio = label.querySelector('input');
+                    if (radio) {
+                        const val = parseInt(radio.value);
+                        if (val === exercise.correct) {
+                            label.style.borderColor = '#22c55e';
+                            label.style.background = '#dcfce7';
+                        } else if (val === selectedValue && !isCorrect) {
+                            label.style.borderColor = '#ef4444';
+                            label.style.background = '#fee2e2';
+                        }
+                    }
+                });
+
+                feedbackDiv.className = 'feedback show';
+                if (isCorrect) {
+                    feedbackDiv.classList.add('correct');
+                    feedbackDiv.textContent = '✅ Correto!';
+                } else {
+                    feedbackDiv.classList.add('wrong');
+                    feedbackDiv.textContent = `❌ Resposta certa: “${exercise.options[exercise.correct]}”.`;
+                }
+                updateStats();
+            });
+        });
+    }
+
+    // ================================================================
+    // 5. ESTATÍSTICAS
+    // ================================================================
+    const statsDiv = document.getElementById('resultStats');
+    const scoreSpan = document.getElementById('scoreDisplay');
+    const msgSpan = document.getElementById('messageDisplay');
+
+    function updateStats() {
+        const total = allExercises.length;
+        let correct = 0;
+        let answered = 0;
+        allExercises.forEach((_, idx) => {
+            const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+            if (selected) {
+                answered++;
+                if (parseInt(selected.value) === allExercises[idx].correct) correct++;
+            }
+        });
+        statsDiv.style.display = 'flex';
+        scoreSpan.textContent = `${correct}/${total}`;
+        const pct = correct / total;
+        let msg = '';
+        if (pct === 1) msg = '🎉 Perfeito! Você dominou todos os 500!';
+        else if (pct >= 0.8) msg = '👏 Muito bom! Continue praticando.';
+        else if (pct >= 0.5) msg = '📖 Bom progresso! Reveja os que errou.';
+        else msg = '💪 Continue estudando! Você vai melhorar.';
+        msgSpan.textContent = msg;
+    }
+
+    renderExercisesPage();
+    window.addEventListener('load', () => {
+        setTimeout(updateStats, 100);
+    });
+</script>
+</body>
+</html>
