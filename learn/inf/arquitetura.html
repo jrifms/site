@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitetura de Computadores · Concurso Técnico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4fa;
+            color: #1a2639;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.07);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b2b44;
+            border-left: 8px solid #2a7de1;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .subtitle {
+            color: #3f5a77;
+            font-size: 1.1rem;
+            padding-left: 28px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e2eaf1;
+            padding-bottom: 15px;
+        }
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        nav button {
+            background: none;
+            border: none;
+            padding: 10px 26px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3a5470;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: #e4ecf6;
+        }
+        nav button.active {
+            background: #1a5fb4;
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 95, 180, 0.3);
+        }
+        .section {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.3;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== TEORIA COM GRÁFICOS ========== */
+        .teoria-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 800px) {
+            .teoria-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .teoria-card {
+            background: #fafcff;
+            border-radius: 18px;
+            padding: 20px 22px;
+            border: 1px solid #e4edf6;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            transition: 0.15s;
+        }
+        .teoria-card:hover {
+            border-color: #b9cee8;
+        }
+        .teoria-card h3 {
+            color: #0b2b44;
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+            border-bottom: 2px dashed #d4e0ed;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .teoria-card ul {
+            padding-left: 22px;
+            margin: 8px 0 12px;
+        }
+        .teoria-card li {
+            margin-bottom: 6px;
+        }
+        .macete-box {
+            background: #e3f0e9;
+            border-left: 6px solid #1f8b4c;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 16px 0 8px;
+        }
+        .macete-box strong {
+            color: #0f5530;
+        }
+        .graphic-container {
+            background: #f4f8ff;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 18px 0 10px;
+            text-align: center;
+            border: 1px solid #d7e4f2;
+        }
+        .graphic-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .graphic-container .legenda {
+            font-size: 0.85rem;
+            color: #2f4b6e;
+            margin-top: 6px;
+        }
+        .dica-extra {
+            background: #fef6e6;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border-left: 4px solid #f0b34b;
+            margin-top: 12px;
+        }
+        .dica-extra strong {
+            color: #a76f1a;
+        }
+
+        /* ========== EXERCÍCIOS ========== */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+        .quiz-controls .info {
+            font-size: 0.95rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+            color: #0b2b44;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a2a3f;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background: #dce5f0;
+        }
+        .btn-primary {
+            background: #1a5fb4;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #124a8a;
+        }
+        .btn-success {
+            background: #1f8b4c;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #16703d;
+        }
+        .btn-danger {
+            background: #b33c3c;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #922e2e;
+        }
+        .questao {
+            background: #fbfdff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e4ecf5;
+            transition: 0.15s;
+        }
+        .questao:hover {
+            border-color: #b8ccf0;
+        }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 8px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .questao .opcao:hover {
+            background: #f0f5fe;
+        }
+        .questao .opcao input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #1a5fb4;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 0;
+        }
+        .questao .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 500;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 6px;
+        }
+        .questao.resolvida .opcao {
+            opacity: 0.85;
+        }
+        .questao.resolvida .opcao input[type="radio"] {
+            pointer-events: none;
+        }
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .paginacao .page-btn:hover {
+            background: #d4dfec;
+        }
+        .paginacao .page-btn.active-page {
+            background: #1a5fb4;
+            color: white;
+        }
+        .stats {
+            background: #f0f5fe;
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #0b2b44;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6a7e97;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .questao {
+                padding: 16px;
+            }
+            .btn-group .btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚙️ Arquitetura de Computadores <span style="font-size:1rem; font-weight:400; color:#3f5a77;">· Técnico Administrativo</span></h1>
+        <div class="subtitle">Teoria visual + macetes + 1000 exercícios com correção automática</div>
+
+        <nav>
+            <button class="active" data-section="teoria">📘 Teoria & Macetes</button>
+            <button data-section="exercicios">📝 Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO TEORIA COM GRÁFICOS E DICAS                               -->
+        <!-- ============================================================ -->
+        <section id="teoria" class="section active">
+            <div class="teoria-grid">
+
+                <!-- 1. CPU -->
+                <div class="teoria-card">
+                    <h3>🧠 CPU (UCP) – Cérebro</h3>
+                    <ul>
+                        <li><strong>UC</strong> (Unidade de Controle): busca, decodifica e coordena.</li>
+                        <li><strong>ULA</strong> (Unidade Lógico-Aritmética): operações matemáticas e lógicas.</li>
+                        <li><strong>Registradores:</strong> memória interna ultrarrápida.</li>
+                        <li><strong>Ciclo da instrução:</strong> Buscar → Decodificar → Executar → Armazenar.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="20" width="80" height="60" rx="10" fill="#d9e6f7" stroke="#1a5fb4" stroke-width="2"/>
+                            <text x="32" y="55" font-size="13" fill="#0b2b44">UC</text>
+                            <rect x="110" y="20" width="80" height="60" rx="10" fill="#d9e6f7" stroke="#1a5fb4" stroke-width="2"/>
+                            <text x="125" y="55" font-size="13" fill="#0b2b44">ULA</text>
+                            <rect x="210" y="20" width="70" height="60" rx="10" fill="#e6f0fa" stroke="#1a5fb4" stroke-width="2"/>
+                            <text x="225" y="55" font-size="13" fill="#0b2b44">Regs</text>
+                            <path d="M90 50 L110 50" stroke="#2a7de1" stroke-width="3" marker-end="url(#arrow)"/>
+                            <path d="M190 50 L210 50" stroke="#2a7de1" stroke-width="3" marker-end="url(#arrow)"/>
+                            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2a7de1"/></marker></defs>
+                        </svg>
+                        <div class="legenda">UC + ULA + Registradores (interligados por barramento interno)</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “UC comanda, ULA calcula, Registra guarda”. 
+                        <span style="display:block; margin-top:4px;">📌 <strong>Decore:</strong> a UC <em>busca</em> a instrução na memória, a ULA <em>executa</em> a operação.</span>
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> Perguntam muito: “Qual componente é responsável por interpretar as instruções?” → <strong>UC</strong>.
+                    </div>
+                </div>
+
+                <!-- 2. Memórias -->
+                <div class="teoria-card">
+                    <h3>🧩 Memórias – Hierarquia</h3>
+                    <ul>
+                        <li><strong>Registradores:</strong> mais rápidos, menores (dentro da CPU).</li>
+                        <li><strong>Cache (L1, L2, L3):</strong> entre CPU e RAM, acelera o acesso.</li>
+                        <li><strong>RAM:</strong> volátil, leitura/escrita, principal.</li>
+                        <li><strong>ROM:</strong> não volátil, somente leitura (BIOS).</li>
+                        <li><strong>HD/SSD:</strong> secundária, não volátil, maior capacidade.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 70" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="10" width="40" height="20" rx="4" fill="#fddf8c" stroke="#b3862b"/>
+                            <text x="14" y="24" font-size="9" fill="#5a3e0b">Regs</text>
+                            <rect x="70" y="10" width="50" height="20" rx="4" fill="#f7c97a" stroke="#b3862b"/>
+                            <text x="80" y="24" font-size="9" fill="#5a3e0b">Cache</text>
+                            <rect x="140" y="10" width="60" height="20" rx="4" fill="#aac9f0" stroke="#1a5fb4"/>
+                            <text x="148" y="24" font-size="9" fill="#0b2b44">RAM</text>
+                            <rect x="220" y="10" width="65" height="20" rx="4" fill="#b3c9d9" stroke="#3f5a77"/>
+                            <text x="230" y="24" font-size="9" fill="#1a2a3f">HD/SSD</text>
+                            <path d="M50 20 L70 20" stroke="#b3862b" stroke-width="2"/>
+                            <path d="M120 20 L140 20" stroke="#b3862b" stroke-width="2"/>
+                            <path d="M200 20 L220 20" stroke="#1a5fb4" stroke-width="2"/>
+                            <text x="10" y="52" font-size="10" fill="#3f5a77">⬆ velocidade · ⬇ capacidade</text>
+                        </svg>
+                        <div class="legenda">Hierarquia: mais rápido no topo, maior capacidade embaixo.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Registrador é foguete, Cache é avião, RAM é carro, HD é caminhão” – velocidade vs. capacidade.<br>
+                        <span style="display:block; margin-top:4px;">📌 <strong>Decore:</strong> RAM é volátil (perde dados), ROM não volátil (guarda BIOS).</span>
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Memória cache serve para reduzir a diferença de velocidade entre CPU e RAM”.
+                    </div>
+                </div>
+
+                <!-- 3. Barramentos -->
+                <div class="teoria-card">
+                    <h3>🔌 Barramentos – Vias de comunicação</h3>
+                    <ul>
+                        <li><strong>Dados:</strong> transporta os dados propriamente ditos (largura em bits).</li>
+                        <li><strong>Endereços:</strong> indica onde os dados estão (capacidade de endereçamento).</li>
+                        <li><strong>Controle:</strong> sinais de leitura/escrita, clock, interrupções.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="10" width="70" height="30" rx="6" fill="#d4e2f0" stroke="#1a5fb4"/>
+                            <text x="35" y="30" font-size="11" fill="#0b2b44">CPU</text>
+                            <rect x="210" y="10" width="70" height="30" rx="6" fill="#d4e2f0" stroke="#1a5fb4"/>
+                            <text x="218" y="30" font-size="11" fill="#0b2b44">Memória</text>
+                            <line x1="90" y1="25" x2="210" y2="25" stroke="#2a7de1" stroke-width="3"/>
+                            <text x="130" y="18" font-size="8" fill="#1a5fb4">Dados</text>
+                            <line x1="90" y1="42" x2="210" y2="42" stroke="#e68a2e" stroke-width="3" stroke-dasharray="4 3"/>
+                            <text x="128" y="55" font-size="8" fill="#b86b1a">Endereços</text>
+                            <line x1="90" y1="65" x2="210" y2="65" stroke="#5f7d9c" stroke-width="3" stroke-dasharray="2 2"/>
+                            <text x="130" y="77" font-size="8" fill="#3f5a77">Controle</text>
+                        </svg>
+                        <div class="legenda">Três barramentos: dados (azul), endereços (laranja) e controle (cinza).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Dados → o quê, Endereços → onde, Controle → como”.<br>
+                        📌 <strong>Decore:</strong> barramento de endereços com <strong>n bits</strong> endereça <strong>2ⁿ</strong> posições de memória.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Largura do barramento de dados afeta a performance” – 32 bits vs 64 bits.
+                    </div>
+                </div>
+
+                <!-- 4. Unidades de medida + Von Neumann -->
+                <div class="teoria-card">
+                    <h3>📏 Unidades & Arquitetura</h3>
+                    <ul>
+                        <li><strong>Bit</strong> → 0 ou 1. <strong>Byte</strong> = 8 bits.</li>
+                        <li><strong>KB</strong> = 1024 B, <strong>MB</strong> = 1024 KB, <strong>GB</strong> = 1024 MB, <strong>TB</strong> = 1024 GB.</li>
+                        <li><strong>Frequência:</strong> Hz, MHz, GHz (ciclos por segundo).</li>
+                        <li><strong>Von Neumann:</strong> programa e dados na mesma memória (barramento único).</li>
+                        <li><strong>Harvard:</strong> memórias separadas para instruções e dados.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="130" height="30" rx="6" fill="#e1e9f5" stroke="#1a5fb4"/>
+                            <text x="20" y="24" font-size="11" fill="#0b2b44">Von Neumann</text>
+                            <text x="20" y="40" font-size="8" fill="#3f5a77">Programa + Dados (memória única)</text>
+                            <rect x="170" y="5" width="120" height="30" rx="6" fill="#f2e6d9" stroke="#b86b1a"/>
+                            <text x="180" y="24" font-size="11" fill="#7a4a0e">Harvard</text>
+                            <text x="180" y="40" font-size="8" fill="#7a4a0e">Instruções ║ Dados (separados)</text>
+                        </svg>
+                        <div class="legenda">Von Neumann (programa armazenado) vs. Harvard (barramentos separados).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Kilo, Mega, Giga, Tera” – na informática sempre <strong>×1024</strong> (não 1000).<br>
+                        📌 <strong>Decore:</strong> 1 GB = 1024 MB = 1.073.741.824 bytes.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Em Von Neumann, o barramento é compartilhado, o que pode criar gargalo (Von Neumann bottleneck)”.
+                    </div>
+                </div>
+
+                <!-- 5. Dispositivos E/S -->
+                <div class="teoria-card">
+                    <h3>🖱️ Periféricos (E/S)</h3>
+                    <ul>
+                        <li><strong>Entrada:</strong> teclado, mouse, scanner, microfone.</li>
+                        <li><strong>Saída:</strong> monitor, impressora, caixas de som.</li>
+                        <li><strong>Mistos (E/S):</strong> HD, SSD, pendrive, leitor de CD/DVD, tela touch.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="80" height="30" rx="8" fill="#c3d9f0" stroke="#1a5fb4"/>
+                            <text x="18" y="24" font-size="11" fill="#0b2b44">Entrada</text>
+                            <rect x="110" y="5" width="80" height="30" rx="8" fill="#c3d9f0" stroke="#1a5fb4"/>
+                            <text x="118" y="24" font-size="11" fill="#0b2b44">Saída</text>
+                            <rect x="210" y="5" width="80" height="30" rx="8" fill="#f7d9a8" stroke="#b86b1a"/>
+                            <text x="218" y="24" font-size="11" fill="#7a4a0e">Mistos</text>
+                        </svg>
+                        <div class="legenda">Dispositivos de entrada, saída e mistos (E/S).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Entrada → entra dado, Saída → sai dado, Misto → faz os dois”.<br>
+                        📌 <strong>Decore:</strong> monitor é saída, mas monitor touch é misto (entrada + saída).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Impressora é saída, scanner é entrada, HD é misto”.
+                    </div>
+                </div>
+
+                <!-- 6. Tópicos extras + dicas finais -->
+                <div class="teoria-card">
+                    <h3>🎯 Tópicos que mais caem</h3>
+                    <ul>
+                        <li><strong>Diferença RAM x ROM:</strong> volátil vs não volátil.</li>
+                        <li><strong>Funções da ULA e UC:</strong> UC controla, ULA opera.</li>
+                        <li><strong>Barramentos:</strong> dados, endereços, controle – saiba diferenciar.</li>
+                        <li><strong>Unidades de armazenamento:</strong> conversões (KB, MB, GB, TB).</li>
+                        <li><strong>Arquitetura de Von Neumann:</strong> programa armazenado na mesma memória.</li>
+                        <li><strong>Memória cache:</strong> níveis (L1, L2, L3) e sua função.</li>
+                    </ul>
+                    <div class="macete-box" style="background:#fcf2e1;">
+                        <strong>📌 Super Macete para a prova:</strong> “Se a questão falar em <strong>decodificar</strong> ou <strong>controlar</strong> → UC. Se falar em <strong>calcular</strong> ou <strong>operação lógica</strong> → ULA. Se falar em <strong>endereçar</strong> → barramento de endereços.”<br>
+                        <span style="display:block; margin-top:6px;">🔁 <strong>Revise sempre:</strong> hierarquia de memória, conversão de unidades e ciclos de instrução.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO EXERCÍCIOS (1000 questões)                               -->
+        <!-- ============================================================ -->
+        <section id="exercicios" class="section">
+            <div class="quiz-controls">
+                <div class="info">
+                    <span id="acertos">0</span> acertos · 
+                    <span id="totalRespondidas">0</span> respondidas de 
+                    <span id="totalQuestoes">1000</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                    <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                    <button class="btn btn-danger" id="btnLimpar">🧹 Limpar respostas</button>
+                </div>
+            </div>
+            <div id="questoesContainer"></div>
+            <div class="paginacao" id="paginacao"></div>
+            <div style="text-align:center; margin-top:10px;">
+                <span class="stats" id="statsProgresso">Progresso: 0%</span>
+            </div>
+        </section>
+
+        <div class="footer">
+            Desenvolvido para concursos · 1000 questões · Teoria visual + macetes · Boa sorte!
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================================
+            // 1. GERADOR DE 1000 QUESTÕES (MESMO CÓDIGO ANTERIOR, MAS COM
+            //    MAIS VARIEDADE E EXPLICAÇÕES MELHORADAS)
+            // ============================================================
+            const TOTAL_QUESTOES = 1000;
+
+            const templates = [
+                // 1) Capacidade de endereçamento
+                (idx) => {
+                    const bits = [8, 16, 24, 32, 40, 48, 56, 64][idx % 8];
+                    const cap = Math.pow(2, bits);
+                    const unidade = cap >= 1024 ** 3 ? 'GB' : cap >= 1024 ** 2 ? 'MB' : 'KB';
+                    const valor = (cap / (1024 ** (unidade === 'GB' ? 3 : unidade === 'MB' ? 2 : 1))).toFixed(1);
+                    const erros = [cap * 0.5, cap * 2, cap / 4, cap * 1.5].map(v => {
+                        const u = v >= 1024 ** 3 ? 'GB' : v >= 1024 ** 2 ? 'MB' : 'KB';
+                        const val = (v / (1024 ** (u === 'GB' ? 3 : u === 'MB' ? 2 : 1))).toFixed(1);
+                        return `${val} ${u}`;
+                    });
+                    const certa = `${valor} ${unidade}`;
+                    const opcoes = [certa, ...erros.slice(0, 3)];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: `Um barramento de endereços com ${bits} bits pode endereçar no máximo quantos bytes?`,
+                        opcoes: opcoes,
+                        correta: certa,
+                        explicacao: `Com ${bits} bits, o número de endereços é 2^${bits} = ${cap.toLocaleString()} bytes ≈ ${valor} ${unidade}. (Fórmula: 2^n bytes)`
+                    };
+                },
+                // 2) Componentes CPU
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual componente da CPU é responsável por decodificar e executar instruções?', ops: ['ULA', 'UC',
+                                'Registrador', 'Cache'
+                            ], corr: 'UC', exp: 'A Unidade de Controle (UC) decodifica as instruções e coordena a execução.' },
+                        { e: 'Qual unidade realiza operações matemáticas e lógicas?', ops: ['ULA', 'UC', 'Barramento',
+                                'Memória'
+                            ], corr: 'ULA', exp: 'A ULA (Unidade Lógico-Aritmética) executa cálculos aritméticos e operações lógicas (AND, OR, NOT).' },
+                        { e: 'Onde ficam armazenados os dados temporários de mais rápida acesso?', ops: ['HD', 'RAM',
+                                'Registradores', 'ROM'
+                            ], corr: 'Registradores', exp: 'Registradores são memórias internas da CPU com tempo de acesso de poucos ciclos.' },
+                        { e: 'Qual das opções NÃO é um componente da CPU?', ops: ['UC', 'ULA', 'Cache L1', 'HD'],
+                            corr: 'HD', exp: 'HD (disco rígido) é memória secundária, externa à CPU.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 3) Unidades de medida
+                (idx) => {
+                    const pares = [
+                        { a: '1 KB', b: '1024 bytes' },
+                        { a: '1 MB', b: '1024 KB' },
+                        { a: '1 GB', b: '1024 MB' },
+                        { a: '1 TB', b: '1024 GB' },
+                        { a: '1 byte', b: '8 bits' },
+                        { a: '1 word (32 bits)', b: '4 bytes' },
+                    ];
+                    const p = pares[idx % pares.length];
+                    const erros = [
+                        `${parseInt(p.b.split(' ')[0]) * 0.8} ${p.b.split(' ')[1] || ''}`,
+                        `${parseInt(p.b.split(' ')[0]) * 1.2} ${p.b.split(' ')[1] || ''}`,
+                        `${parseInt(p.b.split(' ')[0]) * 0.5} ${p.b.split(' ')[1] || ''}`,
+                    ];
+                    const correta = p.b;
+                    const opcoes = [correta, ...erros];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: `Qual é a equivalência correta de ${p.a}?`,
+                        opcoes: opcoes,
+                        correta: correta,
+                        explicacao: `${p.a} = ${p.b} (em informática, usamos potências de 2: 1 KB = 1024 bytes, etc.)`
+                    };
+                },
+                // 4) Memórias
+                (idx) => {
+                    const perg = [
+                        { e: 'Qual memória é volátil?', ops: ['RAM', 'ROM', 'HD', 'SSD'], corr: 'RAM',
+                            exp: 'RAM (Random Access Memory) perde dados ao desligar (volátil).' },
+                        { e: 'Qual memória é não volátil e geralmente usada para firmware (BIOS)?', ops: ['RAM', 'ROM',
+                                'Cache', 'HD'
+                            ], corr: 'ROM', exp: 'ROM (Read-Only Memory) mantém dados sem energia e armazena firmware.' },
+                        { e: 'A memória cache fica entre:', ops: ['CPU e RAM', 'RAM e HD', 'HD e ROM', 'CPU e ROM'],
+                            corr: 'CPU e RAM', exp: 'Cache é uma memória rápida entre a CPU e a RAM para reduzir a latência.' },
+                        { e: 'Qual tipo de memória é mais rápida?', ops: ['Cache L1', 'RAM', 'HD', 'SSD'], corr: 'Cache L1',
+                            exp: 'Cache L1 é a mais próxima da CPU, portanto a mais rápida (geralmente 1-2 ciclos).' },
+                    ];
+                    const p = perg[idx % perg.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 5) Barramentos
+                (idx) => {
+                    const perg = [
+                        { e: 'O barramento que transporta os dados entre os componentes é chamado de:', ops: ['Barramento de dados',
+                                'Barramento de endereços', 'Barramento de controle', 'Barramento de sistema'
+                            ], corr: 'Barramento de dados', exp: 'Barramento de dados carrega as informações (dados).' },
+                        { e: 'O barramento que define a localização da memória é o:', ops: ['Barramento de dados',
+                                'Barramento de endereços', 'Barramento de controle', 'Barramento de E/S'
+                            ], corr: 'Barramento de endereços', exp: 'Barramento de endereços especifica o endereço de memória.' },
+                        { e: 'Qual barramento envia sinais de sincronização e controle?', ops: ['Barramento de dados',
+                                'Barramento de endereços', 'Barramento de controle', 'Barramento de energia'
+                            ], corr: 'Barramento de controle', exp: 'Barramento de controle gerencia os sinais de leitura/escrita, clock, etc.' },
+                    ];
+                    const p = perg[idx % perg.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 6) Dispositivos E/S
+                (idx) => {
+                    const perg = [
+                        { e: 'Qual dispositivo é apenas de entrada?', ops: ['Teclado', 'Monitor', 'Impressora', 'HD'],
+                            corr: 'Teclado', exp: 'Teclado envia dados para o computador (entrada).' },
+                        { e: 'Qual dispositivo é apenas de saída?', ops: ['Mouse', 'Monitor', 'Scanner', 'Webcam'],
+                            corr: 'Monitor', exp: 'Monitor exibe informações (saída).' },
+                        { e: 'Qual dispositivo é de entrada e saída (E/S)?', ops: ['Leitor de CD', 'Monitor', 'Caixa de som',
+                                'Microfone'
+                            ], corr: 'Leitor de CD', exp: 'Leitor de CD pode ler (entrada) e gravar (saída) dados.' },
+                    ];
+                    const p = perg[idx % perg.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 7) Von Neumann / Harvard
+                (idx) => {
+                    const perg = [
+                        { e: 'Na arquitetura de Von Neumann, programa e dados são armazenados:', ops: ['Na mesma memória',
+                                'Em memórias separadas', 'Na CPU', 'Em registradores'
+                            ], corr: 'Na mesma memória', exp: 'Von Neumann usa uma única memória para programa e dados (compartilhada).' },
+                        { e: 'Qual arquitetura separa fisicamente memória de programa e dados?', ops: ['Von Neumann',
+                                'Harvard', 'CISC', 'RISC'
+                            ], corr: 'Harvard', exp: 'Harvard tem barramentos separados para instruções e dados, permitindo acesso simultâneo.' },
+                    ];
+                    const p = perg[idx % perg.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 8) Miscelânea
+                (idx) => {
+                    const perg = [
+                        { e: 'O que significa a sigla ULA?', ops: ['Unidade Lógica e Aritmética', 'Unidade de Leitura Avançada',
+                                'Unidade de Ligação Automática', 'Unidade Linear de Acesso'
+                            ], corr: 'Unidade Lógica e Aritmética', exp: 'ULA realiza operações lógicas (AND, OR) e aritméticas (soma, subtração).' },
+                        { e: 'Clock (frequência) é medido em:', ops: ['Hz', 'Bytes/s', 'Bits/s', 'Ciclos/instrução'],
+                            corr: 'Hz', exp: 'Frequência é medida em Hertz (ciclos por segundo). 1 GHz = 1 bilhão de ciclos/s.' },
+                        { e: 'Qual componente armazena a BIOS?', ops: ['RAM', 'ROM', 'Cache', 'HD'], corr: 'ROM',
+                            exp: 'BIOS fica em uma memória ROM na placa-mãe, não volátil.' },
+                        { e: 'A memória virtual utiliza:', ops: ['HD/SSD', 'RAM', 'Cache', 'Registradores'], corr: 'HD/SSD',
+                            exp: 'Memória virtual usa espaço em disco (HD ou SSD) como extensão da RAM.' },
+                    ];
+                    const p = perg[idx % perg.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                }
+            ];
+
+            const questoes = [];
+            for (let i = 0; i < TOTAL_QUESTOES; i++) {
+                const template = templates[i % templates.length];
+                const q = template(i);
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                for (let k = q.opcoes.length - 1; k > 0; k--) {
+                    const j = Math.floor(Math.random() * (k + 1));
+                    [q.opcoes[k], q.opcoes[j]] = [q.opcoes[j], q.opcoes[k]];
+                }
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                questoes.push({
+                    id: i,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false,
+                });
+            }
+
+            // ============================================================
+            // 2. RENDERIZAÇÃO
+            // ============================================================
+            const ITENS_POR_PAGINA = 10;
+            let paginaAtual = 1;
+            let questoesPorPagina = [];
+            let acertos = 0,
+                respondidas = 0;
+
+            const container = document.getElementById('questoesContainer');
+            const paginacaoDiv = document.getElementById('paginacao');
+            const spanAcertos = document.getElementById('acertos');
+            const spanTotalRes = document.getElementById('totalRespondidas');
+            const spanTotalQ = document.getElementById('totalQuestoes');
+            const statsProgresso = document.getElementById('statsProgresso');
+
+            function atualizarStats() {
+                let acc = 0,
+                    resp = 0;
+                for (const q of questoes) {
+                    if (q.selecionada !== null) {
+                        resp++;
+                        if (q.opcoes[q.selecionada] === q.correta) acc++;
+                    }
+                }
+                acertos = acc;
+                respondidas = resp;
+                spanAcertos.textContent = acertos;
+                spanTotalRes.textContent = respondidas;
+                const pct = Math.round((respondidas / questoes.length) * 100);
+                statsProgresso.textContent = `Progresso: ${pct}%`;
+            }
+
+            function renderizarPagina() {
+                const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+                const fim = Math.min(inicio + ITENS_POR_PAGINA, questoes.length);
+                questoesPorPagina = questoes.slice(inicio, fim);
+
+                let html = '';
+                for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                    const q = questoesPorPagina[idx];
+                    const globalIdx = inicio + idx;
+                    const opcoesHtml = q.opcoes.map((op, oi) => {
+                        const checked = (q.selecionada === oi) ? 'checked' : '';
+                        return `
+                            <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                                <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                                <label for="q${globalIdx}_${oi}">${op}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let feedbackHtml = '';
+                    if (q.selecionada !== null) {
+                        const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                        const classe = isCerto ? 'certo' : 'errado';
+                        const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                        feedbackHtml = `
+                            <div class="feedback ${classe}">${texto}</div>
+                            <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                        `;
+                    }
+
+                    const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+
+                    html += `
+                        <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                            <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                            <div class="opcoes">
+                                ${opcoesHtml}
+                            </div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function(e) {
+                        const questaoDiv = this.closest('.questao');
+                        const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                        const opcaoIdx = parseInt(this.value);
+                        const q = questoes[globalIdx];
+                        if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                            q.selecionada = opcaoIdx;
+                            q.resolvida = true;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                const totalPaginas = Math.ceil(questoes.length / ITENS_POR_PAGINA);
+                let pagHtml = '';
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    if (p === paginaAtual) {
+                        pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                    } else if (p <= 3 || p > totalPaginas - 3 || Math.abs(p - paginaAtual) <= 1) {
+                        pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                    } else if (p === 4 && paginaAtual > 5) {
+                        pagHtml += `<span>…</span>`;
+                    } else if (p === totalPaginas - 3 && paginaAtual < totalPaginas - 4) {
+                        pagHtml += `<span>…</span>`;
+                    }
+                }
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+                paginacaoDiv.innerHTML = pagHtml;
+
+                document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                            paginaAtual = page;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                atualizarStats();
+            }
+
+            // ============================================================
+            // 3. BOTÕES
+            // ============================================================
+            document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+                for (const q of questoesPorPagina) {
+                    if (q.selecionada === null) {
+                        q.selecionada = 0;
+                        q.resolvida = true;
+                    }
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnLimpar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnReiniciar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                paginaAtual = 1;
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            // ============================================================
+            // 4. NAVEGAÇÃO ENTRE SEÇÕES
+            // ============================================================
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.section;
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            // ============================================================
+            // 5. INICIALIZAÇÃO
+            // ============================================================
+            spanTotalQ.textContent = TOTAL_QUESTOES;
+            renderizarPagina();
+            atualizarStats();
+        })();
+    </script>
+</body>
+</html>
