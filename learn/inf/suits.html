@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editores · Planilhas · Apresentações · Extensões · Atalhos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f7fa;
+            color: #1a2639;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.07);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b3b44;
+            border-left: 8px solid #00838f;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .subtitle {
+            color: #3f5a77;
+            font-size: 1.1rem;
+            padding-left: 28px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e2eaf1;
+            padding-bottom: 15px;
+        }
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        nav button {
+            background: none;
+            border: none;
+            padding: 10px 26px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3a5470;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: #e0f2f5;
+        }
+        nav button.active {
+            background: #00838f;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 131, 143, 0.3);
+        }
+        .section {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.3;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== TEORIA COM GRÁFICOS ========== */
+        .teoria-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 800px) {
+            .teoria-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .teoria-card {
+            background: #fafcff;
+            border-radius: 18px;
+            padding: 20px 22px;
+            border: 1px solid #e4edf6;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            transition: 0.15s;
+        }
+        .teoria-card:hover {
+            border-color: #80ced6;
+        }
+        .teoria-card h3 {
+            color: #0b3b44;
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+            border-bottom: 2px dashed #d4e0ed;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .teoria-card ul {
+            padding-left: 22px;
+            margin: 8px 0 12px;
+        }
+        .teoria-card li {
+            margin-bottom: 6px;
+        }
+        .macete-box {
+            background: #e0f2f5;
+            border-left: 6px solid #00838f;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 16px 0 8px;
+        }
+        .macete-box strong {
+            color: #005662;
+        }
+        .graphic-container {
+            background: #f4faff;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 18px 0 10px;
+            text-align: center;
+            border: 1px solid #d7e4ed;
+        }
+        .graphic-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .graphic-container .legenda {
+            font-size: 0.85rem;
+            color: #2f4b6e;
+            margin-top: 6px;
+        }
+        .dica-extra {
+            background: #fef6e6;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border-left: 4px solid #f0b34b;
+            margin-top: 12px;
+        }
+        .dica-extra strong {
+            color: #a76f1a;
+        }
+
+        /* ========== EXERCÍCIOS ========== */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+        .quiz-controls .info {
+            font-size: 0.95rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+            color: #0b3b44;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a2a3f;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background: #dce5f0;
+        }
+        .btn-primary {
+            background: #00838f;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #005662;
+        }
+        .btn-success {
+            background: #1f8b4c;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #16703d;
+        }
+        .btn-danger {
+            background: #b33c3c;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #922e2e;
+        }
+        .questao {
+            background: #fbfdff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e4ecf5;
+            transition: 0.15s;
+        }
+        .questao:hover {
+            border-color: #80ced6;
+        }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 8px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .questao .opcao:hover {
+            background: #e0f2f5;
+        }
+        .questao .opcao input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00838f;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 0;
+        }
+        .questao .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 500;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 6px;
+        }
+        .questao.resolvida .opcao {
+            opacity: 0.85;
+        }
+        .questao.resolvida .opcao input[type="radio"] {
+            pointer-events: none;
+        }
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .paginacao .page-btn:hover {
+            background: #d4dfec;
+        }
+        .paginacao .page-btn.active-page {
+            background: #00838f;
+            color: white;
+        }
+        .stats {
+            background: #e0f2f5;
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #005662;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6a7e97;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .questao {
+                padding: 16px;
+            }
+            .btn-group .btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📄 Editores · 📊 Planilhas · 🖥️ Apresentações <span style="font-size:1rem; font-weight:400; color:#3f5a77;">· Extensões + Atalhos</span></h1>
+        <div class="subtitle">Teoria visual + macetes + 1000 exercícios com correção automática (pagos e gratuitos)</div>
+
+        <nav>
+            <button class="active" data-section="teoria">📘 Teoria & Macetes</button>
+            <button data-section="exercicios">📝 Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO TEORIA COM GRÁFICOS E DICAS                               -->
+        <!-- ============================================================ -->
+        <section id="teoria" class="section active">
+            <div class="teoria-grid">
+
+                <!-- 1. Editores de Texto (mantido) -->
+                <div class="teoria-card">
+                    <h3>✏️ Editores de Texto</h3>
+                    <ul>
+                        <li><strong>Pagos:</strong> Microsoft Word (pacote Office).</li>
+                        <li><strong>Gratuitos:</strong> Google Docs, LibreOffice Writer, OnlyOffice.</li>
+                        <li><strong>Comandos básicos:</strong> Ctrl+N (novo), Ctrl+A (selecionar tudo), Ctrl+Z (desfazer), Ctrl+B (negrito), Ctrl+I (itálico), Ctrl+S (salvar).</li>
+                        <li><strong>Formatação:</strong> fontes, parágrafos, estilos, cabeçalhos/rodapés, sumário, tabelas, imagens.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="70" height="25" rx="6" fill="#2b5797" />
+                            <text x="18" y="22" font-size="11" fill="white">Word</text>
+                            <rect x="90" y="5" width="70" height="25" rx="6" fill="#0f9d58" />
+                            <text x="98" y="22" font-size="11" fill="white">Docs</text>
+                            <rect x="170" y="5" width="70" height="25" rx="6" fill="#f2a900" />
+                            <text x="178" y="22" font-size="11" fill="white">Writer</text>
+                            <text x="10" y="52" font-size="9" fill="#2c3e50">Word (pago) · Google Docs (gratuito) · LibreOffice Writer (gratuito)</text>
+                        </svg>
+                        <div class="legenda">Principais editores de texto.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Ctrl+B = Bold (negrito), Ctrl+I = Itálico, Ctrl+U = Sublinhado, Ctrl+Z = Desfazer”.<br>
+                        📌 <strong>Decore:</strong> No Google Docs, muitos atalhos são iguais aos do Word.
+                    </div>
+                </div>
+
+                <!-- 2. Planilhas (mantido) -->
+                <div class="teoria-card">
+                    <h3>📊 Planilhas Eletrônicas</h3>
+                    <ul>
+                        <li><strong>Pagos:</strong> Microsoft Excel.</li>
+                        <li><strong>Gratuitos:</strong> Google Sheets, LibreOffice Calc.</li>
+                        <li><strong>Fórmulas:</strong> =SOMA(), =MÉDIA(), =SE(), =PROCV(), =CONT.SE(), =SEERRO().</li>
+                        <li><strong>Referências:</strong> A1 (relativa), $A$1 (absoluta), A$1 (linha fixa), $A1 (coluna fixa).</li>
+                        <li><strong>Comandos:</strong> Ctrl+; (data), Ctrl+Shift+: (hora), F4 (alternar referência).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="70" height="25" rx="6" fill="#1e7145" />
+                            <text x="18" y="22" font-size="11" fill="white">Excel</text>
+                            <rect x="90" y="5" width="70" height="25" rx="6" fill="#0f9d58" />
+                            <text x="98" y="22" font-size="11" fill="white">Sheets</text>
+                            <rect x="170" y="5" width="70" height="25" rx="6" fill="#f2a900" />
+                            <text x="178" y="22" font-size="11" fill="white">Calc</text>
+                            <text x="10" y="52" font-size="9" fill="#2c3e50">Excel (pago) · Google Sheets (gratuito) · LibreOffice Calc (gratuito)</text>
+                        </svg>
+                        <div class="legenda">Planilhas mais usadas.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “<strong>P</strong>ROCV = <strong>P</strong>rocurar na <strong>V</strong>ertical, <strong>H</strong>PROCV = horizontal”.<br>
+                        📌 <strong>Decore:</strong> SOMA, MÉDIA, SE, CONT.SE, SOMASE, PROCV são as funções mais cobradas.
+                    </div>
+                </div>
+
+                <!-- 3. Apresentações (mantido) -->
+                <div class="teoria-card">
+                    <h3>🖥️ Apresentações (Slides)</h3>
+                    <ul>
+                        <li><strong>Pagos:</strong> Microsoft PowerPoint.</li>
+                        <li><strong>Gratuitos:</strong> Google Slides, LibreOffice Impress.</li>
+                        <li><strong>Recursos:</strong> slides, layouts, temas, transições, animações, inserir imagens, gráficos, vídeos.</li>
+                        <li><strong>Comandos:</strong> F5 (iniciar apresentação), ESC (sair), setas (navegar).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="70" height="25" rx="6" fill="#d35230" />
+                            <text x="18" y="22" font-size="11" fill="white">PowerPoint</text>
+                            <rect x="90" y="5" width="70" height="25" rx="6" fill="#0f9d58" />
+                            <text x="98" y="22" font-size="11" fill="white">Slides</text>
+                            <rect x="170" y="5" width="70" height="25" rx="6" fill="#f2a900" />
+                            <text x="178" y="22" font-size="11" fill="white">Impress</text>
+                            <text x="10" y="52" font-size="9" fill="#2c3e50">PowerPoint (pago) · Google Slides (gratuito) · LibreOffice Impress (gratuito)</text>
+                        </svg>
+                        <div class="legenda">Ferramentas de apresentação.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “F5 inicia a apresentação; ESC interrompe; setas avançam/retrocedem”.<br>
+                        📌 <strong>Decore:</strong> Transições são efeitos entre slides; Animações são efeitos dentro de um slide.
+                    </div>
+                </div>
+
+                <!-- 4. Comparativo pagos vs gratuitos (mantido) -->
+                <div class="teoria-card">
+                    <h3>⚖️ Pago vs Gratuito</h3>
+                    <ul>
+                        <li><strong>Microsoft Office:</strong> pago (assinatura ou licença perpétua).</li>
+                        <li><strong>Google Workspace:</strong> gratuito (com conta Google), com recursos online e colaboração em tempo real.</li>
+                        <li><strong>LibreOffice:</strong> gratuito e open-source, suíte offline, compatível com formatos do Office.</li>
+                        <li><strong>OnlyOffice:</strong> gratuito, compatível com formatos Microsoft.</li>
+                        <li><strong>Diferenças:</strong> colaboração (Google é nativamente colaborativo), recursos avançados (Excel tem funções mais poderosas que Sheets).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="80" height="20" rx="4" fill="#2b5797" />
+                            <text x="20" y="19" font-size="9" fill="white">Office (pago)</text>
+                            <rect x="100" y="5" width="80" height="20" rx="4" fill="#0f9d58" />
+                            <text x="108" y="19" font-size="9" fill="white">Google (gratuito)</text>
+                            <rect x="190" y="5" width="80" height="20" rx="4" fill="#f2a900" />
+                            <text x="198" y="19" font-size="9" fill="white">LibreOffice (gratuito)</text>
+                            <text x="10" y="46" font-size="8" fill="#2c3e50">Principais diferenças: colaboração, recursos avançados, custo.</text>
+                        </svg>
+                        <div class="legenda">Comparativo entre suítes.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Office é pago, Google é online e gratuito, LibreOffice é offline e gratuito.”<br>
+                        📌 <strong>Decore:</strong> Google Docs/Sheets/Slides são ferramentas web, não precisam de instalação.
+                    </div>
+                </div>
+
+                <!-- 5. EXTENSÕES DE ARQUIVO (NOVO) -->
+                <div class="teoria-card">
+                    <h3>📁 Extensões de Arquivo</h3>
+                    <ul>
+                        <li><strong>Editor de texto:</strong> .docx (Word), .odt (LibreOffice/OpenOffice), .rtf (Rich Text), .txt (texto puro).</li>
+                        <li><strong>Planilha:</strong> .xlsx (Excel), .ods (Calc/OpenOffice), .csv (valores separados por vírgula).</li>
+                        <li><strong>Apresentação:</strong> .pptx (PowerPoint), .odp (Impress/OpenOffice), .pdf (Portable Document Format – visualização).</li>
+                        <li><strong>Outros:</strong> .xml, .html, .pdf, .odf (OpenDocument Framework).</li>
+                        <li><strong>Formatos de exportação:</strong> muitos aplicativos permitem salvar em .pdf para compartilhamento.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#2b5797" />
+                            <text x="16" y="19" font-size="9" fill="white">.docx</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#f2a900" />
+                            <text x="86" y="19" font-size="9" fill="white">.odt</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#1e7145" />
+                            <text x="156" y="19" font-size="9" fill="white">.xlsx</text>
+                            <rect x="220" y="5" width="70" height="20" rx="4" fill="#d35230" />
+                            <text x="226" y="19" font-size="9" fill="white">.pptx</text>
+                            <text x="10" y="46" font-size="8" fill="#2c3e50">Extensões nativas do Microsoft Office e do LibreOffice (ODF).</text>
+                        </svg>
+                        <div class="legenda">Principais extensões de cada ferramenta.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “x” no final (ex: .docx) significa que é baseado em XML (Office 2007+). ODF é o formato padrão do LibreOffice.<br>
+                        📌 <strong>Decore:</strong> .csv é um formato de texto simples para dados, muito usado para importação/exportação.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O formato .pdf não é editável nativamente, mas pode ser editado por ferramentas específicas.”
+                    </div>
+                </div>
+
+                <!-- 6. ATALHOS AVANÇADOS (NOVO) -->
+                <div class="teoria-card">
+                    <h3>⌨️ Atalhos Avançados</h3>
+                    <ul>
+                        <li><strong>Copiar/colar formato:</strong> Ctrl+Shift+C (copiar formato), Ctrl+Shift+V (colar formato).</li>
+                        <li><strong>Colar especial:</strong> Ctrl+Alt+V (abre caixa de colar especial).</li>
+                        <li><strong>Inserir data/hora:</strong> Ctrl+; (data), Ctrl+Shift+: (hora) – Excel/Sheets.</li>
+                        <li><strong>Alternar referências:</strong> F4 (no Excel, alterna entre relativo/absoluto).</li>
+                        <li><strong>Mover entre abas:</strong> Ctrl+Tab (avançar), Ctrl+Shift+Tab (voltar) – Word/Excel/PPT/Google.</li>
+                        <li><strong>Inserir link:</strong> Ctrl+K.</li>
+                        <li><strong>Salvar como:</strong> F12 (Office) ou Ctrl+Shift+S (Google).</li>
+                        <li><strong>Localizar e substituir:</strong> Ctrl+H.</li>
+                        <li><strong>Revisão ortográfica:</strong> F7.</li>
+                        <li><strong>Sumário (Word):</strong> gerado a partir de estilos; atalho Alt+Shift+O (inserir sumário).</li>
+                    </ul>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Ctrl+Shift+C/V = copiar/colar formato (pincel). F4 no Excel alterna referência entre A1, $A$1, A$1, $A1.”<br>
+                        📌 <strong>Decore:</strong> Ctrl+K insere hiperlink em todos os aplicativos Office/Google.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “No Google Docs, muitos atalhos são idênticos ao Word; a diferença está no ambiente online.”
+                    </div>
+                </div>
+
+                <!-- 7. Comandos adicionais – Editor (mantido com atualizações) -->
+                <div class="teoria-card">
+                    <h3>📝 Atalhos – Editor (complemento)</h3>
+                    <ul>
+                        <li><strong>Negrito/Itálico/Sublinhado:</strong> Ctrl+B / Ctrl+I / Ctrl+U</li>
+                        <li><strong>Alinhamentos:</strong> Ctrl+E (centralizar), Ctrl+J (justificar), Ctrl+Q (esquerdo), Ctrl+D (direito).</li>
+                        <li><strong>Aumentar/diminuir fonte:</strong> Ctrl+Shift+> / Ctrl+Shift+<</li>
+                        <li><strong>Selecionar palavra:</strong> duplo clique; selecionar parágrafo: triplo clique.</li>
+                        <li><strong>Mover entre tabelas:</strong> Tab (avança), Shift+Tab (volta).</li>
+                    </ul>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Ctrl+Shift+> aumenta a fonte; Ctrl+Shift+< diminui.”<br>
+                        📌 <strong>Decore:</strong> No Google Docs, os mesmos atalhos funcionam.
+                    </div>
+                </div>
+
+                <!-- 8. Comandos – Planilha (complemento) -->
+                <div class="teoria-card">
+                    <h3>📊 Atalhos – Planilha</h3>
+                    <ul>
+                        <li><strong>Selecionar coluna:</strong> Ctrl+Espaço</li>
+                        <li><strong>Selecionar linha:</strong> Shift+Espaço</li>
+                        <li><strong>Inserir data/hora:</strong> Ctrl+; (data), Ctrl+Shift+: (hora).</li>
+                        <li><strong>AutoSoma:</strong> Alt+= (Excel) ou Ctrl+Shift+Enter (array).</li>
+                        <li><strong>Alternar referência:</strong> F4.</li>
+                        <li><strong>Ir para:</strong> Ctrl+G (abre caixa "Ir para").</li>
+                        <li><strong>Inserir comentário:</strong> Shift+F2.</li>
+                        <li><strong>Filtrar:</strong> Ctrl+Shift+L (alterna filtro).</li>
+                    </ul>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Ctrl+Espaço seleciona coluna, Shift+Espaço seleciona linha. Alt+= faz soma automática.”<br>
+                        📌 <strong>Decore:</strong> F4 alterna referências absolutas/relativas no Excel.
+                    </div>
+                </div>
+
+                <!-- 9. Comandos – Apresentação (complemento) -->
+                <div class="teoria-card">
+                    <h3>🎬 Atalhos – Apresentação</h3>
+                    <ul>
+                        <li><strong>Modo de apresentador:</strong> Alt+F5 (PowerPoint), Ctrl+Shift+Enter (Google Slides).</li>
+                        <li><strong>Zoom na edição:</strong> Ctrl+Mouse wheel (zoom).</li>
+                        <li><strong>Duplicar slide:</strong> Ctrl+D (duplicar).</li>
+                        <li><strong>Inserir novo slide:</strong> Ctrl+M.</li>
+                        <li><strong>Agrupar/desagrupar objetos:</strong> Ctrl+G / Ctrl+Shift+G.</li>
+                        <li><strong>Ir para slide específico:</strong> número do slide + Enter (em apresentação).</li>
+                    </ul>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Ctrl+D duplica, Ctrl+M insere novo slide, Ctrl+G agrupa objetos.”<br>
+                        📌 <strong>Decore:</strong> Alt+F5 ativa o modo de apresentador no PowerPoint.
+                    </div>
+                </div>
+
+                <!-- 10. Resumo final (mantido) -->
+                <div class="teoria-card">
+                    <h3>📌 Resumo para a Prova</h3>
+                    <ul>
+                        <li><strong>Word:</strong> estilos, sumário, mala direta, tabelas, imagens.</li>
+                        <li><strong>Excel:</strong> fórmulas (SOMA, MÉDIA, SE, PROCV), referências absolutas/relativas, gráficos.</li>
+                        <li><strong>PowerPoint:</strong> transições, animações, design, slide mestre.</li>
+                        <li><strong>Google Docs/Sheets/Slides:</strong> colaboração em tempo real, histórico de versões.</li>
+                        <li><strong>LibreOffice:</strong> gratuito, compatível com formatos Office.</li>
+                        <li><strong>Extensões:</strong> .docx, .odt, .xlsx, .ods, .pptx, .odp, .pdf, .csv.</li>
+                        <li><strong>Atalhos:</strong> decore os principais: Ctrl+B/I/U, Ctrl+Z/Y, F5, F4, Ctrl+K, Ctrl+Shift+V, etc.</li>
+                    </ul>
+                    <div class="macete-box" style="background:#fcf2e1;">
+                        <strong>📌 Super Macete:</strong> “Para fórmulas: <strong>S</strong>OMA, <strong>M</strong>ÉDIA, <strong>SE</strong>, <strong>PROCV</strong> – decore a sintaxe. Extensões: .docx/.xlsx/.pptx são do Office, .odt/.ods/.odp são do LibreOffice.”<br>
+                        <span style="display:block; margin-top:6px;">🔁 <strong>Revise:</strong> atalhos, funções básicas, extensões e diferenças entre as suítes.</span>
+                    </div>
+                </div>
+
+            </div> <!-- fim teoria-grid -->
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO EXERCÍCIOS (1000 questões)                               -->
+        <!-- ============================================================ -->
+        <section id="exercicios" class="section">
+            <div class="quiz-controls">
+                <div class="info">
+                    <span id="acertos">0</span> acertos · 
+                    <span id="totalRespondidas">0</span> respondidas de 
+                    <span id="totalQuestoes">1000</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                    <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                    <button class="btn btn-danger" id="btnLimpar">🧹 Limpar respostas</button>
+                </div>
+            </div>
+            <div id="questoesContainer"></div>
+            <div class="paginacao" id="paginacao"></div>
+            <div style="text-align:center; margin-top:10px;">
+                <span class="stats" id="statsProgresso">Progresso: 0%</span>
+            </div>
+        </section>
+
+        <div class="footer">
+            Desenvolvido para concursos · 1000 questões · Teoria visual + macetes · Boa sorte!
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================================
+            // 1. GERADOR DE 1000 QUESTÕES COM EXTENSÕES E MAIS ATALHOS
+            // ============================================================
+            const TOTAL_QUESTOES = 1000;
+
+            const templates = [
+                // 1) Atalhos Editor de Texto (básico)
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual atalho no Word/Google Docs aplica negrito ao texto selecionado?', ops: ['Ctrl+B',
+                                'Ctrl+N', 'Ctrl+I', 'Ctrl+U'
+                            ], corr: 'Ctrl+B', exp: 'Ctrl+B = Bold (negrito).' },
+                        { e: 'Qual atalho desfaz a última ação?', ops: ['Ctrl+Z', 'Ctrl+Y', 'Ctrl+S', 'Ctrl+O'],
+                            corr: 'Ctrl+Z', exp: 'Ctrl+Z desfaz, Ctrl+Y refaz.' },
+                        { e: 'No Word, qual atalho centraliza o parágrafo?', ops: ['Ctrl+E', 'Ctrl+D', 'Ctrl+J',
+                                'Ctrl+Q'
+                            ], corr: 'Ctrl+E', exp: 'Ctrl+E centraliza, Ctrl+J justifica, Ctrl+D alinha à direita.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 2) Fórmulas Excel/Sheets
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual função soma os valores de um intervalo?', ops: ['=SOMA', '=MÉDIA', '=CONT', '=SE'],
+                            corr: '=SOMA', exp: 'SOMA é a função para somar.' },
+                        { e: 'Qual função calcula a média aritmética?', ops: ['=SOMA', '=MÉDIA', '=SE', '=PROCV'],
+                            corr: '=MÉDIA', exp: 'MÉDIA calcula a média dos valores.' },
+                        { e: 'Qual função procura um valor em uma coluna e retorna outro na mesma linha?', ops: ['=PROCV',
+                                '=SOMASE', '=CONT.SE', '=SE'
+                            ], corr: '=PROCV', exp: 'PROCV (Procura Vertical) busca na primeira coluna e retorna outra coluna.' },
+                        { e: 'Qual função retorna um valor se uma condição for verdadeira, e outro se falsa?', ops: ['=SE',
+                                '=E', '=OU', '=SEERRO'
+                            ], corr: '=SE', exp: 'SE testa uma condição e retorna valores diferentes.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 3) Referências em planilhas
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Na planilha, qual referência é absoluta (fixa)?', ops: ['$A$1', 'A1', 'A$1', '$A1'],
+                            corr: '$A$1', exp: '$A$1 fixa linha e coluna (absoluta).' },
+                        { e: 'Qual referência mantém a linha fixa, mas a coluna relativa?', ops: ['A$1', '$A1', 'A1',
+                                '$A$1'
+                            ], corr: 'A$1', exp: 'A$1 fixa a linha 1, a coluna varia.' },
+                        { e: 'No Excel, a referência $A1 significa:', ops: ['Coluna fixa, linha relativa',
+                                'Linha fixa, coluna relativa', 'Ambas fixas', 'Ambas relativas'
+                            ], corr: 'Coluna fixa, linha relativa', exp: '$A1 fixa a coluna A, a linha varia.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 4) Apresentações
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual tecla inicia a apresentação de slides do início (PowerPoint/Google Slides)?', ops: ['F5',
+                                'F1', 'F2', 'F12'
+                            ], corr: 'F5', exp: 'F5 inicia a apresentação do primeiro slide.' },
+                        { e: 'Como iniciar a apresentação a partir do slide atual?', ops: ['Shift+F5', 'F5', 'Ctrl+F5',
+                                'Alt+F5'
+                            ], corr: 'Shift+F5', exp: 'Shift+F5 inicia do slide atual.' },
+                        { e: 'Durante uma apresentação, qual tecla torna a tela preta (pausa)?', ops: ['B', 'W', 'P', 'S'],
+                            corr: 'B', exp: 'B para tela preta, W para tela branca.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 5) Ferramentas pagas vs gratuitas
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual das seguintes opções é uma suíte de escritório gratuita e de código aberto?', ops: [
+                                'Microsoft Office', 'LibreOffice', 'Google Workspace', 'OnlyOffice'
+                            ], corr: 'LibreOffice', exp: 'LibreOffice é open-source e gratuito.' },
+                        { e: 'Qual ferramenta oferece colaboração em tempo real nativamente (online)?', ops: [
+                                'Microsoft Word (offline)', 'Google Docs', 'LibreOffice Writer', 'WordPad'
+                            ], corr: 'Google Docs', exp: 'Google Docs é nativamente colaborativo e online.' },
+                        { e: 'Qual formato de arquivo é nativo do LibreOffice?', ops: ['.docx', '.xlsx', '.odt', '.ppt'],
+                            corr: '.odt', exp: 'LibreOffice usa ODF (OpenDocument Format), como .odt, .ods, .odp.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 6) Formatação e estilos
+                (idx) => {
+                    const perguntas = [
+                        { e: 'No Word, para gerar um sumário automático, é necessário usar:', ops: ['Estilos de título',
+                                'Marcadores', 'Numeração', 'Tabelas'
+                            ], corr: 'Estilos de título', exp: 'O sumário é baseado nos estilos Título 1, Título 2, etc.' },
+                        { e: 'No Excel, a formatação condicional permite:', ops: ['Destacar células com base em regras',
+                                'Criar gráficos', 'Mesclar células', 'Proteger planilha'
+                            ], corr: 'Destacar células com base em regras',
+                            exp: 'Formatação condicional aplica estilos conforme condições.' },
+                        { e: 'Qual recurso do PowerPoint permite definir a aparência de todos os slides de uma vez?',
+                            ops: ['Slide mestre', 'Layout', 'Tema', 'Transição'], corr: 'Slide mestre',
+                            exp: 'O slide mestre controla o design de todos os slides.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 7) Atalhos gerais e comandos (incluindo novos)
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual atalho abre a caixa de diálogo “Salvar como”?', ops: ['F12', 'Ctrl+S', 'Ctrl+Shift+S',
+                                'Ctrl+O'
+                            ], corr: 'F12', exp: 'F12 abre “Salvar como” na maioria dos aplicativos Office.' },
+                        { e: 'Qual atalho localiza texto no documento?', ops: ['Ctrl+F', 'Ctrl+H', 'Ctrl+L', 'Ctrl+G'],
+                            corr: 'Ctrl+F', exp: 'Ctrl+F abre a caixa de localizar.' },
+                        { e: 'Qual atalho substitui texto automaticamente?', ops: ['Ctrl+H', 'Ctrl+F', 'Ctrl+Shift+F',
+                                'Ctrl+Alt+F'
+                            ], corr: 'Ctrl+H', exp: 'Ctrl+H abre a caixa de localizar e substituir.' },
+                        { e: 'Qual atalho insere um hiperlink?', ops: ['Ctrl+K', 'Ctrl+L', 'Ctrl+H', 'Ctrl+Shift+K'],
+                            corr: 'Ctrl+K', exp: 'Ctrl+K insere hiperlink em todos os aplicativos Office/Google.' },
+                        { e: 'Qual atalho copia apenas a formatação (pincel) no Word/Excel?', ops: ['Ctrl+Shift+C',
+                                'Ctrl+C', 'Ctrl+Alt+C', 'Ctrl+Shift+V'
+                            ], corr: 'Ctrl+Shift+C', exp: 'Ctrl+Shift+C copia o formato; Ctrl+Shift+V cola o formato.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 8) Funções avançadas e comandos
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual função conta células não vazias em um intervalo?', ops: ['=CONT.VALORES', '=CONT.NUM',
+                                '=CONT.SE', '=SOMA'
+                            ], corr: '=CONT.VALORES', exp: 'CONT.VALORES conta células com qualquer conteúdo.' },
+                        { e: 'Qual função soma valores com base em um critério?', ops: ['=SOMASE', '=SOMA', '=SE',
+                                '=CONT.SE'
+                            ], corr: '=SOMASE', exp: 'SOMASE soma células que atendem a um critério.' },
+                        { e: 'No Excel, qual comando congela painéis para manter linhas/colunas visíveis?', ops: [
+                                'Congelar Painéis', 'Dividir', 'Ocultar', 'Proteger'
+                            ], corr: 'Congelar Painéis', exp: 'Congelar Painéis mantém linhas/colunas fixas ao rolar.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 9) Extensões de arquivo (NOVO)
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual extensão é nativa do Microsoft Word (a partir de 2007)?', ops: ['.docx', '.doc',
+                                '.odt', '.txt'
+                            ], corr: '.docx', exp: '.docx é o formato padrão do Word desde 2007 (baseado em XML).' },
+                        { e: 'Qual extensão é usada pelo LibreOffice para planilhas?', ops: ['.xlsx', '.ods', '.csv',
+                                '.xls'
+                            ], corr: '.ods', exp: 'LibreOffice Calc usa .ods (OpenDocument Spreadsheet).' },
+                        { e: 'Qual formato é mais comum para exportar apresentações para visualização sem edição?', ops: [
+                                '.pptx', '.odp', '.pdf', '.ppt'
+                            ], corr: '.pdf', exp: 'PDF é amplamente usado para compartilhar documentos com formatação fixa.' },
+                        { e: 'Qual extensão representa um arquivo de valores separados por vírgula?', ops: ['.csv', '.xlsx',
+                                '.ods', '.tsv'
+                            ], corr: '.csv', exp: '.csv (Comma-Separated Values) é um formato de texto para dados.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 10) Mais atalhos (NOVO)
+                (idx) => {
+                    const perguntas = [
+                        { e: 'No Excel, qual tecla alterna entre referências relativas e absolutas?', ops: ['F4', 'F2',
+                                'F5', 'F12'
+                            ], corr: 'F4', exp: 'F4 no Excel alterna entre A1, $A$1, A$1, $A1.' },
+                        { e: 'No Word, qual atalho aumenta o tamanho da fonte?', ops: ['Ctrl+Shift+>', 'Ctrl+>',
+                                'Ctrl+Shift+<', 'Ctrl+Alt+>'
+                            ], corr: 'Ctrl+Shift+>', exp: 'Ctrl+Shift+> aumenta a fonte, Ctrl+Shift+< diminui.' },
+                        { e: 'No PowerPoint, qual atalho duplica o slide atual?', ops: ['Ctrl+D', 'Ctrl+C', 'Ctrl+V',
+                                'Ctrl+M'
+                            ], corr: 'Ctrl+D', exp: 'Ctrl+D duplica o slide selecionado.' },
+                        { e: 'No Google Docs, qual atalho abre o menu de localizar e substituir?', ops: ['Ctrl+H',
+                                'Ctrl+F', 'Ctrl+Alt+H', 'Ctrl+Shift+F'
+                            ], corr: 'Ctrl+H', exp: 'Ctrl+H abre localizar e substituir (assim como no Word).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                }
+            ];
+
+            const questoes = [];
+            for (let i = 0; i < TOTAL_QUESTOES; i++) {
+                const template = templates[i % templates.length];
+                const q = template(i);
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                for (let k = q.opcoes.length - 1; k > 0; k--) {
+                    const j = Math.floor(Math.random() * (k + 1));
+                    [q.opcoes[k], q.opcoes[j]] = [q.opcoes[j], q.opcoes[k]];
+                }
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                questoes.push({
+                    id: i,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false,
+                });
+            }
+
+            // ============================================================
+            // 2. RENDERIZAÇÃO E CONTROLE
+            // ============================================================
+            const ITENS_POR_PAGINA = 10;
+            let paginaAtual = 1;
+            let questoesPorPagina = [];
+            let acertos = 0,
+                respondidas = 0;
+
+            const container = document.getElementById('questoesContainer');
+            const paginacaoDiv = document.getElementById('paginacao');
+            const spanAcertos = document.getElementById('acertos');
+            const spanTotalRes = document.getElementById('totalRespondidas');
+            const spanTotalQ = document.getElementById('totalQuestoes');
+            const statsProgresso = document.getElementById('statsProgresso');
+
+            function atualizarStats() {
+                let acc = 0,
+                    resp = 0;
+                for (const q of questoes) {
+                    if (q.selecionada !== null) {
+                        resp++;
+                        if (q.opcoes[q.selecionada] === q.correta) acc++;
+                    }
+                }
+                acertos = acc;
+                respondidas = resp;
+                spanAcertos.textContent = acertos;
+                spanTotalRes.textContent = respondidas;
+                const pct = Math.round((respondidas / questoes.length) * 100);
+                statsProgresso.textContent = `Progresso: ${pct}%`;
+            }
+
+            function renderizarPagina() {
+                const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+                const fim = Math.min(inicio + ITENS_POR_PAGINA, questoes.length);
+                questoesPorPagina = questoes.slice(inicio, fim);
+
+                let html = '';
+                for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                    const q = questoesPorPagina[idx];
+                    const globalIdx = inicio + idx;
+                    const opcoesHtml = q.opcoes.map((op, oi) => {
+                        const checked = (q.selecionada === oi) ? 'checked' : '';
+                        return `
+                            <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                                <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                                <label for="q${globalIdx}_${oi}">${op}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let feedbackHtml = '';
+                    if (q.selecionada !== null) {
+                        const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                        const classe = isCerto ? 'certo' : 'errado';
+                        const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                        feedbackHtml = `
+                            <div class="feedback ${classe}">${texto}</div>
+                            <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                        `;
+                    }
+
+                    const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+
+                    html += `
+                        <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                            <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                            <div class="opcoes">
+                                ${opcoesHtml}
+                            </div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function(e) {
+                        const questaoDiv = this.closest('.questao');
+                        const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                        const opcaoIdx = parseInt(this.value);
+                        const q = questoes[globalIdx];
+                        if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                            q.selecionada = opcaoIdx;
+                            q.resolvida = true;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                const totalPaginas = Math.ceil(questoes.length / ITENS_POR_PAGINA);
+                let pagHtml = '';
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    if (p === paginaAtual) {
+                        pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                    } else if (p <= 3 || p > totalPaginas - 3 || Math.abs(p - paginaAtual) <= 1) {
+                        pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                    } else if (p === 4 && paginaAtual > 5) {
+                        pagHtml += `<span>…</span>`;
+                    } else if (p === totalPaginas - 3 && paginaAtual < totalPaginas - 4) {
+                        pagHtml += `<span>…</span>`;
+                    }
+                }
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+                paginacaoDiv.innerHTML = pagHtml;
+
+                document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                            paginaAtual = page;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                atualizarStats();
+            }
+
+            // ============================================================
+            // 3. BOTÕES
+            // ============================================================
+            document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+                for (const q of questoesPorPagina) {
+                    if (q.selecionada === null) {
+                        q.selecionada = 0;
+                        q.resolvida = true;
+                    }
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnLimpar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnReiniciar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                paginaAtual = 1;
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            // ============================================================
+            // 4. NAVEGAÇÃO ENTRE SEÇÕES
+            // ============================================================
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.section;
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            // ============================================================
+            // 5. INICIALIZAÇÃO
+            // ============================================================
+            spanTotalQ.textContent = TOTAL_QUESTOES;
+            renderizarPagina();
+            atualizarStats();
+
+        })();
+    </script>
+</body>
+</html>
