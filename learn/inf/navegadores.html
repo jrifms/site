@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navegadores · Ameaças · Vírus · Antivírus · Concurso</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f4f0fa;
+            color: #1a2639;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.07);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #2c0b44;
+            border-left: 8px solid #8e44ad;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .subtitle {
+            color: #3f5a77;
+            font-size: 1.1rem;
+            padding-left: 28px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e2eaf1;
+            padding-bottom: 15px;
+        }
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        nav button {
+            background: none;
+            border: none;
+            padding: 10px 26px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3a5470;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: #f0e4f6;
+        }
+        nav button.active {
+            background: #8e44ad;
+            color: white;
+            box-shadow: 0 4px 12px rgba(142, 68, 173, 0.3);
+        }
+        .section {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.3;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== TEORIA COM GRÁFICOS ========== */
+        .teoria-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 800px) {
+            .teoria-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .teoria-card {
+            background: #fafcff;
+            border-radius: 18px;
+            padding: 20px 22px;
+            border: 1px solid #e4edf6;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            transition: 0.15s;
+        }
+        .teoria-card:hover {
+            border-color: #c39bd3;
+        }
+        .teoria-card h3 {
+            color: #2c0b44;
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+            border-bottom: 2px dashed #d4e0ed;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .teoria-card ul {
+            padding-left: 22px;
+            margin: 8px 0 12px;
+        }
+        .teoria-card li {
+            margin-bottom: 6px;
+        }
+        .macete-box {
+            background: #f4ecf7;
+            border-left: 6px solid #8e44ad;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 16px 0 8px;
+        }
+        .macete-box strong {
+            color: #6c3483;
+        }
+        .graphic-container {
+            background: #f9f4ff;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 18px 0 10px;
+            text-align: center;
+            border: 1px solid #d7c4e6;
+        }
+        .graphic-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .graphic-container .legenda {
+            font-size: 0.85rem;
+            color: #2f4b6e;
+            margin-top: 6px;
+        }
+        .dica-extra {
+            background: #fef6e6;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border-left: 4px solid #f0b34b;
+            margin-top: 12px;
+        }
+        .dica-extra strong {
+            color: #a76f1a;
+        }
+
+        /* ========== EXERCÍCIOS ========== */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+        .quiz-controls .info {
+            font-size: 0.95rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+            color: #2c0b44;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a2a3f;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background: #dce5f0;
+        }
+        .btn-primary {
+            background: #8e44ad;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #6c3483;
+        }
+        .btn-success {
+            background: #1f8b4c;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #16703d;
+        }
+        .btn-danger {
+            background: #b33c3c;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #922e2e;
+        }
+        .questao {
+            background: #fbfdff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e4ecf5;
+            transition: 0.15s;
+        }
+        .questao:hover {
+            border-color: #c39bd3;
+        }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 8px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .questao .opcao:hover {
+            background: #f4ecf7;
+        }
+        .questao .opcao input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #8e44ad;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 0;
+        }
+        .questao .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 500;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 6px;
+        }
+        .questao.resolvida .opcao {
+            opacity: 0.85;
+        }
+        .questao.resolvida .opcao input[type="radio"] {
+            pointer-events: none;
+        }
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .paginacao .page-btn:hover {
+            background: #d4dfec;
+        }
+        .paginacao .page-btn.active-page {
+            background: #8e44ad;
+            color: white;
+        }
+        .stats {
+            background: #f4ecf7;
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #6c3483;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6a7e97;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .questao {
+                padding: 16px;
+            }
+            .btn-group .btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Navegadores · Ameaças · Vírus · Antivírus <span style="font-size:1rem; font-weight:400; color:#3f5a77;">· Técnico Administrativo</span></h1>
+        <div class="subtitle">Teoria visual + macetes + 1000 exercícios com correção automática</div>
+
+        <nav>
+            <button class="active" data-section="teoria">📘 Teoria & Macetes</button>
+            <button data-section="exercicios">📝 Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO TEORIA COM GRÁFICOS E DICAS                               -->
+        <!-- ============================================================ -->
+        <section id="teoria" class="section active">
+            <div class="teoria-grid">
+
+                <!-- 1. Navegadores -->
+                <div class="teoria-card">
+                    <h3>🌐 Navegadores (Browsers)</h3>
+                    <ul>
+                        <li><strong>Função:</strong> interpretar HTML, CSS e JavaScript para exibir páginas web.</li>
+                        <li><strong>Principais:</strong> Chrome, Firefox, Edge, Safari, Opera.</li>
+                        <li><strong>Mecanismos:</strong> Blink (Chrome/Edge), Gecko (Firefox), WebKit (Safari).</li>
+                        <li><strong>Segurança:</strong> sandbox, navegação privada, bloqueio de pop-ups, certificados SSL.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="50" height="40" rx="8" fill="#e74c3c" />
+                            <text x="14" y="30" font-size="12" fill="white">Chrome</text>
+                            <rect x="70" y="5" width="50" height="40" rx="8" fill="#2980b9" />
+                            <text x="76" y="30" font-size="12" fill="white">Firefox</text>
+                            <rect x="130" y="5" width="50" height="40" rx="8" fill="#2ecc71" />
+                            <text x="138" y="30" font-size="12" fill="white">Edge</text>
+                            <rect x="190" y="5" width="50" height="40" rx="8" fill="#f1c40f" />
+                            <text x="196" y="30" font-size="12" fill="black">Safari</text>
+                            <rect x="250" y="5" width="40" height="40" rx="8" fill="#e67e22" />
+                            <text x="254" y="30" font-size="12" fill="white">Opera</text>
+                            <text x="10" y="58" font-size="9" fill="#2c3e50">Principais navegadores e seus mecanismos de renderização.</text>
+                        </svg>
+                        <div class="legenda">Navegadores mais usados em concursos.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Chrome = Blink, Firefox = Gecko, Safari = WebKit”.<br>
+                        📌 <strong>Decore:</strong> Navegação privada não salva histórico, cookies ou dados de formulário.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O modo anônimo/privado não garante anonimato completo (o provedor de internet ainda vê seu tráfego).”
+                    </div>
+                </div>
+
+                <!-- 2. Ameaças: Malware, Spyware, Adware, Ransomware -->
+                <div class="teoria-card">
+                    <h3>☣️ Principais Ameaças</h3>
+                    <ul>
+                        <li><strong>Vírus:</strong> programa que se replica e infecta arquivos (necessita de execução).</li>
+                        <li><strong>Worm:</strong> auto-replicante, se espalha via rede (não precisa de arquivo hospedeiro).</li>
+                        <li><strong>Spyware:</strong> coleta informações do usuário sem consentimento.</li>
+                        <li><strong>Adware:</strong> exibe propagandas indesejadas.</li>
+                        <li><strong>Ransomware:</strong> sequestra dados e pede resgate.</li>
+                        <li><strong>Trojan (cavalo de troia):</strong> aparenta ser legítimo, mas tem função maliciosa.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#e74c3c" />
+                            <text x="16" y="19" font-size="9" fill="white">Vírus</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#f39c12" />
+                            <text x="86" y="19" font-size="9" fill="white">Worm</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#3498db" />
+                            <text x="156" y="19" font-size="9" fill="white">Spyware</text>
+                            <rect x="220" y="5" width="70" height="20" rx="4" fill="#9b59b6" />
+                            <text x="226" y="19" font-size="9" fill="white">Ransomware</text>
+                            <rect x="10" y="30" width="60" height="20" rx="4" fill="#e67e22" />
+                            <text x="16" y="44" font-size="9" fill="white">Adware</text>
+                            <rect x="80" y="30" width="60" height="20" rx="4" fill="#2c3e50" />
+                            <text x="86" y="44" font-size="9" fill="white">Trojan</text>
+                            <text x="10" y="58" font-size="8" fill="#2c3e50">Vírus, Worm, Spyware, Ransomware, Adware, Trojan</text>
+                        </svg>
+                        <div class="legenda">Categorias de ameaças mais cobradas.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Vírus precisa de hospedeiro, Worm se espalha sozinho, Trojan se disfarça, Ransomware sequestra.”<br>
+                        📌 <strong>Decore:</strong> Spyware espiona, Adware anuncia, Ransomware resgata.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Worm é a única ameaça que se replica automaticamente sem intervenção do usuário (via rede).”
+                    </div>
+                </div>
+
+                <!-- 3. Vírus e Worms – diferenças -->
+                <div class="teoria-card">
+                    <h3>🧬 Vírus vs. Worm</h3>
+                    <ul>
+                        <li><strong>Vírus:</strong> precisa ser executado (geralmente por um programa infectado).</li>
+                        <li><strong>Worm:</strong> auto-replicante, propaga-se via rede, e-mail ou vulnerabilidades.</li>
+                        <li><strong>Exemplo de vírus:</strong> Melissa, ILOVEYOU.</li>
+                        <li><strong>Exemplo de worm:</strong> Morris, Conficker, Stuxnet.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="120" height="25" rx="6" fill="#fadbd8" stroke="#e74c3c" />
+                            <text x="20" y="22" font-size="11" fill="#922b21">Vírus → precisa de hospedeiro</text>
+                            <rect x="160" y="5" width="120" height="25" rx="6" fill="#f5cba7" stroke="#f39c12" />
+                            <text x="170" y="22" font-size="11" fill="#7a4a0e">Worm → auto-replicante (rede)</text>
+                            <text x="10" y="48" font-size="9" fill="#2c3e50">A diferença essencial: o worm não precisa de arquivo hospedeiro para se replicar.</text>
+                        </svg>
+                        <div class="legenda">Comparativo vírus × worm.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Vírus é parasita (precisa de hospedeiro), Worm é predador (age sozinho).”<br>
+                        📌 <strong>Decore:</strong> Vírus infecta arquivos, Worm infecta redes.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O worm pode consumir banda e recursos de rede, causando lentidão.”
+                    </div>
+                </div>
+
+                <!-- 4. Antivírus e suas funções -->
+                <div class="teoria-card">
+                    <h3>🛡️ Antivírus (AV)</h3>
+                    <ul>
+                        <li><strong>Função:</strong> detectar, bloquear e remover malwares.</li>
+                        <li><strong>Técnicas:</strong> assinatura (hash), heurística (comportamento), sandboxing.</li>
+                        <li><strong>Atualização:</strong> essencial para detectar novas ameaças (bases de assinatura).</li>
+                        <li><strong>Exemplos:</strong> Avast, Kaspersky, Norton, McAfee, Windows Defender (Microsoft).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="80" height="25" rx="6" fill="#d5f5e3" stroke="#27ae60" />
+                            <text x="14" y="22" font-size="11" fill="#1e8449">Assinatura</text>
+                            <rect x="100" y="5" width="80" height="25" rx="6" fill="#d4e6f1" stroke="#2980b9" />
+                            <text x="106" y="22" font-size="11" fill="#1a5276">Heurística</text>
+                            <rect x="190" y="5" width="80" height="25" rx="6" fill="#f4ecf7" stroke="#8e44ad" />
+                            <text x="196" y="22" font-size="11" fill="#6c3483">Sandbox</text>
+                            <text x="10" y="48" font-size="9" fill="#2c3e50">Métodos de detecção: assinatura (conhecido), heurística (comportamento), sandbox (isolamento).</text>
+                        </svg>
+                        <div class="legenda">Técnicas de detecção de antivírus.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Assinatura = identidade fixa (vírus conhecido), Heurística = suspeita (comportamento), Sandbox = testar em ambiente isolado.”<br>
+                        📌 <strong>Decore:</strong> Antivírus precisa estar sempre atualizado (novas assinaturas).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Windows Defender é o antivírus nativo do Windows, ativado por padrão.”
+                    </div>
+                </div>
+
+                <!-- 5. Engenharia Social, Phishing, Spoofing -->
+                <div class="teoria-card">
+                    <h3>🎣 Engenharia Social & Phishing</h3>
+                    <ul>
+                        <li><strong>Engenharia Social:</strong> manipulação psicológica para obter informações confidenciais.</li>
+                        <li><strong>Phishing:</strong> e-mail ou site falso que imita entidades legítimas para roubar dados.</li>
+                        <li><strong>Spoofing:</strong> falsificação de identidade (e-mail, IP, site).</li>
+                        <li><strong>Como se proteger:</strong> desconfiar de e-mails suspeitos, verificar URLs, não clicar em links desconhecidos.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="25" r="20" fill="#e74c3c" />
+                            <text x="34" y="22" font-size="10" fill="white">Phishing</text>
+                            <text x="35" y="35" font-size="8" fill="white">(isca)</text>
+                            <rect x="90" y="5" width="90" height="40" rx="8" fill="#f39c12" />
+                            <text x="98" y="22" font-size="10" fill="white">Engenharia</text>
+                            <text x="98" y="35" font-size="10" fill="white">Social</text>
+                            <rect x="200" y="5" width="80" height="40" rx="8" fill="#3498db" />
+                            <text x="208" y="22" font-size="10" fill="white">Spoofing</text>
+                            <text x="208" y="35" font-size="10" fill="white">(falsificação)</text>
+                        </svg>
+                        <div class="legenda">Phishing (isca), Engenharia Social (manipulação), Spoofing (falsificação).</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Phishing = pescaria (você é o peixe), Engenharia Social = golpe psicológico, Spoofing = falsificação de identidade.”<br>
+                        📌 <strong>Decore:</strong> Phishing usa URLs que imitam sites verdadeiros (ex: gooogle.com).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “A engenharia social explora o fator humano, e não vulnerabilidades técnicas.”
+                    </div>
+                </div>
+
+                <!-- 6. Firewall, Autenticação, Backup -->
+                <div class="teoria-card">
+                    <h3>🔐 Medidas de Proteção</h3>
+                    <ul>
+                        <li><strong>Firewall:</strong> bloqueia acessos não autorizados (hardware ou software).</li>
+                        <li><strong>Autenticação de dois fatores (2FA):</strong> camada extra de segurança (senha + token).</li>
+                        <li><strong>Backup:</strong> cópia de segurança para recuperar dados em caso de ataque (ex: ransomware).</li>
+                        <li><strong>Política de senhas:</strong> senhas fortes, troca periódica, não reutilizar.</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#2c3e50" />
+                            <text x="16" y="19" font-size="9" fill="white">Firewall</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#2980b9" />
+                            <text x="86" y="19" font-size="9" fill="white">2FA</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#27ae60" />
+                            <text x="158" y="19" font-size="9" fill="white">Backup</text>
+                            <rect x="220" y="5" width="70" height="20" rx="4" fill="#e67e22" />
+                            <text x="226" y="19" font-size="9" fill="white">Senhas</text>
+                            <text x="10" y="48" font-size="9" fill="#2c3e50">Medidas complementares: firewall, autenticação, backup e senhas fortes.</text>
+                        </svg>
+                        <div class="legenda">Ferramentas e práticas de proteção.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Firewall bloqueia, 2FA protege, Backup salva, Senha fortalece.”<br>
+                        📌 <strong>Decore:</strong> Backup deve ser feito em local diferente do original (regra 3-2-1).
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “O firewall pode ser do tipo filtro de pacotes (camada 3) ou proxy (camada 7).”
+                    </div>
+                </div>
+
+                <!-- 7. Outras ameaças: Keylogger, Rootkit, Botnet -->
+                <div class="teoria-card">
+                    <h3>⌨️ Ameaças Adicionais</h3>
+                    <ul>
+                        <li><strong>Keylogger:</strong> registra teclas digitadas (captura senhas).</li>
+                        <li><strong>Rootkit:</strong> oculta sua presença, dá acesso privilegiado ao atacante.</li>
+                        <li><strong>Botnet:</strong> rede de computadores zumbis controlados remotamente para ataques (ex: DDoS).</li>
+                        <li><strong>Ransomware:</strong> criptografa dados e pede resgate (ex: WannaCry).</li>
+                    </ul>
+                    <div class="graphic-container">
+                        <svg viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="60" height="20" rx="4" fill="#e74c3c" />
+                            <text x="16" y="19" font-size="9" fill="white">Keylogger</text>
+                            <rect x="80" y="5" width="60" height="20" rx="4" fill="#f39c12" />
+                            <text x="88" y="19" font-size="9" fill="white">Rootkit</text>
+                            <rect x="150" y="5" width="60" height="20" rx="4" fill="#3498db" />
+                            <text x="158" y="19" font-size="9" fill="white">Botnet</text>
+                            <rect x="220" y="5" width="70" height="20" rx="4" fill="#9b59b6" />
+                            <text x="226" y="19" font-size="9" fill="white">Ransomware</text>
+                            <text x="10" y="48" font-size="9" fill="#2c3e50">Ameaças avançadas: keylogger (captura teclas), rootkit (ocultação), botnet (zumbis).</text>
+                        </svg>
+                        <div class="legenda">Outras ameaças importantes.</div>
+                    </div>
+                    <div class="macete-box">
+                        <strong>💡 Macete:</strong> “Keylogger vê o que você digita, Rootkit se esconde, Botnet é exército de máquinas, Ransomware sequestra.”<br>
+                        📌 <strong>Decore:</strong> Rootkit opera com privilégios de administrador e é difícil de detectar.
+                    </div>
+                    <div class="dica-extra">
+                        <strong>📌 Dica de prova:</strong> “Botnet é usada para ataques DDoS, spam e roubo de dados.”
+                    </div>
+                </div>
+
+                <!-- 8. Dicas finais e resumo -->
+                <div class="teoria-card">
+                    <h3>📌 Resumo para a Prova</h3>
+                    <ul>
+                        <li><strong>Vírus:</strong> infecta arquivos, precisa de execução.</li>
+                        <li><strong>Worm:</strong> auto-replicante, propaga via rede.</li>
+                        <li><strong>Trojan:</strong> disfarçado de útil, mas malicioso.</li>
+                        <li><strong>Spyware:</strong> espiona dados, Adware: anúncios, Ransomware: resgate.</li>
+                        <li><strong>Antivírus:</strong> usa assinaturas, heurística e sandbox.</li>
+                        <li><strong>Phishing & Engenharia Social:</strong> exploram o fator humano.</li>
+                        <li><strong>Firewall, 2FA, Backup:</strong> medidas essenciais.</li>
+                    </ul>
+                    <div class="macete-box" style="background:#fcf2e1;">
+                        <strong>📌 Super Macete:</strong> “Na dúvida entre vírus e worm: se fala em <strong>arquivo</strong> → vírus; se fala em <strong>rede</strong> → worm. Se fala em <strong>disfarce</strong> → Trojan; se fala em <strong>resgate</strong> → Ransomware.”<br>
+                        <span style="display:block; margin-top:6px;">🔁 <strong>Revise:</strong> diferenças entre ameaças, métodos de detecção e boas práticas de segurança.</span>
+                    </div>
+                </div>
+
+            </div> <!-- fim teoria-grid -->
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO EXERCÍCIOS (1000 questões)                               -->
+        <!-- ============================================================ -->
+        <section id="exercicios" class="section">
+            <div class="quiz-controls">
+                <div class="info">
+                    <span id="acertos">0</span> acertos · 
+                    <span id="totalRespondidas">0</span> respondidas de 
+                    <span id="totalQuestoes">1000</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                    <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                    <button class="btn btn-danger" id="btnLimpar">🧹 Limpar respostas</button>
+                </div>
+            </div>
+            <div id="questoesContainer"></div>
+            <div class="paginacao" id="paginacao"></div>
+            <div style="text-align:center; margin-top:10px;">
+                <span class="stats" id="statsProgresso">Progresso: 0%</span>
+            </div>
+        </section>
+
+        <div class="footer">
+            Desenvolvido para concursos · 1000 questões · Teoria visual + macetes · Boa sorte!
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================================
+            // 1. GERADOR DE 1000 QUESTÕES SOBRE NAVEGADORES, AMEAÇAS, VÍRUS, WORM, ANTIVÍRUS
+            // ============================================================
+            const TOTAL_QUESTOES = 1000;
+
+            const templates = [
+                // 1) Navegadores
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual navegador utiliza o mecanismo de renderização Blink?', ops: ['Chrome', 'Firefox',
+                                'Safari', 'Opera'
+                            ], corr: 'Chrome', exp: 'Chrome (e Edge atualmente) usam Blink, derivado do WebKit.' },
+                        { e: 'Qual navegador utiliza o mecanismo Gecko?', ops: ['Chrome', 'Firefox', 'Edge', 'Safari'],
+                            corr: 'Firefox', exp: 'Firefox usa Gecko, desenvolvido pela Mozilla.' },
+                        { e: 'O modo de navegação privada (anônimo) oferece proteção contra:', ops: ['Histórico local',
+                                'Rastreamento por provedor', 'Cookies de terceiros', 'Todos os anteriores'
+                            ], corr: 'Histórico local', exp: 'Navegação privada não salva histórico local, mas não esconde do provedor.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 2) Vírus, Worm, Trojan
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual tipo de malware se replica automaticamente sem precisar de um arquivo hospedeiro?',
+                            ops: ['Vírus', 'Worm', 'Trojan', 'Spyware'], corr: 'Worm',
+                            exp: 'Worm é auto-replicante e se espalha via rede, sem hospedeiro.' },
+                        { e: 'Qual malware se disfarça como programa legítimo, mas executa ações maliciosas?', ops: ['Vírus',
+                                'Worm', 'Trojan', 'Ransomware'
+                            ], corr: 'Trojan', exp: 'Trojan (cavalo de troia) aparenta ser útil, mas tem função maliciosa.' },
+                        { e: 'Qual ameaça criptografa dados e exige pagamento de resgate?', ops: ['Vírus', 'Worm', 'Trojan',
+                                'Ransomware'
+                            ], corr: 'Ransomware', exp: 'Ransomware sequestra dados e pede resgate (ex: WannaCry).' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 3) Spyware, Adware, Keylogger
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual malware coleta informações do usuário sem seu consentimento?', ops: ['Spyware',
+                                'Adware', 'Ransomware', 'Trojan'
+                            ], corr: 'Spyware', exp: 'Spyware espiona dados pessoais, senhas e hábitos.' },
+                        { e: 'Qual malware exibe propagandas indesejadas?', ops: ['Spyware', 'Adware', 'Worm', 'Trojan'],
+                            corr: 'Adware', exp: 'Adware exibe anúncios, muitas vezes em pop-ups.' },
+                        { e: 'Qual programa registra as teclas digitadas pelo usuário?', ops: ['Keylogger', 'Rootkit',
+                                'Botnet', 'Ransomware'
+                            ], corr: 'Keylogger', exp: 'Keylogger captura tudo que é digitado, incluindo senhas.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 4) Antivírus e técnicas
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual técnica de antivírus compara códigos com uma base de assinaturas conhecidas?', ops: [
+                                'Heurística', 'Assinatura', 'Sandbox', 'Comportamental'
+                            ], corr: 'Assinatura', exp: 'Assinatura usa hashes ou padrões de vírus conhecidos.' },
+                        { e: 'Qual técnica analisa o comportamento suspeito de um programa?', ops: ['Assinatura',
+                                'Heurística', 'Atualização', 'Quarentena'
+                            ], corr: 'Heurística', exp: 'Heurística avalia comportamento para detectar novas ameaças.' },
+                        { e: 'Qual método executa o arquivo em um ambiente isolado para análise?', ops: ['Sandbox',
+                                'Assinatura', 'Heurística', 'Firewall'
+                            ], corr: 'Sandbox', exp: 'Sandbox isola a execução para observar ações sem risco.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 5) Phishing, Engenharia Social, Spoofing
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual técnica usa e-mails falsos para enganar usuários e roubar dados?', ops: ['Phishing',
+                                'Spoofing', 'Engenharia Social', 'DDoS'
+                            ], corr: 'Phishing', exp: 'Phishing envia mensagens fraudulentas que imitam entidades legítimas.' },
+                        { e: 'Qual ataque explora a confiança e manipulação psicológica?', ops: ['Phishing', 'Spoofing',
+                                'Engenharia Social', 'Ransomware'
+                            ], corr: 'Engenharia Social', exp: 'Engenharia social engana pessoas, não sistemas.' },
+                        { e: 'Qual técnica falsifica o remetente de um e-mail?', ops: ['Phishing', 'Spoofing',
+                                'Engenharia Social', 'Keylogger'
+                            ], corr: 'Spoofing', exp: 'Spoofing forja endereços de e-mail ou IPs para enganar.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 6) Firewall, 2FA, Backup
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual ferramenta controla o tráfego de rede com base em regras?', ops: ['Firewall', 'Antivírus',
+                                'Proxy', 'IDS'
+                            ], corr: 'Firewall', exp: 'Firewall filtra pacotes permitidos ou bloqueados.' },
+                        { e: 'Qual medida de segurança adiciona uma segunda camada de autenticação?', ops: ['Backup',
+                                '2FA', 'Firewall', 'VPN'
+                            ], corr: '2FA', exp: 'Autenticação de dois fatores (2FA) usa senha + token ou biometria.' },
+                        { e: 'Qual prática é essencial para recuperar dados após um ataque de ransomware?', ops: ['Firewall',
+                                'Backup', 'Antivírus', '2FA'
+                            ], corr: 'Backup', exp: 'Backup permite restaurar dados sem pagar resgate.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 7) Rootkit, Botnet, DDoS
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual malware se esconde no sistema e concede acesso privilegiado?', ops: ['Rootkit',
+                                'Keylogger', 'Spyware', 'Trojan'
+                            ], corr: 'Rootkit', exp: 'Rootkit opera com privilégios de administrador e é difícil de detectar.' },
+                        { e: 'Uma rede de computadores zumbis controlados remotamente é chamada de:', ops: ['Botnet',
+                                'Rootkit', 'Spyware', 'Adware'
+                            ], corr: 'Botnet', exp: 'Botnet é usada para DDoS, spam e ataques coordenados.' },
+                        { e: 'Qual ataque sobrecarrega um servidor com requisições de múltiplas fontes?', ops: ['Phishing',
+                                'DDoS', 'Spoofing', 'Man-in-the-Middle'
+                            ], corr: 'DDoS', exp: 'DDoS (Distributed Denial of Service) usa botnets para sobrecarregar.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                },
+                // 8) Miscelânea (diferenças, segurança)
+                (idx) => {
+                    const perguntas = [
+                        { e: 'Qual a principal diferença entre vírus e worm?', ops: ['Vírus precisa de hospedeiro, worm não',
+                                'Worm precisa de hospedeiro, vírus não', 'Vírus se espalha por e-mail, worm por USB',
+                                'Não há diferença'
+                            ], corr: 'Vírus precisa de hospedeiro, worm não',
+                            exp: 'Vírus infecta arquivos, worm é auto-replicante e não precisa de hospedeiro.' },
+                        { e: 'O Windows Defender é um exemplo de:', ops: ['Antivírus', 'Firewall', 'Proxy', 'VPN'],
+                            corr: 'Antivírus', exp: 'Windows Defender é o antivírus nativo do Windows.' },
+                        { e: 'Qual protocolo é usado para navegação segura (HTTPS)?', ops: ['SSL/TLS', 'HTTP', 'FTP',
+                                'SMTP'
+                            ], corr: 'SSL/TLS', exp: 'HTTPS utiliza SSL/TLS para criptografar a comunicação.' },
+                    ];
+                    const p = perguntas[idx % perguntas.length];
+                    const opcoes = [...p.ops];
+                    for (let i = opcoes.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    }
+                    return {
+                        enunciado: p.e,
+                        opcoes: opcoes,
+                        correta: p.corr,
+                        explicacao: p.exp
+                    };
+                }
+            ];
+
+            const questoes = [];
+            for (let i = 0; i < TOTAL_QUESTOES; i++) {
+                const template = templates[i % templates.length];
+                const q = template(i);
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                for (let k = q.opcoes.length - 1; k > 0; k--) {
+                    const j = Math.floor(Math.random() * (k + 1));
+                    [q.opcoes[k], q.opcoes[j]] = [q.opcoes[j], q.opcoes[k]];
+                }
+                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
+                questoes.push({
+                    id: i,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false,
+                });
+            }
+
+            // ============================================================
+            // 2. RENDERIZAÇÃO E CONTROLE (mesmo das páginas anteriores)
+            // ============================================================
+            const ITENS_POR_PAGINA = 10;
+            let paginaAtual = 1;
+            let questoesPorPagina = [];
+            let acertos = 0,
+                respondidas = 0;
+
+            const container = document.getElementById('questoesContainer');
+            const paginacaoDiv = document.getElementById('paginacao');
+            const spanAcertos = document.getElementById('acertos');
+            const spanTotalRes = document.getElementById('totalRespondidas');
+            const spanTotalQ = document.getElementById('totalQuestoes');
+            const statsProgresso = document.getElementById('statsProgresso');
+
+            function atualizarStats() {
+                let acc = 0,
+                    resp = 0;
+                for (const q of questoes) {
+                    if (q.selecionada !== null) {
+                        resp++;
+                        if (q.opcoes[q.selecionada] === q.correta) acc++;
+                    }
+                }
+                acertos = acc;
+                respondidas = resp;
+                spanAcertos.textContent = acertos;
+                spanTotalRes.textContent = respondidas;
+                const pct = Math.round((respondidas / questoes.length) * 100);
+                statsProgresso.textContent = `Progresso: ${pct}%`;
+            }
+
+            function renderizarPagina() {
+                const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+                const fim = Math.min(inicio + ITENS_POR_PAGINA, questoes.length);
+                questoesPorPagina = questoes.slice(inicio, fim);
+
+                let html = '';
+                for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                    const q = questoesPorPagina[idx];
+                    const globalIdx = inicio + idx;
+                    const opcoesHtml = q.opcoes.map((op, oi) => {
+                        const checked = (q.selecionada === oi) ? 'checked' : '';
+                        return `
+                            <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                                <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                                <label for="q${globalIdx}_${oi}">${op}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let feedbackHtml = '';
+                    if (q.selecionada !== null) {
+                        const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                        const classe = isCerto ? 'certo' : 'errado';
+                        const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                        feedbackHtml = `
+                            <div class="feedback ${classe}">${texto}</div>
+                            <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                        `;
+                    }
+
+                    const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+
+                    html += `
+                        <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                            <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                            <div class="opcoes">
+                                ${opcoesHtml}
+                            </div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function(e) {
+                        const questaoDiv = this.closest('.questao');
+                        const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                        const opcaoIdx = parseInt(this.value);
+                        const q = questoes[globalIdx];
+                        if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                            q.selecionada = opcaoIdx;
+                            q.resolvida = true;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                const totalPaginas = Math.ceil(questoes.length / ITENS_POR_PAGINA);
+                let pagHtml = '';
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    if (p === paginaAtual) {
+                        pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                    } else if (p <= 3 || p > totalPaginas - 3 || Math.abs(p - paginaAtual) <= 1) {
+                        pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                    } else if (p === 4 && paginaAtual > 5) {
+                        pagHtml += `<span>…</span>`;
+                    } else if (p === totalPaginas - 3 && paginaAtual < totalPaginas - 4) {
+                        pagHtml += `<span>…</span>`;
+                    }
+                }
+                pagHtml += `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+                paginacaoDiv.innerHTML = pagHtml;
+
+                document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                            paginaAtual = page;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                atualizarStats();
+            }
+
+            // ============================================================
+            // 3. BOTÕES
+            // ============================================================
+            document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+                for (const q of questoesPorPagina) {
+                    if (q.selecionada === null) {
+                        q.selecionada = 0;
+                        q.resolvida = true;
+                    }
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnLimpar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnReiniciar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                paginaAtual = 1;
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            // ============================================================
+            // 4. NAVEGAÇÃO ENTRE SEÇÕES
+            // ============================================================
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.section;
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            // ============================================================
+            // 5. INICIALIZAÇÃO
+            // ============================================================
+            spanTotalQ.textContent = TOTAL_QUESTOES;
+            renderizarPagina();
+            atualizarStats();
+
+        })();
+    </script>
+</body>
+</html>
