@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📘 Gramática Avançada: Orações Coordenativas e Subordinativas</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: #f6f9fc;
+            color: #1e293b;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #0f172a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            -webkit-text-fill-color: #64748b;
+            background: none;
+            color: #64748b;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.05rem;
+            border-left: 4px solid #3b82f6;
+            padding-left: 18px;
+            margin-bottom: 30px;
+        }
+        /* ===== NAV ===== */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 2px solid #e9edf2;
+            padding-bottom: 14px;
+            margin-bottom: 30px;
+        }
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #475569;
+            transition: 0.2s;
+        }
+        .nav-tabs button:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .nav-tabs button.active {
+            background: #0f172a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            from {
+                opacity: 0.4;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== CARDS & TYPOGRAPHY ===== */
+        .theory-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf2;
+            transition: 0.15s;
+        }
+        .theory-card:hover {
+            border-color: #cbd5e1;
+        }
+        .theory-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .theory-card h3 .badge {
+            font-size: 0.7rem;
+            background: #3b82f6;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .theory-card h4 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin: 16px 0 6px;
+        }
+        .theory-card p,
+        .theory-card li {
+            color: #334155;
+        }
+        .theory-card ul,
+        .theory-card ol {
+            padding-left: 24px;
+            margin: 8px 0 12px;
+        }
+        .theory-card li {
+            margin-bottom: 3px;
+        }
+        .highlight-box {
+            background: #dbeafe;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border-left: 5px solid #2563eb;
+        }
+        .highlight-box strong {
+            color: #1e40af;
+        }
+        .example {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin: 8px 0 12px;
+            font-style: italic;
+            border: 1px dashed #94a3b8;
+        }
+        .example::before {
+            content: "📌 ";
+            font-style: normal;
+        }
+        .mnemonic {
+            background: #fef9c3;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #fde047;
+            margin: 10px 0;
+        }
+        .mnemonic strong {
+            color: #854d0e;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 680px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.8rem;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* ===== TABELA ===== */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th,
+        td {
+            border: 1px solid #d1d9e6;
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e9edf2;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        /* ===== EXERCÍCIOS ===== */
+        .exercise-area {
+            margin-top: 12px;
+        }
+        .exercise-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 16px 20px;
+            border-radius: 18px;
+        }
+        .exercise-controls label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .exercise-controls select,
+        .exercise-controls input {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .exercise-controls button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 40px;
+            background: #0f172a;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .exercise-controls button:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+        .exercise-controls .score {
+            margin-left: auto;
+            font-weight: 700;
+            color: #0f172a;
+            background: white;
+            padding: 4px 18px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .question-box {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px;
+            border: 1px solid #e9edf2;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .question-box .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+        .question-box .q-text .highlight {
+            background: #fef08a;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 8px;
+        }
+        .options button {
+            padding: 8px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 40px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.15s;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .options button:hover:not(:disabled) {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+        .options button.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+        .options button.correct {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #14532d;
+        }
+        .options button.wrong {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+        .options button:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .feedback.show {
+            display: block;
+        }
+        .feedback.correct {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #14532d;
+        }
+        .feedback.wrong {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #7f1d1d;
+        }
+        .feedback .explanation {
+            margin-top: 6px;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 6px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 30px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .pagination button:hover {
+            background: #f1f5f9;
+        }
+        .pagination button.active-page {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+
+        /* ===== PROGRESS ===== */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9edf2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 6px 0 16px;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            border-radius: 20px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 500px) {
+            .question-box {
+                padding: 16px;
+            }
+            .options button {
+                padding: 6px 14px;
+                font-size: 0.85rem;
+            }
+            .exercise-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .exercise-controls .score {
+                margin-left: 0;
+                text-align: center;
+            }
+        }
+
+        /* scroll */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* footer */
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid #e9edf2;
+            padding-top: 24px;
+        }
+        .footer-note strong {
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+
+        <!-- HEADER -->
+        <header>
+            <h1>
+                📘 Gramática Avançada
+                <small>Orações Coordenativas &amp; Subordinativas</small>
+            </h1>
+            <div class="subtitle">
+                Domine a sintaxe do período composto com teoria completa, macetes e 1.000 exercícios interativos
+            </div>
+        </header>
+
+        <!-- NAV -->
+        <nav class="nav-tabs" id="navTabs">
+            <button class="active" data-tab="teoria">📖 Teoria</button>
+            <button data-tab="macetes">🧠 Macetes</button>
+            <button data-tab="exercicios">✏️ Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- TAB 1 – TEORIA -->
+        <!-- ============================================================ -->
+        <div class="tab-content active" id="tab-teoria">
+
+            <h2 style="font-size:1.8rem; margin-bottom:16px;">📖 Teoria Completa</h2>
+
+            <!-- INTRODUÇÃO -->
+            <div class="theory-card">
+                <h3>🔹 O que são orações coordenativas e subordinativas?</h3>
+                <p>No período composto, as orações podem se relacionar de duas formas fundamentais:</p>
+                <ul>
+                    <li><strong>Coordenação</strong> – orações <strong>independentes</strong> entre si, cada uma com sentido próprio, ligadas por conjunções coordenativas ou justapostas (assindéticas).</li>
+                    <li><strong>Subordinação</strong> – uma oração (<strong>principal</strong>) e outra (<strong>subordinada</strong>) que exerce função sintática em relação à principal, como um termo da oração.</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>⏳ Dica de ouro:</strong> Na coordenação, as orações são <em>independentes</em>; na subordinação, uma <em>depende</em> da outra para completar o sentido.
+                </div>
+            </div>
+
+            <!-- COORDENATIVAS -->
+            <div class="theory-card">
+                <h3>🔸 Orações Coordenativas <span class="badge">5 tipos</span></h3>
+                <p>Podem ser <strong>assindéticas</strong> (sem conjunção, justapostas) ou <strong>sindéticas</strong> (com conjunção).</p>
+
+                <h4>📌 Coordenadas Assindéticas</h4>
+                <p>Justapostas, sem conectivo. Ex: <em>Cheguei, sentei, comecei a estudar.</em></p>
+
+                <h4>📌 Coordenadas Sindéticas</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Tipo</th><th>Conjunções típicas</th><th>Exemplo</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Aditiva</strong></td>
+                                <td>e, nem, não só… mas também, tanto… como</td>
+                                <td><em>Estudou muito <strong>e</strong> passou no concurso.</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Adversativa</strong></td>
+                                <td>mas, porém, contudo, todavia, entretanto, no entanto</td>
+                                <td><em>Tentou, <strong>mas</strong> não conseguiu.</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alternativa</strong></td>
+                                <td>ou, ou… ou, ora… ora, já… já, quer… quer</td>
+                                <td><em><strong>Ou</strong> estuda <strong>ou</strong> trabalha.</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conclusiva</strong></td>
+                                <td>logo, portanto, por conseguinte, assim, pois (posposto)</td>
+                                <td><em>Estudou bastante, <strong>logo</strong> será aprovado.</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Explicativa</strong></td>
+                                <td>que, porque, porquanto, pois (anteposto)</td>
+                                <td><em>Vá dormir, <strong>que</strong> amanhã tem prova.</em></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="highlight-box">
+                    <strong>🧩 Macete:</strong> Para lembrar as 5: <strong>A</strong>ditiva, <strong>A</strong>dversativa, <strong>A</strong>lternativa, <strong>C</strong>onclusiva, <strong>E</strong>xplicativa → <strong>"A A A C E"</strong> (lembre de "AAA CE").
+                </div>
+            </div>
+
+            <!-- SUBORDINATIVAS -->
+            <div class="theory-card">
+                <h3>🔸 Orações Subordinativas <span class="badge">3 grupos</span></h3>
+                <p>Dividem-se em <strong>substantivas</strong>, <strong>adjetivas</strong> e <strong>adverbiais</strong>, conforme a função sintática que exercem.</p>
+
+                <h4>📌 Subordinadas Substantivas (6 tipos)</h4>
+                <p>Exercem funções típicas de substantivo. São introduzidas por conjunções integrantes (<em>que, se</em>).</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Função</th><th>Exemplo</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Subjetiva</strong> (sujeito)</td><td><em>É importante <strong>que você estude</strong>.</em></td></tr>
+                            <tr><td><strong>Objetiva Direta</strong> (OD)</td><td><em>Desejo <strong>que você seja feliz</strong>.</em></td></tr>
+                            <tr><td><strong>Objetiva Indireta</strong> (OI)</td><td><em>Gosto <strong>de que me elogiem</strong>.</em></td></tr>
+                            <tr><td><strong>Completiva Nominal</strong> (compl. nominal)</td><td><em>Tenho certeza <strong>de que virá</strong>.</em></td></tr>
+                            <tr><td><strong>Predicativa</strong> (predicativo do sujeito)</td><td><em>A verdade é <strong>que ele mentiu</strong>.</em></td></tr>
+                            <tr><td><strong>Apositiva</strong> (aposto)</td><td><em>Só desejo uma coisa: <strong>que você seja feliz</strong>.</em></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>📌 Subordinadas Adjetivas (2 tipos)</h4>
+                <p>Funcionam como adjetivo, caracterizando um substantivo. Introduzidas por pronomes relativos (<em>que, quem, cujo, onde, etc.</em>).</p>
+                <ul>
+                    <li><strong>Restritiva</strong> – restringe o sentido do antecedente. <em>Os alunos <strong>que estudaram</strong> passaram.</em></li>
+                    <li><strong>Explicativa</strong> – acrescenta uma explicação, entre vírgulas. <em>Os alunos, <strong>que estudaram</strong>, passaram.</em></li>
+                </ul>
+
+                <h4>📌 Subordinadas Adverbiais (9 tipos)</h4>
+                <p>Expressam circunstâncias. Introduzidas por conjunções subordinativas adverbiais.</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Tipo</th><th>Conjunções</th><th>Exemplo</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Causal</strong></td><td>porque, pois, visto que, já que</td><td><em>Não saiu <strong>porque</strong> chovia.</em></td></tr>
+                            <tr><td><strong>Comparativa</strong></td><td>como, (tal) qual, que, do que</td><td><em>Ela canta <strong>como</strong> uma artista.</em></td></tr>
+                            <tr><td><strong>Concessiva</strong></td><td>embora, ainda que, mesmo que</td><td><em><strong>Embora</strong> chovesse, saiu.</em></td></tr>
+                            <tr><td><strong>Condicional</strong></td><td>se, caso, contanto que</td><td><em><strong>Se</strong> estudar, passará.</em></td></tr>
+                            <tr><td><strong>Conformativa</strong></td><td>conforme, segundo, como</td><td><em>Agiu <strong>conforme</strong> o combinado.</em></td></tr>
+                            <tr><td><strong>Consecutiva</strong></td><td>que (com tão, tal, tanto)</td><td><em>Falou tanto <strong>que</strong> ficou rouco.</em></td></tr>
+                            <tr><td><strong>Final</strong></td><td>para que, a fim de que</td><td><em>Estude <strong>para que</strong> aprenda.</em></td></tr>
+                            <tr><td><strong>Proporcional</strong></td><td>à medida que, quanto mais… mais</td><td><em><strong>Quanto mais</strong> estudo, <strong>mais</strong> aprendo.</em></td></tr>
+                            <tr><td><strong>Temporal</strong></td><td>quando, enquanto, logo que</td><td><em><strong>Quando</strong> chegar, avise.</em></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="highlight-box">
+                    <strong>🧩 Macete para as 9 adverbiais:</strong> <br />
+                    <strong>C</strong>ausal · <strong>C</strong>omparativa · <strong>C</strong>oncessiva · <strong>C</strong>ondicional · <strong>C</strong>onformativa · <strong>C</strong>onsecutiva · <strong>F</strong>inal · <strong>P</strong>roporcional · <strong>T</strong>emporal<br />
+                    → <strong>"As 9 C's (com F e P e T)"</strong> – lembre: <em>Causais, Comparativas, Concessivas, Condicionais, Conformativas, Consecutivas, Finais, Proporcionais, Temporais</em>.
+                </div>
+            </div>
+
+            <!-- DIFERENÇAS -->
+            <div class="theory-card">
+                <h3>🔹 Diferenças Essenciais</h3>
+                <div class="grid-2">
+                    <div style="background:#eff6ff; border-radius:14px; padding:16px;">
+                        <h4 style="margin-top:0;">Coordenativas</h4>
+                        <ul>
+                            <li>Orações <strong>independentes</strong></li>
+                            <li>Separação por vírgula ou conjunção</li>
+                            <li>Cada oração tem sentido completo</li>
+                            <li>Conjunções: <em>e, mas, ou, logo, que</em> (explicativo)</li>
+                        </ul>
+                    </div>
+                    <div style="background:#fef3c7; border-radius:14px; padding:16px;">
+                        <h4 style="margin-top:0;">Subordinativas</h4>
+                        <ul>
+                            <li>Uma oração <strong>depende</strong> da outra</li>
+                            <li>Função sintática (sujeito, OD, adjunto…)</li>
+                            <li>Introduzidas por conjunções integrantes ou relativas</li>
+                            <li>Ex: <em>que, se, porque, embora, quando</em></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example">
+                    <strong>Exemplo contrastante:</strong><br />
+                    <em>Estudou <strong>e</strong> passou.</em> (coordenada aditiva – duas ações independentes)<br />
+                    <em>Estudou <strong>para que</strong> passasse.</em> (subordinada final – a segunda oração explica a finalidade da primeira)
+                </div>
+            </div>
+
+            <!-- PONTUAÇÃO -->
+            <div class="theory-card">
+                <h3>🔹 Pontuação e Dicas</h3>
+                <ul>
+                    <li><strong>Vírgula</strong> – separa orações coordenadas assindéticas e sindéticas (exceto aditivas com "e"). Ex: <em>Chegou, viu, venceu.</em></li>
+                    <li><strong>Vírgula obrigatória</strong> antes de adversativas (<em>mas, porém</em>) e explicativas pospostas.</li>
+                    <li><strong>Subordinadas adjetivas explicativas</strong> – sempre entre vírgulas.</li>
+                    <li><strong>Subordinadas adverbiais</strong> – vírgula obrigatória quando antepostas à principal.</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>⚠️ Atenção:</strong> A vírgula pode mudar completamente o sentido! Compare:<br />
+                    <em>Os alunos que estudaram passaram.</em> (restritiva – só os que estudaram)<br />
+                    <em>Os alunos, que estudaram, passaram.</em> (explicativa – todos estudaram e passaram)
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 2 – MACETES -->
+        <!-- ============================================================ -->
+        <div class="tab-content" id="tab-macetes">
+
+            <h2 style="font-size:1.8rem; margin-bottom:16px;">🧠 Macetes &amp; Mnemônicos</h2>
+
+            <div class="theory-card">
+                <h3>📌 Coordenativas – "AAA CE"</h3>
+                <div class="mnemonic">
+                    <strong>A</strong>ditiva · <strong>A</strong>dversativa · <strong>A</strong>lternativa · <strong>C</strong>onclusiva · <strong>E</strong>xplicativa<br />
+                    → Decore: <strong>"AAA CE"</strong> (soa como "açaí") – <em>açaí é bom, e as coordenativas são 5!</em>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 Subordinativas Substantivas – "S O O C P A"</h3>
+                <div class="mnemonic">
+                    <strong>S</strong>ubjetiva · <strong>O</strong>bjetiva Direta · <strong>O</strong>bjetiva Indireta · <strong>C</strong>ompletiva Nominal · <strong>P</strong>redicativa · <strong>A</strong>positiva<br />
+                    → <strong>"SOOCPA"</strong> – lembre de <em>"Só o Cpa"</em> (ou "Só o CPA" – sigla divertida).
+                </div>
+                <p style="margin-top:8px;">📎 Dica: a <strong>Subjetiva</strong> sempre tem verbo na 3ª pessoa do singular + <em>que</em>. Ex: <em>É bom que você venha.</em></p>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 Subordinativas Adjetivas – "RE"</h3>
+                <div class="mnemonic">
+                    <strong>R</strong>estritiva · <strong>E</strong>xplicativa<br />
+                    → A restritiva <strong>restringe</strong> (sem vírgulas); a explicativa <strong>explica</strong> (com vírgulas).
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 Subordinativas Adverbiais – "As 9 C's com F, P e T"</h3>
+                <div class="mnemonic" style="font-size:0.98rem;">
+                    <strong>C</strong>ausal · <strong>C</strong>omparativa · <strong>C</strong>oncessiva · <strong>C</strong>ondicional · <strong>C</strong>onformativa · <strong>C</strong>onsecutiva · <strong>F</strong>inal · <strong>P</strong>roporcional · <strong>T</strong>emporal<br />
+                    → <strong>"CCCCCFPT"</strong> – ou pense: <em>"6 C's, F, P, T"</em>.<br />
+                    <span style="display:inline-block;margin-top:6px;background:#f1f5f9;padding:4px 14px;border-radius:30px;">🔁 <strong>Outro macete:</strong> "Causa, Compara, Concede, Condiciona, Conforma, Consequência, Finalidade, Proporção, Tempo"</span>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 Diferença entre "porque", "por que", "porquê", "por quê"</h3>
+                <div class="mnemonic">
+                    <ul style="list-style:none;padding:0;">
+                        <li><strong>Porque</strong> – conjunção causal/explicativa (junto, sem acento) → <em>Não fui porque choveu.</em></li>
+                        <li><strong>Por que</strong> – preposição + pronome interrogativo (separado) → <em>Por que você não veio?</em></li>
+                        <li><strong>Porquê</strong> – substantivo (com acento, junto) → <em>Explique o porquê.</em></li>
+                        <li><strong>Por quê</strong> – final de frase interrogativa (separado, com acento) → <em>Você não veio por quê?</em></li>
+                    </ul>
+                    <p style="margin-top:6px;">📎 <strong>Macete:</strong> "Junto = conjunção; separado = pergunta; com acento = final ou substantivo".</p>
+                </div>
+            </div>
+
+            <div class="theory-card">
+                <h3>📌 Conjunções integrantes × pronomes relativos</h3>
+                <ul>
+                    <li><strong>Que</strong> – pode ser conjunção integrante (subst.) ou pronome relativo (adj.).</li>
+                    <li>Para distinguir: substitua <em>que</em> por <em>o qual / a qual</em> – se funcionar, é pronome relativo.</li>
+                </ul>
+                <div class="example">
+                    <em>Desejo <strong>que</strong> você venha.</em> → substituir por "o qual" não funciona → conjunção integrante.<br />
+                    <em>O livro <strong>que</strong> li é bom.</em> → "o qual" funciona → pronome relativo.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 3 – EXERCÍCIOS -->
+        <!-- ============================================================ -->
+        <div class="tab-content" id="tab-exercicios">
+
+            <h2 style="font-size:1.8rem; margin-bottom:8px;">✏️ 1.000 Exercícios Interativos</h2>
+            <p style="color:#475569; margin-bottom:18px;">Responda, veja a correção na hora e acompanhe seu progresso.</p>
+
+            <div class="exercise-controls">
+                <label for="qtySelect">Quantos por vez:</label>
+                <select id="qtySelect">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+                <button id="newExerciseBtn">🔁 Nova rodada</button>
+                <span class="score" id="scoreDisplay">✅ 0 / 0</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="fill" id="progressFill" style="width:0%;"></div>
+            </div>
+
+            <div id="exerciseContainer" class="exercise-area">
+                <!-- gerado por JS -->
+            </div>
+
+            <div class="pagination" id="paginationContainer">
+                <!-- gerado por JS -->
+            </div>
+
+            <div style="margin-top:24px; text-align:center; color:#94a3b8; font-size:0.9rem;">
+                <span id="totalExercisesLabel">Total de exercícios disponíveis: 1000</span>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-note">
+            <strong>📚 Domine a gramática</strong> · Teoria + Macetes + 1.000 exercícios com correção automática
+        </div>
+    </div>
+
+    <script>
+        // ======================================================================
+        //   GERADOR DE 1.000 EXERCÍCIOS
+        // ======================================================================
+
+        (function() {
+            'use strict';
+
+            // --------------------------------------------------------------
+            //   BANCO DE DADOS DE PERGUNTAS (template-based)
+            // --------------------------------------------------------------
+
+            // Cada exercício é gerado a partir de um template.
+            // Vamos criar 1000 exercícios únicos combinando:
+            //   - tipo de pergunta (identificação, classificação, completar)
+            //   - cláusulas e conjunções aleatórias
+            //   - frases variadas
+
+            // ---------- CONJUNTOS DE DADOS ----------
+            const CONJUNCOES_COORD = {
+                aditiva: ['e', 'nem', 'não só... mas também', 'tanto... como'],
+                adversativa: ['mas', 'porém', 'contudo', 'todavia', 'entretanto', 'no entanto'],
+                alternativa: ['ou', 'ou... ou', 'ora... ora', 'já... já', 'quer... quer'],
+                conclusiva: ['logo', 'portanto', 'por conseguinte', 'assim', 'pois'],
+                explicativa: ['que', 'porque', 'porquanto', 'pois']
+            };
+
+            const CONJUNCOES_SUB = {
+                causal: ['porque', 'pois', 'visto que', 'já que', 'uma vez que'],
+                comparativa: ['como', 'tal qual', 'que', 'do que', 'quanto'],
+                concessiva: ['embora', 'ainda que', 'mesmo que', 'se bem que', 'por mais que'],
+                condicional: ['se', 'caso', 'contanto que', 'desde que', 'a menos que'],
+                conformativa: ['conforme', 'segundo', 'como', 'de acordo com'],
+                consecutiva: ['que', 'de modo que', 'de sorte que'],
+                final: ['para que', 'a fim de que', 'que', 'porque'],
+                proporcional: ['à medida que', 'quanto mais... mais', 'ao passo que', 'quanto menos... menos'],
+                temporal: ['quando', 'enquanto', 'logo que', 'assim que', 'antes que', 'depois que', 'sempre que']
+            };
+
+            // Frases para construir exercícios
+            const SUJEITOS = ['ele', 'ela', 'João', 'Maria', 'os alunos', 'a equipe', 'o time', 'o professor', 'a professora',
+                'meu pai', 'minha mãe', 'você', 'nós', 'eles', 'elas'
+            ];
+            const VERBOS = ['estuda', 'trabalha', 'corre', 'dança', 'canta', 'escreve', 'lê', 'viaja', 'cozinha', 'desenha',
+                'programa', 'ensina', 'aprende', 'fala', 'come', 'bebe'
+            ];
+            const OBJETOS = ['livro', 'música', 'poema', 'trabalho', 'prova', 'concurso', 'viagem', 'jantar', 'filme', 'arte',
+                'ciência', 'história', 'matemática', 'português', 'inglês'
+            ];
+            const ADJETIVOS = ['bom', 'ótimo', 'difícil', 'fácil', 'interessante', 'chato', 'divertido', 'cansativo',
+                'emocionante', 'triste', 'alegre'
+            ];
+            const LOCAIS = ['na escola', 'em casa', 'no trabalho', 'no parque', 'na biblioteca', 'no cinema', 'no teatro',
+                'na praia', 'na montanha'
+            ];
+            const TEMPOS = ['hoje', 'ontem', 'amanhã', 'agora', 'sempre', 'nunca', 'às vezes', 'já', 'ainda'];
+
+            // ---------- FUNÇÕES AUXILIARES ----------
+            function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+            function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = randInt(0, i);
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function pickN(arr, n) {
+                const copy = [...arr];
+                shuffle(copy);
+                return copy.slice(0, n);
+            }
+
+            // ---------- GERADORES DE EXERCÍCIOS ----------
+
+            // Cada gerador retorna um objeto { question, options, answer, explanation, type }
+
+            // 1. IDENTIFICAR COORDENATIVA (tipo)
+            function genCoordIdentify() {
+                const tipos = Object.keys(CONJUNCOES_COORD);
+                const tipo = rand(tipos);
+                const conjList = CONJUNCOES_COORD[tipo];
+                const conj = rand(conjList);
+                const suj = rand(SUJEITOS);
+                const verb = rand(VERBOS);
+                const obj = rand(OBJETOS);
+                const suj2 = rand(SUJEITOS);
+                const verb2 = rand(VERBOS);
+                const obj2 = rand(OBJETOS);
+
+                let frase;
+                if (conj.includes('...')) {
+                    // conj com padrão
+                    const parts = conj.split('...');
+                    frase =
+                        `${parts[0]} ${suj} ${verb} ${obj} ${parts[1]} ${suj2} ${verb2} ${obj2}`;
+                } else if (conj === 'nem') {
+                    frase = `${suj} não ${verb} ${obj} ${conj} ${suj2} ${verb2} ${obj2}`;
+                } else {
+                    frase = `${suj} ${verb} ${obj}, ${conj} ${suj2} ${verb2} ${obj2}`;
+                }
+
+                const options = shuffle([
+                    'Aditiva', 'Adversativa', 'Alternativa', 'Conclusiva', 'Explicativa'
+                ]);
+                const answer = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+                const explanation =
+                    `A oração destacada é coordenativa ${answer.toLowerCase()}, pois a conjunção "${conj}" expressa ${tipo === 'aditiva' ? 'adição' : tipo === 'adversativa' ? 'oposição' : tipo === 'alternativa' ? 'alternância' : tipo === 'conclusiva' ? 'conclusão' : 'explicação'}.`;
+
+                return {
+                    question: `Identifique o tipo de oração coordenativa na frase abaixo:\n\n"${frase}"`,
+                    options,
+                    answer,
+                    explanation,
+                    type: 'coord-ident'
+                };
+            }
+
+            // 2. IDENTIFICAR SUBORDINATIVA (tipo)
+            function genSubIdent() {
+                // Escolhe entre substantiva, adjetiva, adverbial
+                const grupo = rand(['substantiva', 'adjetiva', 'adverbial']);
+                let tipo, frase, answer, explanation, conj = '';
+
+                if (grupo === 'substantiva') {
+                    const tiposSubst = ['Subjetiva', 'Objetiva Direta', 'Objetiva Indireta', 'Completiva Nominal',
+                        'Predicativa', 'Apositiva'
+                    ];
+                    tipo = rand(tiposSubst);
+                    const suj = rand(SUJEITOS);
+                    const verb = rand(VERBOS);
+                    const obj = rand(OBJETOS);
+                    const adj = rand(ADJETIVOS);
+                    const suj2 = rand(SUJEITOS);
+                    const verb2 = rand(VERBOS);
+                    const obj2 = rand(OBJETOS);
+
+                    const mapFrase = {
+                        'Subjetiva': `É ${adj} que ${suj} ${verb} ${obj}.`,
+                        'Objetiva Direta': `${suj} deseja que ${suj2} ${verb2} ${obj2}.`,
+                        'Objetiva Indireta': `${suj} gosta de que ${suj2} ${verb2} ${obj2}.`,
+                        'Completiva Nominal': `${suj} tem certeza de que ${suj2} ${verb2} ${obj2}.`,
+                        'Predicativa': `A verdade é que ${suj} ${verb} ${obj}.`,
+                        'Apositiva': `Só peço uma coisa: que ${suj} ${verb} ${obj}.`
+                    };
+                    frase = mapFrase[tipo];
+                    answer = tipo;
+                    explanation =
+                        `É uma subordinada substantiva ${tipo.toLowerCase()}, pois exerce função de ${tipo === 'Subjetiva' ? 'sujeito' : tipo === 'Objetiva Direta' ? 'objeto direto' : tipo === 'Objetiva Indireta' ? 'objeto indireto' : tipo === 'Completiva Nominal' ? 'complemento nominal' : tipo === 'Predicativa' ? 'predicativo do sujeito' : 'aposto'}.`;
+                } else if (grupo === 'adjetiva') {
+                    const tiposAdj = ['Restritiva', 'Explicativa'];
+                    tipo = rand(tiposAdj);
+                    const suj = rand(SUJEITOS);
+                    const verb = rand(VERBOS);
+                    const obj = rand(OBJETOS);
+                    const adj = rand(ADJETIVOS);
+                    const rel = rand(['que', 'quem', 'cujo', 'onde']);
+                    const suj2 = rand(SUJEITOS);
+                    const verb2 = rand(VERBOS);
+                    const obj2 = rand(OBJETOS);
+
+                    if (tipo === 'Restritiva') {
+                        frase =
+                            `Os ${suj} ${rel} ${verb2} ${obj2} são ${adj}.`;
+                    } else {
+                        frase =
+                            `Os ${suj}, ${rel} ${verb2} ${obj2}, são ${adj}.`;
+                    }
+                    answer = tipo;
+                    explanation =
+                        `É uma subordinada adjetiva ${tipo.toLowerCase()}: ${tipo === 'Restritiva' ? 'restringe o sentido do antecedente (sem vírgulas)' : 'acrescenta uma explicação (entre vírgulas)'}.`;
+                } else { // adverbial
+                    const tiposAdv = ['Causal', 'Comparativa', 'Concessiva', 'Condicional', 'Conformativa', 'Consecutiva',
+                        'Final', 'Proporcional', 'Temporal'
+                    ];
+                    tipo = rand(tiposAdv);
+                    const conjMap = {
+                        'Causal': rand(CONJUNCOES_SUB.causal),
+                        'Comparativa': rand(CONJUNCOES_SUB.comparativa),
+                        'Concessiva': rand(CONJUNCOES_SUB.concessiva),
+                        'Condicional': rand(CONJUNCOES_SUB.condicional),
+                        'Conformativa': rand(CONJUNCOES_SUB.conformativa),
+                        'Consecutiva': rand(CONJUNCOES_SUB.consecutiva),
+                        'Final': rand(CONJUNCOES_SUB.final),
+                        'Proporcional': rand(CONJUNCOES_SUB.proporcional),
+                        'Temporal': rand(CONJUNCOES_SUB.temporal)
+                    };
+                    conj = conjMap[tipo];
+                    const suj = rand(SUJEITOS);
+                    const verb = rand(VERBOS);
+                    const obj = rand(OBJETOS);
+                    const suj2 = rand(SUJEITOS);
+                    const verb2 = rand(VERBOS);
+                    const obj2 = rand(OBJETOS);
+                    const local = rand(LOCAIS);
+                    const tempo = rand(TEMPOS);
+
+                    let fraseTemplate = '';
+                    if (tipo === 'Proporcional') {
+                        fraseTemplate =
+                            `Quanto mais ${suj} ${verb}, mais ${suj2} ${verb2} ${obj2}.`;
+                    } else if (tipo === 'Consecutiva') {
+                        fraseTemplate =
+                            `${suj} falou tanto ${conj} ficou rouco.`;
+                    } else {
+                        fraseTemplate =
+                            `${conj} ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                    }
+                    frase = fraseTemplate;
+                    answer = tipo;
+                    explanation =
+                        `É uma subordinada adverbial ${tipo.toLowerCase()}, pois expressa circunstância de ${tipo.toLowerCase()}.`;
+                }
+
+                const options = shuffle([
+                    'Subjetiva', 'Objetiva Direta', 'Objetiva Indireta', 'Completiva Nominal',
+                    'Predicativa', 'Apositiva', 'Restritiva', 'Explicativa',
+                    'Causal', 'Comparativa', 'Concessiva', 'Condicional', 'Conformativa',
+                    'Consecutiva', 'Final', 'Proporcional', 'Temporal'
+                ]);
+
+                // Garantir que a resposta está nas opções
+                if (!options.includes(answer)) {
+                    options[0] = answer;
+                    shuffle(options);
+                }
+
+                return {
+                    question: `Identifique o tipo de oração subordinativa na frase abaixo:\n\n"${frase}"`,
+                    options,
+                    answer,
+                    explanation,
+                    type: 'sub-ident'
+                };
+            }
+
+            // 3. COMPLETAR COM CONJUNÇÃO (coordenativa ou subordinativa)
+            function genComplete() {
+                const tipoCoord = rand(['coordenativa', 'subordinativa']);
+                let conj, frase, answer, explanation, options;
+
+                if (tipoCoord === 'coordenativa') {
+                    const tipos = Object.keys(CONJUNCOES_COORD);
+                    const tipo = rand(tipos);
+                    const conjList = CONJUNCOES_COORD[tipo];
+                    conj = rand(conjList);
+                    const suj = rand(SUJEITOS);
+                    const verb = rand(VERBOS);
+                    const obj = rand(OBJETOS);
+                    const suj2 = rand(SUJEITOS);
+                    const verb2 = rand(VERBOS);
+                    const obj2 = rand(OBJETOS);
+
+                    // remover conj da lista de opções
+                    const allConjs = Object.values(CONJUNCOES_COORD).flat();
+                    const otherConjs = allConjs.filter(c => c !== conj);
+                    const wrongs = pickN(otherConjs, 3);
+                    options = shuffle([conj, ...wrongs]);
+
+                    frase = `${suj} ${verb} ${obj}, _____ ${suj2} ${verb2} ${obj2}.`;
+                    answer = conj;
+                    explanation =
+                        `A conjunção correta é "${conj}", que expressa ${tipo} (coordenativa ${tipo}).`;
+                } else {
+                    const tipos = Object.keys(CONJUNCOES_SUB);
+                    const tipo = rand(tipos);
+                    const conjList = CONJUNCOES_SUB[tipo];
+                    conj = rand(conjList);
+                    const suj = rand(SUJEITOS);
+                    const verb = rand(VERBOS);
+                    const obj = rand(OBJETOS);
+                    const suj2 = rand(SUJEITOS);
+                    const verb2 = rand(VERBOS);
+                    const obj2 = rand(OBJETOS);
+
+                    const allConjs = Object.values(CONJUNCOES_SUB).flat();
+                    const otherConjs = allConjs.filter(c => c !== conj);
+                    const wrongs = pickN(otherConjs, 3);
+                    options = shuffle([conj, ...wrongs]);
+
+                    frase = `_____ ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                    answer = conj;
+                    explanation =
+                        `A conjunção correta é "${conj}", que introduz uma subordinada adverbial ${tipo.toLowerCase()}.`;
+                }
+
+                return {
+                    question: `Complete a frase com a conjunção adequada:\n\n"${frase}"`,
+                    options,
+                    answer,
+                    explanation,
+                    type: 'complete'
+                };
+            }
+
+            // 4. COORDENATIVA OU SUBORDINATIVA?
+            function genCoordOrSub() {
+                const tipo = rand(['coordenativa', 'subordinativa']);
+                let frase, answer, explanation, options;
+
+                if (tipo === 'coordenativa') {
+                    const tipos = Object.keys(CONJUNCOES_COORD);
+                    const tipoC = rand(tipos);
+                    const conj = rand(CONJUNCOES_COORD[tipoC]);
+                    const suj = rand(SUJEITOS);
+                    const verb = rand(VERBOS);
+                    const obj = rand(OBJETOS);
+                    const suj2 = rand(SUJEITOS);
+                    const verb2 = rand(VERBOS);
+                    const obj2 = rand(OBJETOS);
+                    frase = `${suj} ${verb} ${obj}, ${conj} ${suj2} ${verb2} ${obj2}.`;
+                    answer = 'Coordenativa';
+                    explanation =
+                        `É uma oração coordenativa, pois as orações são independentes e a conjunção "${conj}" expressa ${tipoC}.`;
+                } else {
+                    const tipos = Object.keys(CONJUNCOES_SUB);
+                    const tipoS = rand(tipos);
+                    const conj = rand(CONJUNCOES_SUB[tipoS]);
+                    const suj = rand(SUJEITOS);
+                    const verb = rand(VERBOS);
+                    const obj = rand(OBJETOS);
+                    const suj2 = rand(SUJEITOS);
+                    const verb2 = rand(VERBOS);
+                    const obj2 = rand(OBJETOS);
+                    frase = `${conj} ${suj} ${verb} ${obj}, ${suj2} ${verb2} ${obj2}.`;
+                    answer = 'Subordinativa';
+                    explanation =
+                        `É uma oração subordinativa, pois a oração introduzida por "${conj}" depende da principal e expressa circunstância de ${tipoS.toLowerCase()}.`;
+                }
+
+                options = shuffle(['Coordenativa', 'Subordinativa']);
+                return {
+                    question: `A oração destacada é coordenativa ou subordinativa?\n\n"${frase}"`,
+                    options,
+                    answer,
+                    explanation,
+                    type: 'coord-sub'
+                };
+            }
+
+            // 5. QUAL A FUNÇÃO DA SUBORDINADA SUBSTANTIVA?
+            function genSubstantivaFuncao() {
+                const tiposSubst = ['Subjetiva', 'Objetiva Direta', 'Objetiva Indireta', 'Completiva Nominal',
+                    'Predicativa', 'Apositiva'
+                ];
+                const tipo = rand(tiposSubst);
+                const suj = rand(SUJEITOS);
+                const verb = rand(VERBOS);
+                const obj = rand(OBJETOS);
+                const adj = rand(ADJETIVOS);
+                const suj2 = rand(SUJEITOS);
+                const verb2 = rand(VERBOS);
+                const obj2 = rand(OBJETOS);
+
+                const mapFrase = {
+                    'Subjetiva': `É ${adj} que ${suj} ${verb} ${obj}.`,
+                    'Objetiva Direta': `${suj} deseja que ${suj2} ${verb2} ${obj2}.`,
+                    'Objetiva Indireta': `${suj} gosta de que ${suj2} ${verb2} ${obj2}.`,
+                    'Completiva Nominal': `${suj} tem certeza de que ${suj2} ${verb2} ${obj2}.`,
+                    'Predicativa': `A verdade é que ${suj} ${verb} ${obj}.`,
+                    'Apositiva': `Só peço uma coisa: que ${suj} ${verb} ${obj}.`
+                };
+                const frase = mapFrase[tipo];
+                const answer = tipo;
+                const options = shuffle([
+                    'Subjetiva', 'Objetiva Direta', 'Objetiva Indireta',
+                    'Completiva Nominal', 'Predicativa', 'Apositiva'
+                ]);
+                const explanation =
+                    `A oração subordinada substantiva exerce função de ${tipo === 'Subjetiva' ? 'sujeito' : tipo === 'Objetiva Direta' ? 'objeto direto' : tipo === 'Objetiva Indireta' ? 'objeto indireto' : tipo === 'Completiva Nominal' ? 'complemento nominal' : tipo === 'Predicativa' ? 'predicativo do sujeito' : 'aposto'}.`;
+
+                return {
+                    question: `Qual é a função da oração subordinada substantiva na frase?\n\n"${frase}"`,
+                    options,
+                    answer,
+                    explanation,
+                    type: 'subst-funcao'
+                };
+            }
+
+            // ---------- GERAR 1000 EXERCÍCIOS ----------
+            function generateExercises(count = 1000) {
+                const exercises = [];
+                const generators = [
+                    genCoordIdent,
+                    genSubIdent,
+                    genComplete,
+                    genCoordOrSub,
+                    genSubstantivaFuncao
+                ];
+
+                for (let i = 0; i < count; i++) {
+                    const gen = rand(generators);
+                    exercises.push(gen());
+                }
+                return exercises;
+            }
+
+            // ---------- ESTADO DA APLICAÇÃO ----------
+            let allExercises = [];
+            let currentPage = 0;
+            let pageSize = 10;
+            let answered = {};
+            let userAnswers = {};
+            let score = { correct: 0, total: 0 };
+
+            // ---------- RENDERIZAÇÃO ----------
+            function renderExercises() {
+                const container = document.getElementById('exerciseContainer');
+                const pagContainer = document.getElementById('paginationContainer');
+                const progressFill = document.getElementById('progressFill');
+                const scoreDisplay = document.getElementById('scoreDisplay');
+
+                if (allExercises.length === 0) {
+                    container.innerHTML =
+                        `<p style="text-align:center; padding:40px; color:#64748b;">🔍 Clique em "Nova rodada" para gerar os exercícios.</p>`;
+                    pagContainer.innerHTML = '';
+                    return;
+                }
+
+                const total = allExercises.length;
+                const totalPages = Math.ceil(total / pageSize);
+                const start = currentPage * pageSize;
+                const end = Math.min(start + pageSize, total);
+                const pageExercises = allExercises.slice(start, end);
+
+                // atualizar progresso
+                const answeredCount = Object.keys(answered).length;
+                const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+                progressFill.style.width = pct + '%';
+                scoreDisplay.textContent = `✅ ${score.correct} / ${score.total} (${total > 0 ? Math.round(score.total/total*100) : 0}%)`;
+
+                // construir html dos exercícios
+                let html = '';
+                pageExercises.forEach((ex, idx) => {
+                    const globalIdx = start + idx;
+                    const isAnswered = answered[globalIdx] !== undefined;
+                    const userAns = userAnswers[globalIdx] || '';
+                    const isCorrect = answered[globalIdx] === true;
+                    const isWrong = answered[globalIdx] === false;
+
+                    html += `<div class="question-box" data-idx="${globalIdx}">`;
+                    html += `<div class="q-text">${ex.question.replace(/\n/g, '<br>')}</div>`;
+
+                    // Opções
+                    html += `<div class="options">`;
+                    ex.options.forEach(opt => {
+                        let cls = '';
+                        let disabled = false;
+                        if (isAnswered) {
+                            disabled = true;
+                            if (opt === ex.answer) cls = 'correct';
+                            if (opt === userAns && opt !== ex.answer) cls = 'wrong';
+                            if (opt === userAns) cls += ' selected';
+                        } else if (opt === userAns) {
+                            cls = 'selected';
+                        }
+                        html +=
+                            `<button class="${cls}" data-global="${globalIdx}" data-opt="${opt}" ${disabled ? 'disabled' : ''}>${opt}</button>`;
+                    });
+                    html += `</div>`;
+
+                    // Feedback
+                    if (isAnswered) {
+                        const fbClass = isCorrect ? 'correct' : 'wrong';
+                        html += `<div class="feedback show ${fbClass}">`;
+                        html +=
+                            `<strong>${isCorrect ? '✅ Correto!' : '❌ Incorreto.'}</strong> ${ex.explanation}`;
+                        html += `</div>`;
+                    } else {
+                        html += `<div class="feedback" id="fb-${globalIdx}"></div>`;
+                    }
+
+                    html += `</div>`;
+                });
+
+                container.innerHTML = html;
+
+                // Eventos dos botões
+                container.querySelectorAll('.options button:not([disabled])').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        const globalIdx = parseInt(this.dataset.global);
+                        const selected = this.dataset.opt;
+                        handleAnswer(globalIdx, selected);
+                    });
+                });
+
+                // Paginação
+                let pagHtml = '';
+                for (let p = 0; p < totalPages; p++) {
+                    pagHtml +=
+                        `<button class="${p === currentPage ? 'active-page' : ''}" data-page="${p}">${p+1}</button>`;
+                }
+                pagContainer.innerHTML = pagHtml;
+                pagContainer.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (page !== currentPage) {
+                            currentPage = page;
+                            renderExercises();
+                        }
+                    });
+                });
+
+                // Atualizar total exercises label
+                document.getElementById('totalExercisesLabel').textContent =
+                    `Total de exercícios disponíveis: ${total}`;
+            }
+
+            // ---------- LIDAR COM RESPOSTA ----------
+            function handleAnswer(globalIdx, selected) {
+                if (answered[globalIdx] !== undefined) return; // já respondido
+
+                const ex = allExercises[globalIdx];
+                const isCorrect = selected === ex.answer;
+
+                answered[globalIdx] = isCorrect;
+                userAnswers[globalIdx] = selected;
+                if (isCorrect) score.correct++;
+                score.total++;
+
+                renderExercises();
+
+                // Rolar para a pergunta
+                const qBox = document.querySelector(`.question-box[data-idx="${globalIdx}"]`);
+                if (qBox) qBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // ---------- GERAR NOVA RODADA ----------
+            function newRound() {
+                const qty = parseInt(document.getElementById('qtySelect').value);
+                allExercises = generateExercises(qty);
+                currentPage = 0;
+                answered = {};
+                userAnswers = {};
+                score = { correct: 0, total: 0 };
+                renderExercises();
+            }
+
+            // ---------- INICIALIZAR ----------
+            document.addEventListener('DOMContentLoaded', function() {
+                // Navegação por tabs
+                const navBtns = document.querySelectorAll('#navTabs button');
+                const tabContents = {
+                    teoria: document.getElementById('tab-teoria'),
+                    macetes: document.getElementById('tab-macetes'),
+                    exercicios: document.getElementById('tab-exercicios')
+                };
+
+                navBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const tab = this.dataset.tab;
+                        navBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        Object.keys(tabContents).forEach(key => {
+                            tabContents[key].classList.toggle('active', key === tab);
+                        });
+                    });
+                });
+
+                // Botão nova rodada
+                document.getElementById('newExerciseBtn').addEventListener('click', newRound);
+
+                // Mudar quantidade
+                document.getElementById('qtySelect').addEventListener('change', function() {
+                    // se já houver exercícios, recarregar com nova quantidade
+                    if (allExercises.length > 0) {
+                        newRound();
+                    }
+                });
+
+                // Gerar primeira rodada automaticamente (10)
+                setTimeout(() => {
+                    newRound();
+                }, 100);
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
