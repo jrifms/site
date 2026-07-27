@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Principal</title>
+    <style>
+        /* ── Reset & base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(145deg, #0b0e1a 0%, #1a1f2f 100%);
+            padding: 20px;
+        }
+
+        /* ── Card principal ── */
+        .menu-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px;
+            padding: 50px 60px 60px;
+            max-width: 680px;
+            width: 100%;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: transform 0.2s ease;
+        }
+
+        .menu-card:hover {
+            transform: scale(1.005);
+        }
+
+        /* ── Título ── */
+        .menu-title {
+            text-align: center;
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #f0f3ff;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 18px;
+        }
+
+        /* ── Lista de itens ── */
+        .menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-list li {
+            width: 100%;
+        }
+
+        /* ── Cada link como botão ── */
+        .menu-list a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            text-decoration: none;
+            color: #e8edff;
+            font-size: 1.15rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.3px;
+        }
+
+        /* Ícone seta › */
+        .menu-list a .arrow {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.2);
+            transition: transform 0.25s ease, color 0.25s ease;
+            line-height: 1;
+        }
+
+        /* ── Hover / focus ── */
+        .menu-list a:hover {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateX(6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+        }
+
+        .menu-list a:hover .arrow {
+            color: rgba(255, 255, 255, 0.7);
+            transform: translateX(4px);
+        }
+
+        .menu-list a:active {
+            transform: scale(0.97) translateX(2px);
+        }
+
+        /* ── Cores sutis por tipo (arquivo .txt fica diferente) ── */
+        .menu-list a[href$=".txt"] {
+            border-left: 3px solid #fbbf24;
+        }
+
+        .menu-list a[href$=".html"] {
+            border-left: 3px solid #60a5fa;
+        }
+
+        .menu-list a[href$=".html"]:hover {
+            border-left-color: #93c5fd;
+        }
+
+        .menu-list a[href$=".txt"]:hover {
+            border-left-color: #fcd34d;
+        }
+
+        /* ── Rodapé com info extra ── */
+        .menu-footer {
+            margin-top: 36px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.15);
+            letter-spacing: 0.5px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 24px;
+        }
+
+        .menu-footer span {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px 14px;
+            border-radius: 40px;
+        }
+
+        /* ── Responsivo ── */
+        @media (max-width: 550px) {
+            .menu-card {
+                padding: 32px 24px 40px;
+                border-radius: 32px;
+            }
+
+            .menu-title {
+                font-size: 2rem;
+            }
+
+            .menu-list a {
+                font-size: 1rem;
+                padding: 14px 20px;
+                border-radius: 16px;
+            }
+
+            .menu-list a .arrow {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .menu-card {
+                padding: 24px 16px 30px;
+                border-radius: 24px;
+            }
+
+            .menu-title {
+                font-size: 1.6rem;
+            }
+
+            .menu-list a {
+                font-size: 0.9rem;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-card">
+
+        <!-- Título -->
+        <h1 class="menu-title">📂 Navegue</h1>
+        <p class="menu-subtitle">Escolha um item para acessar</p>
+
+        <!-- Lista de links -->
+        <ul class="menu-list">
+
+            <li>
+                <a href="arquitetura.html">
+                    <span>🏛️ Arquitetura</span>
+                    <span class="arrow">›</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="navegadores.html">
+                    <span>🌐 Navegadores</span>
+                    <span class="arrow">›</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="redes.html">
+                    <span>🔗 Redes</span>
+                    <span class="arrow">›</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="sistemaop.html">
+                    <span>⚙️ Sistema Operacional</span>
+                    <span class="arrow">›</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="suits.html">
+                    <span>👔 Suits</span>
+                    <span class="arrow">›</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- Rodapé -->
+        <div class="menu-footer">
+            <span>index.html &bull; menu principal</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
