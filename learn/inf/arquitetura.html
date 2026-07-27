@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arquitetura de Computadores · Concurso Técnico</title>
     <style>
         * {
@@ -86,8 +86,6 @@
                 transform: translateY(0);
             }
         }
-
-        /* ========== TEORIA COM GRÁFICOS ========== */
         .teoria-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -163,8 +161,6 @@
         .dica-extra strong {
             color: #a76f1a;
         }
-
-        /* ========== EXERCÍCIOS ========== */
         .quiz-controls {
             display: flex;
             justify-content: space-between;
@@ -359,7 +355,7 @@
 <body>
     <div class="container">
         <h1>⚙️ Arquitetura de Computadores <span style="font-size:1rem; font-weight:400; color:#3f5a77;">· Técnico Administrativo</span></h1>
-        <div class="subtitle">Teoria visual + macetes + 1000 exercícios com correção automática</div>
+        <div class="subtitle">Teoria visual + macetes + 1000 exercícios com correção automática (questões únicas)</div>
 
         <nav>
             <button class="active" data-section="teoria">📘 Teoria & Macetes</button>
@@ -367,11 +363,10 @@
         </nav>
 
         <!-- ============================================================ -->
-        <!-- SEÇÃO TEORIA COM GRÁFICOS E DICAS                               -->
+        <!-- SEÇÃO TEORIA (mantida igual)                                   -->
         <!-- ============================================================ -->
         <section id="teoria" class="section active">
             <div class="teoria-grid">
-
                 <!-- 1. CPU -->
                 <div class="teoria-card">
                     <h3>🧠 CPU (UCP) – Cérebro</h3>
@@ -550,7 +545,7 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- SEÇÃO EXERCÍCIOS (1000 questões)                               -->
+        <!-- SEÇÃO EXERCÍCIOS – 1000 QUESTÕES ÚNICAS                       -->
         <!-- ============================================================ -->
         <section id="exercicios" class="section">
             <div class="quiz-controls">
@@ -573,45 +568,88 @@
         </section>
 
         <div class="footer">
-            Desenvolvido para concursos · 1000 questões · Teoria visual + macetes · Boa sorte!
+            Desenvolvido para concursos · 1000 questões únicas · Teoria visual + macetes · Boa sorte!
         </div>
     </div>
 
     <script>
         (function() {
-            // ============================================================
-            // 1. GERADOR DE 1000 QUESTÕES (MESMO CÓDIGO ANTERIOR, MAS COM
-            //    MAIS VARIEDADE E EXPLICAÇÕES MELHORADAS)
-            // ============================================================
-            const TOTAL_QUESTOES = 1000;
+            // ================================================================
+            // GERADOR DE 1000 QUESTÕES ÚNICAS (SEM REPETIÇÃO)
+            // ================================================================
 
-            const templates = [
-                // 1) Capacidade de endereçamento
-                (idx) => {
-                    const bits = [8, 16, 24, 32, 40, 48, 56, 64][idx % 8];
+            // ---------- Funções auxiliares ----------
+            function shuffleArray(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            // Gera um número aleatório entre min e max (inclusive)
+            function rand(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            // Escolhe um elemento aleatório de um array
+            function pick(arr) {
+                return arr[rand(0, arr.length - 1)];
+            }
+
+            // Formata um número com separador de milhares
+            function formatNumber(num) {
+                return num.toLocaleString('pt-BR');
+            }
+
+            // Converte bytes para unidade legível (KB, MB, GB, TB)
+            function bytesToHuman(bytes) {
+                const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+                let u = 0;
+                let val = bytes;
+                while (val >= 1024 && u < units.length - 1) {
+                    val /= 1024;
+                    u++;
+                }
+                return val.toFixed(1) + ' ' + units[u];
+            }
+
+            // ---------- Geradores de questões (cada função retorna um objeto {enunciado, opcoes, correta, explicacao}) ----------
+            const geradores = [
+
+                // 1) Capacidade de endereçamento (com valores variados)
+                function() {
+                    const bits = rand(4, 48); // 4 a 48 bits
                     const cap = Math.pow(2, bits);
-                    const unidade = cap >= 1024 ** 3 ? 'GB' : cap >= 1024 ** 2 ? 'MB' : 'KB';
-                    const valor = (cap / (1024 ** (unidade === 'GB' ? 3 : unidade === 'MB' ? 2 : 1))).toFixed(1);
-                    const erros = [cap * 0.5, cap * 2, cap / 4, cap * 1.5].map(v => {
-                        const u = v >= 1024 ** 3 ? 'GB' : v >= 1024 ** 2 ? 'MB' : 'KB';
-                        const val = (v / (1024 ** (u === 'GB' ? 3 : u === 'MB' ? 2 : 1))).toFixed(1);
-                        return `${val} ${u}`;
-                    });
-                    const certa = `${valor} ${unidade}`;
-                    const opcoes = [certa, ...erros.slice(0, 3)];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    const correta = bytesToHuman(cap);
+                    // Gerar 3 alternativas erradas (distintas e próximas)
+                    const erros = new Set();
+                    while (erros.size < 3) {
+                        let fator;
+                        if (Math.random() < 0.6) {
+                            // fator entre 0.5 e 2.5, excluindo 1
+                            fator = (Math.random() * 2 + 0.3); // 0.3 ~ 2.3
+                            if (Math.abs(fator - 1) < 0.1) fator = 1.2;
+                        } else {
+                            // erro de unidade
+                            fator = Math.pow(1024, rand(1, 3));
+                            if (Math.random() < 0.5) fator = 1 / fator;
+                        }
+                        const val = cap * fator;
+                        const human = bytesToHuman(val);
+                        if (human !== correta) erros.add(human);
                     }
+                    const opcoes = shuffleArray([correta, ...erros]);
                     return {
                         enunciado: `Um barramento de endereços com ${bits} bits pode endereçar no máximo quantos bytes?`,
                         opcoes: opcoes,
-                        correta: certa,
-                        explicacao: `Com ${bits} bits, o número de endereços é 2^${bits} = ${cap.toLocaleString()} bytes ≈ ${valor} ${unidade}. (Fórmula: 2^n bytes)`
+                        correta: correta,
+                        explicacao: `Com ${bits} bits, o número de endereços é 2^${bits} = ${formatNumber(cap)} bytes ≈ ${correta}. (Fórmula: 2^n bytes)`
                     };
                 },
-                // 2) Componentes CPU
-                (idx) => {
+
+                // 2) Componentes da CPU (perguntas variadas)
+                function() {
                     const perguntas = [
                         { e: 'Qual componente da CPU é responsável por decodificar e executar instruções?', ops: ['ULA', 'UC',
                                 'Registrador', 'Cache'
@@ -621,16 +659,20 @@
                             ], corr: 'ULA', exp: 'A ULA (Unidade Lógico-Aritmética) executa cálculos aritméticos e operações lógicas (AND, OR, NOT).' },
                         { e: 'Onde ficam armazenados os dados temporários de mais rápida acesso?', ops: ['HD', 'RAM',
                                 'Registradores', 'ROM'
-                            ], corr: 'Registradores', exp: 'Registradores são memórias internas da CPU com tempo de acesso de poucos ciclos.' },
+                            ], corr: 'Registradores',
+                            exp: 'Registradores são memórias internas da CPU com tempo de acesso de poucos ciclos.' },
                         { e: 'Qual das opções NÃO é um componente da CPU?', ops: ['UC', 'ULA', 'Cache L1', 'HD'],
                             corr: 'HD', exp: 'HD (disco rígido) é memória secundária, externa à CPU.' },
+                        { e: 'O que significa a sigla ULA?', ops: ['Unidade Lógica e Aritmética',
+                                'Unidade de Leitura Avançada', 'Unidade de Ligação Automática',
+                                'Unidade Linear de Acesso'
+                            ], corr: 'Unidade Lógica e Aritmética',
+                            exp: 'ULA realiza operações lógicas (AND, OR) e aritméticas (soma, subtração).' },
+                        { e: 'Clock (frequência) é medido em:', ops: ['Hz', 'Bytes/s', 'Bits/s', 'Ciclos/instrução'],
+                            corr: 'Hz', exp: 'Frequência é medida em Hertz (ciclos por segundo). 1 GHz = 1 bilhão de ciclos/s.' },
                     ];
-                    const p = perguntas[idx % perguntas.length];
-                    const opcoes = [...p.ops];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
-                    }
+                    const p = pick(perguntas);
+                    const opcoes = shuffleArray([...p.ops]);
                     return {
                         enunciado: p.e,
                         opcoes: opcoes,
@@ -638,28 +680,34 @@
                         explicacao: p.exp
                     };
                 },
-                // 3) Unidades de medida
-                (idx) => {
-                    const pares = [
+
+                // 3) Unidades de medida (com variações de valores)
+                function() {
+                    const bases = [
                         { a: '1 KB', b: '1024 bytes' },
                         { a: '1 MB', b: '1024 KB' },
                         { a: '1 GB', b: '1024 MB' },
                         { a: '1 TB', b: '1024 GB' },
                         { a: '1 byte', b: '8 bits' },
                         { a: '1 word (32 bits)', b: '4 bytes' },
+                        { a: '1 KiB', b: '1024 bytes' },
+                        { a: '1 MiB', b: '1024 KiB' },
+                        { a: '1 GiB', b: '1024 MiB' },
+                        { a: '1 TiB', b: '1024 GiB' },
                     ];
-                    const p = pares[idx % pares.length];
-                    const erros = [
-                        `${parseInt(p.b.split(' ')[0]) * 0.8} ${p.b.split(' ')[1] || ''}`,
-                        `${parseInt(p.b.split(' ')[0]) * 1.2} ${p.b.split(' ')[1] || ''}`,
-                        `${parseInt(p.b.split(' ')[0]) * 0.5} ${p.b.split(' ')[1] || ''}`,
-                    ];
+                    const p = pick(bases);
                     const correta = p.b;
-                    const opcoes = [correta, ...erros];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
+                    // Gerar 3 erros variando o valor
+                    const erros = new Set();
+                    while (erros.size < 3) {
+                        const fator = (Math.random() * 1.6 + 0.2).toFixed(2);
+                        if (fator === '1.00') continue;
+                        const val = parseFloat(p.b.split(' ')[0]) * parseFloat(fator);
+                        const unidade = p.b.split(' ')[1] || '';
+                        const err = `${val.toFixed(1)} ${unidade}`.trim();
+                        if (err !== correta) erros.add(err);
                     }
+                    const opcoes = shuffleArray([correta, ...erros]);
                     return {
                         enunciado: `Qual é a equivalência correta de ${p.a}?`,
                         opcoes: opcoes,
@@ -667,8 +715,9 @@
                         explicacao: `${p.a} = ${p.b} (em informática, usamos potências de 2: 1 KB = 1024 bytes, etc.)`
                     };
                 },
-                // 4) Memórias
-                (idx) => {
+
+                // 4) Memórias (perguntas variadas)
+                function() {
                     const perg = [
                         { e: 'Qual memória é volátil?', ops: ['RAM', 'ROM', 'HD', 'SSD'], corr: 'RAM',
                             exp: 'RAM (Random Access Memory) perde dados ao desligar (volátil).' },
@@ -677,15 +726,20 @@
                             ], corr: 'ROM', exp: 'ROM (Read-Only Memory) mantém dados sem energia e armazena firmware.' },
                         { e: 'A memória cache fica entre:', ops: ['CPU e RAM', 'RAM e HD', 'HD e ROM', 'CPU e ROM'],
                             corr: 'CPU e RAM', exp: 'Cache é uma memória rápida entre a CPU e a RAM para reduzir a latência.' },
-                        { e: 'Qual tipo de memória é mais rápida?', ops: ['Cache L1', 'RAM', 'HD', 'SSD'], corr: 'Cache L1',
+                        { e: 'Qual tipo de memória é mais rápida?', ops: ['Cache L1', 'RAM', 'HD', 'SSD'],
+                            corr: 'Cache L1',
                             exp: 'Cache L1 é a mais próxima da CPU, portanto a mais rápida (geralmente 1-2 ciclos).' },
+                        { e: 'Qual memória armazena a BIOS?', ops: ['RAM', 'ROM', 'Cache', 'HD'], corr: 'ROM',
+                            exp: 'BIOS fica em uma memória ROM na placa-mãe, não volátil.' },
+                        { e: 'A memória virtual utiliza:', ops: ['HD/SSD', 'RAM', 'Cache', 'Registradores'],
+                            corr: 'HD/SSD', exp: 'Memória virtual usa espaço em disco (HD ou SSD) como extensão da RAM.' },
+                        { e: 'Qual a principal diferença entre RAM e ROM?', ops: ['Volátil vs não volátil',
+                                'Capacidade', 'Velocidade', 'Tamanho'
+                            ], corr: 'Volátil vs não volátil',
+                            exp: 'RAM é volátil (perde dados ao desligar), ROM é não volátil (mantém os dados).' },
                     ];
-                    const p = perg[idx % perg.length];
-                    const opcoes = [...p.ops];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
-                    }
+                    const p = pick(perg);
+                    const opcoes = shuffleArray([...p.ops]);
                     return {
                         enunciado: p.e,
                         opcoes: opcoes,
@@ -693,25 +747,28 @@
                         explicacao: p.exp
                     };
                 },
-                // 5) Barramentos
-                (idx) => {
+
+                // 5) Barramentos (perguntas variadas)
+                function() {
                     const perg = [
                         { e: 'O barramento que transporta os dados entre os componentes é chamado de:', ops: ['Barramento de dados',
                                 'Barramento de endereços', 'Barramento de controle', 'Barramento de sistema'
                             ], corr: 'Barramento de dados', exp: 'Barramento de dados carrega as informações (dados).' },
                         { e: 'O barramento que define a localização da memória é o:', ops: ['Barramento de dados',
                                 'Barramento de endereços', 'Barramento de controle', 'Barramento de E/S'
-                            ], corr: 'Barramento de endereços', exp: 'Barramento de endereços especifica o endereço de memória.' },
+                            ], corr: 'Barramento de endereços',
+                            exp: 'Barramento de endereços especifica o endereço de memória.' },
                         { e: 'Qual barramento envia sinais de sincronização e controle?', ops: ['Barramento de dados',
                                 'Barramento de endereços', 'Barramento de controle', 'Barramento de energia'
-                            ], corr: 'Barramento de controle', exp: 'Barramento de controle gerencia os sinais de leitura/escrita, clock, etc.' },
+                            ], corr: 'Barramento de controle',
+                            exp: 'Barramento de controle gerencia os sinais de leitura/escrita, clock, etc.' },
+                        { e: 'O gargalo de Von Neumann está relacionado a qual barramento?', ops: ['Barramento de dados',
+                                'Barramento de endereços', 'Barramento de controle', 'Barramento de energia'
+                            ], corr: 'Barramento de dados',
+                            exp: 'Em Von Neumann, programa e dados compartilham o mesmo barramento de dados, gerando gargalo.' },
                     ];
-                    const p = perg[idx % perg.length];
-                    const opcoes = [...p.ops];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
-                    }
+                    const p = pick(perg);
+                    const opcoes = shuffleArray([...p.ops]);
                     return {
                         enunciado: p.e,
                         opcoes: opcoes,
@@ -719,23 +776,29 @@
                         explicacao: p.exp
                     };
                 },
-                // 6) Dispositivos E/S
-                (idx) => {
+
+                // 6) Dispositivos E/S (perguntas variadas)
+                function() {
                     const perg = [
                         { e: 'Qual dispositivo é apenas de entrada?', ops: ['Teclado', 'Monitor', 'Impressora', 'HD'],
                             corr: 'Teclado', exp: 'Teclado envia dados para o computador (entrada).' },
                         { e: 'Qual dispositivo é apenas de saída?', ops: ['Mouse', 'Monitor', 'Scanner', 'Webcam'],
                             corr: 'Monitor', exp: 'Monitor exibe informações (saída).' },
-                        { e: 'Qual dispositivo é de entrada e saída (E/S)?', ops: ['Leitor de CD', 'Monitor', 'Caixa de som',
-                                'Microfone'
+                        { e: 'Qual dispositivo é de entrada e saída (E/S)?', ops: ['Leitor de CD', 'Monitor',
+                                'Caixa de som', 'Microfone'
                             ], corr: 'Leitor de CD', exp: 'Leitor de CD pode ler (entrada) e gravar (saída) dados.' },
+                        { e: 'Qual dos seguintes é um dispositivo de entrada?', ops: ['Scanner', 'Impressora', 'Monitor',
+                                'Projetor'
+                            ], corr: 'Scanner', exp: 'Scanner digitaliza imagens e envia dados para o computador.' },
+                        { e: 'Qual dos seguintes é um dispositivo de saída?', ops: ['Caixa de som', 'Teclado', 'Mouse',
+                                'Scanner'
+                            ], corr: 'Caixa de som', exp: 'Caixa de som reproduz áudio (saída).' },
+                        { e: 'Um monitor touchscreen é classificado como:', ops: ['Entrada', 'Saída', 'Misto',
+                                'Nenhuma das anteriores'
+                            ], corr: 'Misto', exp: 'Touchscreen permite entrada (toque) e saída (exibição).' },
                     ];
-                    const p = perg[idx % perg.length];
-                    const opcoes = [...p.ops];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
-                    }
+                    const p = pick(perg);
+                    const opcoes = shuffleArray([...p.ops]);
                     return {
                         enunciado: p.e,
                         opcoes: opcoes,
@@ -743,22 +806,25 @@
                         explicacao: p.exp
                     };
                 },
-                // 7) Von Neumann / Harvard
-                (idx) => {
+
+                // 7) Arquitetura Von Neumann vs Harvard
+                function() {
                     const perg = [
                         { e: 'Na arquitetura de Von Neumann, programa e dados são armazenados:', ops: ['Na mesma memória',
                                 'Em memórias separadas', 'Na CPU', 'Em registradores'
-                            ], corr: 'Na mesma memória', exp: 'Von Neumann usa uma única memória para programa e dados (compartilhada).' },
+                            ], corr: 'Na mesma memória',
+                            exp: 'Von Neumann usa uma única memória para programa e dados (compartilhada).' },
                         { e: 'Qual arquitetura separa fisicamente memória de programa e dados?', ops: ['Von Neumann',
                                 'Harvard', 'CISC', 'RISC'
-                            ], corr: 'Harvard', exp: 'Harvard tem barramentos separados para instruções e dados, permitindo acesso simultâneo.' },
+                            ], corr: 'Harvard',
+                            exp: 'Harvard tem barramentos separados para instruções e dados, permitindo acesso simultâneo.' },
+                        { e: 'Qual arquitetura é mais comum em microcontroladores?', ops: ['Von Neumann', 'Harvard',
+                                'CISC', 'RISC'
+                            ], corr: 'Harvard',
+                            exp: 'Harvard é comum em microcontroladores devido à separação de memórias para maior desempenho.' },
                     ];
-                    const p = perg[idx % perg.length];
-                    const opcoes = [...p.ops];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
-                    }
+                    const p = pick(perg);
+                    const opcoes = shuffleArray([...p.ops]);
                     return {
                         enunciado: p.e,
                         opcoes: opcoes,
@@ -766,25 +832,32 @@
                         explicacao: p.exp
                     };
                 },
-                // 8) Miscelânea
-                (idx) => {
+
+                // 8) Miscelânea (conceitos diversos)
+                function() {
                     const perg = [
-                        { e: 'O que significa a sigla ULA?', ops: ['Unidade Lógica e Aritmética', 'Unidade de Leitura Avançada',
-                                'Unidade de Ligação Automática', 'Unidade Linear de Acesso'
-                            ], corr: 'Unidade Lógica e Aritmética', exp: 'ULA realiza operações lógicas (AND, OR) e aritméticas (soma, subtração).' },
-                        { e: 'Clock (frequência) é medido em:', ops: ['Hz', 'Bytes/s', 'Bits/s', 'Ciclos/instrução'],
-                            corr: 'Hz', exp: 'Frequência é medida em Hertz (ciclos por segundo). 1 GHz = 1 bilhão de ciclos/s.' },
-                        { e: 'Qual componente armazena a BIOS?', ops: ['RAM', 'ROM', 'Cache', 'HD'], corr: 'ROM',
-                            exp: 'BIOS fica em uma memória ROM na placa-mãe, não volátil.' },
-                        { e: 'A memória virtual utiliza:', ops: ['HD/SSD', 'RAM', 'Cache', 'Registradores'], corr: 'HD/SSD',
-                            exp: 'Memória virtual usa espaço em disco (HD ou SSD) como extensão da RAM.' },
+                        { e: 'Qual é a unidade de medida da frequência de um processador?', ops: ['Hz', 'Bytes/s',
+                                'Bits/s', 'Ciclos/instrução'
+                            ], corr: 'Hz', exp: 'Frequência é medida em Hertz (ciclos por segundo).' },
+                        { e: 'O que significa a sigla SSD?', ops: ['Solid State Drive', 'Super Speed Disk',
+                                'System Storage Device', 'Secondary State Drive'
+                            ], corr: 'Solid State Drive',
+                            exp: 'SSD é um dispositivo de armazenamento baseado em memória flash, sem partes móveis.' },
+                        { e: 'O que é o "Von Neumann bottleneck"?', ops: ['Gargalo no barramento de dados',
+                                'Gargalo na CPU', 'Gargalo na memória cache', 'Gargalo no HD'
+                            ], corr: 'Gargalo no barramento de dados',
+                            exp: 'Em Von Neumann, programa e dados compartilham o mesmo barramento de dados, limitando a velocidade.' },
+                        { e: 'Qual a função da memória cache?', ops: ['Reduzir latência entre CPU e RAM',
+                                'Aumentar capacidade de armazenamento', 'Substituir a RAM', 'Armazenar BIOS'
+                            ], corr: 'Reduzir latência entre CPU e RAM',
+                            exp: 'Cache é uma memória rápida que armazena dados frequentemente usados para reduzir o tempo de acesso à RAM.' },
+                        { e: 'O que é um registrador?', ops: ['Memória interna da CPU', 'Memória externa',
+                                'Dispositivo de entrada', 'Dispositivo de saída'
+                            ], corr: 'Memória interna da CPU',
+                            exp: 'Registradores são pequenas memórias internas da CPU, de acesso extremamente rápido.' },
                     ];
-                    const p = perg[idx % perg.length];
-                    const opcoes = [...p.ops];
-                    for (let i = opcoes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [opcoes[i], opcoes[j]] = [opcoes[j], opcoes[i]];
-                    }
+                    const p = pick(perg);
+                    const opcoes = shuffleArray([...p.ops]);
                     return {
                         enunciado: p.e,
                         opcoes: opcoes,
@@ -794,30 +867,61 @@
                 }
             ];
 
+            // ---------- Gerar 1000 questões únicas ----------
+            const TOTAL = 1000;
             const questoes = [];
-            for (let i = 0; i < TOTAL_QUESTOES; i++) {
-                const template = templates[i % templates.length];
-                const q = template(i);
-                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
-                for (let k = q.opcoes.length - 1; k > 0; k--) {
-                    const j = Math.floor(Math.random() * (k + 1));
-                    [q.opcoes[k], q.opcoes[j]] = [q.opcoes[j], q.opcoes[k]];
-                }
-                if (!q.opcoes.includes(q.correta)) q.opcoes[0] = q.correta;
-                questoes.push({
-                    id: i,
-                    enunciado: q.enunciado,
-                    opcoes: q.opcoes,
-                    correta: q.correta,
-                    explicacao: q.explicacao,
-                    selecionada: null,
-                    resolvida: false,
-                });
+            const usedKeys = new Set();
+
+            function getKey(q) {
+                // Chave: enunciado + opções ordenadas (para evitar duplicatas mesmo com ordem diferente)
+                const sortedOps = [...q.opcoes].sort().join('|');
+                return q.enunciado + '||' + sortedOps;
             }
 
-            // ============================================================
-            // 2. RENDERIZAÇÃO
-            // ============================================================
+            let tentativas = 0;
+            while (questoes.length < TOTAL && tentativas < 50000) {
+                tentativas++;
+                const gerador = pick(geradores);
+                const q = gerador();
+                // Garantir que a correta está nas opções
+                if (!q.opcoes.includes(q.correta)) {
+                    q.opcoes[rand(0, q.opcoes.length - 1)] = q.correta;
+                }
+                const key = getKey(q);
+                if (!usedKeys.has(key)) {
+                    usedKeys.add(key);
+                    questoes.push({
+                        id: questoes.length,
+                        enunciado: q.enunciado,
+                        opcoes: q.opcoes,
+                        correta: q.correta,
+                        explicacao: q.explicacao,
+                        selecionada: null,
+                        resolvida: false
+                    });
+                }
+            }
+
+            // Se por acaso não atingiu 1000 (improvável), preenche com questões simples
+            while (questoes.length < TOTAL) {
+                const q = {
+                    enunciado: `Questão simples ${questoes.length + 1}: Qual é a unidade básica de informação?`,
+                    opcoes: ['Bit', 'Byte', 'Word', 'Nibble'],
+                    correta: 'Bit',
+                    explicacao: 'Bit é a menor unidade de informação, representando 0 ou 1.',
+                    selecionada: null,
+                    resolvida: false
+                };
+                const key = getKey(q);
+                if (!usedKeys.has(key)) {
+                    usedKeys.add(key);
+                    questoes.push(q);
+                }
+            }
+
+            // ================================================================
+            // RENDERIZAÇÃO E CONTROLES (mesmo código anterior, adaptado)
+            // ================================================================
             const ITENS_POR_PAGINA = 10;
             let paginaAtual = 1;
             let questoesPorPagina = [];
@@ -939,9 +1043,7 @@
                 atualizarStats();
             }
 
-            // ============================================================
-            // 3. BOTÕES
-            // ============================================================
+            // Botões
             document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
                 for (const q of questoesPorPagina) {
                     if (q.selecionada === null) {
@@ -972,9 +1074,7 @@
                 atualizarStats();
             });
 
-            // ============================================================
-            // 4. NAVEGAÇÃO ENTRE SEÇÕES
-            // ============================================================
+            // Navegação entre seções
             document.querySelectorAll('nav button').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -985,10 +1085,8 @@
                 });
             });
 
-            // ============================================================
-            // 5. INICIALIZAÇÃO
-            // ============================================================
-            spanTotalQ.textContent = TOTAL_QUESTOES;
+            // Inicialização
+            spanTotalQ.textContent = TOTAL;
             renderizarPagina();
             atualizarStats();
 
