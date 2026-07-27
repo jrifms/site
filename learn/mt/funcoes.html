@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funções Matemáticas · Teoria + 500 Exercícios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f7fc;
+            color: #1e293b;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2.6rem;
+            color: #0f172a;
+            border-left: 8px solid #3b82f6;
+            padding-left: 24px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.1rem;
+            padding-left: 32px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e9edf4;
+            padding-bottom: 16px;
+        }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 28px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 48px;
+        }
+        nav button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #334155;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: rgba(59, 130, 246, 0.08);
+        }
+        nav button.active {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
+        .section {
+            display: none;
+            animation: fade 0.35s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.2;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== CARDS DE TEORIA ===== */
+        .card {
+            background: #fafcff;
+            border-radius: 20px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            border: 1px solid #e9edf4;
+            transition: 0.15s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .card:hover {
+            border-color: #b9c9e0;
+        }
+        .card h2 {
+            font-size: 1.8rem;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin: 20px 0 12px;
+            border-bottom: 2px dashed #dce3ed;
+            padding-bottom: 6px;
+        }
+        .card h4 {
+            font-size: 1.1rem;
+            color: #334155;
+            margin: 14px 0 8px;
+        }
+        .card p {
+            margin-bottom: 12px;
+            color: #334155;
+        }
+        .card ul, .card ol {
+            padding-left: 28px;
+            margin: 8px 0 16px;
+        }
+        .card li {
+            margin-bottom: 6px;
+        }
+        .card .destaque {
+            background: #eef2ff;
+            border-left: 6px solid #3b82f6;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-weight: 500;
+        }
+        .card .exemplo {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 12px 0;
+            border-left: 4px solid #8b5cf6;
+        }
+        .card .exemplo strong {
+            color: #6d28d9;
+        }
+        .card .formula {
+            background: #fef9e7;
+            border-left: 6px solid #f59e0b;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            font-family: 'Cambria', 'Times New Roman', serif;
+        }
+        .card .construcao {
+            background: #ecfdf5;
+            border-left: 6px solid #10b981;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+        }
+        .graph-container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 12px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .graph-container canvas {
+            max-width: 100%;
+            height: auto;
+            background: #fafcff;
+            border-radius: 12px;
+        }
+        .graph-container .legenda {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-top: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 800px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .container { padding: 16px; }
+            h1 { font-size: 1.8rem; }
+            .card { padding: 16px; }
+            nav button { padding: 6px 14px; font-size: 0.8rem; }
+        }
+
+        /* ===== ESTILOS DOS EXERCÍCIOS ===== */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+        .quiz-controls .info {
+            font-size: 0.95rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a2a3f;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover { background: #dce5f0; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-success { background: #22c55e; color: white; }
+        .btn-success:hover { background: #16a34a; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+
+        .questao {
+            background: #fbfdff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e4ecf5;
+            transition: 0.15s;
+        }
+        .questao:hover { border-color: #b9c9e0; }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 8px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .questao .opcao:hover { background: #f0f5fe; }
+        .questao .opcao input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #3b82f6;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 0;
+        }
+        .questao .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 500;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 6px;
+        }
+        .questao.resolvida .opcao { opacity: 0.85; }
+        .questao.resolvida .opcao input[type="radio"] { pointer-events: none; }
+
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .paginacao .page-btn:hover { background: #d4dfec; }
+        .paginacao .page-btn.active-page { background: #3b82f6; color: white; }
+
+        .stats {
+            background: #eef2ff;
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #1e40af;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 22px;
+        }
+        .teoria-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .teoria-nav a {
+            background: #eef2ff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #1e40af;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.15s;
+        }
+        .teoria-nav a:hover {
+            background: #dbeafe;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📐 Funções Matemáticas <span style="font-size:1.2rem; font-weight:400; color:#475569;">· Teoria + 500 Exercícios</span></h1>
+    <div class="subtitle">Teoria detalhada, gráficos, construção passo a passo e 500 questões com correção automática</div>
+
+    <nav id="menuNavegacao">
+        <button class="active" data-section="teoria">📘 Teoria</button>
+        <button data-section="exercicios">📝 Exercícios</button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- SEÇÃO TEORIA (detalhada)                                      -->
+    <!-- ============================================================ -->
+    <section id="teoria" class="section active">
+        <!-- Navegação interna -->
+        <div class="teoria-nav">
+            <a href="#afim">📈 Afim</a>
+            <a href="#quadratica">📊 Quadrática</a>
+            <a href="#exponencial">🚀 Exponencial</a>
+            <a href="#logaritmica">🔢 Logarítmica</a>
+            <a href="#trigonometricas">🔄 Trigonométricas</a>
+            <a href="#modular">🧩 Modular</a>
+            <a href="#outras">📌 Outras</a>
+        </div>
+
+        <!-- ===== FUNÇÃO AFIM ===== -->
+        <div class="card" id="afim">
+            <h2>📈 Função Afim (1º grau)</h2>
+            <p><strong>Definição:</strong> Toda função <strong>f: ℝ → ℝ</strong> dada por <strong>f(x) = ax + b</strong>, com <strong>a ≠ 0</strong>, é chamada de função afim.</p>
+            <ul>
+                <li><strong>a</strong> = coeficiente angular (taxa de variação) → determina a inclinação da reta.</li>
+                <li><strong>b</strong> = coeficiente linear → ponto onde a reta cruza o eixo y (0, b).</li>
+                <li>Gráfico: uma <strong>reta</strong>.</li>
+                <li>Raiz (zero): <strong>x = –b/a</strong>.</li>
+            </ul>
+            <div class="formula">
+                <strong>Fórmula geral:</strong> f(x) = ax + b &nbsp;·&nbsp; <strong>a ≠ 0</strong>
+            </div>
+            <div class="construcao">
+                <h4>🔧 Como construir a função a partir de dois pontos</h4>
+                <p>Dados dois pontos P(x₁, y₁) e Q(x₂, y₂) com x₁ ≠ x₂:</p>
+                <ol>
+                    <li>Calcule <strong>a = (y₂ – y₁) / (x₂ – x₁)</strong>.</li>
+                    <li>Substitua um dos pontos e o valor de a em y = ax + b para encontrar b.</li>
+                    <li>Escreva f(x) = ax + b.</li>
+                </ol>
+                <div class="exemplo">
+                    <strong>Exemplo:</strong> P(1, 2) e Q(3, 8) → a = (8–2)/(3–1) = 6/2 = 3.<br>
+                    2 = 3·1 + b → b = –1. Logo f(x) = 3x – 1.
+                </div>
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoAfimTeoria" width="600" height="280"></canvas>
+                <div class="legenda">f(x) = 2x + 3 (azul) &nbsp;·&nbsp; f(x) = –x + 4 (vermelho)</div>
+            </div>
+            <h3>Propriedades importantes</h3>
+            <ul>
+                <li><strong>Crescente:</strong> se a > 0.</li>
+                <li><strong>Decrescente:</strong> se a < 0.</li>
+                <li><strong>Constante:</strong> se a = 0 (não é afim, é constante).</li>
+                <li><strong>Função linear:</strong> b = 0 → f(x) = ax (passa pela origem).</li>
+            </ul>
+        </div>
+
+        <!-- ===== FUNÇÃO QUADRÁTICA ===== -->
+        <div class="card" id="quadratica">
+            <h2>📊 Função Quadrática (2º grau)</h2>
+            <p><strong>Definição:</strong> Toda função <strong>f: ℝ → ℝ</strong> dada por <strong>f(x) = ax² + bx + c</strong>, com <strong>a ≠ 0</strong>.</p>
+            <ul>
+                <li><strong>a</strong> → concavidade: a > 0 (∪), a < 0 (∩).</li>
+                <li><strong>Δ = b² – 4ac</strong> (discriminante).</li>
+                <li>Raízes (zeros): <strong>x = (–b ± √Δ) / 2a</strong> (Bhaskara).</li>
+                <li>Vértice: <strong>V = (–b/2a, –Δ/4a)</strong>.</li>
+                <li>Eixo de simetria: <strong>x = –b/2a</strong>.</li>
+            </ul>
+            <div class="formula">
+                <strong>Forma geral:</strong> f(x) = ax² + bx + c &nbsp;·&nbsp; <strong>a ≠ 0</strong>
+            </div>
+            <div class="construcao">
+                <h4>🔧 Como construir a partir das raízes</h4>
+                <p>Se conhecermos as raízes x₁ e x₂, podemos escrever:</p>
+                <p><strong>f(x) = a(x – x₁)(x – x₂)</strong> (forma fatorada).</p>
+                <p>Para determinar a, usamos um ponto adicional.</p>
+                <div class="exemplo">
+                    <strong>Exemplo:</strong> Raízes 2 e 5 → f(x) = a(x – 2)(x – 5). Se f(3) = –4, então –4 = a(1)(–2) → a = 2. Logo f(x) = 2(x – 2)(x – 5) = 2x² – 14x + 20.
+                </div>
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoQuadraticaTeoria" width="600" height="280"></canvas>
+                <div class="legenda">f(x) = x² – 4x + 3 (azul) &nbsp;·&nbsp; f(x) = –x² + 2x + 3 (vermelho)</div>
+            </div>
+            <h3>Formas de representação</h3>
+            <ul>
+                <li><strong>Geral:</strong> f(x) = ax² + bx + c</li>
+                <li><strong>Fatorada:</strong> f(x) = a(x – x₁)(x – x₂) (se Δ ≥ 0)</li>
+                <li><strong>Canônica:</strong> f(x) = a(x – h)² + k, onde (h, k) é o vértice.</li>
+            </ul>
+            <p><strong>Completando quadrados:</strong> a partir de ax² + bx + c, podemos escrever na forma canônica para encontrar o vértice facilmente.</p>
+        </div>
+
+        <!-- ===== FUNÇÃO EXPONENCIAL ===== -->
+        <div class="card" id="exponencial">
+            <h2>🚀 Função Exponencial</h2>
+            <p><strong>Definição:</strong> <strong>f: ℝ → ℝ<sub>+</sub></strong> dada por <strong>f(x) = a<sup>x</sup></strong>, com <strong>a > 0</strong> e <strong>a ≠ 1</strong>.</p>
+            <ul>
+                <li><strong>Base a</strong> determina o crescimento/decrescimento.</li>
+                <li>Se a > 1 → <strong>crescente</strong>.</li>
+                <li>Se 0 < a < 1 → <strong>decrescente</strong>.</li>
+                <li>Domínio: ℝ; Imagem: ℝ<sub>+</sub> (positivos).</li>
+                <li>O gráfico passa por (0, 1) porque a⁰ = 1.</li>
+                <li>Assíntota horizontal: eixo x (y = 0).</li>
+            </ul>
+            <div class="formula">
+                <strong>Forma geral:</strong> f(x) = a<sup>x</sup> &nbsp;·&nbsp; <strong>a > 0, a ≠ 1</strong>
+            </div>
+            <div class="construcao">
+                <h4>🔧 Como construir a partir de dois pontos</h4>
+                <p>Dados P(x₁, y₁) e Q(x₂, y₂) com y > 0:</p>
+                <ol>
+                    <li>Use a relação y₁ = a<sup>x₁</sup> e y₂ = a<sup>x₂</sup>.</li>
+                    <li>Divida: y₂/y₁ = a<sup>x₂–x₁</sup> → a = (y₂/y₁)<sup>1/(x₂–x₁)</sup>.</li>
+                    <li>Substitua para encontrar a função.</li>
+                </ol>
+                <div class="exemplo">
+                    <strong>Exemplo:</strong> P(1, 2) e Q(3, 8) → a = (8/2)<sup>1/(3–1)</sup> = 4<sup>1/2</sup> = 2. Logo f(x) = 2<sup>x</sup>.
+                </div>
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoExponencialTeoria" width="600" height="280"></canvas>
+                <div class="legenda">2<sup>x</sup> (azul) &nbsp;·&nbsp; (½)<sup>x</sup> (vermelho)</div>
+            </div>
+            <h3>Propriedades importantes</h3>
+            <ul>
+                <li>a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></li>
+                <li>a<sup>m</sup> / a<sup>n</sup> = a<sup>m–n</sup></li>
+                <li>(a<sup>m</sup>)<sup>n</sup> = a<sup>m·n</sup></li>
+                <li>a<sup>–n</sup> = 1 / a<sup>n</sup></li>
+                <li>a<sup>0</sup> = 1</li>
+            </ul>
+            <p><strong>Aplicação:</strong> crescimento populacional, juros compostos, decaimento radioativo.</p>
+        </div>
+
+        <!-- ===== FUNÇÃO LOGARÍTMICA ===== -->
+        <div class="card" id="logaritmica">
+            <h2>🔢 Função Logarítmica</h2>
+            <p><strong>Definição:</strong> <strong>f: ℝ<sub>+</sub> → ℝ</strong> dada por <strong>f(x) = log<sub>a</sub> x</strong>, com <strong>a > 0</strong>, <strong>a ≠ 1</strong> e <strong>x > 0</strong>.</p>
+            <ul>
+                <li>É a função inversa da exponencial.</li>
+                <li>Se a > 1 → <strong>crescente</strong>; se 0 < a < 1 → <strong>decrescente</strong>.</li>
+                <li>Domínio: ℝ<sub>+</sub> (x > 0); Imagem: ℝ.</li>
+                <li>O gráfico passa por (1, 0) porque log<sub>a</sub> 1 = 0.</li>
+                <li>Assíntota vertical: eixo y (x = 0).</li>
+            </ul>
+            <div class="formula">
+                <strong>Forma geral:</strong> f(x) = log<sub>a</sub> x &nbsp;·&nbsp; <strong>a > 0, a ≠ 1, x > 0</strong>
+            </div>
+            <div class="construcao">
+                <h4>🔧 Como construir a partir de pontos</h4>
+                <p>Assim como a exponencial, podemos determinar a base a usando dois pontos e a definição de logaritmo.</p>
+                <div class="exemplo">
+                    <strong>Exemplo:</strong> Se f(2) = 1 e f(8) = 3, então log<sub>a</sub> 2 = 1 → a = 2, e log<sub>2</sub> 8 = 3 confirma. Logo f(x) = log<sub>2</sub> x.
+                </div>
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoLogaritmicaTeoria" width="600" height="280"></canvas>
+                <div class="legenda">log₂ x (azul) &nbsp;·&nbsp; log<sub>½</sub> x (vermelho)</div>
+            </div>
+            <h3>Propriedades dos logaritmos</h3>
+            <ul>
+                <li>log<sub>a</sub> (m·n) = log<sub>a</sub> m + log<sub>a</sub> n</li>
+                <li>log<sub>a</sub> (m/n) = log<sub>a</sub> m – log<sub>a</sub> n</li>
+                <li>log<sub>a</sub> m<sup>n</sup> = n · log<sub>a</sub> m</li>
+                <li>log<sub>a</sub> 1 = 0; log<sub>a</sub> a = 1</li>
+                <li>Mudança de base: log<sub>a</sub> b = log<sub>c</sub> b / log<sub>c</sub> a</li>
+            </ul>
+        </div>
+
+        <!-- ===== FUNÇÕES TRIGONOMÉTRICAS ===== -->
+        <div class="card" id="trigonometricas">
+            <h2>🔄 Funções Trigonométricas</h2>
+            <p>As funções <strong>seno</strong>, <strong>cosseno</strong> e <strong>tangente</strong> são definidas a partir do círculo trigonométrico.</p>
+
+            <div class="grid-2">
+                <div>
+                    <h3>🔵 Seno (f(x) = sen x)</h3>
+                    <ul>
+                        <li>Domínio: ℝ; Imagem: [–1, 1]</li>
+                        <li>Período: 2π</li>
+                        <li>Função ímpar: sen(–x) = –sen x</li>
+                        <li>Zeros: x = kπ, k ∈ ℤ</li>
+                    </ul>
+                    <div class="graph-container">
+                        <canvas id="graficoSenoTeoria" width="280" height="140"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3>🟢 Cosseno (f(x) = cos x)</h3>
+                    <ul>
+                        <li>Domínio: ℝ; Imagem: [–1, 1]</li>
+                        <li>Período: 2π</li>
+                        <li>Função par: cos(–x) = cos x</li>
+                        <li>Zeros: x = π/2 + kπ, k ∈ ℤ</li>
+                    </ul>
+                    <div class="graph-container">
+                        <canvas id="graficoCossenoTeoria" width="280" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3>🟠 Tangente (f(x) = tg x = sen x / cos x)</h3>
+                <ul>
+                    <li>Domínio: x ≠ π/2 + kπ, k ∈ ℤ</li>
+                    <li>Imagem: ℝ</li>
+                    <li>Período: π</li>
+                    <li>Função ímpar: tg(–x) = –tg x</li>
+                    <li>Zeros: x = kπ, k ∈ ℤ</li>
+                </ul>
+                <div class="graph-container">
+                    <canvas id="graficoTangenteTeoria" width="600" height="180"></canvas>
+                </div>
+            </div>
+            <h3>Identidades fundamentais</h3>
+            <ul>
+                <li><strong>sen² x + cos² x = 1</strong></li>
+                <li><strong>tg x = sen x / cos x</strong></li>
+                <li><strong>cotg x = cos x / sen x</strong></li>
+                <li><strong>sec x = 1 / cos x</strong> &nbsp;·&nbsp; <strong>cossec x = 1 / sen x</strong></li>
+                <li><strong>sen(a ± b) = sen a cos b ± cos a sen b</strong></li>
+                <li><strong>cos(a ± b) = cos a cos b ∓ sen a sen b</strong></li>
+            </ul>
+        </div>
+
+        <!-- ===== FUNÇÃO MODULAR ===== -->
+        <div class="card" id="modular">
+            <h2>🧩 Função Modular</h2>
+            <p><strong>Definição:</strong> <strong>f(x) = |x|</strong>, onde <strong>|x| = x</strong> se x ≥ 0 e <strong>|x| = –x</strong> se x < 0.</p>
+            <ul>
+                <li>Domínio: ℝ; Imagem: [0, +∞)</li>
+                <li>Função par: |–x| = |x|</li>
+                <li>Gráfico em forma de "V" com vértice em (0, 0).</li>
+            </ul>
+            <div class="formula">
+                <strong>Definição por partes:</strong> <span style="display:inline-block;">|x| = { x, se x ≥ 0; –x, se x < 0 }</span>
+            </div>
+            <div class="construcao">
+                <h4>🔧 Transformações com módulo</h4>
+                <ul>
+                    <li><strong>|x| + c</strong> → deslocamento vertical (c > 0 sobe, c < 0 desce).</li>
+                    <li><strong>|x – h|</strong> → deslocamento horizontal (h > 0 para direita).</li>
+                    <li><strong>a|x|</strong> → alongamento/compressão vertical (|a| > 1 alonga).</li>
+                    <li><strong>|f(x)|</strong> → reflete a parte negativa de f para cima.</li>
+                </ul>
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoModularTeoria" width="600" height="280"></canvas>
+                <div class="legenda">|x| (azul) &nbsp;·&nbsp; |x – 2| + 1 (vermelho)</div>
+            </div>
+        </div>
+
+        <!-- ===== OUTRAS FUNÇÕES ===== -->
+        <div class="card" id="outras">
+            <h2>📌 Outras Funções Importantes</h2>
+
+            <h3>🧊 Função Raiz</h3>
+            <p><strong>Raiz quadrada:</strong> f(x) = √x, com x ≥ 0. Gráfico é uma parábola deitada.</p>
+            <p><strong>Raiz cúbica:</strong> f(x) = ∛x, domínio ℝ. É ímpar.</p>
+            <div class="graph-container">
+                <canvas id="graficoRaizTeoria" width="600" height="180"></canvas>
+                <div class="legenda">√x (azul) &nbsp;·&nbsp; ∛x (vermelho)</div>
+            </div>
+
+            <h3>📦 Função Polinomial</h3>
+            <p><strong>f(x) = a<sub>n</sub>x<sup>n</sup> + ... + a<sub>1</sub>x + a<sub>0</sub></strong>, com a<sub>n</sub> ≠ 0.</p>
+            <ul>
+                <li>Grau n (maior expoente).</li>
+                <li>Exemplos: cúbica (n=3), quártica (n=4).</li>
+                <li>Gráfico pode ter várias curvas e pontos de inflexão.</li>
+            </ul>
+
+            <h3>🧮 Função Racional</h3>
+            <p><strong>f(x) = P(x) / Q(x)</strong>, onde P e Q são polinômios, Q(x) ≠ 0.</p>
+            <ul>
+                <li>Domínio: todos os reais, exceto raízes de Q.</li>
+                <li>Exemplo clássico: f(x) = 1/x (hipérbole).</li>
+                <li>Assíntotas verticais e horizontais.</li>
+            </ul>
+            <div class="graph-container">
+                <canvas id="graficoRacionalTeoria" width="600" height="180"></canvas>
+                <div class="legenda">1/x (azul) &nbsp;·&nbsp; (x+1)/(x–2) (vermelho)</div>
+            </div>
+
+            <h3>🔁 Função Inversa</h3>
+            <p>Se f é bijetora, existe f⁻¹ tal que f(f⁻¹(x)) = x.</p>
+            <ul>
+                <li>Gráfico da inversa é simétrico em relação à reta y = x.</li>
+                <li>Exemplo: f(x) = x² (x ≥ 0) → f⁻¹(x) = √x.</li>
+            </ul>
+            <div class="graph-container">
+                <canvas id="graficoInversaTeoria" width="600" height="180"></canvas>
+                <div class="legenda">x² (x≥0) (azul) &nbsp;·&nbsp; √x (vermelho) &nbsp;·&nbsp; y=x (tracejado)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SEÇÃO EXERCÍCIOS (500 questões)                               -->
+    <!-- ============================================================ -->
+    <section id="exercicios" class="section">
+        <div class="quiz-controls">
+            <div class="info">
+                <span id="acertos">0</span> acertos · 
+                <span id="totalRespondidas">0</span> respondidas de 
+                <span id="totalQuestoes">500</span>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                <button class="btn btn-danger" id="btnLimpar">🧹 Limpar respostas</button>
+            </div>
+        </div>
+        <div id="questoesContainer"></div>
+        <div class="paginacao" id="paginacao"></div>
+        <div style="text-align:center; margin-top:10px;">
+            <span class="stats" id="statsProgresso">Progresso: 0%</span>
+        </div>
+    </section>
+
+    <div class="footer">
+        📚 500 exercícios únicos · Teoria detalhada com gráficos e construções · Desenvolvido para estudo
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ================================================================
+        // 1. NAVEGAÇÃO PRINCIPAL (Teoria / Exercícios)
+        // ================================================================
+        const botoes = document.querySelectorAll('#menuNavegacao button');
+        const teoriaSec = document.getElementById('teoria');
+        const exerciciosSec = document.getElementById('exercicios');
+
+        botoes.forEach(btn => {
+            btn.addEventListener('click', function() {
+                botoes.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                if (this.dataset.section === 'teoria') {
+                    teoriaSec.classList.add('active');
+                    exerciciosSec.classList.remove('active');
+                    // Redesenhar gráficos da teoria
+                    setTimeout(desenharTodosGraficosTeoria, 50);
+                } else {
+                    teoriaSec.classList.remove('active');
+                    exerciciosSec.classList.add('active');
+                }
+            });
+        });
+
+        // ================================================================
+        // 2. GRÁFICOS DA TEORIA (Canvas)
+        // ================================================================
+        function getCtx(id) {
+            const canvas = document.getElementById(id);
+            if (!canvas) return null;
+            return canvas.getContext('2d');
+        }
+
+        function desenharEixos(ctx, w, h, xMin, xMax, yMin, yMax, xLabel = 'x', yLabel = 'y') {
+            const margin = 40;
+            const plotW = w - 2 * margin;
+            const plotH = h - 2 * margin;
+            const xScale = plotW / (xMax - xMin);
+            const yScale = plotH / (yMax - yMin);
+
+            function toCanvasX(x) { return margin + (x - xMin) * xScale; }
+
+            function toCanvasY(y) { return h - margin - (y - yMin) * yScale; }
+
+            ctx.fillStyle = '#fafcff';
+            ctx.fillRect(0, 0, w, h);
+
+            // Grid
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 0.5;
+            for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+                if (x === 0) continue;
+                const cx = toCanvasX(x);
+                ctx.beginPath();
+                ctx.moveTo(cx, margin);
+                ctx.lineTo(cx, h - margin);
+                ctx.stroke();
+            }
+            for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+                if (y === 0) continue;
+                const cy = toCanvasY(y);
+                ctx.beginPath();
+                ctx.moveTo(margin, cy);
+                ctx.lineTo(w - margin, cy);
+                ctx.stroke();
+            }
+
+            // Eixos
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 2;
+            // Eixo X
+            if (yMin <= 0 && yMax >= 0) {
+                const y0 = toCanvasY(0);
+                ctx.beginPath();
+                ctx.moveTo(margin, y0);
+                ctx.lineTo(w - margin, y0);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(w - margin, y0);
+                ctx.lineTo(w - margin - 8, y0 - 6);
+                ctx.lineTo(w - margin - 8, y0 + 6);
+                ctx.closePath();
+                ctx.fillStyle = '#1e293b';
+                ctx.fill();
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(xLabel, w - margin - 20, y0 - 12);
+            }
+            if (xMin <= 0 && xMax >= 0) {
+                const x0 = toCanvasX(0);
+                ctx.beginPath();
+                ctx.moveTo(x0, margin);
+                ctx.lineTo(x0, h - margin);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x0, margin);
+                ctx.lineTo(x0 - 6, margin + 8);
+                ctx.lineTo(x0 + 6, margin + 8);
+                ctx.closePath();
+                ctx.fillStyle = '#1e293b';
+                ctx.fill();
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(yLabel, x0 + 10, margin + 16);
+            }
+
+            ctx.fillStyle = '#475569';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+                if (x === 0) continue;
+                const cx = toCanvasX(x);
+                ctx.fillText(x, cx, h - margin + 4);
+            }
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+                if (y === 0) continue;
+                const cy = toCanvasY(y);
+                ctx.fillText(y, margin - 8, cy);
+            }
+            return { toCanvasX, toCanvasY, xScale, yScale };
+        }
+
+        // --- Gráficos individuais ---
+        function desenharAfimTeoria() {
+            const ctx = getCtx('graficoAfimTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -6, 6, -6, 8, 'x', 'y');
+            // f(x) = 2x + 3
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -5; px <= 5; px += 0.05) {
+                const y = 2 * px + 3;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            // f(x) = -x + 4
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -5; px <= 5; px += 0.05) {
+                const y = -px + 4;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharQuadraticaTeoria() {
+            const ctx = getCtx('graficoQuadraticaTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -4, 6, -6, 8, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -3; px <= 6; px += 0.05) {
+                const y = px * px - 4 * px + 3;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -3) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -3; px <= 5; px += 0.05) {
+                const y = -px * px + 2 * px + 3;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -3) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharExponencialTeoria() {
+            const ctx = getCtx('graficoExponencialTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -4, 4, -1, 9, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -3.5; px <= 3.5; px += 0.05) {
+                const y = Math.pow(2, px);
+                if (y > 8.5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -3.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -3.5; px <= 3.5; px += 0.05) {
+                const y = Math.pow(0.5, px);
+                if (y > 8.5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -3.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharLogaritmicaTeoria() {
+            const ctx = getCtx('graficoLogaritmicaTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -1, 8, -4, 4, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = 0.05; px <= 7.5; px += 0.05) {
+                const y = Math.log2(px);
+                if (y < -3.5 || y > 3.5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === 0.05) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = 0.05; px <= 7.5; px += 0.05) {
+                const y = Math.log(px) / Math.log(0.5);
+                if (y < -3.5 || y > 3.5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === 0.05) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharSenoTeoria() {
+            const ctx = getCtx('graficoSenoTeoria');
+            if (!ctx) return;
+            const w = 280,
+                h = 140;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -2 * Math.PI, 2 * Math.PI, -1.8, 1.8, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let px = -2 * Math.PI; px <= 2 * Math.PI; px += 0.02) {
+                const y = Math.sin(px);
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -2 * Math.PI) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharCossenoTeoria() {
+            const ctx = getCtx('graficoCossenoTeoria');
+            if (!ctx) return;
+            const w = 280,
+                h = 140;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -2 * Math.PI, 2 * Math.PI, -1.8, 1.8, 'x', 'y');
+            ctx.strokeStyle = '#22c55e';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let px = -2 * Math.PI; px <= 2 * Math.PI; px += 0.02) {
+                const y = Math.cos(px);
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -2 * Math.PI) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharTangenteTeoria() {
+            const ctx = getCtx('graficoTangenteTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 180;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -2 * Math.PI, 2 * Math.PI, -4, 4, 'x', 'y');
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let px = -2 * Math.PI; px <= 2 * Math.PI; px += 0.02) {
+                const y = Math.tan(px);
+                if (Math.abs(y) > 4) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -2 * Math.PI) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharModularTeoria() {
+            const ctx = getCtx('graficoModularTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -6, 6, -1, 6, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -5; px <= 5; px += 0.05) {
+                const y = Math.abs(px);
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -4; px <= 6; px += 0.05) {
+                const y = Math.abs(px - 2) + 1;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -4) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharRaizTeoria() {
+            const ctx = getCtx('graficoRaizTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 180;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -2, 8, -2, 5, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = 0; px <= 7; px += 0.05) {
+                const y = Math.sqrt(px);
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === 0) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -1.5; px <= 7; px += 0.05) {
+                const y = Math.cbrt(px);
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -1.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharRacionalTeoria() {
+            const ctx = getCtx('graficoRacionalTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 180;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -6, 6, -6, 6, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            // 1/x
+            ctx.beginPath();
+            for (let px = 0.1; px <= 5; px += 0.05) {
+                const y = 1 / px;
+                if (y > 5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === 0.1) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.beginPath();
+            for (let px = -0.1; px >= -5; px -= 0.05) {
+                const y = 1 / px;
+                if (y < -5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -0.1) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            // (x+1)/(x-2)
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -5; px <= 5; px += 0.05) {
+                if (Math.abs(px - 2) < 0.01) continue;
+                const y = (px + 1) / (px - 2);
+                if (Math.abs(y) > 5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+        }
+
+        function desenharInversaTeoria() {
+            const ctx = getCtx('graficoInversaTeoria');
+            if (!ctx) return;
+            const w = 600,
+                h = 180;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -1, 6, -1, 5, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = 0; px <= 5; px += 0.05) {
+                const y = px * px;
+                if (y > 4.5) continue;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === 0) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = 0; px <= 4.5; px += 0.05) {
+                const y = Math.sqrt(px);
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === 0) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            for (let px = -0.5; px <= 5; px += 0.05) {
+                const y = px;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -0.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function desenharTodosGraficosTeoria() {
+            desenharAfimTeoria();
+            desenharQuadraticaTeoria();
+            desenharExponencialTeoria();
+            desenharLogaritmicaTeoria();
+            desenharSenoTeoria();
+            desenharCossenoTeoria();
+            desenharTangenteTeoria();
+            desenharModularTeoria();
+            desenharRaizTeoria();
+            desenharRacionalTeoria();
+            desenharInversaTeoria();
+        }
+
+        // ================================================================
+        // 3. INICIALIZAÇÃO DOS GRÁFICOS DA TEORIA
+        // ================================================================
+        // Desenhar quando a página carregar
+        window.addEventListener('load', function() {
+            setTimeout(desenharTodosGraficosTeoria, 100);
+        });
+
+        // Redesenhar ao redimensionar (debounce)
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(desenharTodosGraficosTeoria, 300);
+        });
+
+        // ================================================================
+        // 4. GERADOR DE 500 QUESTÕES ÚNICAS (mesmo código anterior)
+        // ================================================================
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+        // Geradores de questões (mesmos da versão anterior, com mais variedade)
+        const geradores = [
+            // Afim
+            function() {
+                const a = rand(-5, 5);
+                const b = rand(-5, 5);
+                if (a === 0) return null;
+                const x = rand(-5, 5);
+                const valor = a * x + b;
+                const perguntas = [
+                    { e: `Dada f(x) = ${a}x ${b>=0?'+':''} ${b}, calcule f(${x}).`,
+                        ops: [`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`],
+                        corr: `${valor}`,
+                        exp: `Substituindo: ${a}·${x} + ${b} = ${valor}.` },
+                    { e: `Qual é a raiz de f(x) = ${a}x ${b>=0?'+':''} ${b}?`,
+                        ops: [`${-b/a}`, `${b/a}`, `${-a/b}`, `${a/b}`],
+                        corr: `${-b/a}`,
+                        exp: `Raiz: x = –b/a = ${-b/a}.` },
+                ];
+                const p = pick(perguntas);
+                const opcoes = shuffleArray(p.ops);
+                return { enunciado: p.e, opcoes, correta: p.corr, explicacao: p.exp };
+            },
+            // Quadrática
+            function() {
+                const a = rand(-3, 3);
+                const b = rand(-4, 4);
+                const c = rand(-4, 4);
+                if (a === 0) return null;
+                const x = rand(-3, 3);
+                const valor = a * x * x + b * x + c;
+                const perguntas = [
+                    { e: `Dada f(x) = ${a}x² ${b>=0?'+':''} ${b}x ${c>=0?'+':''} ${c}, calcule f(${x}).`,
+                        ops: [`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`],
+                        corr: `${valor}`,
+                        exp: `Substituindo: ${a}·(${x})² + ${b}·(${x}) + ${c} = ${valor}.` },
+                    { e: `Qual é o x do vértice de f(x) = ${a}x² ${b>=0?'+':''} ${b}x ${c>=0?'+':''} ${c}?`,
+                        ops: [`${-b/(2*a)}`, `${b/(2*a)}`, `${-b/a}`, `${b/a}`],
+                        corr: `${-b/(2*a)}`,
+                        exp: `x_v = –b/2a = ${-b/(2*a)}.` },
+                ];
+                const p = pick(perguntas);
+                const opcoes = shuffleArray(p.ops);
+                return { enunciado: p.e, opcoes, correta: p.corr, explicacao: p.exp };
+            },
+            // Exponencial
+            function() {
+                const base = pick([2, 3, 4, 5, 0.5, 0.25]);
+                const expoente = rand(-3, 3);
+                const valor = Math.pow(base, expoente);
+                const perguntas = [
+                    { e: `Calcule ${base}${expoente>=0?'^':'^('}${expoente}${expoente>=0?'':')'}`,
+                        ops: [`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`],
+                        corr: `${valor}`,
+                        exp: `${base}^${expoente} = ${valor}.` },
+                    { e: `A função f(x) = ${base}^x é:`,
+                        ops: ['Crescente', 'Decrescente', 'Constante', 'Nem cresce nem decresce'],
+                        corr: base > 1 ? 'Crescente' : 'Decrescente',
+                        exp: `Base ${base} ${base>1?'>':'<'} 1, logo ${base>1?'crescente':'decrescente'}.` },
+                ];
+                const p = pick(perguntas);
+                const opcoes = shuffleArray(p.ops);
+                return { enunciado: p.e, opcoes, correta: p.corr, explicacao: p.exp };
+            },
+            // Logarítmica
+            function() {
+                const base = pick([2, 3, 4, 5, 10]);
+                const x = rand(1, 10);
+                const valor = Math.log(x) / Math.log(base);
+                const perguntas = [
+                    { e: `Calcule log<sub>${base}</sub> ${x}`,
+                        ops: [`${valor.toFixed(2)}`, `${(valor+1).toFixed(2)}`, `${(valor-1).toFixed(2)}`,
+                            `${(valor*2).toFixed(2)}`
+                        ],
+                        corr: `${valor.toFixed(2)}`,
+                        exp: `log<sub>${base}</sub> ${x} = ${valor.toFixed(2)}.` },
+                ];
+                const p = pick(perguntas);
+                const opcoes = shuffleArray(p.ops);
+                return { enunciado: p.e, opcoes, correta: p.corr, explicacao: p.exp };
+            },
+            // Trigonométricas
+            function() {
+                const angulos = [0, 30, 45, 60, 90, 180, 270, 360];
+                const ang = pick(angulos);
+                const rad = ang * Math.PI / 180;
+                const tipo = pick(['seno', 'cosseno', 'tangente']);
+                let valor, pergunta;
+                if (tipo === 'seno') { valor = Math.sin(rad);
+                    pergunta = `sen(${ang}°)`; } else if (tipo === 'cosseno') { valor = Math.cos(rad);
+                    pergunta = `cos(${ang}°)`; } else { valor = Math.tan(rad);
+                    pergunta = `tg(${ang}°)`; if (!isFinite(valor)) valor = 'indefinido'; }
+                const opcoes = [];
+                if (typeof valor === 'string') { opcoes.push(valor, '0', '1', '-1'); } else { const vals = [valor, valor +
+                        0.5, valor - 0.5, -valor];
+                    opcoes.push(...vals.map(v => v.toFixed(2))); }
+                const correta = typeof valor === 'string' ? valor : valor.toFixed(2);
+                return {
+                    enunciado: `Calcule ${pergunta}`,
+                    opcoes: shuffleArray(opcoes.slice(0, 4)),
+                    correta: correta,
+                    explicacao: `${pergunta} = ${correta}.`
+                };
+            },
+            // Modular
+            function() {
+                const x = rand(-10, 10);
+                const valor = Math.abs(x);
+                const perguntas = [
+                    { e: `Calcule |${x}|`, ops: [`${valor}`, `${valor+1}`, `${valor-1}`, `${-valor}`],
+                        corr: `${valor}`, exp: `|${x}| = ${valor}.` },
+                ];
+                const p = pick(perguntas);
+                const opcoes = shuffleArray(p.ops);
+                return { enunciado: p.e, opcoes, correta: p.corr, explicacao: p.exp };
+            },
+            // Raiz / Racional
+            function() {
+                const tipo = pick(['raiz', 'cubica', 'racional']);
+                if (tipo === 'raiz') {
+                    const x = rand(0, 16);
+                    const valor = Math.sqrt(x);
+                    return {
+                        enunciado: `Calcule √${x}`,
+                        opcoes: shuffleArray([`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`]),
+                        correta: `${valor}`,
+                        explicacao: `√${x} = ${valor}.`
+                    };
+                } else if (tipo === 'cubica') {
+                    const x = rand(-8, 8);
+                    const valor = Math.cbrt(x);
+                    return {
+                        enunciado: `Calcule ∛${x}`,
+                        opcoes: shuffleArray([`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`]),
+                        correta: `${valor}`,
+                        explicacao: `∛${x} = ${valor}.`
+                    };
+                } else {
+                    const a = rand(1, 5);
+                    const b = rand(1, 5);
+                    const x = rand(1, 5);
+                    const valor = (a * x + b) / (x - 2 + 0.001);
+                    const perguntas = [
+                        { e: `Dada f(x) = (${a}x + ${b})/(x-2), calcule f(${x})`,
+                            ops: [`${valor.toFixed(2)}`, `${(valor+1).toFixed(2)}`, `${(valor-1).toFixed(2)}`,
+                                `${(valor*2).toFixed(2)}`
+                            ],
+                            corr: `${valor.toFixed(2)}`,
+                            exp: `Substituindo: (${a}·${x}+${b})/(${x}-2) = ${valor.toFixed(2)}.` },
+                    ];
+                    const p = pick(perguntas);
+                    const opcoes = shuffleArray(p.ops);
+                    return { enunciado: p.e, opcoes, correta: p.corr, explicacao: p.exp };
+                }
+            }
+        ];
+
+        // Gerar 500 questões únicas
+        const TOTAL = 500;
+        const questoes = [];
+        const usedKeys = new Set();
+
+        function getKey(q) {
+            const sortedOps = [...q.opcoes].sort().join('|');
+            return q.enunciado + '||' + sortedOps;
+        }
+
+        let tentativas = 0;
+        while (questoes.length < TOTAL && tentativas < 100000) {
+            tentativas++;
+            const gerador = pick(geradores);
+            let q = gerador();
+            if (!q) continue;
+            if (!q.opcoes.includes(q.correta)) {
+                q.opcoes[rand(0, q.opcoes.length - 1)] = q.correta;
+            }
+            q.opcoes = shuffleArray(q.opcoes);
+            const key = getKey(q);
+            if (!usedKeys.has(key)) {
+                usedKeys.add(key);
+                questoes.push({
+                    id: questoes.length,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false
+                });
+            }
+        }
+        // Fallback
+        while (questoes.length < TOTAL) {
+            const q = {
+                enunciado: `Qual é o valor de 2 + 2?`,
+                opcoes: ['3', '4', '5', '6'],
+                correta: '4',
+                explicacao: '2 + 2 = 4.'
+            };
+            const key = getKey(q);
+            if (!usedKeys.has(key)) {
+                usedKeys.add(key);
+                questoes.push({
+                    id: questoes.length,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false
+                });
+            }
+        }
+
+        // ================================================================
+        // 5. RENDERIZAÇÃO DOS EXERCÍCIOS
+        // ================================================================
+        const ITENS_POR_PAGINA = 10;
+        let paginaAtual = 1;
+        let questoesPorPagina = [];
+        let acertos = 0,
+            respondidas = 0;
+
+        const container = document.getElementById('questoesContainer');
+        const paginacaoDiv = document.getElementById('paginacao');
+        const spanAcertos = document.getElementById('acertos');
+        const spanTotalRes = document.getElementById('totalRespondidas');
+        const spanTotalQ = document.getElementById('totalQuestoes');
+        const statsProgresso = document.getElementById('statsProgresso');
+
+        function atualizarStats() {
+            let acc = 0,
+                resp = 0;
+            for (const q of questoes) {
+                if (q.selecionada !== null) {
+                    resp++;
+                    if (q.opcoes[q.selecionada] === q.correta) acc++;
+                }
+            }
+            acertos = acc;
+            respondidas = resp;
+            spanAcertos.textContent = acertos;
+            spanTotalRes.textContent = respondidas;
+            const pct = Math.round((respondidas / questoes.length) * 100);
+            statsProgresso.textContent = `Progresso: ${pct}%`;
+        }
+
+        function renderizarPagina() {
+            const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+            const fim = Math.min(inicio + ITENS_POR_PAGINA, questoes.length);
+            questoesPorPagina = questoes.slice(inicio, fim);
+
+            let html = '';
+            for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                const q = questoesPorPagina[idx];
+                const globalIdx = inicio + idx;
+                const opcoesHtml = q.opcoes.map((op, oi) => {
+                    const checked = (q.selecionada === oi) ? 'checked' : '';
+                    return `
+                        <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                            <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                            <label for="q${globalIdx}_${oi}">${op}</label>
+                        </div>
+                    `;
+                }).join('');
+
+                let feedbackHtml = '';
+                if (q.selecionada !== null) {
+                    const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                    const classe = isCerto ? 'certo' : 'errado';
+                    const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                    feedbackHtml = `
+                        <div class="feedback ${classe}">${texto}</div>
+                        <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                    `;
+                }
+
+                const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+
+                html += `
+                    <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                        <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                        <div class="opcoes">
+                            ${opcoesHtml}
+                        </div>
+                        ${feedbackHtml}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function(e) {
+                    const questaoDiv = this.closest('.questao');
+                    const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                    const opcaoIdx = parseInt(this.value);
+                    const q = questoes[globalIdx];
+                    if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                        q.selecionada = opcaoIdx;
+                        q.resolvida = true;
+                        renderizarPagina();
+                        atualizarStats();
+                    }
+                });
+            });
+
+            const totalPaginas = Math.ceil(questoes.length / ITENS_POR_PAGINA);
+            let pagHtml = '';
+            pagHtml += `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+            for (let p = 1; p <= totalPaginas; p++) {
+                if (p === paginaAtual) {
+                    pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                } else if (p <= 3 || p > totalPaginas - 3 || Math.abs(p - paginaAtual) <= 1) {
+                    pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                } else if (p === 4 && paginaAtual > 5) {
+                    pagHtml += `<span>…</span>`;
+                } else if (p === totalPaginas - 3 && paginaAtual < totalPaginas - 4) {
+                    pagHtml += `<span>…</span>`;
+                }
+            }
+            pagHtml += `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+            paginacaoDiv.innerHTML = pagHtml;
+
+            document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = parseInt(this.dataset.page);
+                    if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                        paginaAtual = page;
+                        renderizarPagina();
+                        atualizarStats();
+                    }
+                });
+            });
+
+            atualizarStats();
+        }
+
+        // Botões
+        document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+            for (const q of questoesPorPagina) {
+                if (q.selecionada === null) {
+                    q.selecionada = 0;
+                    q.resolvida = true;
+                }
+            }
+            renderizarPagina();
+            atualizarStats();
+        });
+
+        document.getElementById('btnLimpar').addEventListener('click', function() {
+            for (const q of questoes) {
+                q.selecionada = null;
+                q.resolvida = false;
+            }
+            renderizarPagina();
+            atualizarStats();
+        });
+
+        document.getElementById('btnReiniciar').addEventListener('click', function() {
+            for (const q of questoes) {
+                q.selecionada = null;
+                q.resolvida = false;
+            }
+            paginaAtual = 1;
+            renderizarPagina();
+            atualizarStats();
+        });
+
+        // Inicialização dos exercícios
+        spanTotalQ.textContent = TOTAL;
+        renderizarPagina();
+        atualizarStats();
+
+    })();
+</script>
+</body>
+</html>
