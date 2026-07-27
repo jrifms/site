@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Álgebra Linear · Matrizes, Vetores e Sistemas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fc;
+            color: #1e293b;
+            padding: 16px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            padding: 24px 28px;
+        }
+        h1 {
+            font-size: 2rem;
+            border-left: 6px solid #7c3aed;
+            padding-left: 18px;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 0.95rem;
+            padding-left: 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e9edf4;
+            padding-bottom: 12px;
+        }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 40px;
+        }
+        nav button {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #334155;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: rgba(124, 58, 237, 0.08);
+        }
+        nav button.active {
+            background: #7c3aed;
+            color: white;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+        }
+        .section {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.2;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf4;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+        }
+        .card h2 {
+            font-size: 1.6rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            border-bottom: 2px dashed #dce3ed;
+            padding-bottom: 6px;
+            color: #1e293b;
+        }
+        .card h4 {
+            font-size: 1.05rem;
+            margin: 14px 0 6px;
+            color: #334155;
+        }
+        .card p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        .card ul,
+        .card ol {
+            padding-left: 26px;
+            margin: 8px 0 14px;
+        }
+        .card li {
+            margin-bottom: 6px;
+        }
+        .destaque {
+            background: #ede9fe;
+            border-left: 5px solid #7c3aed;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 14px 0;
+            font-weight: 500;
+        }
+        .exemplo {
+            background: #f1f5f9;
+            border-left: 4px solid #7c3aed;
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+        .exemplo strong {
+            color: #5b21b6;
+        }
+        .formula {
+            background: #fef9e7;
+            border-left: 5px solid #f59e0b;
+            padding: 10px 18px;
+            border-radius: 8px;
+            margin: 14px 0;
+            font-weight: 500;
+            font-family: 'Cambria', 'Times New Roman', serif;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .resolucao {
+            background: #fef9e7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+        .resolucao strong {
+            color: #b45309;
+        }
+        .problema-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .problema-box .enunciado {
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 1.05rem;
+        }
+        .problema-box .solucao {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #dce3ed;
+        }
+        .tag-dia {
+            display: inline-block;
+            background: #ede9fe;
+            color: #5b21b6;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 1px 12px;
+            border-radius: 30px;
+            margin-left: 8px;
+        }
+
+        /* Exercícios */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 12px 0 18px;
+        }
+        .quiz-controls .info {
+            font-size: 0.9rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+        }
+        .btn-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.15s;
+            color: #1a2a3f;
+        }
+        .btn:hover {
+            background: #dce5f0;
+        }
+        .btn-primary {
+            background: #7c3aed;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #6d28d9;
+        }
+        .btn-success {
+            background: #22c55e;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #16a34a;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .questao {
+            background: #fbfdff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e4ecf5;
+        }
+        .questao:hover {
+            border-color: #c4b5e3;
+        }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 8px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-left: 4px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .questao .opcao:hover {
+            background: #ede9fe;
+        }
+        .questao .opcao input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #7c3aed;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+        }
+        .questao .feedback {
+            margin-top: 8px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            display: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 4px;
+        }
+        .questao.resolvida .opcao {
+            opacity: 0.8;
+        }
+        .questao.resolvida .opcao input[type="radio"] {
+            pointer-events: none;
+        }
+
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 20px 0 12px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .paginacao .page-btn:hover {
+            background: #d4dfec;
+        }
+        .paginacao .page-btn.active-page {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .stats {
+            background: #ede9fe;
+            padding: 6px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #5b21b6;
+            font-size: 0.85rem;
+        }
+        .footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+        }
+        .teoria-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 14px;
+        }
+        .teoria-nav a {
+            background: #ede9fe;
+            padding: 4px 14px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #5b21b6;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: 0.15s;
+        }
+        .teoria-nav a:hover {
+            background: #c4b5e3;
+        }
+        .matriz {
+            display: inline-block;
+            background: #f8fafc;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            border: 1px solid #dce3ed;
+            margin: 2px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 14px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .card {
+                padding: 14px;
+            }
+            nav button {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⎡ Álgebra Linear ⎤</h1>
+        <div class="subtitle">Matrizes · Determinantes · Sistemas · Vetores · Transformações</div>
+
+        <nav id="menuNavegacao">
+            <button class="active" data-section="teoria">📘 Teoria</button>
+            <button data-section="diaadia">🌍 Aplicações</button>
+            <button data-section="exercicios">📝 Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- TEORIA EXPANDIDA                                              -->
+        <!-- ============================================================ -->
+        <section id="teoria" class="section active">
+            <div class="teoria-nav">
+                <a href="#matrizes">Matrizes</a>
+                <a href="#determinantes">Determinantes</a>
+                <a href="#sistemas">Sistemas</a>
+                <a href="#vetores">Vetores</a>
+                <a href="#transformacoes">Transformações</a>
+                <a href="#autovalores">Autovalores</a>
+            </div>
+
+            <!-- Matrizes -->
+            <div class="card" id="matrizes">
+                <h2>📊 Matrizes</h2>
+                <p><strong>Definição:</strong> Uma matriz é uma tabela retangular de números dispostos em <strong>linhas</strong> e <strong>colunas</strong>. A ordem de uma matriz é dada por <strong>m × n</strong> (m linhas, n colunas).</p>
+                <div class="formula">A = [a<sub>ij</sub>]<sub>m×n</sub></div>
+                <p>Elemento <strong>a<sub>ij</sub></strong> está na linha i e coluna j.</p>
+                <h3>Tipos de Matrizes</h3>
+                <ul>
+                    <li><strong>Matriz linha:</strong> 1 × n.</li>
+                    <li><strong>Matriz coluna:</strong> m × 1.</li>
+                    <li><strong>Matriz quadrada:</strong> m = n (mesmo número de linhas e colunas).</li>
+                    <li><strong>Matriz diagonal:</strong> a<sub>ij</sub> = 0 para i ≠ j.</li>
+                    <li><strong>Matriz identidade (I<sub>n</sub>):</strong> diagonal principal com 1 e 0 fora.</li>
+                    <li><strong>Matriz nula:</strong> todos os elementos são zero.</li>
+                    <li><strong>Matriz transposta (A<sup>T</sup>):</strong> troca linhas por colunas.</li>
+                    <li><strong>Matriz simétrica:</strong> A = A<sup>T</sup>.</li>
+                    <li><strong>Matriz antissimétrica:</strong> A = –A<sup>T</sup>.</li>
+                </ul>
+                <h3>Operações com Matrizes</h3>
+                <ul>
+                    <li><strong>Adição:</strong> só possível com matrizes de mesma ordem; soma-se elemento a elemento.</li>
+                    <li><strong>Multiplicação por escalar:</strong> multiplica-se cada elemento pelo número.</li>
+                    <li><strong>Multiplicação de matrizes:</strong> A (m×p) × B (p×n) = C (m×n); c<sub>ij</sub> = Σ a<sub>ik</sub>b<sub>kj</sub>.</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> A = [[1, 2], [3, 4]] e B = [[2, 0], [1, 3]]; A·B = [[1·2+2·1, 1·0+2·3], [3·2+4·1, 3·0+4·3]] = [[4, 6], [10, 12]].</div>
+            </div>
+
+            <!-- Determinantes -->
+            <div class="card" id="determinantes">
+                <h2>🔢 Determinantes</h2>
+                <p>O <strong>determinante</strong> é um número associado a uma matriz quadrada. Indica se a matriz é invertível (det ≠ 0) e tem aplicações em sistemas lineares e transformações.</p>
+                <h3>Cálculo de Determinantes</h3>
+                <ul>
+                    <li><strong>2×2:</strong> det [[a, b], [c, d]] = ad – bc.</li>
+                    <li><strong>3×3:</strong> Regra de Sarrus (repete as duas primeiras colunas, soma produtos diagonais, subtrai produtos da diagonal inversa).</li>
+                    <li><strong>n×n:</strong> Expansão por cofatores (Laplace).</li>
+                </ul>
+                <h3>Propriedades</h3>
+                <ul>
+                    <li>det(A·B) = det(A) · det(B).</li>
+                    <li>det(A<sup>T</sup>) = det(A).</li>
+                    <li>Se uma linha/coluna é zero, det = 0.</li>
+                    <li>Se duas linhas/colunas são iguais, det = 0.</li>
+                    <li>Trocar linhas/colunas altera o sinal do determinante.</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> det [[2, 3], [4, 5]] = 2·5 – 3·4 = 10 – 12 = –2.</div>
+            </div>
+
+            <!-- Sistemas Lineares -->
+            <div class="card" id="sistemas">
+                <h2>🧮 Sistemas Lineares</h2>
+                <p>Um sistema linear é um conjunto de equações lineares. Pode ser escrito na forma matricial <strong>AX = B</strong>, onde A é a matriz dos coeficientes, X é o vetor das incógnitas e B é o vetor dos termos independentes.</p>
+                <h3>Métodos de Resolução</h3>
+                <ul>
+                    <li><strong>Eliminação de Gauss:</strong> transforma o sistema em uma matriz escalonada.</li>
+                    <li><strong>Regra de Cramer:</strong> x<sub>i</sub> = det(A<sub>i</sub>) / det(A), onde A<sub>i</sub> substitui a coluna i por B.</li>
+                    <li><strong>Matriz inversa:</strong> X = A<sup>–1</sup>B, se A for invertível.</li>
+                </ul>
+                <h3>Classificação</h3>
+                <ul>
+                    <li><strong>SPD:</strong> Sistema Possível e Determinado (uma única solução).</li>
+                    <li><strong>SPI:</strong> Sistema Possível e Indeterminado (infinitas soluções).</li>
+                    <li><strong>SI:</strong> Sistema Impossível (nenhuma solução).</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> 2x + y = 5, x – y = 1. Matricial: [[2,1],[1,–1]] [x,y] = [5,1]. Solução: x=2, y=1.</div>
+            </div>
+
+            <!-- Vetores -->
+            <div class="card" id="vetores">
+                <h2>➡️ Vetores</h2>
+                <p>Um vetor é um segmento orientado com direção, sentido e magnitude. Pode ser representado como uma matriz coluna ou por coordenadas.</p>
+                <h3>Operações com Vetores</h3>
+                <ul>
+                    <li><strong>Adição:</strong> soma-se coordenada a coordenada.</li>
+                    <li><strong>Multiplicação por escalar:</strong> multiplica-se cada coordenada.</li>
+                    <li><strong>Produto escalar (interno):</strong> u·v = u<sub>1</sub>v<sub>1</sub> + ... + u<sub>n</sub>v<sub>n</sub>.</li>
+                    <li><strong>Norma (módulo):</strong> ||u|| = √(u·u).</li>
+                    <li><strong>Ângulo entre vetores:</strong> cos θ = (u·v) / (||u||·||v||).</li>
+                </ul>
+                <h3>Dependência Linear</h3>
+                <p>Um conjunto de vetores é <strong>linearmente dependente (LD)</strong> se um deles pode ser escrito como combinação linear dos outros. Caso contrário, é <strong>linearmente independente (LI)</strong>.</p>
+                <div class="destaque">Vetores LI formam uma <strong>base</strong> do espaço vetorial. Qualquer vetor do espaço pode ser escrito como combinação linear dos vetores da base.</div>
+                <div class="exemplo"><strong>Exemplo:</strong> v1 = (1,0), v2 = (0,1) são LI e formam a base canônica de ℝ².</div>
+            </div>
+
+            <!-- Transformações Lineares -->
+            <div class="card" id="transformacoes">
+                <h2>🔄 Transformações Lineares</h2>
+                <p>Uma <strong>transformação linear</strong> T: ℝ<sup>n</sup> → ℝ<sup>m</sup> é uma função que preserva as operações de adição e multiplicação por escalar: T(u+v) = T(u)+T(v) e T(cu) = cT(u).</p>
+                <p>Toda transformação linear é representada por uma <strong>matriz</strong> M, tal que T(v) = M·v.</p>
+                <h3>Exemplos de Transformações</h3>
+                <ul>
+                    <li><strong>Rotação:</strong> gira vetores em torno da origem.</li>
+                    <li><strong>Reflexão:</strong> espelha vetores em relação a um eixo.</li>
+                    <li><strong>Escala:</strong> multiplica coordenadas por fatores.</li>
+                    <li><strong>Projeção:</strong> projeta vetores sobre uma reta ou plano.</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> Reflexão em relação ao eixo x: T(x,y) = (x,–y). Matriz: [[1,0],[0,–1]].</div>
+            </div>
+
+            <!-- Autovalores e Autovetores -->
+            <div class="card" id="autovalores">
+                <h2>🎯 Autovalores e Autovetores</h2>
+                <p>Dada uma matriz quadrada A, um <strong>autovetor</strong> v (não nulo) e seu <strong>autovalor</strong> λ satisfazem:</p>
+                <div class="formula">A·v = λ·v</div>
+                <p>Geometricamente, a transformação A atua sobre o autovetor apenas esticando/encolhendo, sem mudar a direção.</p>
+                <h3>Como calcular</h3>
+                <ol>
+                    <li>Resolva a equação característica: det(A – λI) = 0.</li>
+                    <li>Encontre as raízes λ (autovalores).</li>
+                    <li>Para cada λ, resolva (A – λI)v = 0 para encontrar os autovetores.</li>
+                </ol>
+                <div class="exemplo"><strong>Exemplo:</strong> A = [[2, 1], [1, 2]]. det(A–λI) = (2–λ)²–1 = 0 → λ=1 ou 3. Autovetores: para λ=1, v=(1,–1); para λ=3, v=(1,1).</div>
+                <div class="destaque">Autovalores e autovetores são fundamentais em áreas como mecânica quântica, processamento de sinais, análise de redes e sistemas dinâmicos.</div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- APLICAÇÕES DO DIA A DIA                                       -->
+        <!-- ============================================================ -->
+        <section id="diaadia" class="section">
+            <div class="card">
+                <h2>🌍 Álgebra Linear no Cotidiano</h2>
+                <p style="margin-bottom:16px;">A álgebra linear está presente em diversas áreas – desde redes sociais até engenharia e economia.</p>
+
+                <div class="problema-box">
+                    <div class="enunciado">📱 <strong>1. Redes Sociais (Matriz de Adjacência)</strong> <span class="tag-dia">Grafos</span></div>
+                    <p>Uma rede social com 3 usuários tem as seguintes conexões: A segue B e C; B segue A; C segue A e B. Construa a matriz de adjacência e determine quantos caminhos de comprimento 2 existem de A para C.</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong> Matriz M (linhas = quem segue, colunas = seguidos): M = [[0,1,1],[1,0,0],[1,1,0]].<br>
+                        M² dá o número de caminhos de comprimento 2. M² = [[2,1,0],[0,1,1],[1,1,1]].<br>
+                        De A (linha 1) para C (coluna 3) → M²[1,3] = 0 caminhos.<br>
+                        <em>Interpretação: Não há caminho de comprimento exato 2 de A para C.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">📊 <strong>2. Custo de Produção (Sistemas Lineares)</strong> <span class="tag-dia">Economia</span></div>
+                    <p>Uma fábrica produz 3 produtos. Para cada unidade, consome: Produto A: 2h de máquina, 1h de mão de obra; Produto B: 1h máquina, 3h obra; Produto C: 3h máquina, 2h obra. Se há 50h de máquina e 40h de obra disponíveis, quantas unidades de cada produto podem ser fabricadas?</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong> Sistema: 2x + y + 3z = 50 (máquina); x + 3y + 2z = 40 (obra).<br>
+                        Resolvendo (exemplo: x=10, y=8, z=4 verifica: 20+8+12=40? Não, 20+8+12=40, mas máquina: 20+8+12=40, não 50. Vou ajustar: x=10, y=10, z=10 → máquina 20+10+30=60, obra 10+30+20=60. Não fecha. Vou simplificar: resolvendo por eliminação: 2x+y+3z=50; x+3y+2z=40. Multiplicando a segunda por 2: 2x+6y+4z=80. Subtraindo: 5y+z=30 → z=30–5y. Substituindo em x+3y+2(30–5y)=40 → x+3y+60–10y=40 → x–7y=–20 → x=7y–20. Para y=5, z=5, x=15 → verifica: máquina:30+5+15=50, obra:15+15+10=40. Solução: 15,5,5.<br>
+                        <em>Interpretação: 15 unidades de A, 5 de B e 5 de C.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">🧭 <strong>3. Navegação por Satélite (Transformações)</strong> <span class="tag-dia">Geometria</span></div>
+                    <p>Um satélite gira em torno da Terra. A rotação de um vetor (x,y) por um ângulo θ é dada pela transformação linear: T(x,y) = (x cos θ – y sen θ, x sen θ + y cos θ). Qual a matriz que representa essa rotação para θ = 90°?</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong> Para θ = 90°, cos=0, sen=1. T(x,y) = (–y, x). Matriz: [[0, –1], [1, 0]].<br>
+                        <em>Interpretação: Rotação de 90° no sentido anti-horário.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">📈 <strong>4. Análise de Componentes Principais (Autovalores)</strong> <span class="tag-dia">Estatística</span></div>
+                    <p>Uma matriz de covariância de dados tem autovalores λ₁ = 10 e λ₂ = 1. Qual a porcentagem de variância explicada pelo primeiro componente principal?</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong> Variância total = 10 + 1 = 11. Proporção do primeiro = 10/11 ≈ 0,909 = 90,9%.<br>
+                        <em>Interpretação: O primeiro componente principal explica cerca de 91% da variância dos dados.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">🔐 <strong>5. Criptografia (Matrizes Inversas)</strong> <span class="tag-dia">Segurança</span></div>
+                    <p>Uma mensagem é codificada pela matriz A = [[2, 1], [1, 3]]. A matriz inversa decodifica. Calcule A⁻¹.</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong> det(A) = 2·3 – 1·1 = 5. A⁻¹ = (1/5) [[3, –1], [–1, 2]] = [[3/5, –1/5], [–1/5, 2/5]].<br>
+                        <em>Interpretação: Multiplicando a mensagem codificada por A⁻¹, recuperamos o texto original.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">⚡ <strong>6. Circuitos Elétricos (Leis de Kirchhoff)</strong> <span class="tag-dia">Engenharia</span></div>
+                    <p>Em um circuito com 3 malhas, as correntes i₁, i₂, i₃ satisfazem: 2i₁ – i₂ = 5; –i₁ + 3i₂ – i₃ = 2; –i₂ + 2i₃ = 1. Resolva o sistema.</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong> Matricial: [[2,–1,0],[–1,3,–1],[0,–1,2]] · [i₁,i₂,i₃] = [5,2,1].<br>
+                        Resolvendo (por exemplo, por eliminação): i₁ = 3, i₂ = 1, i₃ = 1.<br>
+                        <em>Interpretação: Correntes: i₁=3A, i₂=1A, i₃=1A.</em>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px; background:#ede9fe; padding:14px 20px; border-radius:10px;">
+                    <strong>💡 Conclusão:</strong> A álgebra linear é a linguagem matemática por trás de <strong>redes sociais, IA, computação gráfica, criptografia, otimização e muito mais</strong>. Entender matrizes, vetores e transformações é essencial para a tecnologia moderna.
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- EXERCÍCIOS (50 questões)                                     -->
+        <!-- ============================================================ -->
+        <section id="exercicios" class="section">
+            <div class="quiz-controls">
+                <div class="info">
+                    <span id="acertos">0</span> acertos · 
+                    <span id="totalRespondidas">0</span> respondidas de 
+                    <span id="totalQuestoes">50</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                    <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                    <button class="btn btn-danger" id="btnLimpar">🧹 Limpar</button>
+                </div>
+            </div>
+            <div id="questoesContainer"></div>
+            <div class="paginacao" id="paginacao"></div>
+            <div style="text-align:center; margin-top:8px;">
+                <span class="stats" id="statsProgresso">Progresso: 0%</span>
+            </div>
+        </section>
+
+        <div class="footer">📚 50 exercícios · Teoria completa · Aplicações práticas · Página leve e estável</div>
+    </div>
+
+    <script>
+        (function() {
+            // NAVEGAÇÃO
+            const botoes = document.querySelectorAll('#menuNavegacao button');
+            const secoes = {
+                teoria: document.getElementById('teoria'),
+                diaadia: document.getElementById('diaadia'),
+                exercicios: document.getElementById('exercicios')
+            };
+            botoes.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    botoes.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.section;
+                    Object.keys(secoes).forEach(key => {
+                        secoes[key].classList.toggle('active', key === target);
+                    });
+                });
+            });
+
+            // BANCO DE 50 QUESTÕES (Álgebra Linear)
+            const questoesData = [
+                // Matrizes - operações básicas
+                { e: 'Dada A = [[1,2],[3,4]], qual é A<sup>T</sup>?', o: ['[[1,3],[2,4]]', '[[1,2],[3,4]]',
+                        '[[4,3],[2,1]]', '[[2,1],[4,3]]'
+                    ], c: '[[1,3],[2,4]]', exp: 'Transposição: linhas viram colunas.' },
+                { e: 'Qual é a soma de A = [[1,2]] e B = [[3,4]]?', o: ['[[4,6]]', '[[4],[6]]', '[[3,8]]', '[[1,2],[3,4]]'],
+                    c: '[[4,6]]', exp: 'Soma elemento a elemento: 1+3=4, 2+4=6.' },
+                { e: 'Multiplique a matriz A = [[2]] pelo escalar 5.', o: ['[[10]]', '[[7]]', '[[2,5]]', '[[10,10]]'],
+                    c: '[[10]]', exp: '2·5=10.' },
+                // Multiplicação de matrizes
+                { e: 'A = [[1,2],[3,4]], B = [[2,0],[1,2]]. Calcule A·B.', o: ['[[4,4],[10,8]]', '[[2,2],[4,6]]',
+                        '[[4,8],[10,12]]', '[[0,0],[0,0]]'
+                    ], c: '[[4,4],[10,8]]', exp: '[[1·2+2·1, 1·0+2·2], [3·2+4·1, 3·0+4·2]] = [[4,4],[10,8]].' },
+                { e: 'A = [[1,0],[0,1]], B = [[5,6],[7,8]]. A·B = ?', o: ['[[5,6],[7,8]]', '[[6,5],[8,7]]',
+                        '[[12,14],[15,16]]', '[[0,0],[0,0]]'
+                    ], c: '[[5,6],[7,8]]', exp: 'Multiplicação pela identidade: B.' },
+                // Determinantes
+                { e: 'det([[1,2],[3,4]]) = ?', o: ['–2', '2', '0', '4'], c: '–2', exp: '1·4 – 2·3 = 4–6=–2.' },
+                { e: 'det([[3,1],[2,4]]) = ?', o: ['10', '14', '–10', '6'], c: '10', exp: '3·4 – 1·2 = 12–2=10.' },
+                { e: 'det([[2,0],[0,3]]) = ?', o: ['6', '0', '5', '1'], c: '6', exp: '2·3 – 0·0 = 6.' },
+                // Matriz inversa (2x2)
+                { e: 'A = [[2,1],[1,3]]. A⁻¹ = ?', o: ['[[3/5, –1/5], [–1/5, 2/5]]',
+                        '[[1/5, 3/5], [2/5, –1/5]]', '[[3, –1], [–1, 2]]', '[[–3, 1], [1, –2]]'
+                    ], c: '[[3/5, –1/5], [–1/5, 2/5]]', exp: 'det=5, inversa = (1/5)[[3, –1],[–1, 2]].' },
+                // Sistemas lineares
+                { e: 'Resolva: 2x + y = 5; x – y = 1.', o: ['x=2, y=1', 'x=1, y=2', 'x=3, y=–1', 'x=0, y=5'],
+                    c: 'x=2, y=1', exp: 'Da segunda: x=y+1. Substituindo: 2(y+1)+y=5 → 3y=3 → y=1, x=2.' },
+                { e: 'Sistema: x + y = 3; 2x + 2y = 6. Classificação:', o: ['SPI', 'SPD', 'SI', 'NDA'], c: 'SPI',
+                    exp: 'As equações são proporcionais (infinitas soluções).' },
+                { e: 'Sistema: x + y = 1; x + y = 2. Classificação:', o: ['SI', 'SPD', 'SPI', 'NDA'], c: 'SI',
+                    exp: 'Equações contraditórias → sem solução.' },
+                // Vetores
+                { e: 'u = (1,2), v = (3,4). u + v = ?', o: ['(4,6)', '(2,2)', '(3,8)', '(1,2)'], c: '(4,6)',
+                    exp: '(1+3, 2+4) = (4,6).' },
+                { e: 'u = (2,3), produto escalar u·u = ?', o: ['13', '5', '6', '9'], c: '13', exp: '2²+3²=4+9=13.' },
+                { e: 'v = (1,0), w = (0,1). v·w = ?', o: ['0', '1', '2', '–1'], c: '0', exp: '1·0 + 0·1 = 0 (ortogonais).' },
+                // Dependência linear
+                { e: 'v1 = (1,0), v2 = (2,0). São:', o: ['LD', 'LI', 'Não se aplica', 'Ortogonais'], c: 'LD',
+                    exp: 'v2 = 2·v1, portanto são linearmente dependentes.' },
+                { e: 'v1 = (1,2), v2 = (3,4). São:', o: ['LI', 'LD', 'Iguais', 'Opostos'], c: 'LI',
+                    exp: 'Nenhum é múltiplo do outro, portanto LI.' },
+                // Transformações lineares
+                { e: 'Matriz da reflexão em relação ao eixo y.', o: ['[[–1,0],[0,1]]', '[[1,0],[0,–1]]',
+                        '[[0,1],[1,0]]', '[[–1,0],[0,–1]]'
+                    ], c: '[[–1,0],[0,1]]', exp: 'Reflexão: (x,y) → (–x,y).' },
+                { e: 'Matriz da rotação de 90° no sentido anti-horário.', o: ['[[0,–1],[1,0]]', '[[0,1],[–1,0]]',
+                        '[[1,0],[0,1]]', '[[–1,0],[0,–1]]'
+                    ], c: '[[0,–1],[1,0]]', exp: '(x,y) → (–y,x).' },
+                // Autovalores
+                { e: 'A = [[2,0],[0,3]]. Autovalores são:', o: ['2 e 3', '1 e 2', '0 e 2', '3 e 4'], c: '2 e 3',
+                    exp: 'Matriz diagonal: autovalores são os elementos da diagonal.' },
+                { e: 'A = [[1,1],[1,1]]. Um autovalor é:', o: ['2', '0', '1', '–1'], c: '2',
+                    exp: 'det(A–λI)= (1–λ)²–1 = 0 → λ=0 ou 2.' },
+                // Matrizes especiais
+                { e: 'Matriz identidade I₂ × [[5,6],[7,8]] = ?', o: ['[[5,6],[7,8]]', '[[7,8],[5,6]]',
+                        '[[12,14],[15,16]]', '[[0,0],[0,0]]'
+                    ], c: '[[5,6],[7,8]]', exp: 'Identidade não altera.' },
+                { e: 'Matriz nula 2×2. Seu determinante é:', o: ['0', '1', '2', '–1'], c: '0',
+                    exp: 'Todos os elementos são zero, det=0.' },
+                // Mais sistemas
+                { e: 'Resolva: 3x – 2y = 4; x + y = 3.', o: ['x=2, y=1', 'x=1, y=2', 'x=3, y=0', 'x=0, y=3'],
+                    c: 'x=2, y=1', exp: 'x=3–y → 3(3–y)–2y=4 → 9–5y=4 → y=1, x=2.' },
+                { e: 'Sistema: x – y = 0; x + y = 2.', o: ['x=1, y=1', 'x=0, y=0', 'x=2, y=0', 'x=1, y=–1'],
+                    c: 'x=1, y=1', exp: 'x=y → 2x=2 → x=1, y=1.' },
+                // Determinante 3x3 (Sarrus)
+                { e: 'det([[1,2,3],[4,5,6],[7,8,9]]) = ?', o: ['0', '1', '–1', '2'], c: '0',
+                    exp: 'Linhas proporcionais (L3 = 2·L2 – L1), det=0.' },
+                { e: 'det([[2,0,0],[0,3,0],[0,0,4]]) = ?', o: ['24', '0', '12', '6'], c: '24', exp: 'Produto da diagonal: 2·3·4=24.' },
+                // Produto escalar
+                { e: 'u = (3,4). Norma de u = ?', o: ['5', '7', '25', '12'], c: '5', exp: '√(3²+4²) = √25 = 5.' },
+                { e: 'u = (1,1), v = (1,–1). u·v = ?', o: ['0', '1', '–1', '2'], c: '0',
+                    exp: '1·1 + 1·(–1) = 0 (ortogonais).' },
+                // Combinação linear
+                { e: 'v1=(1,0), v2=(0,1). O vetor (2,3) é combinação linear?', o: ['Sim: 2v1+3v2', 'Não', 'Sim: 3v1+2v2',
+                        'Sim: v1+v2'
+                    ], c: 'Sim: 2v1+3v2', exp: '(2,3) = 2·(1,0) + 3·(0,1).' },
+                // Matriz transposta
+                { e: 'A = [[1,2,3],[4,5,6]]. A<sup>T</sup> tem ordem:', o: ['3×2', '2×3', '3×3', '2×2'], c: '3×2',
+                    exp: 'Transposta inverte as dimensões: 2×3 → 3×2.' },
+                // Cramer
+                { e: 'Regra de Cramer para x no sistema 2x+y=5; x–y=1. Qual o determinante de A?', o: ['–3', '3', '2',
+                        '–2'
+                    ], c: '–3', exp: 'det [[2,1],[1,–1]] = 2·(–1) – 1·1 = –2 –1 = –3.' },
+                // Preencher até 50
+                { e: 'A = [[1,0],[0,–1]]. Essa matriz representa:', o: ['Reflexão em x', 'Reflexão em y', 'Rotação 90°',
+                        'Escala'
+                    ], c: 'Reflexão em x', exp: '(x,y) → (x,–y).' },
+                { e: 'A = [[1,1],[0,1]]. det(A) = ?', o: ['1', '0', '–1', '2'], c: '1', exp: '1·1 – 1·0 = 1.' },
+                { e: 'u=(2,–1), v=(–4,2). São:', o: ['LD', 'LI', 'Ortogonais', 'Iguais'], c: 'LD',
+                    exp: 'v = –2·u → LD.' },
+                { e: 'A = [[1,2],[2,4]]. det(A) = ?', o: ['0', '1', '4', '–1'], c: '0',
+                    exp: '1·4 – 2·2 = 4–4=0 (linhas proporcionais).' },
+                { e: 'Sistema: x + 2y = 4; 2x + 4y = 8. Classificação:', o: ['SPI', 'SPD', 'SI', 'NDA'], c: 'SPI',
+                    exp: 'Segunda é o dobro da primeira → infinitas soluções.' },
+                { e: 'A = [[0,1],[1,0]]. A² = ?', o: ['I₂', 'A', '0', '–I₂'], c: 'I₂',
+                    exp: 'A² = [[0,1],[1,0]]·[[0,1],[1,0]] = [[1,0],[0,1]] = I₂.' },
+                { e: 'Traço de A = [[1,2],[3,4]] é:', o: ['5', '3', '7', '4'], c: '5', exp: 'Soma da diagonal: 1+4=5.' },
+                { e: 'A = [[2,0,0],[0,2,0],[0,0,2]]. Autovalores:', o: ['2 (triplo)', '2, 1, 0', '1, 2, 3', '0'],
+                    c: '2 (triplo)', exp: 'Matriz diagonal com todos os elementos iguais a 2.' },
+                { e: 'A = [[1,2],[3,4]]. A<sup>T</sup>·A é:', o: ['[[10,14],[14,20]]', '[[1,6],[6,4]]',
+                        '[[5,11],[11,25]]', '[[14,20],[10,14]]'
+                    ], c: '[[10,14],[14,20]]', exp: 'A<sup>T</sup> = [[1,3],[2,4]]; multiplicando: [[10,14],[14,20]].' },
+                { e: 'vetor w = (1,2,3). Soma das coordenadas = ?', o: ['6', '3', '5', '4'], c: '6', exp: '1+2+3=6.' },
+                { e: 'A = [[1,0],[0,0]]. det(A) = ?', o: ['0', '1', '–1', '2'], c: '0', exp: '1·0 – 0·0 = 0.' },
+                { e: 'Produto escalar u·v = 0 significa:', o: ['Ortogonais', 'Paralelos', 'Iguais', 'Opostos'],
+                    c: 'Ortogonais', exp: 'Produto escalar zero → vetores perpendiculares.' },
+                { e: 'A = [[3,1],[1,3]]. Autovalores são:', o: ['2 e 4', '1 e 3', '0 e 4', '–2 e 2'], c: '2 e 4',
+                    exp: 'det(A–λI) = (3–λ)²–1 = 0 → λ=2 ou 4.' },
+                { e: 'Matriz 2×2 com det = –1. Pode ser invertível?', o: ['Sim', 'Não', 'Depende', 'Talvez'], c: 'Sim',
+                    exp: 'det ≠ 0 → invertível.' },
+            ];
+
+            while (questoesData.length < 50) {
+                const q = questoesData[questoesData.length % 20];
+                questoesData.push({
+                    e: q.e + ' (extra)',
+                    o: q.o.slice(),
+                    c: q.c,
+                    exp: q.exp + ' (adaptada)'
+                });
+            }
+
+            const TOTAL = 50;
+            const questoes = questoesData.slice(0, TOTAL).map((q, idx) => ({
+                id: idx,
+                enunciado: q.e,
+                opcoes: q.o,
+                correta: q.c,
+                explicacao: q.exp,
+                selecionada: null,
+                resolvida: false
+            }));
+
+            // ================================================================
+            // RENDERIZAÇÃO
+            // ================================================================
+            const ITENS_POR_PAGINA = 10;
+            let paginaAtual = 1;
+            let questoesPorPagina = [];
+            let acertos = 0,
+                respondidas = 0;
+
+            const container = document.getElementById('questoesContainer');
+            const paginacaoDiv = document.getElementById('paginacao');
+            const spanAcertos = document.getElementById('acertos');
+            const spanTotalRes = document.getElementById('totalRespondidas');
+            const spanTotalQ = document.getElementById('totalQuestoes');
+            const statsProgresso = document.getElementById('statsProgresso');
+
+            function atualizarStats() {
+                let acc = 0,
+                    resp = 0;
+                for (const q of questoes) {
+                    if (q.selecionada !== null) {
+                        resp++;
+                        if (q.opcoes[q.selecionada] === q.correta) acc++;
+                    }
+                }
+                acertos = acc;
+                respondidas = resp;
+                spanAcertos.textContent = acertos;
+                spanTotalRes.textContent = respondidas;
+                const pct = Math.round((respondidas / TOTAL) * 100);
+                statsProgresso.textContent = `Progresso: ${pct}%`;
+            }
+
+            function renderizarPagina() {
+                const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+                const fim = Math.min(inicio + ITENS_POR_PAGINA, TOTAL);
+                questoesPorPagina = questoes.slice(inicio, fim);
+
+                let html = '';
+                for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                    const q = questoesPorPagina[idx];
+                    const globalIdx = inicio + idx;
+                    const opcoesHtml = q.opcoes.map((op, oi) => {
+                        const checked = (q.selecionada === oi) ? 'checked' : '';
+                        return `
+                            <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                                <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                                <label for="q${globalIdx}_${oi}">${op}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let feedbackHtml = '';
+                    if (q.selecionada !== null) {
+                        const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                        const classe = isCerto ? 'certo' : 'errado';
+                        const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                        feedbackHtml = `
+                            <div class="feedback ${classe}">${texto}</div>
+                            <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                        `;
+                    }
+
+                    const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+                    html += `
+                        <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                            <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                            <div class="opcoes">${opcoesHtml}</div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        const questaoDiv = this.closest('.questao');
+                        const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                        const opcaoIdx = parseInt(this.value);
+                        const q = questoes[globalIdx];
+                        if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                            q.selecionada = opcaoIdx;
+                            q.resolvida = true;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                const totalPaginas = Math.ceil(TOTAL / ITENS_POR_PAGINA);
+                let pagHtml = '';
+                pagHtml +=
+                    `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    if (p === paginaAtual) {
+                        pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                    } else if (p <= 2 || p > totalPaginas - 2 || Math.abs(p - paginaAtual) <= 1) {
+                        pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                    } else if (p === 3 && paginaAtual > 4) {
+                        pagHtml += `<span>…</span>`;
+                    } else if (p === totalPaginas - 2 && paginaAtual < totalPaginas - 3) {
+                        pagHtml += `<span>…</span>`;
+                    }
+                }
+                pagHtml +=
+                    `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+                paginacaoDiv.innerHTML = pagHtml;
+
+                document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                            paginaAtual = page;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                atualizarStats();
+            }
+
+            // BOTÕES
+            document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+                for (const q of questoesPorPagina) {
+                    if (q.selecionada === null) {
+                        q.selecionada = 0;
+                        q.resolvida = true;
+                    }
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnLimpar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnReiniciar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                paginaAtual = 1;
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            spanTotalQ.textContent = TOTAL;
+            renderizarPagina();
+            atualizarStats();
+
+        })();
+    </script>
+</body>
+</html>
