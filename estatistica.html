@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estatística · Descritiva e Inferencial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fc;
+            color: #1e293b;
+            padding: 16px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            padding: 24px 28px;
+        }
+        h1 {
+            font-size: 2rem;
+            border-left: 6px solid #0ea5e9;
+            padding-left: 18px;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 0.95rem;
+            padding-left: 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e9edf4;
+            padding-bottom: 12px;
+        }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 40px;
+        }
+        nav button {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #334155;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: rgba(14, 165, 233, 0.08);
+        }
+        nav button.active {
+            background: #0ea5e9;
+            color: white;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+        }
+        .section {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.2;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf4;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+        }
+        .card h2 {
+            font-size: 1.6rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            border-bottom: 2px dashed #dce3ed;
+            padding-bottom: 6px;
+            color: #1e293b;
+        }
+        .card h4 {
+            font-size: 1.05rem;
+            margin: 14px 0 6px;
+            color: #334155;
+        }
+        .card p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        .card ul,
+        .card ol {
+            padding-left: 26px;
+            margin: 8px 0 14px;
+        }
+        .card li {
+            margin-bottom: 6px;
+        }
+        .destaque {
+            background: #e0f2fe;
+            border-left: 5px solid #0ea5e9;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 14px 0;
+            font-weight: 500;
+        }
+        .exemplo {
+            background: #f1f5f9;
+            border-left: 4px solid #0ea5e9;
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+        .exemplo strong {
+            color: #0369a1;
+        }
+        .formula {
+            background: #fef9e7;
+            border-left: 5px solid #f59e0b;
+            padding: 10px 18px;
+            border-radius: 8px;
+            margin: 14px 0;
+            font-weight: 500;
+            font-family: 'Cambria', 'Times New Roman', serif;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .resolucao {
+            background: #fef9e7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+        .resolucao strong {
+            color: #b45309;
+        }
+        .problema-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .problema-box .enunciado {
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 1.05rem;
+        }
+        .problema-box .solucao {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #dce3ed;
+        }
+        .tag-dia {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 1px 12px;
+            border-radius: 30px;
+            margin-left: 8px;
+        }
+
+        /* Exercícios */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 12px 0 18px;
+        }
+        .quiz-controls .info {
+            font-size: 0.9rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+        }
+        .btn-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.15s;
+            color: #1a2a3f;
+        }
+        .btn:hover {
+            background: #dce5f0;
+        }
+        .btn-primary {
+            background: #0ea5e9;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0284c7;
+        }
+        .btn-success {
+            background: #22c55e;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #16a34a;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .questao {
+            background: #fbfdff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e4ecf5;
+        }
+        .questao:hover {
+            border-color: #7dd3fc;
+        }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 8px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-left: 4px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .questao .opcao:hover {
+            background: #e0f2fe;
+        }
+        .questao .opcao input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #0ea5e9;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+        }
+        .questao .feedback {
+            margin-top: 8px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            display: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 4px;
+        }
+        .questao.resolvida .opcao {
+            opacity: 0.8;
+        }
+        .questao.resolvida .opcao input[type="radio"] {
+            pointer-events: none;
+        }
+
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 20px 0 12px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .paginacao .page-btn:hover {
+            background: #d4dfec;
+        }
+        .paginacao .page-btn.active-page {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .stats {
+            background: #e0f2fe;
+            padding: 6px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #0369a1;
+            font-size: 0.85rem;
+        }
+        .footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+        }
+        .teoria-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 14px;
+        }
+        .teoria-nav a {
+            background: #e0f2fe;
+            padding: 4px 14px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #0369a1;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: 0.15s;
+        }
+        .teoria-nav a:hover {
+            background: #bae6fd;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 14px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .card {
+                padding: 14px;
+            }
+            nav button {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Estatística</h1>
+        <div class="subtitle">Descritiva · Inferencial · Probabilidade · Testes · Regressão</div>
+
+        <nav id="menuNavegacao">
+            <button class="active" data-section="teoria">📘 Teoria</button>
+            <button data-section="diaadia">🌍 Aplicações</button>
+            <button data-section="exercicios">📝 Exercícios</button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- TEORIA (COMPLETA)                                             -->
+        <!-- ============================================================ -->
+        <section id="teoria" class="section active">
+            <div class="teoria-nav">
+                <a href="#descritiva">Descritiva</a>
+                <a href="#tendencia">Tendência Central</a>
+                <a href="#dispersao">Dispersão</a>
+                <a href="#probabilidade">Probabilidade</a>
+                <a href="#distribuicoes">Distribuições</a>
+                <a href="#inferencia">Inferência</a>
+                <a href="#testes">Testes de Hipóteses</a>
+                <a href="#regressao">Regressão</a>
+            </div>
+
+            <!-- Descritiva -->
+            <div class="card" id="descritiva">
+                <h2>📊 Estatística Descritiva</h2>
+                <p>A estatística descritiva tem como objetivo <strong>resumir e organizar</strong> dados, tornando-os mais fáceis de interpretar. Ela utiliza tabelas, gráficos e medidas resumo.</p>
+                <h3>Tipos de Dados</h3>
+                <ul>
+                    <li><strong>Qualitativos (categóricos):</strong> nominais (sem ordem, ex: cor) ou ordinais (com ordem, ex: escolaridade).</li>
+                    <li><strong>Quantitativos (numéricos):</strong> discretos (contáveis, ex: número de filhos) ou contínuos (mensuráveis, ex: altura, peso).</li>
+                </ul>
+                <h3>Distribuição de Frequências</h3>
+                <p>Organiza os dados em classes (intervalos) e conta a frequência de cada classe. Elementos: frequência absoluta, relativa, percentual, acumulada.</p>
+                <div class="exemplo"><strong>Exemplo:</strong> Notas de 20 alunos: 5,6,7,8,9,10... Agrupar em classes 0-4, 5-6, 7-8, 9-10.</div>
+                <h3>Gráficos</h3>
+                <ul>
+                    <li><strong>Barras/Colunas:</strong> para dados qualitativos ou discretos.</li>
+                    <li><strong>Histograma:</strong> para dados contínuos (área proporcional à frequência).</li>
+                    <li><strong>Setores (Pizza):</strong> para proporções.</li>
+                    <li><strong>Boxplot:</strong> mostra mediana, quartis e outliers.</li>
+                </ul>
+            </div>
+
+            <!-- Medidas de Tendência Central -->
+            <div class="card" id="tendencia">
+                <h2>📈 Medidas de Tendência Central</h2>
+                <p>Indicam o valor central ou típico de um conjunto de dados.</p>
+                <ul>
+                    <li><strong>Média (aritmética):</strong> x̄ = (Σx<sub>i</sub>) / n. É influenciada por valores extremos.</li>
+                    <li><strong>Mediana:</strong> valor central quando os dados estão ordenados. Para n ímpar é o valor do meio; para n par, a média dos dois valores centrais. Não é influenciada por extremos.</li>
+                    <li><strong>Moda:</strong> valor que mais se repete. Pode haver mais de uma moda (bimodal, multimodal).</li>
+                </ul>
+                <div class="formula">Média = Σx / n &nbsp;·&nbsp; Mediana = valor central &nbsp;·&nbsp; Moda = valor mais frequente</div>
+                <div class="exemplo"><strong>Exemplo:</strong> Dados: 2,3,5,7,8. Média=5, Mediana=5, Moda=não tem.</div>
+                <p><strong>Escolha da medida:</strong> Em distribuições simétricas, média = mediana. Com assimetria, a mediana é mais robusta.</p>
+            </div>
+
+            <!-- Medidas de Dispersão -->
+            <div class="card" id="dispersao">
+                <h2>📉 Medidas de Dispersão</h2>
+                <p>Indicam o grau de variabilidade ou espalhamento dos dados em torno da média.</p>
+                <ul>
+                    <li><strong>Amplitude:</strong> máximo – mínimo. Muito sensível a outliers.</li>
+                    <li><strong>Variância (σ² ou s²):</strong> média dos quadrados dos desvios em relação à média.</li>
+                    <li><strong>Desvio padrão (σ ou s):</strong> raiz quadrada da variância. Mesma unidade dos dados.</li>
+                    <li><strong>Coeficiente de variação (CV):</strong> (desvio padrão / média) × 100%. Útil para comparar variabilidade de conjuntos com médias diferentes.</li>
+                    <li><strong>Amplitude interquartil (AIQ):</strong> Q3 – Q1. Medida robusta de dispersão.</li>
+                </ul>
+                <div class="formula">σ² = Σ(x<sub>i</sub> – μ)² / N &nbsp;·&nbsp; s² = Σ(x<sub>i</sub> – x̄)² / (n–1) &nbsp;·&nbsp; CV = (s / x̄) × 100%</div>
+                <div class="exemplo"><strong>Exemplo:</strong> Dados 2,4,6,8. Média=5. Variância = [(–3)²+(–1)²+1²+3²]/4 = (9+1+1+9)/4 = 5. Desvio padrão = √5 ≈ 2,24.</div>
+            </div>
+
+            <!-- Probabilidade -->
+            <div class="card" id="probabilidade">
+                <h2>🎲 Probabilidade</h2>
+                <p>A probabilidade é a base da inferência estatística. Mede a chance de um evento ocorrer.</p>
+                <ul>
+                    <li><strong>Definição clássica:</strong> P(A) = número de casos favoráveis / número de casos possíveis.</li>
+                    <li><strong>Definição frequentista:</strong> P(A) = limite da frequência relativa quando n→∞.</li>
+                    <li><strong>Propriedades:</strong> 0 ≤ P(A) ≤ 1; P(Ω)=1; P(∅)=0.</li>
+                </ul>
+                <h3>Regras</h3>
+                <ul>
+                    <li><strong>Soma:</strong> P(A∪B) = P(A) + P(B) – P(A∩B).</li>
+                    <li><strong>Produto (independentes):</strong> P(A∩B) = P(A)·P(B).</li>
+                    <li><strong>Probabilidade condicional:</strong> P(A|B) = P(A∩B) / P(B), com P(B) > 0.</li>
+                    <li><strong>Teorema de Bayes:</strong> P(A|B) = P(B|A)·P(A) / P(B).</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> Lançar um dado: P(par) = 3/6 = 0,5.</div>
+            </div>
+
+            <!-- Distribuições de Probabilidade -->
+            <div class="card" id="distribuicoes">
+                <h2>📊 Distribuições de Probabilidade</h2>
+                <h3>Distribuições Discretas</h3>
+                <ul>
+                    <li><strong>Binomial:</strong> número de sucessos em n tentativas independentes (p = probabilidade de sucesso). P(X=k) = C(n,k) p<sup>k</sup> (1–p)<sup>n–k</sup>. E(X)=np, Var(X)=np(1–p).</li>
+                    <li><strong>Poisson:</strong> número de eventos raros em um intervalo fixo (λ = taxa média). P(X=k) = e<sup>–λ</sup> λ<sup>k</sup> / k!. E(X)=λ, Var(X)=λ.</li>
+                </ul>
+                <h3>Distribuições Contínuas</h3>
+                <ul>
+                    <li><strong>Normal (Gaussiana):</strong> f(x) = (1/(σ√(2π))) e<sup>–(x–μ)²/(2σ²)</sup>. Simétrica, com média = mediana = moda. 68% dos dados em μ±σ, 95% em μ±2σ, 99,7% em μ±3σ.</li>
+                    <li><strong>Padronização (Z):</strong> Z = (X – μ) / σ. Z ∼ N(0,1).</li>
+                    <li><strong>t-Student:</strong> usada para amostras pequenas (n < 30) quando a variância populacional é desconhecida.</li>
+                    <li><strong>Qui-quadrado (χ²):</strong> usada em testes de ajuste e independência.</li>
+                    <li><strong>F de Snedecor:</strong> usada em ANOVA e comparação de variâncias.</li>
+                </ul>
+                <div class="destaque">Teorema do Limite Central (TLC): Para amostras suficientemente grandes (n ≥ 30), a distribuição das médias amostrais se aproxima de uma normal, independentemente da distribuição da população.</div>
+            </div>
+
+            <!-- Inferência Estatística -->
+            <div class="card" id="inferencia">
+                <h2>🔍 Inferência Estatística</h2>
+                <p>A inferência permite tirar conclusões sobre a população a partir de uma <strong>amostra</strong>.</p>
+                <h3>Estimativa Pontual</h3>
+                <p>Usa uma estatística (ex: média amostral x̄) para estimar um parâmetro populacional (μ). É um valor único, sujeito a erro.</p>
+                <h3>Intervalos de Confiança</h3>
+                <p>Fornece um intervalo de valores que contém o parâmetro com uma certa probabilidade (nível de confiança, geralmente 95%).</p>
+                <ul>
+                    <li><strong>Para μ com σ conhecido:</strong> x̄ ± z·(σ/√n).</li>
+                    <li><strong>Para μ com σ desconhecido (n ≥ 30):</strong> x̄ ± z·(s/√n).</li>
+                    <li><strong>Para μ com σ desconhecido (n < 30):</strong> x̄ ± t·(s/√n), com t da distribuição t-Student com n–1 graus de liberdade.</li>
+                    <li><strong>Para proporção p:</strong> p̂ ± z·√(p̂(1–p̂)/n).</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> Amostra n=100, x̄=50, s=10. IC 95% para μ: 50 ± 1,96·(10/√100) = 50 ± 1,96 = [48,04, 51,96].</div>
+            </div>
+
+            <!-- Testes de Hipóteses -->
+            <div class="card" id="testes">
+                <h2>📋 Testes de Hipóteses</h2>
+                <p>Procedimento para decidir se uma afirmação sobre a população é verdadeira, com base em dados amostrais.</p>
+                <ul>
+                    <li><strong>Hipótese nula (H₀):</strong> afirmação a ser testada (ex: μ = μ₀).</li>
+                    <li><strong>Hipótese alternativa (H₁):</strong> o que se quer evidenciar (ex: μ ≠ μ₀, μ > μ₀, μ < μ₀).</li>
+                    <li><strong>Estatística de teste:</strong> valor calculado a partir dos dados (ex: z, t, χ², F).</li>
+                    <li><strong>Nível de significância (α):</strong> probabilidade de erro tipo I (rejeitar H₀ quando verdadeira).</li>
+                    <li><strong>Valor-p (p-value):</strong> probabilidade de obter um resultado tão extremo quanto o observado, supondo H₀ verdadeira. Se p < α, rejeita-se H₀.</li>
+                </ul>
+                <h3>Testes Comuns</h3>
+                <ul>
+                    <li><strong>Teste z:</strong> para média com variância conhecida (n ≥ 30).</li>
+                    <li><strong>Teste t:</strong> para média com variância desconhecida (n < 30).</li>
+                    <li><strong>Teste χ² de independência:</strong> para tabelas de contingência (duas variáveis categóricas).</li>
+                    <li><strong>Teste χ² de aderência (bondade de ajuste):</strong> compara distribuição observada com esperada.</li>
+                    <li><strong>ANOVA (Análise de Variância):</strong> compara médias de três ou mais grupos.</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> H₀: μ = 50 vs H₁: μ ≠ 50. α=0,05. Amostra n=30, x̄=52, s=4. z = (52–50)/(4/√30) = 2,74. p-valor = 0,006 < 0,05 → rejeita H₀. Conclusão: há evidência de que a média é diferente de 50.</div>
+            </div>
+
+            <!-- Regressão e Correlação -->
+            <div class="card" id="regressao">
+                <h2>📈 Regressão e Correlação</h2>
+                <p>Estuda a relação entre duas ou mais variáveis.</p>
+                <h3>Correlação</h3>
+                <ul>
+                    <li><strong>Coeficiente de correlação de Pearson (r):</strong> mede a intensidade e direção da relação linear entre duas variáveis. r ∈ [–1, 1]. r próximo de 1 → correlação positiva forte; r próximo de –1 → negativa forte; r = 0 → ausência de correlação linear.</li>
+                </ul>
+                <div class="formula">r = Σ[(x<sub>i</sub>–x̄)(y<sub>i</sub>–ȳ)] / √[Σ(x<sub>i</sub>–x̄)² · Σ(y<sub>i</sub>–ȳ)²]</div>
+                <h3>Regressão Linear Simples</h3>
+                <p>Modelo: y = a + bx + ε, onde a é o intercepto, b é a inclinação (efeito de x sobre y), ε é o erro aleatório.</p>
+                <ul>
+                    <li><strong>Coeficientes estimados (mínimos quadrados):</strong> b = Σ(x<sub>i</sub>–x̄)(y<sub>i</sub>–ȳ) / Σ(x<sub>i</sub>–x̄)²; a = ȳ – b·x̄.</li>
+                    <li><strong>Coeficiente de determinação (R²):</strong> proporção da variância de y explicada pelo modelo. R² = r² (na regressão simples).</li>
+                </ul>
+                <div class="exemplo"><strong>Exemplo:</strong> Dados de horas de estudo (x) e nota (y). Estimar nota para x=5. Suponha que a regressão seja y = 4 + 1,5x. Para x=5 → y = 4 + 7,5 = 11,5.</div>
+                <h3>Regressão Múltipla</h3>
+                <p>Inclui mais de uma variável preditora: y = a + b₁x₁ + b₂x₂ + ... + b<sub>k</sub>x<sub>k</sub> + ε. Avalia o efeito conjunto e individual de cada preditor.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- APLICAÇÕES (PROBLEMAS DO DIA A DIA)                           -->
+        <!-- ============================================================ -->
+        <section id="diaadia" class="section">
+            <div class="card">
+                <h2>🌍 Estatística no Cotidiano</h2>
+                <p style="margin-bottom:16px;">A estatística está presente em pesquisas, negócios, saúde, esportes e muito mais.</p>
+
+                <div class="problema-box">
+                    <div class="enunciado">📊 <strong>1. Média de Notas (Descritiva)</strong> <span class="tag-dia">Educação</span></div>
+                    <p>As notas de 5 alunos foram: 6, 7, 8, 9, 10. Calcule a média, mediana e desvio padrão.</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong><br>
+                        Média = (6+7+8+9+10)/5 = 40/5 = 8.<br>
+                        Mediana = valor central (ordenados) = 8.<br>
+                        Variância = [(–2)²+(–1)²+0²+1²+2²]/5 = (4+1+0+1+4)/5 = 10/5 = 2.<br>
+                        Desvio padrão = √2 ≈ 1,41.<br>
+                        <em>Interpretação: A média é 8, a mediana é 8 e o desvio é 1,41 (baixa dispersão).</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">🎲 <strong>2. Probabilidade de uma Moeda</strong> <span class="tag-dia">Jogos</span></div>
+                    <p>Uma moeda é lançada 3 vezes. Qual a probabilidade de obter exatamente 2 caras?</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong><br>
+                        Usando a distribuição binomial: n=3, k=2, p=0,5.<br>
+                        P(X=2) = C(3,2) · (0,5)² · (0,5)¹ = 3 · 0,25 · 0,5 = 0,375 = 37,5%.<br>
+                        <em>Interpretação: Em 37,5% das vezes, sairão exatamente 2 caras.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">📈 <strong>3. Intervalo de Confiança (Pesquisa)</strong> <span class="tag-dia">Opinião</span></div>
+                    <p>Uma pesquisa com 400 pessoas mostrou que 60% são a favor de uma proposta. Construa um IC de 95% para a proporção populacional.</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong><br>
+                        p̂ = 0,6; n=400; z(95%) = 1,96.<br>
+                        Erro = z·√(p̂(1–p̂)/n) = 1,96·√(0,6·0,4/400) = 1,96·√(0,0006) ≈ 1,96·0,0245 = 0,048.<br>
+                        IC = 0,6 ± 0,048 = [0,552; 0,648] ou [55,2%; 64,8%].<br>
+                        <em>Interpretação: Com 95% de confiança, a proporção real está entre 55,2% e 64,8%.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">🧪 <strong>4. Teste de Hipóteses (Medicina)</strong> <span class="tag-dia">Saúde</span></div>
+                    <p>Um medicamento afirma reduzir a pressão arterial em 5 mmHg, em média. Em uma amostra de 30 pacientes, a redução média foi de 4,2 mmHg com desvio 1,8. Teste a afirmação com α=0,05.</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong><br>
+                        H₀: μ = 5; H₁: μ ≠ 5 (bilateral).<br>
+                        t = (4,2 – 5) / (1,8/√30) = –0,8 / 0,3286 = –2,43.<br>
+                        Graus de liberdade = 29. p-valor ≈ 0,021 (bilateral).<br>
+                        Como p < 0,05, rejeita-se H₀. Há evidência de que a redução média não é 5 mmHg.<br>
+                        <em>Interpretação: O medicamento não atinge a redução prometida.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">📉 <strong>5. Correlação e Regressão (Vendas)</strong> <span class="tag-dia">Negócios</span></div>
+                    <p>Uma loja coletou dados de gastos com publicidade (x, em mil R$) e vendas (y, em mil R$): (1, 10), (2, 14), (3, 18), (4, 22). Estime as vendas para um gasto de 5 mil R$.</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong><br>
+                        x̄ = 2,5; ȳ = 16. Σ(x–x̄)(y–ȳ) = (–1,5·–6)+(–0,5·–2)+(0,5·2)+(1,5·6) = 9+1+1+9=20. Σ(x–x̄)² = 2,25+0,25+0,25+2,25=5.<br>
+                        b = 20/5 = 4; a = 16 – 4·2,5 = 16 – 10 = 6.<br>
+                        Equação: y = 6 + 4x. Para x=5 → y = 6 + 20 = 26 mil R$.<br>
+                        <em>Interpretação: Com gasto de 5 mil em publicidade, as vendas estimadas são 26 mil.</em>
+                    </div>
+                </div>
+
+                <div class="problema-box">
+                    <div class="enunciado">📦 <strong>6. Distribuição Normal (Controle de Qualidade)</strong> <span class="tag-dia">Indústria</span></div>
+                    <p>O peso de um produto tem distribuição normal com μ=200g e σ=5g. Qual a probabilidade de um produto pesar entre 195g e 205g?</p>
+                    <div class="solucao">
+                        <strong>Solução:</strong><br>
+                        P(195 < X < 205) = P((195–200)/5 < Z < (205–200)/5) = P(–1 < Z < 1).<br>
+                        P(–1 < Z < 1) = 0,6827 (pela tabela normal).<br>
+                        <em>Interpretação: 68,27% dos produtos estão nesse intervalo (regra empírica).</em>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px; background:#e0f2fe; padding:14px 20px; border-radius:10px;">
+                    <strong>💡 Conclusão:</strong> A estatística é uma ferramenta poderosa para <strong>tomar decisões baseadas em dados</strong> – desde entender o comportamento do consumidor até avaliar a eficácia de tratamentos médicos.
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- EXERCÍCIOS (50 questões)                                     -->
+        <!-- ============================================================ -->
+        <section id="exercicios" class="section">
+            <div class="quiz-controls">
+                <div class="info">
+                    <span id="acertos">0</span> acertos · 
+                    <span id="totalRespondidas">0</span> respondidas de 
+                    <span id="totalQuestoes">50</span>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                    <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                    <button class="btn btn-danger" id="btnLimpar">🧹 Limpar</button>
+                </div>
+            </div>
+            <div id="questoesContainer"></div>
+            <div class="paginacao" id="paginacao"></div>
+            <div style="text-align:center; margin-top:8px;">
+                <span class="stats" id="statsProgresso">Progresso: 0%</span>
+            </div>
+        </section>
+
+        <div class="footer">📚 50 exercícios · Teoria completa · Aplicações práticas · Página leve e estável</div>
+    </div>
+
+    <script>
+        (function() {
+            // NAVEGAÇÃO
+            const botoes = document.querySelectorAll('#menuNavegacao button');
+            const secoes = {
+                teoria: document.getElementById('teoria'),
+                diaadia: document.getElementById('diaadia'),
+                exercicios: document.getElementById('exercicios')
+            };
+            botoes.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    botoes.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.section;
+                    Object.keys(secoes).forEach(key => {
+                        secoes[key].classList.toggle('active', key === target);
+                    });
+                });
+            });
+
+            // BANCO DE 50 QUESTÕES (Estatística)
+            const questoesData = [
+                // Descritiva - média, mediana, moda
+                { e: 'Dados: 2,3,5,7,8. Média = ?', o: ['5', '6', '4', '7'], c: '5', exp: '(2+3+5+7+8)/5=5.' },
+                { e: 'Dados: 2,3,5,7,8. Mediana = ?', o: ['5', '6', '4', '7'], c: '5', exp: 'Valor central = 5.' },
+                { e: 'Dados: 1,2,2,3,4. Moda = ?', o: ['2', '1', '3', '4'], c: '2', exp: '2 aparece duas vezes.' },
+                { e: 'Dados: 10,12,14,16,18. Amplitude = ?', o: ['8', '4', '10', '6'], c: '8',
+                    exp: '18–10 = 8.' },
+                { e: 'Dados: 2,4,6,8. Variância populacional = ?', o: ['5', '4', '6', '3'], c: '5',
+                    exp: 'Média=5; (9+1+1+9)/4=5.' },
+                // Probabilidade
+                { e: 'Lançar um dado: P(par) = ?', o: ['0,5', '0,33', '0,66', '0,25'], c: '0,5',
+                    exp: '3/6 = 0,5.' },
+                { e: 'Lançar duas moedas: P(cara e coroa) = ?', o: ['0,5', '0,25', '0,75', '0,33'], c: '0,5',
+                    exp: 'Possibilidades: CC, CK, KC, KK → 2/4 = 0,5.' },
+                { e: 'P(A)=0,4, P(B)=0,3, P(A∩B)=0,1. P(A∪B)=?', o: ['0,6', '0,7', '0,5', '0,8'], c: '0,6',
+                    exp: '0,4+0,3–0,1=0,6.' },
+                // Distribuição normal
+                { e: 'Em uma normal com μ=0, σ=1, P(Z<0) = ?', o: ['0,5', '0', '1', '0,25'], c: '0,5',
+                    exp: 'Simetria da normal → 0,5.' },
+                { e: 'Em uma normal, aproximadamente 68% dos dados estão em μ±?', o: ['σ', '2σ', '3σ', '0,5σ'],
+                    c: 'σ', exp: 'Regra empírica: μ±σ contém 68%.' },
+                // Intervalo de confiança
+                { e: 'IC 95% para média com z=1,96, erro padrão=2, x̄=10. Limite inferior?', o: ['6,08', '8,04', '9,02',
+                        '7,5'
+                    ], c: '6,08', exp: '10 – 1,96·2 = 6,08.' },
+                // Teste de hipóteses
+                { e: 'Em um teste, p-valor = 0,03 e α=0,05. Decisão:', o: ['Rejeitar H₀', 'Não rejeitar H₀',
+                        'Aceitar H₀', 'Inconclusivo'
+                    ], c: 'Rejeitar H₀', exp: 'p < α → rejeita H₀.' },
+                // Correlação
+                { e: 'r = 0,85 indica correlação:', o: ['Positiva forte', 'Negativa forte', 'Nula', 'Positiva fraca'],
+                    c: 'Positiva forte', exp: 'r próximo de 1 → forte positiva.' },
+                // Regressão
+                { e: 'Equação y = 2 + 3x. Para x=4, y = ?', o: ['14', '10', '12', '16'], c: '14',
+                    exp: '2 + 3·4 = 14.' },
+                // Coeficiente de determinação
+                { e: 'r = 0,9. R² = ?', o: ['0,81', '0,9', '0,95', '0,5'], c: '0,81', exp: 'R² = r² = 0,81.' },
+                // Mais descritiva
+                { e: 'Dados: 1,1,2,3,5,8. Mediana = ?', o: ['2,5', '2', '3', '4'], c: '2,5',
+                    exp: 'Média dos dois centrais (2+3)/2 = 2,5.' },
+                { e: 'Desvio padrão populacional de 2,4,6 é:', o: ['1,63', '2,0', '1,0', '2,5'], c: '1,63',
+                    exp: 'Média=4; σ=√((4+0+4)/3)=√(8/3)=1,63.' },
+                // Distribuição binomial
+                { e: 'n=4, p=0,5. P(X=2) = ?', o: ['0,375', '0,25', '0,5', '0,125'], c: '0,375',
+                    exp: 'C(4,2)·0,5²·0,5² = 6·0,0625=0,375.' },
+                // Poisson
+                { e: 'λ=2. P(X=0) = ?', o: ['0,135', '0,271', '0,05', '0,5'], c: '0,135',
+                    exp: 'e⁻² = 0,1353.' },
+                // Testes
+                { e: 'H₀: μ=10, H₁: μ>10. Teste é:', o: ['Unilateral direito', 'Unilateral esquerdo', 'Bilateral',
+                        'Não se aplica'
+                    ], c: 'Unilateral direito', exp: 'H₁ usa ">" → unilateral direito.' },
+                // Variância
+                { e: 's² = 16, s = ?', o: ['4', '8', '16', '2'], c: '4', exp: '√16 = 4.' },
+                { e: 'CV = (s/x̄)·100%. Se s=5, x̄=20, CV = ?', o: ['25%', '20%', '30%', '15%'], c: '25%',
+                    exp: '(5/20)·100 = 25%.' },
+                // Probabilidade condicional
+                { e: 'P(A)=0,3, P(B)=0,4, P(A∩B)=0,12. P(A|B)=?', o: ['0,3', '0,4', '0,12', '0,5'], c: '0,3',
+                    exp: '0,12/0,4 = 0,3.' },
+                // Teorema de Bayes
+                { e: 'P(A)=0,2, P(B|A)=0,7, P(B|Aᶜ)=0,1. P(A|B) = ?', o: ['0,636', '0,5', '0,2', '0,8'], c: '0,636',
+                    exp: 'P(A|B) = (0,2·0,7)/(0,2·0,7 + 0,8·0,1) = 0,14/0,22 = 0,636.' },
+                // Normal padrão
+                { e: 'P(Z > 1,96) ≈ ?', o: ['0,025', '0,05', '0,01', '0,1'], c: '0,025',
+                    exp: 'Na tabela normal, P(Z>1,96)=0,025.' },
+                // Graus de liberdade
+                { e: 'Teste t com amostra n=25. gl = ?', o: ['24', '25', '26', '23'], c: '24',
+                    exp: 'gl = n–1 = 24.' },
+                // Qui-quadrado
+                { e: 'Em um teste χ², se χ²calc > χ²crit, rejeita-se H₀. Verdadeiro ou falso?', o: ['Verdadeiro',
+                        'Falso', 'Depende', 'Não se aplica'
+                    ], c: 'Verdadeiro', exp: 'Valor calculado maior que o crítico → rejeita.' },
+                // ANOVA
+                { e: 'ANOVA compara médias de:', o: ['3 ou mais grupos', '2 grupos', '1 grupo', 'Distribuições'],
+                    c: '3 ou mais grupos', exp: 'ANOVA é usada para comparar várias médias.' },
+                // Regressão múltipla
+                { e: 'Regressão múltipla tem:', o: ['Mais de um preditor', 'Um preditor', 'Apenas intercepto',
+                        'Nenhum preditor'
+                    ], c: 'Mais de um preditor', exp: 'Múltipla = várias variáveis independentes.' },
+                // Boxplot
+                { e: 'No boxplot, os "bigodes" representam:', o: ['Valores extremos (não outliers)',
+                        'Outliers', 'Mediana', 'Quartis'
+                    ], c: 'Valores extremos (não outliers)', exp: 'Os bigodes vão até o valor máximo/mínimo que não são outliers.' },
+                // Histograma
+                { e: 'Histograma é usado para dados:', o: ['Contínuos', 'Discretos', 'Categóricos', 'Ordinais'],
+                    c: 'Contínuos', exp: 'Histograma é para variáveis contínuas agrupadas em intervalos.' },
+                // Complementos
+                { e: 'Média ponderada de 2 com peso 3 e 4 com peso 2 é:', o: ['2,8', '3,0', '3,2', '2,5'], c: '2,8',
+                    exp: '(2·3 + 4·2)/5 = (6+8)/5 = 2,8.' },
+                { e: 'Se todos os valores são iguais, o desvio padrão é:', o: ['0', '1', 'Depende', 'Infinito'],
+                    c: '0', exp: 'Sem variabilidade → σ=0.' },
+                { e: 'A mediana é mais robusta que a média. Verdadeiro?', o: ['Verdadeiro', 'Falso', 'Depende',
+                        'Não se aplica'
+                    ], c: 'Verdadeiro', exp: 'Mediana não é afetada por outliers.' },
+                { e: 'P(A∪B) = P(A) + P(B) se:', o: ['A e B mutuamente exclusivos', 'A e B independentes',
+                        'A e B iguais', 'Sempre'
+                    ], c: 'A e B mutuamente exclusivos', exp: 'P(A∩B)=0 → soma das probabilidades.' },
+                { e: 'Na distribuição t-Student, com gl→∞, aproxima-se da:', o: ['Normal', 'Exponencial',
+                        'Uniforme', 'Poisson'
+                    ], c: 'Normal', exp: 't converge para normal quando gl é grande.' },
+                { e: 'Coeficiente de variação (CV) é útil para:', o: ['Comparar dispersão de conjuntos com médias diferentes',
+                        'Comparar médias', 'Calcular moda', 'Medir correlação'
+                    ], c: 'Comparar dispersão de conjuntos com médias diferentes', exp: 'CV é adimensional e permite comparação.' },
+                { e: 'Em um teste de hipóteses, erro tipo I é:', o: ['Rejeitar H₀ quando verdadeira',
+                        'Não rejeitar H₀ quando falsa', 'Aceitar H₀', 'Nenhum dos anteriores'
+                    ], c: 'Rejeitar H₀ quando verdadeira', exp: 'Erro tipo I = falso positivo.' },
+                { e: 'Em um teste de hipóteses, erro tipo II é:', o: ['Não rejeitar H₀ quando falsa',
+                        'Rejeitar H₀ quando verdadeira', 'Aceitar H₁', 'Nenhum'
+                    ], c: 'Não rejeitar H₀ quando falsa', exp: 'Erro tipo II = falso negativo.' },
+                { e: 'O nível de significância α é a probabilidade de:', o: ['Erro tipo I', 'Erro tipo II', 'Aceitar H₀',
+                        'Rejeitar H₁'
+                    ], c: 'Erro tipo I', exp: 'α = P(erro tipo I).' },
+                { e: 'O poder de um teste é 1 – β, onde β é:', o: ['Erro tipo II', 'Erro tipo I', 'Nível de confiança',
+                        'Valor-p'
+                    ], c: 'Erro tipo II', exp: 'β = probabilidade de erro tipo II.' },
+                { e: 'Distribuição qui-quadrado é usada para:', o: ['Variâncias e tabelas de contingência', 'Médias',
+                        'Proporções', 'Correlações'
+                    ], c: 'Variâncias e tabelas de contingência', exp: 'χ² é usada para testes de variância e independência.' },
+                { e: 'A distribuição F é usada principalmente para:', o: ['Comparar duas variâncias ou ANOVA',
+                        'Comparar duas médias', 'Correlação', 'Regressão linear simples'
+                    ], c: 'Comparar duas variâncias ou ANOVA', exp: 'F é razão de variâncias.' },
+                { e: 'Na regressão linear, o coeficiente de determinação R² varia entre:', o: ['0 e 1', '–1 e 1',
+                        '0 e ∞', '–∞ e ∞'
+                    ], c: '0 e 1', exp: 'R² está sempre entre 0 e 1 (proporção da variância explicada).' },
+                { e: 'Se r = –0,9, a correlação é:', o: ['Negativa forte', 'Positiva forte', 'Nula', 'Negativa fraca'],
+                    c: 'Negativa forte', exp: 'r próximo de –1 → forte negativa.' },
+                // Preencher até 50
+                { e: 'Dados: 5,5,5,5,5. Desvio padrão = ?', o: ['0', '5', '1', '2'], c: '0',
+                    exp: 'Todos iguais → variabilidade zero.' },
+                { e: 'Se P(A)=0,6 e P(A∩B)=0,3, P(B|A)=?', o: ['0,5', '0,6', '0,3', '0,9'], c: '0,5',
+                    exp: '0,3/0,6 = 0,5.' },
+                { e: 'Na fórmula da regressão y = a + bx, b é:', o: ['Inclinação', 'Intercepto', 'Erro', 'Coeficiente de correlação'
+                    ], c: 'Inclinação', exp: 'b é o efeito de x sobre y.' },
+                { e: 'Na fórmula da regressão y = a + bx, a é:', o: ['Intercepto', 'Inclinação', 'Erro', 'R²'],
+                    c: 'Intercepto', exp: 'a é o valor de y quando x=0.' },
+                { e: 'Se n=10, a mediana está entre as posições:', o: ['5ª e 6ª', '5ª', '6ª', '4ª e 5ª'], c: '5ª e 6ª',
+                    exp: 'n par → média das posições 5 e 6.' },
+            ];
+
+            while (questoesData.length < 50) {
+                const q = questoesData[questoesData.length % 20];
+                questoesData.push({
+                    e: q.e + ' (extra)',
+                    o: q.o.slice(),
+                    c: q.c,
+                    exp: q.exp + ' (adaptada)'
+                });
+            }
+
+            const TOTAL = 50;
+            const questoes = questoesData.slice(0, TOTAL).map((q, idx) => ({
+                id: idx,
+                enunciado: q.e,
+                opcoes: q.o,
+                correta: q.c,
+                explicacao: q.exp,
+                selecionada: null,
+                resolvida: false
+            }));
+
+            // ================================================================
+            // RENDERIZAÇÃO
+            // ================================================================
+            const ITENS_POR_PAGINA = 10;
+            let paginaAtual = 1;
+            let questoesPorPagina = [];
+            let acertos = 0,
+                respondidas = 0;
+
+            const container = document.getElementById('questoesContainer');
+            const paginacaoDiv = document.getElementById('paginacao');
+            const spanAcertos = document.getElementById('acertos');
+            const spanTotalRes = document.getElementById('totalRespondidas');
+            const spanTotalQ = document.getElementById('totalQuestoes');
+            const statsProgresso = document.getElementById('statsProgresso');
+
+            function atualizarStats() {
+                let acc = 0,
+                    resp = 0;
+                for (const q of questoes) {
+                    if (q.selecionada !== null) {
+                        resp++;
+                        if (q.opcoes[q.selecionada] === q.correta) acc++;
+                    }
+                }
+                acertos = acc;
+                respondidas = resp;
+                spanAcertos.textContent = acertos;
+                spanTotalRes.textContent = respondidas;
+                const pct = Math.round((respondidas / TOTAL) * 100);
+                statsProgresso.textContent = `Progresso: ${pct}%`;
+            }
+
+            function renderizarPagina() {
+                const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+                const fim = Math.min(inicio + ITENS_POR_PAGINA, TOTAL);
+                questoesPorPagina = questoes.slice(inicio, fim);
+
+                let html = '';
+                for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                    const q = questoesPorPagina[idx];
+                    const globalIdx = inicio + idx;
+                    const opcoesHtml = q.opcoes.map((op, oi) => {
+                        const checked = (q.selecionada === oi) ? 'checked' : '';
+                        return `
+                            <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                                <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                                <label for="q${globalIdx}_${oi}">${op}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let feedbackHtml = '';
+                    if (q.selecionada !== null) {
+                        const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                        const classe = isCerto ? 'certo' : 'errado';
+                        const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                        feedbackHtml = `
+                            <div class="feedback ${classe}">${texto}</div>
+                            <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                        `;
+                    }
+
+                    const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+                    html += `
+                        <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                            <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                            <div class="opcoes">${opcoesHtml}</div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        const questaoDiv = this.closest('.questao');
+                        const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                        const opcaoIdx = parseInt(this.value);
+                        const q = questoes[globalIdx];
+                        if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                            q.selecionada = opcaoIdx;
+                            q.resolvida = true;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                const totalPaginas = Math.ceil(TOTAL / ITENS_POR_PAGINA);
+                let pagHtml = '';
+                pagHtml +=
+                    `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    if (p === paginaAtual) {
+                        pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                    } else if (p <= 2 || p > totalPaginas - 2 || Math.abs(p - paginaAtual) <= 1) {
+                        pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                    } else if (p === 3 && paginaAtual > 4) {
+                        pagHtml += `<span>…</span>`;
+                    } else if (p === totalPaginas - 2 && paginaAtual < totalPaginas - 3) {
+                        pagHtml += `<span>…</span>`;
+                    }
+                }
+                pagHtml +=
+                    `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+                paginacaoDiv.innerHTML = pagHtml;
+
+                document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                            paginaAtual = page;
+                            renderizarPagina();
+                            atualizarStats();
+                        }
+                    });
+                });
+
+                atualizarStats();
+            }
+
+            // BOTÕES
+            document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+                for (const q of questoesPorPagina) {
+                    if (q.selecionada === null) {
+                        q.selecionada = 0;
+                        q.resolvida = true;
+                    }
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnLimpar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            document.getElementById('btnReiniciar').addEventListener('click', function() {
+                for (const q of questoes) {
+                    q.selecionada = null;
+                    q.resolvida = false;
+                }
+                paginaAtual = 1;
+                renderizarPagina();
+                atualizarStats();
+            });
+
+            spanTotalQ.textContent = TOTAL;
+            renderizarPagina();
+            atualizarStats();
+
+        })();
+    </script>
+</body>
+</html>
