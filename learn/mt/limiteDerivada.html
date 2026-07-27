@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Limites e Derivadas · Cálculo Diferencial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f7fc;
+            color: #1e293b;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2.6rem;
+            color: #0f172a;
+            border-left: 8px solid #8b5cf6;
+            padding-left: 24px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 1.1rem;
+            padding-left: 32px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e9edf4;
+            padding-bottom: 16px;
+        }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 28px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 48px;
+        }
+        nav button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #334155;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        nav button:hover {
+            background: rgba(139, 92, 246, 0.08);
+        }
+        nav button.active {
+            background: #8b5cf6;
+            color: white;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+        }
+        .section {
+            display: none;
+            animation: fade 0.35s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.2;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards de teoria */
+        .card {
+            background: #fafcff;
+            border-radius: 20px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            border: 1px solid #e9edf4;
+            transition: 0.15s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .card:hover {
+            border-color: #c4b5e3;
+        }
+        .card h2 {
+            font-size: 1.8rem;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin: 20px 0 12px;
+            border-bottom: 2px dashed #dce3ed;
+            padding-bottom: 6px;
+        }
+        .card h4 {
+            font-size: 1.1rem;
+            color: #334155;
+            margin: 14px 0 8px;
+        }
+        .card p {
+            margin-bottom: 12px;
+            color: #334155;
+        }
+        .card ul, .card ol {
+            padding-left: 28px;
+            margin: 8px 0 16px;
+        }
+        .card li {
+            margin-bottom: 6px;
+        }
+        .destaque {
+            background: #eef2ff;
+            border-left: 6px solid #8b5cf6;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-weight: 500;
+        }
+        .exemplo {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin: 12px 0;
+            border-left: 4px solid #8b5cf6;
+        }
+        .exemplo strong {
+            color: #6d28d9;
+        }
+        .formula {
+            background: #fef9e7;
+            border-left: 6px solid #f59e0b;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            font-family: 'Cambria', 'Times New Roman', serif;
+        }
+        .construcao {
+            background: #ecfdf5;
+            border-left: 6px solid #10b981;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+        }
+        .graph-container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 12px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .graph-container canvas {
+            max-width: 100%;
+            height: auto;
+            background: #fafcff;
+            border-radius: 12px;
+        }
+        .graph-container .legenda {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-top: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 800px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .container { padding: 16px; }
+            h1 { font-size: 1.8rem; }
+            .card { padding: 16px; }
+            nav button { padding: 6px 14px; font-size: 0.8rem; }
+        }
+
+        /* Exercícios */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+        .quiz-controls .info {
+            font-size: 0.95rem;
+            color: #2b4a6a;
+        }
+        .quiz-controls .info span {
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #eef3f9;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a2a3f;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover { background: #dce5f0; }
+        .btn-primary { background: #8b5cf6; color: white; }
+        .btn-primary:hover { background: #7c3aed; }
+        .btn-success { background: #22c55e; color: white; }
+        .btn-success:hover { background: #16a34a; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+
+        .questao {
+            background: #fbfdff;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e4ecf5;
+            transition: 0.15s;
+        }
+        .questao:hover { border-color: #c4b5e3; }
+        .questao .enunciado {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .questao .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 8px;
+        }
+        .questao .opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .questao .opcao:hover { background: #f0f5fe; }
+        .questao .opcao input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #8b5cf6;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .questao .opcao label {
+            cursor: pointer;
+            flex: 1;
+            padding: 4px 0;
+        }
+        .questao .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 500;
+        }
+        .questao .feedback.certo {
+            display: block;
+            background: #dff0d8;
+            color: #1e6b3b;
+            border-left: 4px solid #2d9e4e;
+        }
+        .questao .feedback.errado {
+            display: block;
+            background: #f8dddd;
+            color: #a13d3d;
+            border-left: 4px solid #c95a5a;
+        }
+        .questao .feedback.explicacao {
+            display: block;
+            background: #eef3f9;
+            color: #1e2a3a;
+            border-left: 4px solid #6f8bb0;
+            margin-top: 6px;
+        }
+        .questao.resolvida .opcao { opacity: 0.85; }
+        .questao.resolvida .opcao input[type="radio"] { pointer-events: none; }
+
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        .paginacao .page-btn {
+            background: #eef3f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .paginacao .page-btn:hover { background: #d4dfec; }
+        .paginacao .page-btn.active-page { background: #8b5cf6; color: white; }
+
+        .stats {
+            background: #eef2ff;
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #5b21b6;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 22px;
+        }
+        .teoria-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .teoria-nav a {
+            background: #eef2ff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #5b21b6;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.15s;
+        }
+        .teoria-nav a:hover {
+            background: #dbeafe;
+        }
+        .math {
+            font-family: 'Cambria', 'Times New Roman', serif;
+            font-size: 1.05rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📐 Limites e Derivadas <span style="font-size:1.2rem; font-weight:400; color:#475569;">· Cálculo Diferencial</span></h1>
+    <div class="subtitle">Teoria detalhada, gráficos, construção passo a passo e 500 exercícios com correção automática</div>
+
+    <nav id="menuNavegacao">
+        <button class="active" data-section="teoria">📘 Teoria</button>
+        <button data-section="exercicios">📝 Exercícios</button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- SEÇÃO TEORIA                                                  -->
+    <!-- ============================================================ -->
+    <section id="teoria" class="section active">
+        <div class="teoria-nav">
+            <a href="#limites">📌 Limites</a>
+            <a href="#propriedades-limites">⚙️ Propriedades</a>
+            <a href="#limites-fundamentais">🌟 Limites Fundamentais</a>
+            <a href="#continuidade">🔗 Continuidade</a>
+            <a href="#derivada">📈 Derivada</a>
+            <a href="#regras-derivacao">📊 Regras de Derivação</a>
+            <a href="#derivadas-funcoes">📋 Derivadas de Funções</a>
+            <a href="#aplicacoes">🎯 Aplicações</a>
+        </div>
+
+        <!-- ===== LIMITES ===== -->
+        <div class="card" id="limites">
+            <h2>📌 Limite de uma Função</h2>
+            <p><strong>Definição intuitiva:</strong> O limite de f(x) quando x se aproxima de um valor a é o valor L que f(x) se aproxima arbitrariamente, desde que x esteja suficientemente próximo de a (mas não necessariamente igual a a).</p>
+            <div class="formula">
+                <strong>Notação:</strong> lim<sub>x→a</sub> f(x) = L
+            </div>
+            <p><strong>Definição formal (ε-δ):</strong> Para todo ε > 0, existe δ > 0 tal que se 0 < |x – a| < δ, então |f(x) – L| < ε.</p>
+            <div class="exemplo">
+                <strong>Exemplo:</strong> lim<sub>x→2</sub> (2x + 1) = 5. Quando x se aproxima de 2, f(x) se aproxima de 5.
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoLimite" width="600" height="280"></canvas>
+                <div class="legenda">f(x) = x² – 2x + 1 (azul) · limite em x=2 (ponto destacado)</div>
+            </div>
+            <div class="construcao">
+                <h4>🔧 Como calcular um limite algebricamente</h4>
+                <ol>
+                    <li><strong>Substituição direta:</strong> se f(a) existe, lim<sub>x→a</sub> f(x) = f(a).</li>
+                    <li><strong>Fatoração:</strong> se houver indeterminação (0/0), fatore e simplifique.</li>
+                    <li><strong>Racionalização:</strong> multiplique pelo conjugado para eliminar raízes.</li>
+                    <li><strong>Divisão pelo termo de maior grau:</strong> para limites no infinito.</li>
+                </ol>
+                <div class="exemplo">
+                    <strong>Exemplo:</strong> lim<sub>x→2</sub> (x² – 4)/(x – 2) = lim<sub>x→2</sub> (x–2)(x+2)/(x–2) = lim<sub>x→2</sub> (x+2) = 4.
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PROPRIEDADES DOS LIMITES ===== -->
+        <div class="card" id="propriedades-limites">
+            <h2>⚙️ Propriedades dos Limites</h2>
+            <p>Se lim<sub>x→a</sub> f(x) = L e lim<sub>x→a</sub> g(x) = M, então:</p>
+            <ul>
+                <li><strong>Soma:</strong> lim (f + g) = L + M</li>
+                <li><strong>Diferença:</strong> lim (f – g) = L – M</li>
+                <li><strong>Produto:</strong> lim (f · g) = L · M</li>
+                <li><strong>Quociente:</strong> lim (f / g) = L / M, se M ≠ 0</li>
+                <li><strong>Potência:</strong> lim (f<sup>n</sup>) = L<sup>n</sup></li>
+                <li><strong>Raiz:</strong> lim √f = √L (se L ≥ 0)</li>
+                <li><strong>Multiplicação por constante:</strong> lim (c·f) = c·L</li>
+            </ul>
+            <div class="destaque">
+                <strong>Teorema do confronto (Sanduíche):</strong> Se g(x) ≤ f(x) ≤ h(x) para x próximo de a, e lim g(x) = lim h(x) = L, então lim f(x) = L.
+            </div>
+        </div>
+
+        <!-- ===== LIMITES FUNDAMENTAIS ===== -->
+        <div class="card" id="limites-fundamentais">
+            <h2>🌟 Limites Fundamentais</h2>
+            <div class="formula">
+                <strong>1.</strong> lim<sub>x→0</sub> sen x / x = 1
+            </div>
+            <div class="formula">
+                <strong>2.</strong> lim<sub>x→0</sub> (1 – cos x) / x = 0
+            </div>
+            <div class="formula">
+                <strong>3.</strong> lim<sub>x→0</sub> (e<sup>x</sup> – 1) / x = 1
+            </div>
+            <div class="formula">
+                <strong>4.</strong> lim<sub>x→0</sub> (1 + x)<sup>1/x</sup> = e
+            </div>
+            <div class="formula">
+                <strong>5.</strong> lim<sub>x→0</sub> ln(1 + x) / x = 1
+            </div>
+            <div class="exemplo">
+                <strong>Exemplo:</strong> lim<sub>x→0</sub> sen(2x)/x = 2 · lim<sub>x→0</sub> sen(2x)/(2x) = 2 · 1 = 2.
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoLimiteFundamental" width="600" height="200"></canvas>
+                <div class="legenda">sen x / x (azul) · tende a 1 quando x→0</div>
+            </div>
+        </div>
+
+        <!-- ===== CONTINUIDADE ===== -->
+        <div class="card" id="continuidade">
+            <h2>🔗 Continuidade</h2>
+            <p>Uma função f é <strong>contínua</strong> em x = a se as três condições forem satisfeitas:</p>
+            <ol>
+                <li>f(a) existe (a pertence ao domínio).</li>
+                <li>lim<sub>x→a</sub> f(x) existe.</li>
+                <li>lim<sub>x→a</sub> f(x) = f(a).</li>
+            </ol>
+            <p>Se uma dessas falha, a função é <strong>descontínua</strong> em a.</p>
+            <div class="exemplo">
+                <strong>Exemplo:</strong> f(x) = (x² – 1)/(x – 1) não é contínua em x = 1, mas é contínua em todo outro ponto.
+            </div>
+            <div class="destaque">
+                <strong>Teorema do Valor Intermediário:</strong> Se f é contínua em [a, b] e y está entre f(a) e f(b), então existe c ∈ (a, b) tal que f(c) = y.
+            </div>
+        </div>
+
+        <!-- ===== DERIVADA ===== -->
+        <div class="card" id="derivada">
+            <h2>📈 Derivada – Definição</h2>
+            <p>A <strong>derivada</strong> de uma função f em um ponto x é a taxa de variação instantânea, definida pelo limite:</p>
+            <div class="formula">
+                <strong>f'(x) = lim<sub>h→0</sub> (f(x+h) – f(x)) / h</strong>
+            </div>
+            <p>Interpretação geométrica: a derivada é a <strong>inclinação da reta tangente</strong> ao gráfico de f no ponto (x, f(x)).</p>
+            <div class="construcao">
+                <h4>🔧 Como calcular a derivada pela definição</h4>
+                <ol>
+                    <li>Calcule f(x+h).</li>
+                    <li>Calcule f(x+h) – f(x).</li>
+                    <li>Divida por h.</li>
+                    <li>Calcule o limite quando h → 0.</li>
+                </ol>
+                <div class="exemplo">
+                    <strong>Exemplo:</strong> f(x) = x² → f'(x) = lim<sub>h→0</sub> ((x+h)² – x²)/h = lim<sub>h→0</sub> (2xh + h²)/h = lim<sub>h→0</sub> (2x + h) = 2x.
+                </div>
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoDerivada" width="600" height="280"></canvas>
+                <div class="legenda">f(x) = x² (azul) · reta tangente em x=1 (vermelha) · inclinação = f'(1) = 2</div>
+            </div>
+        </div>
+
+        <!-- ===== REGRAS DE DERIVAÇÃO ===== -->
+        <div class="card" id="regras-derivacao">
+            <h2>📊 Regras de Derivação</h2>
+            <ul>
+                <li><strong>Regra da constante:</strong> d/dx [c] = 0</li>
+                <li><strong>Regra da potência:</strong> d/dx [x<sup>n</sup>] = n·x<sup>n–1</sup></li>
+                <li><strong>Regra da soma:</strong> d/dx [f + g] = f' + g'</li>
+                <li><strong>Regra do produto:</strong> d/dx [f·g] = f'·g + f·g'</li>
+                <li><strong>Regra do quociente:</strong> d/dx [f/g] = (f'·g – f·g') / g²</li>
+                <li><strong>Regra da cadeia:</strong> d/dx [f(g(x))] = f'(g(x)) · g'(x)</li>
+            </ul>
+            <div class="exemplo">
+                <strong>Exemplo (produto):</strong> f(x) = x²·sen x → f'(x) = 2x·sen x + x²·cos x.
+            </div>
+            <div class="exemplo">
+                <strong>Exemplo (cadeia):</strong> f(x) = (x² + 1)³ → f'(x) = 3(x² + 1)² · 2x = 6x(x² + 1)².
+            </div>
+        </div>
+
+        <!-- ===== DERIVADAS DE FUNÇÕES ELEMENTARES ===== -->
+        <div class="card" id="derivadas-funcoes">
+            <h2>📋 Derivadas de Funções Elementares</h2>
+            <div class="grid-2">
+                <div>
+                    <ul>
+                        <li><strong>d/dx [x<sup>n</sup>]</strong> = n·x<sup>n–1</sup></li>
+                        <li><strong>d/dx [e<sup>x</sup>]</strong> = e<sup>x</sup></li>
+                        <li><strong>d/dx [a<sup>x</sup>]</strong> = a<sup>x</sup>·ln a</li>
+                        <li><strong>d/dx [ln x]</strong> = 1/x</li>
+                        <li><strong>d/dx [log<sub>a</sub> x]</strong> = 1/(x·ln a)</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li><strong>d/dx [sen x]</strong> = cos x</li>
+                        <li><strong>d/dx [cos x]</strong> = –sen x</li>
+                        <li><strong>d/dx [tg x]</strong> = sec² x</li>
+                        <li><strong>d/dx [cotg x]</strong> = –cossec² x</li>
+                        <li><strong>d/dx [sec x]</strong> = sec x · tg x</li>
+                        <li><strong>d/dx [cossec x]</strong> = –cossec x · cotg x</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="destaque">
+                <strong>Derivada da inversa:</strong> (f⁻¹)'(x) = 1 / f'(f⁻¹(x)).
+            </div>
+        </div>
+
+        <!-- ===== APLICAÇÕES ===== -->
+        <div class="card" id="aplicacoes">
+            <h2>🎯 Aplicações da Derivada</h2>
+            <ul>
+                <li><strong>Reta tangente:</strong> y – f(a) = f'(a)(x – a).</li>
+                <li><strong>Reta normal:</strong> y – f(a) = –1/f'(a)·(x – a) (se f'(a) ≠ 0).</li>
+                <li><strong>Velocidade instantânea:</strong> v(t) = s'(t).</li>
+                <li><strong>Aceleração:</strong> a(t) = v'(t) = s''(t).</li>
+                <li><strong>Taxa de variação:</strong> dy/dx = f'(x).</li>
+                <li><strong>Pontos críticos:</strong> onde f'(x) = 0 ou não existe (máximos, mínimos, inflexão).</li>
+                <li><strong>Teste da derivada primeira:</strong> f' muda de + para – → máximo local; de – para + → mínimo local.</li>
+                <li><strong>Teste da derivada segunda:</strong> f''(x) > 0 → mínimo local; f''(x) < 0 → máximo local.</li>
+            </ul>
+            <div class="exemplo">
+                <strong>Exemplo:</strong> f(x) = x³ – 3x² + 2. f'(x) = 3x² – 6x = 3x(x – 2). Pontos críticos: x = 0 (máximo local), x = 2 (mínimo local).
+            </div>
+            <div class="graph-container">
+                <canvas id="graficoAplicacoes" width="600" height="280"></canvas>
+                <div class="legenda">f(x) = x³ – 3x² + 2 (azul) · máx em x=0 · mín em x=2</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SEÇÃO EXERCÍCIOS (500 questões)                               -->
+    <!-- ============================================================ -->
+    <section id="exercicios" class="section">
+        <div class="quiz-controls">
+            <div class="info">
+                <span id="acertos">0</span> acertos · 
+                <span id="totalRespondidas">0</span> respondidas de 
+                <span id="totalQuestoes">500</span>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="btnReiniciar">🔄 Reiniciar</button>
+                <button class="btn btn-success" id="btnCorrigirTodas">✅ Corrigir todas</button>
+                <button class="btn btn-danger" id="btnLimpar">🧹 Limpar respostas</button>
+            </div>
+        </div>
+        <div id="questoesContainer"></div>
+        <div class="paginacao" id="paginacao"></div>
+        <div style="text-align:center; margin-top:10px;">
+            <span class="stats" id="statsProgresso">Progresso: 0%</span>
+        </div>
+    </section>
+
+    <div class="footer">
+        📚 500 exercícios únicos · Teoria detalhada com gráficos e construções · Desenvolvido para estudo
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ================================================================
+        // 1. NAVEGAÇÃO PRINCIPAL
+        // ================================================================
+        const botoes = document.querySelectorAll('#menuNavegacao button');
+        const teoriaSec = document.getElementById('teoria');
+        const exerciciosSec = document.getElementById('exercicios');
+
+        botoes.forEach(btn => {
+            btn.addEventListener('click', function() {
+                botoes.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                if (this.dataset.section === 'teoria') {
+                    teoriaSec.classList.add('active');
+                    exerciciosSec.classList.remove('active');
+                    setTimeout(desenharTodosGraficos, 50);
+                } else {
+                    teoriaSec.classList.remove('active');
+                    exerciciosSec.classList.add('active');
+                }
+            });
+        });
+
+        // ================================================================
+        // 2. GRÁFICOS (CANVAS)
+        // ================================================================
+        function getCtx(id) {
+            const canvas = document.getElementById(id);
+            if (!canvas) return null;
+            return canvas.getContext('2d');
+        }
+
+        function desenharEixos(ctx, w, h, xMin, xMax, yMin, yMax, xLabel = 'x', yLabel = 'y') {
+            const margin = 40;
+            const plotW = w - 2 * margin;
+            const plotH = h - 2 * margin;
+            const xScale = plotW / (xMax - xMin);
+            const yScale = plotH / (yMax - yMin);
+
+            function toCanvasX(x) { return margin + (x - xMin) * xScale; }
+            function toCanvasY(y) { return h - margin - (y - yMin) * yScale; }
+
+            ctx.fillStyle = '#fafcff';
+            ctx.fillRect(0, 0, w, h);
+
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 0.5;
+            for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+                if (x === 0) continue;
+                const cx = toCanvasX(x);
+                ctx.beginPath();
+                ctx.moveTo(cx, margin);
+                ctx.lineTo(cx, h - margin);
+                ctx.stroke();
+            }
+            for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+                if (y === 0) continue;
+                const cy = toCanvasY(y);
+                ctx.beginPath();
+                ctx.moveTo(margin, cy);
+                ctx.lineTo(w - margin, cy);
+                ctx.stroke();
+            }
+
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 2;
+            if (yMin <= 0 && yMax >= 0) {
+                const y0 = toCanvasY(0);
+                ctx.beginPath();
+                ctx.moveTo(margin, y0);
+                ctx.lineTo(w - margin, y0);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(w - margin, y0);
+                ctx.lineTo(w - margin - 8, y0 - 6);
+                ctx.lineTo(w - margin - 8, y0 + 6);
+                ctx.closePath();
+                ctx.fillStyle = '#1e293b';
+                ctx.fill();
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(xLabel, w - margin - 20, y0 - 12);
+            }
+            if (xMin <= 0 && xMax >= 0) {
+                const x0 = toCanvasX(0);
+                ctx.beginPath();
+                ctx.moveTo(x0, margin);
+                ctx.lineTo(x0, h - margin);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x0, margin);
+                ctx.lineTo(x0 - 6, margin + 8);
+                ctx.lineTo(x0 + 6, margin + 8);
+                ctx.closePath();
+                ctx.fillStyle = '#1e293b';
+                ctx.fill();
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(yLabel, x0 + 10, margin + 16);
+            }
+
+            ctx.fillStyle = '#475569';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+                if (x === 0) continue;
+                const cx = toCanvasX(x);
+                ctx.fillText(x, cx, h - margin + 4);
+            }
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+                if (y === 0) continue;
+                const cy = toCanvasY(y);
+                ctx.fillText(y, margin - 8, cy);
+            }
+            return { toCanvasX, toCanvasY, xScale, yScale };
+        }
+
+        // Gráfico: Limite
+        function desenharLimite() {
+            const ctx = getCtx('graficoLimite');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -1, 5, -1, 6, 'x', 'y');
+            // f(x) = x² - 2x + 1
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -0.5; px <= 4.5; px += 0.05) {
+                const y = px * px - 2 * px + 1;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -0.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            // Ponto (2,1) destacado
+            const px = 2,
+                py = 1;
+            const cx = toCanvasX(px),
+                cy = toCanvasY(py);
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(cx, cy, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('(2, 1)', cx + 8, cy - 6);
+        }
+
+        // Gráfico: Limite Fundamental
+        function desenharLimiteFundamental() {
+            const ctx = getCtx('graficoLimiteFundamental');
+            if (!ctx) return;
+            const w = 600,
+                h = 200;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -4, 4, -0.5, 1.5, 'x', 'y');
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -3.5; px <= 3.5; px += 0.02) {
+                if (Math.abs(px) < 0.001) continue;
+                const y = Math.sin(px) / px;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -3.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            // Linha y=1 (assíntota)
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([5, 5]);
+            const y1 = toCanvasY(1);
+            ctx.beginPath();
+            ctx.moveTo(toCanvasX(-3.5), y1);
+            ctx.lineTo(toCanvasX(3.5), y1);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#ef4444';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('y = 1', toCanvasX(2.5), y1 - 8);
+        }
+
+        // Gráfico: Derivada e reta tangente
+        function desenharDerivada() {
+            const ctx = getCtx('graficoDerivada');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -2, 4, -1, 5, 'x', 'y');
+            // f(x) = x²
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -1.5; px <= 3.5; px += 0.05) {
+                const y = px * px;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -1.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            // Reta tangente em x=1: f'(1)=2, ponto (1,1)
+            const x0 = 1,
+                y0 = 1,
+                m = 2;
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let px = -0.5; px <= 2.5; px += 0.05) {
+                const y = m * (px - x0) + y0;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -0.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            // Ponto (1,1)
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(toCanvasX(1), toCanvasY(1), 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('(1, 1)', toCanvasX(1) + 8, toCanvasY(1) - 6);
+        }
+
+        // Gráfico: Aplicações (máx/mín)
+        function desenharAplicacoes() {
+            const ctx = getCtx('graficoAplicacoes');
+            if (!ctx) return;
+            const w = 600,
+                h = 280;
+            const { toCanvasX, toCanvasY } = desenharEixos(ctx, w, h, -2, 4, -4, 4, 'x', 'y');
+            // f(x) = x³ - 3x² + 2
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let px = -1.5; px <= 3.5; px += 0.05) {
+                const y = px * px * px - 3 * px * px + 2;
+                const cx = toCanvasX(px),
+                    cy = toCanvasY(y);
+                if (px === -1.5) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+            }
+            ctx.stroke();
+            // Máximo local em (0,2)
+            ctx.fillStyle = '#22c55e';
+            ctx.beginPath();
+            ctx.arc(toCanvasX(0), toCanvasY(2), 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '11px sans-serif';
+            ctx.fillText('máx (0,2)', toCanvasX(0) + 8, toCanvasY(2) - 4);
+            // Mínimo local em (2,-2)
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(toCanvasX(2), toCanvasY(-2), 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#1e293b';
+            ctx.fillText('mín (2,-2)', toCanvasX(2) + 8, toCanvasY(-2) - 4);
+        }
+
+        function desenharTodosGraficos() {
+            desenharLimite();
+            desenharLimiteFundamental();
+            desenharDerivada();
+            desenharAplicacoes();
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(desenharTodosGraficos, 100);
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(desenharTodosGraficos, 300);
+        });
+
+        // ================================================================
+        // 3. GERADOR DE 500 QUESTÕES SOBRE LIMITES E DERIVADAS
+        // ================================================================
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+        // Geradores de questões
+        const geradores = [
+            // Limites simples
+            function() {
+                const a = rand(1, 5);
+                const b = rand(1, 5);
+                const x0 = rand(-3, 3);
+                const valor = a * x0 + b;
+                return {
+                    enunciado: `Calcule lim<sub>x→${x0}</sub> (${a}x ${b>=0?'+':''} ${b})`,
+                    opcoes: shuffleArray([`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`]),
+                    correta: `${valor}`,
+                    explicacao: `Substituindo x = ${x0}: ${a}·${x0} + ${b} = ${valor}.`
+                };
+            },
+            // Limites com fatoração (indeterminação 0/0)
+            function() {
+                const x0 = rand(1, 4);
+                const r1 = rand(1, 4);
+                const r2 = rand(1, 4);
+                if (r1 === r2) return null;
+                // f(x) = (x - r1)(x - r2) / (x - r1) = x - r2
+                const valor = x0 - r2;
+                return {
+                    enunciado: `Calcule lim<sub>x→${x0}</sub> (x² - ${r1+r2}x + ${r1*r2})/(x - ${r1})`,
+                    opcoes: shuffleArray([`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`]),
+                    correta: `${valor}`,
+                    explicacao: `Fatorando: (x-${r1})(x-${r2})/(x-${r1}) = x-${r2}. Substituindo x=${x0}: ${x0}-${r2} = ${valor}.`
+                };
+            },
+            // Limites fundamentais (sen x / x)
+            function() {
+                const coef = rand(1, 3);
+                const valor = coef;
+                return {
+                    enunciado: `Calcule lim<sub>x→0</sub> sen(${coef}x)/x`,
+                    opcoes: shuffleArray([`${valor}`, `${valor+1}`, `${valor-1}`, `${valor*2}`]),
+                    correta: `${valor}`,
+                    explicacao: `Usando o limite fundamental: lim sen(kx)/x = k. Aqui k = ${coef}.`
+                };
+            },
+            // Derivada pela definição
+            function() {
+                const a = rand(1, 3);
+                const b = rand(1, 3);
+                const x0 = rand(1, 3);
+                const derivada = a;
+                return {
+                    enunciado: `Usando a definição, calcule f'(${x0}) para f(x) = ${a}x ${b>=0?'+':''} ${b}`,
+                    opcoes: shuffleArray([`${derivada}`, `${derivada+1}`, `${derivada-1}`, `${derivada*2}`]),
+                    correta: `${derivada}`,
+                    explicacao: `f'(x) = ${a}, portanto f'(${x0}) = ${a}.`
+                };
+            },
+            // Regra da potência
+            function() {
+                const n = rand(2, 5);
+                const x0 = rand(1, 3);
+                const derivada = n * Math.pow(x0, n - 1);
+                return {
+                    enunciado: `Calcule f'(${x0}) para f(x) = x<sup>${n}</sup>`,
+                    opcoes: shuffleArray([`${derivada}`, `${derivada+1}`, `${derivada-1}`, `${derivada*2}`]),
+                    correta: `${derivada}`,
+                    explicacao: `f'(x) = ${n}x<sup>${n-1}</sup>. Substituindo x=${x0}: ${n}·${x0}<sup>${n-1}</sup> = ${derivada}.`
+                };
+            },
+            // Regra do produto
+            function() {
+                const a = rand(1, 3);
+                const b = rand(1, 3);
+                const x0 = rand(1, 2);
+                const f = a * x0;
+                const g = b * x0 + 1;
+                const fp = a;
+                const gp = b;
+                const derivada = fp * g + f * gp;
+                return {
+                    enunciado: `Calcule f'(${x0}) para f(x) = (${a}x)·(${b}x + 1)`,
+                    opcoes: shuffleArray([`${derivada}`, `${derivada+1}`, `${derivada-1}`, `${derivada*2}`]),
+                    correta: `${derivada}`,
+                    explicacao: `Regra do produto: f' = ${a}·(${b}x+1) + (${a}x)·${b}. Em x=${x0}: ${derivada}.`
+                };
+            },
+            // Regra da cadeia
+            function() {
+                const a = rand(1, 3);
+                const b = rand(1, 3);
+                const n = rand(2, 3);
+                const x0 = rand(1, 2);
+                const interno = a * x0 + b;
+                const derivada = n * Math.pow(interno, n - 1) * a;
+                return {
+                    enunciado: `Calcule f'(${x0}) para f(x) = (${a}x ${b>=0?'+':''} ${b})<sup>${n}</sup>`,
+                    opcoes: shuffleArray([`${derivada}`, `${derivada+1}`, `${derivada-1}`, `${derivada*2}`]),
+                    correta: `${derivada}`,
+                    explicacao: `Regra da cadeia: f' = ${n}(${a}x+${b})<sup>${n-1}</sup>·${a}. Em x=${x0}: ${derivada}.`
+                };
+            },
+            // Derivada de exponencial
+            function() {
+                const a = rand(1, 3);
+                const x0 = rand(0, 2);
+                const derivada = Math.pow(a, x0) * Math.log(a);
+                return {
+                    enunciado: `Calcule f'(${x0}) para f(x) = ${a}<sup>x</sup>`,
+                    opcoes: shuffleArray([`${derivada.toFixed(2)}`, `${(derivada+1).toFixed(2)}`, `${(derivada-1).toFixed(2)}`,
+                        `${(derivada*2).toFixed(2)}`
+                    ]),
+                    correta: `${derivada.toFixed(2)}`,
+                    explicacao: `f'(x) = ${a}<sup>x</sup>·ln(${a}). Em x=${x0}: ${derivada.toFixed(2)}.`
+                };
+            },
+            // Derivada de seno
+            function() {
+                const x0 = pick([0, Math.PI / 6, Math.PI / 4, Math.PI / 3, Math.PI / 2]);
+                const derivada = Math.cos(x0);
+                return {
+                    enunciado: `Calcule f'(${x0.toFixed(2)}) para f(x) = sen x`,
+                    opcoes: shuffleArray([`${derivada.toFixed(2)}`, `${(derivada+0.5).toFixed(2)}`,
+                        `${(derivada-0.5).toFixed(2)}`, `${(-derivada).toFixed(2)}`
+                    ]),
+                    correta: `${derivada.toFixed(2)}`,
+                    explicacao: `f'(x) = cos x. cos(${x0.toFixed(2)}) = ${derivada.toFixed(2)}.`
+                };
+            },
+            // Derivada de logaritmo natural
+            function() {
+                const x0 = rand(1, 5);
+                const derivada = 1 / x0;
+                return {
+                    enunciado: `Calcule f'(${x0}) para f(x) = ln x`,
+                    opcoes: shuffleArray([`${derivada.toFixed(2)}`, `${(derivada+0.5).toFixed(2)}`,
+                        `${(derivada-0.5).toFixed(2)}`, `${(derivada*2).toFixed(2)}`
+                    ]),
+                    correta: `${derivada.toFixed(2)}`,
+                    explicacao: `f'(x) = 1/x. Em x=${x0}: 1/${x0} = ${derivada.toFixed(2)}.`
+                };
+            }
+        ];
+
+        // Gerar 500 questões únicas
+        const TOTAL = 500;
+        const questoes = [];
+        const usedKeys = new Set();
+
+        function getKey(q) {
+            const sortedOps = [...q.opcoes].sort().join('|');
+            return q.enunciado + '||' + sortedOps;
+        }
+
+        let tentativas = 0;
+        while (questoes.length < TOTAL && tentativas < 100000) {
+            tentativas++;
+            const gerador = pick(geradores);
+            let q = gerador();
+            if (!q) continue;
+            if (!q.opcoes.includes(q.correta)) {
+                q.opcoes[rand(0, q.opcoes.length - 1)] = q.correta;
+            }
+            q.opcoes = shuffleArray(q.opcoes);
+            const key = getKey(q);
+            if (!usedKeys.has(key)) {
+                usedKeys.add(key);
+                questoes.push({
+                    id: questoes.length,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false
+                });
+            }
+        }
+
+        // Fallback
+        while (questoes.length < TOTAL) {
+            const q = {
+                enunciado: `Calcule lim<sub>x→2</sub> (x² - 4)/(x - 2)`,
+                opcoes: ['0', '2', '4', '6'],
+                correta: '4',
+                explicacao: 'Fatorando: (x-2)(x+2)/(x-2) = x+2. Em x=2: 4.'
+            };
+            const key = getKey(q);
+            if (!usedKeys.has(key)) {
+                usedKeys.add(key);
+                questoes.push({
+                    id: questoes.length,
+                    enunciado: q.enunciado,
+                    opcoes: q.opcoes,
+                    correta: q.correta,
+                    explicacao: q.explicacao,
+                    selecionada: null,
+                    resolvida: false
+                });
+            }
+        }
+
+        // ================================================================
+        // 4. RENDERIZAÇÃO DOS EXERCÍCIOS
+        // ================================================================
+        const ITENS_POR_PAGINA = 10;
+        let paginaAtual = 1;
+        let questoesPorPagina = [];
+        let acertos = 0,
+            respondidas = 0;
+
+        const container = document.getElementById('questoesContainer');
+        const paginacaoDiv = document.getElementById('paginacao');
+        const spanAcertos = document.getElementById('acertos');
+        const spanTotalRes = document.getElementById('totalRespondidas');
+        const spanTotalQ = document.getElementById('totalQuestoes');
+        const statsProgresso = document.getElementById('statsProgresso');
+
+        function atualizarStats() {
+            let acc = 0,
+                resp = 0;
+            for (const q of questoes) {
+                if (q.selecionada !== null) {
+                    resp++;
+                    if (q.opcoes[q.selecionada] === q.correta) acc++;
+                }
+            }
+            acertos = acc;
+            respondidas = resp;
+            spanAcertos.textContent = acertos;
+            spanTotalRes.textContent = respondidas;
+            const pct = Math.round((respondidas / questoes.length) * 100);
+            statsProgresso.textContent = `Progresso: ${pct}%`;
+        }
+
+        function renderizarPagina() {
+            const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
+            const fim = Math.min(inicio + ITENS_POR_PAGINA, questoes.length);
+            questoesPorPagina = questoes.slice(inicio, fim);
+
+            let html = '';
+            for (let idx = 0; idx < questoesPorPagina.length; idx++) {
+                const q = questoesPorPagina[idx];
+                const globalIdx = inicio + idx;
+                const opcoesHtml = q.opcoes.map((op, oi) => {
+                    const checked = (q.selecionada === oi) ? 'checked' : '';
+                    return `
+                        <div class="opcao" data-questao="${globalIdx}" data-opcao="${oi}">
+                            <input type="radio" name="q${globalIdx}" value="${oi}" id="q${globalIdx}_${oi}" ${checked}>
+                            <label for="q${globalIdx}_${oi}">${op}</label>
+                        </div>
+                    `;
+                }).join('');
+
+                let feedbackHtml = '';
+                if (q.selecionada !== null) {
+                    const isCerto = (q.opcoes[q.selecionada] === q.correta);
+                    const classe = isCerto ? 'certo' : 'errado';
+                    const texto = isCerto ? '✅ Correto!' : '❌ Errado.';
+                    feedbackHtml = `
+                        <div class="feedback ${classe}">${texto}</div>
+                        <div class="feedback explicacao">💡 ${q.explicacao}</div>
+                    `;
+                }
+
+                const resolvidaClass = (q.selecionada !== null) ? 'resolvida' : '';
+
+                html += `
+                    <div class="questao ${resolvidaClass}" id="questao-${globalIdx}">
+                        <div class="enunciado">${globalIdx+1}. ${q.enunciado}</div>
+                        <div class="opcoes">
+                            ${opcoesHtml}
+                        </div>
+                        ${feedbackHtml}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.questao input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function(e) {
+                    const questaoDiv = this.closest('.questao');
+                    const globalIdx = parseInt(questaoDiv.id.split('-')[1]);
+                    const opcaoIdx = parseInt(this.value);
+                    const q = questoes[globalIdx];
+                    if (q.selecionada === null || q.selecionada !== opcaoIdx) {
+                        q.selecionada = opcaoIdx;
+                        q.resolvida = true;
+                        renderizarPagina();
+                        atualizarStats();
+                    }
+                });
+            });
+
+            const totalPaginas = Math.ceil(questoes.length / ITENS_POR_PAGINA);
+            let pagHtml = '';
+            pagHtml += `<button class="page-btn" data-page="${paginaAtual-1}" ${paginaAtual<=1?'disabled':''}>◀</button>`;
+            for (let p = 1; p <= totalPaginas; p++) {
+                if (p === paginaAtual) {
+                    pagHtml += `<button class="page-btn active-page">${p}</button>`;
+                } else if (p <= 3 || p > totalPaginas - 3 || Math.abs(p - paginaAtual) <= 1) {
+                    pagHtml += `<button class="page-btn" data-page="${p}">${p}</button>`;
+                } else if (p === 4 && paginaAtual > 5) {
+                    pagHtml += `<span>…</span>`;
+                } else if (p === totalPaginas - 3 && paginaAtual < totalPaginas - 4) {
+                    pagHtml += `<span>…</span>`;
+                }
+            }
+            pagHtml += `<button class="page-btn" data-page="${paginaAtual+1}" ${paginaAtual>=totalPaginas?'disabled':''}>▶</button>`;
+            paginacaoDiv.innerHTML = pagHtml;
+
+            document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = parseInt(this.dataset.page);
+                    if (!isNaN(page) && page >= 1 && page <= totalPaginas) {
+                        paginaAtual = page;
+                        renderizarPagina();
+                        atualizarStats();
+                    }
+                });
+            });
+
+            atualizarStats();
+        }
+
+        // Botões
+        document.getElementById('btnCorrigirTodas').addEventListener('click', function() {
+            for (const q of questoesPorPagina) {
+                if (q.selecionada === null) {
+                    q.selecionada = 0;
+                    q.resolvida = true;
+                }
+            }
+            renderizarPagina();
+            atualizarStats();
+        });
+
+        document.getElementById('btnLimpar').addEventListener('click', function() {
+            for (const q of questoes) {
+                q.selecionada = null;
+                q.resolvida = false;
+            }
+            renderizarPagina();
+            atualizarStats();
+        });
+
+        document.getElementById('btnReiniciar').addEventListener('click', function() {
+            for (const q of questoes) {
+                q.selecionada = null;
+                q.resolvida = false;
+            }
+            paginaAtual = 1;
+            renderizarPagina();
+            atualizarStats();
+        });
+
+        spanTotalQ.textContent = TOTAL;
+        renderizarPagina();
+        atualizarStats();
+
+    })();
+</script>
+</body>
+</html>
