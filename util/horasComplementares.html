@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividades Complementares — Integralização</title>
+<style>
+  :root{
+    --bg:#eef2ff;
+    --card:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --line:#e2e8f0;
+    --danger:#dc2626;
+    --ok:#16a34a;
+    --radius:22px;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    color:var(--text);
+    background:linear-gradient(180deg,#eef2ff 0%, #f8fafc 320px, #f1f5f9 100%);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .app{max-width:1080px;margin:0 auto;padding:24px 16px 64px;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed 55%,#2563eb);
+    color:#fff;border-radius:var(--radius);padding:22px 26px;
+    box-shadow:0 22px 44px -24px rgba(79,70,229,.9);
+  }
+  .brand{display:flex;gap:14px;align-items:center;}
+  .logo{
+    width:52px;height:52px;border-radius:16px;flex:none;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);
+    display:grid;place-items:center;font-weight:800;letter-spacing:.5px;
+  }
+  .brand h1{margin:0;font-size:1.25rem;letter-spacing:-.3px;}
+  .brand p{margin:3px 0 0;font-size:.82rem;opacity:.85;}
+
+  .total-box{
+    min-width:250px;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.26);padding:12px 16px;border-radius:16px;
+  }
+  .total-label{
+    display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;
+    opacity:.85;margin-bottom:6px;font-weight:600;
+  }
+  .total-row{display:flex;align-items:baseline;gap:6px;}
+  #totalGeral{font-size:1.75rem;font-weight:800;line-height:1;}
+  .total-max{font-size:.85rem;opacity:.85;}
+  .total-box .bar{background:rgba(255,255,255,.25);}
+  .total-box .bar-fill{background:#fff;}
+
+  /* ---------- BARRA ---------- */
+  .bar{height:8px;background:rgba(148,163,184,.25);border-radius:99px;overflow:hidden;margin-top:10px;}
+  .bar-fill{
+    height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,#818cf8,#22d3ee);
+    transition:width .45s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ---------- TABS ---------- */
+  .tabs{
+    display:flex;gap:8px;margin:22px 0 18px;padding:8px;
+    background:#fff;border-radius:18px;overflow-x:auto;
+    box-shadow:0 10px 26px -20px rgba(15,23,42,.7);
+  }
+  .tab{
+    flex:1 1 0;min-width:200px;display:flex;gap:10px;align-items:center;
+    border:0;background:transparent;padding:12px 14px;border-radius:13px;
+    cursor:pointer;text-align:left;color:var(--muted);font:inherit;
+    transition:background .2s, color .2s, box-shadow .2s;
+  }
+  .tab:hover{background:#f1f5f9;color:var(--text);}
+  .tab.active{background:var(--soft);color:var(--c);box-shadow:inset 0 0 0 1.5px var(--c);}
+  .tab-ico{font-size:1.25rem;}
+  .tab-txt{display:flex;flex-direction:column;line-height:1.25;min-width:0;}
+  .tab-txt strong{font-size:.85rem;font-weight:700;}
+  .tab-txt small{font-size:.74rem;opacity:.8;}
+
+  /* ---------- PAINEL ---------- */
+  .panel{
+    background:#fff;border-radius:var(--radius);padding:24px;
+    box-shadow:0 24px 48px -34px rgba(15,23,42,.75);
+    animation:fade .25s ease;
+  }
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .cat-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
+  .cat-title{display:flex;gap:14px;align-items:flex-start;}
+  .cat-ico{
+    width:46px;height:46px;border-radius:14px;flex:none;
+    display:grid;place-items:center;font-size:1.3rem;
+    background:var(--soft);color:var(--c);
+  }
+  .cat-head h2{margin:0;font-size:1.05rem;line-height:1.35;letter-spacing:-.2px;}
+  .cat-sub{margin:5px 0 0;font-size:.79rem;color:var(--muted);}
+  .cat-score{
+    display:flex;align-items:baseline;gap:5px;flex:none;
+    background:#f8fafc;border:1px solid var(--line);
+    padding:8px 14px;border-radius:14px;font-size:.8rem;color:var(--muted);
+  }
+  .cat-score strong{font-size:1.35rem;color:var(--c);}
+
+  .cap-alert{
+    margin:12px 0 0;font-size:.8rem;color:#b45309;
+    background:#fffbeb;border:1px solid #fde68a;
+    padding:9px 13px;border-radius:11px;
+  }
+
+  /* ---------- FORMULÁRIO ---------- */
+  .form{
+    margin-top:20px;padding:18px;border-radius:18px;
+    border:1px dashed var(--line);background:#fcfdff;
+  }
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .col-2{grid-column:span 2;}
+  .field{display:flex;flex-direction:column;gap:7px;min-width:0;}
+  .field label{
+    font-size:.72rem;font-weight:800;color:#334155;
+    text-transform:uppercase;letter-spacing:.05em;
+  }
+  .field label .unit{color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0;}
+
+  select, input[type="number"]{
+    font:inherit;width:100%;padding:11px 12px;border-radius:12px;
+    border:1.5px solid var(--line);background:#fff;color:var(--text);
+    outline:none;transition:border-color .15s, box-shadow .15s;
+  }
+  select:focus, input[type="number"]:focus{
+    border-color:var(--c);box-shadow:0 0 0 4px var(--soft);
+  }
+
+  input[type="file"]{
+    font:inherit;font-size:.85rem;width:100%;padding:10px;
+    border-radius:12px;border:1.5px dashed #cbd5e1;background:#fff;cursor:pointer;
+  }
+  input[type="file"]::file-selector-button{
+    font:inherit;font-size:.8rem;font-weight:700;margin-right:12px;
+    padding:8px 14px;border:0;border-radius:9px;
+    background:var(--soft);color:var(--c);cursor:pointer;
+  }
+  .hint{font-size:.72rem;color:var(--muted);}
+
+  .info{
+    background:var(--soft);border-radius:14px;padding:13px 15px;
+    font-size:.83rem;color:#334155;
+  }
+  .info p{margin:0;}
+  .info-nome{margin:0 0 11px !important;font-size:.83rem;font-weight:600;line-height:1.45;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:11px;}
+  .info-grid span{
+    display:block;font-size:.66rem;font-weight:800;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--muted);margin-bottom:3px;
+  }
+  .info-grid strong{font-weight:600;font-size:.8rem;line-height:1.35;}
+
+  .btn-primary{
+    font:inherit;font-weight:700;font-size:.9rem;padding:12px 22px;
+    border:0;border-radius:12px;background:var(--c);color:#fff;cursor:pointer;
+    box-shadow:0 14px 24px -14px var(--c);transition:transform .15s, filter .15s;
+  }
+  .btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px);}
+  .btn-primary:active{transform:none;}
+
+  .form-msg{margin:12px 0 0;font-size:.82rem;font-weight:600;}
+  .form-msg.erro{color:var(--danger);}
+  .form-msg.ok{color:var(--ok);}
+
+  /* ---------- LISTA ---------- */
+  .lista{margin-top:20px;display:flex;flex-direction:column;gap:10px;}
+  .vazio{
+    margin:0;padding:20px;text-align:center;font-size:.84rem;font-style:italic;
+    color:var(--muted);border:1px dashed var(--line);border-radius:14px;
+  }
+  .item{
+    display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+    padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .item:hover{border-color:var(--c);box-shadow:0 12px 26px -20px rgba(15,23,42,.8);}
+  .item-main{display:flex;gap:12px;align-items:flex-start;min-width:0;}
+  .tag{
+    flex:none;background:var(--soft);color:var(--c);font-weight:800;
+    font-size:.72rem;padding:4px 9px;border-radius:8px;
+  }
+  .item-info{display:flex;flex-direction:column;gap:5px;min-width:0;}
+  .item-info strong{font-size:.85rem;font-weight:600;line-height:1.4;}
+  .meta{font-size:.77rem;color:var(--muted);}
+  .file{
+    font-size:.77rem;color:#2563eb;text-decoration:none;
+    display:inline-flex;gap:6px;align-items:center;word-break:break-all;
+  }
+  .file:hover{text-decoration:underline;}
+  .item-right{display:flex;align-items:center;gap:10px;flex:none;}
+  .pts{font-weight:800;color:var(--c);font-size:.95rem;}
+  .btn-remove{
+    width:30px;height:30px;border:0;border-radius:9px;cursor:pointer;
+    background:#fee2e2;color:#dc2626;font-size:.85rem;line-height:1;
+    transition:background .2s, color .2s;
+  }
+  .btn-remove:hover{background:#dc2626;color:#fff;}
+
+  /* ---------- FOOTER ---------- */
+  .foot{
+    margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;
+    align-items:center;justify-content:space-between;
+  }
+  .foot p{margin:0;font-size:.76rem;color:var(--muted);max-width:640px;line-height:1.5;}
+  .btn-ghost{
+    font:inherit;font-size:.82rem;font-weight:600;padding:10px 16px;
+    border-radius:11px;border:1.5px solid var(--line);background:#fff;
+    color:var(--muted);cursor:pointer;transition:.2s;
+  }
+  .btn-ghost:hover{border-color:var(--danger);color:var(--danger);background:#fef2f2;}
+
+  /* ---------- RESPONSIVO ---------- */
+  @media (max-width:680px){
+    .grid{grid-template-columns:1fr;}
+    .col-2{grid-column:span 1;}
+    .topbar{padding:18px;}
+    .panel{padding:18px;}
+    .tab{min-width:165px;}
+    .total-box{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">AC</div>
+      <div>
+        <h1>Atividades Complementares</h1>
+        <p>Anexo I — Pontuação para as atividades complementares</p>
+      </div>
+    </div>
+
+    <div class="total-box">
+      <span class="total-label">Total integralizado</span>
+      <div class="total-row">
+        <strong id="totalGeral">0</strong>
+        <span class="total-max">/ <span id="maxGeral">420</span> pts</span>
+      </div>
+      <div class="bar"><div class="bar-fill" id="barGeral"></div></div>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Categorias"></nav>
+
+  <main id="panels"></main>
+
+  <div class="foot">
+    <p>
+      Os limites são aplicados automaticamente: <strong>por subtópico</strong>, <strong>por categoria
+      (ao longo do curso)</strong> e no <strong>total geral</strong>. Pontos excedentes não são contabilizados.
+      O limite semestral é apenas informativo.
+    </p>
+    <button class="btn-ghost" id="limparTudo" type="button">🗑 Limpar todos os lançamentos</button>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script>
+/* =========================================================
+   1) DADOS — extraídos do Anexo I
+   ========================================================= */
+const CATEGORIAS = [
+  {
+    id: 1,
+    icone: "🎭",
+    cor: "#6366f1",
+    corSoft: "#eef2ff",
+    curto: "Cultural e esportivo",
+    nome: "Atividades de aperfeiçoamento e enriquecimento cultural e esportivo",
+    maxCurso: 120,
+    maxSemestral: 80,
+    subtopicos: [
+      {
+        id: "1.1",
+        nome: "Participação como agente em atividades culturais: filme, teatro, apresentações artísticas, feiras, exposições, festivais e competições esportivas, bandas, coral, olimpíadas em geral.",
+        unidades: [{ rotulo: "atividade(s)", pontos: 5 }],
+        max: 30,
+        comprovacao: "Relatório ou comprovante de participação"
+      },
+      {
+        id: "1.2",
+        nome: "Visitas técnicas e culturais: patrimônios tombados, cidades históricas, monumentos, museus, memoriais, escola-modelo, creches, berçários, ONGs, APAE e entidades afins, hospitais, laboratórios, instituições de ensino e pesquisa, empresas públicas e privadas e outras de interesse do curso.",
+        unidades: [{ rotulo: "visita(s)", pontos: 5 }],
+        max: 30,
+        comprovacao: "Relatório ou comprovante de participação"
+      },
+      {
+        id: "1.3",
+        nome: "Realização de cursos de língua estrangeira, informática e outros de formação cultural, social ou específica do âmbito do curso.",
+        unidades: [{ rotulo: "hora(s)", pontos: 1 }],
+        max: 40,
+        comprovacao: "Certificado / Declaração"
+      },
+      {
+        id: "1.4",
+        nome: "Trabalho voluntário, atividades comunitárias, associações de bairros, brigadas de incêndio e associações escolares.",
+        unidades: [{ rotulo: "participação(ões)", pontos: 10 }],
+        max: 40,
+        comprovacao: "Declaração"
+      }
+    ]
+  },
+  {
+    id: 2,
+    icone: "🔬",
+    cor: "#0ea5e9",
+    corSoft: "#e0f2fe",
+    curto: "Divulgação científica",
+    nome: "Atividades de divulgação científica e de iniciação à docência",
+    maxCurso: 100,
+    maxSemestral: 60,
+    subtopicos: [
+      {
+        id: "2.1",
+        nome: "Monitoria remunerada ou voluntária.",
+        unidades: [{ rotulo: "participação(ões)", pontos: 15 }],
+        max: 60,
+        comprovacao: "Certificado / Declaração"
+      },
+      {
+        id: "2.2",
+        nome: "Membro atuante em atividades técnico-científicas, tais como apresentação de trabalhos científicos ministrar palestras, orientações técnicas supervisionadas e participação em bancas de debate.",
+        unidades: [{ rotulo: "participação(ões)", pontos: 10 }],
+        max: 30,
+        comprovacao: "Certificado / Declaração"
+      },
+       {
+        id: "2.3",
+        nome: "Participação em atividades pedagógicas de observação.",
+        unidades: [{ rotulo: "participação(ões)", pontos: 5 }],
+        max: 20,
+        comprovacao: "Certificado / Declaração"
+      }
+    ]
+  },
+  {
+    id: 3,
+    icone: "🎤",
+    cor: "#f59e0b",
+    corSoft: "#fef3c7",
+    curto: "Eventos e representação",
+    nome: "Atividades de participação em eventos, representação estudantil e projetos de incubação",
+    maxCurso: 100,
+    maxSemestral: 60,
+    subtopicos: [
+      {
+        id: "3.2",
+        nome: "Representação discente em Conselhos e Entidades estudantis, liderança de turma, órgãos de classe e conselhos representativos.",
+        unidades: [{ rotulo: "participação(ões)", pontos: 5 }],
+        max: 20,
+        comprovacao: "Certificado / Declaração"
+      },
+      {
+        id: "3.3",
+        nome: "Participação como ouvinte em eventos acadêmicos, tais como bancas de TCC, dissertação, teses.",
+        unidades: [{ rotulo: "participação(ões)", pontos: 3 }],
+        max: 18,
+        comprovacao: "Relatório / Declaração"
+      },
+      {
+        id: "3.4",
+        nome: "Participação como ouvinte em congressos, seminários, simpósios e demais eventos relacionados ao curso de graduação ou áreas afins.",
+        unidades: [
+          { rotulo: "hora(s)", pontos: 1 },
+          { rotulo: "evento(s)", pontos: 10 }
+        ],
+        max: 40,
+        comprovacao: "Certificado / Declaração"
+      },
+      {
+        id: "3.5",
+        nome: "Participação em visita técnica relacionada à área de atuação.",
+        unidades: [
+          { rotulo: "hora(s)", pontos: 1 },
+          { rotulo: "evento(s)", pontos: 8 }
+        ],
+        max: 20,
+        comprovacao: "Relatório da visita, com anuência do professor responsável"
+      },
+      {
+        id: "3.6",
+        nome: "Participação em projetos de incubação.",
+        unidades: [{ rotulo: "mês(es)", pontos: 7.5 }],
+        max: 45,
+        comprovacao: "Certificado / Declaração"
+      }
+    ]
+  },
+  {
+    id: 4,
+    icone: "📚",
+    cor: "#10b981",
+    corSoft: "#d1fae5",
+    curto: "Pesquisa, extensão e publicações",
+    nome: "Atividades de Pesquisa ou Extensão e publicações",
+    maxCurso: 100,
+    maxSemestral: 80,
+    subtopicos: [
+      {
+        id: "4.1",
+        nome: "Participação em projetos e grupos de pesquisa.",
+        unidades: [{ rotulo: "mês(es)", pontos: 7.5 }],
+        max: 45,
+        comprovacao: "Certificado / Declaração"
+      },
+      {
+        id: "4.2",
+        nome: "Participação em projetos e grupos de extensão.",
+        unidades: [{ rotulo: "mês(es)", pontos: 7.5 }],
+        max: 45,
+        comprovacao: "Certificado / Declaração"
+      },
+      {
+        id: "4.3",
+        nome: "Publicação de artigo científico completo em revista ou periódico.",
+        unidades: [
+          { rotulo: "publicação (revista comum)", pontos: 25 },
+          { rotulo: "publicação (revista da área)", pontos: 30 }
+        ],
+        max: 50,
+        comprovacao: "Artigo publicado"
+      },
+      {
+        id: "4.4",
+        nome: "Publicação de resumos de artigo científico em revista ou periódico.",
+        unidades: [
+          { rotulo: "publicação (revista comum)", pontos: 15 },
+          { rotulo: "publicação (revista da área)", pontos: 20 }
+        ],
+        max: 50,
+        comprovacao: "Resumo publicado"
+      },
+      {
+        id: "4.5",
+        nome: "Publicação de matérias ou notas em jornais e meios eletrônicos.",
+        unidades: [{ rotulo: "publicação(ões)", pontos: 5 }],
+        max: 10,
+        comprovacao: "Publicação"
+      }
+    ]
+  }
+];
+
+const LIMITE_ARQUIVO_MB = 10;
+
+/* =========================================================
+   2) ESTADO
+   ========================================================= */
+const state = { registros: [] };
+let seq = 0;
+
+/* =========================================================
+   3) HELPERS
+   ========================================================= */
+const fmtPts = n => Number(n).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+const fmtQtd = n => Number(n).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+const ptLabel = p => (p === 1 ? "1 pt" : `${fmtPts(p)} pts`);
+
+function fmtSize(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1).replace(".", ",") + " KB";
+  return (bytes / 1048576).toFixed(2).replace(".", ",") + " MB";
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+function truncate(s, n) {
+  return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s;
+}
+
+const getCat = id => CATEGORIAS.find(c => c.id === Number(id));
+const getSub = (cat, subId) => cat.subtopicos.find(s => s.id === subId);
+
+/* =========================================================
+   4) CÁLCULO DE PONTOS (com limites)
+   ========================================================= */
+function calcCategoria(cat) {
+  const regs = state.registros.filter(r => r.catId === cat.id);
+
+  const porSub = {};
+  cat.subtopicos.forEach(s => {
+    porSub[s.id] = { bruto: 0, valido: 0, max: s.max };
+  });
+
+  regs.forEach(r => {
+    if (porSub[r.subId]) porSub[r.subId].bruto += r.pontos;
+  });
+
+  Object.values(porSub).forEach(o => {
+    o.valido = Math.min(o.bruto, o.max);
+  });
+
+  const somaSub = Object.values(porSub).reduce((a, o) => a + o.valido, 0);
+  const total = Math.min(somaSub, cat.maxCurso);
+
+  return { porSub, somaSub, total, excedeu: somaSub > cat.maxCurso };
+}
+
+/* =========================================================
+   5) CONSTRUÇÃO DA INTERFACE
+   ========================================================= */
+function buildTabs() {
+  const nav = document.getElementById("tabs");
+
+  CATEGORIAS.forEach((cat, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "tab" + (i === 0 ? " active" : "");
+    b.dataset.tab = cat.id;
+    b.setAttribute("role", "tab");
+    b.style.setProperty("--c", cat.cor);
+    b.style.setProperty("--soft", cat.corSoft);
+    b.innerHTML = `
+      <span class="tab-ico">${cat.icone}</span>
+      <span class="tab-txt">
+        <strong>${cat.id}. ${escapeHtml(cat.curto)}</strong>
+        <small data-tab-pts="${cat.id}">0 pts</small>
+      </span>`;
+    b.addEventListener("click", () => activateTab(cat.id));
+    nav.appendChild(b);
+  });
+
+  const bResumo = document.createElement("button");
+  bResumo.type = "button";
+  bResumo.className = "tab";
+  bResumo.dataset.tab = "resumo";
+  bResumo.setAttribute("role", "tab");
+  bResumo.style.setProperty("--c", "#334155");
+  bResumo.style.setProperty("--soft", "#e2e8f0");
+  bResumo.innerHTML = `
+    <span class="tab-ico">📄</span>
+    <span class="tab-txt">
+      <strong>Relatório final</strong>
+      <small>Gerar e baixar PDF</small>
+    </span>`;
+  bResumo.addEventListener("click", () => activateTab("resumo"));
+  nav.appendChild(bResumo);
+}
+
+function activateTab(id) {
+  document.querySelectorAll(".tab").forEach(t =>
+    t.classList.toggle("active", String(t.dataset.tab) === String(id))
+  );
+  document.querySelectorAll(".panel").forEach(p =>
+    (p.hidden = String(p.dataset.cat) !== String(id))
+  );
+  if (String(id) === "resumo") renderResumo();
+}
+
+function buildPanels() {
+  const main = document.getElementById("panels");
+
+  CATEGORIAS.forEach((cat, i) => {
+    const sec = document.createElement("section");
+    sec.className = "panel";
+    sec.id = "panel-" + cat.id;
+    sec.dataset.cat = cat.id;
+    sec.setAttribute("role", "tabpanel");
+    sec.hidden = i !== 0;
+    sec.style.setProperty("--c", cat.cor);
+    sec.style.setProperty("--soft", cat.corSoft);
+
+    const opcoes = cat.subtopicos.map(s =>
+      `<option value="${s.id}">${s.id} — ${escapeHtml(truncate(s.nome, 100))}</option>`
+    ).join("");
+
+    sec.innerHTML = `
+      <div class="cat-head">
+        <div class="cat-title">
+          <span class="cat-ico">${cat.icone}</span>
+          <div>
+            <h2>${cat.id}. ${escapeHtml(cat.nome)}</h2>
+            <p class="cat-sub">
+              Máximo de <b>${cat.maxCurso} pts</b> ao longo do curso ·
+              <b>${cat.maxSemestral} pts</b> por semestre
+            </p>
+          </div>
+        </div>
+        <div class="cat-score">
+          <strong data-score="${cat.id}">0</strong><span>/ ${cat.maxCurso} pts</span>
+        </div>
+      </div>
+
+      <div class="bar"><div class="bar-fill" data-bar="${cat.id}" style="background:${cat.cor}"></div></div>
+
+      <p class="cap-alert" data-alert="${cat.id}" hidden>
+        ⚠️ Limite da categoria atingido — os pontos excedentes não são contabilizados.
+      </p>
+
+      <form class="form" data-form="${cat.id}" novalidate>
+        <div class="grid">
+
+          <div class="field col-2">
+            <label for="sub-${cat.id}">Subtópico</label>
+            <select id="sub-${cat.id}" required>
+              <option value="">Selecione um subtópico…</option>
+              ${opcoes}
+            </select>
+          </div>
+
+          <div class="field col-2">
+            <div class="info" data-info="${cat.id}">
+              <p>Selecione um subtópico para ver as regras de pontuação.</p>
+            </div>
+          </div>
+
+          <div class="field" data-unidade-wrap="${cat.id}" hidden>
+            <label for="uni-${cat.id}">Critério de pontuação</label>
+            <select id="uni-${cat.id}"></select>
+          </div>
+
+          <div class="field">
+            <label for="qtd-${cat.id}">
+              Quantidade <span class="unit" data-unit="${cat.id}"></span>
+            </label>
+            <input type="number" id="qtd-${cat.id}" min="0.5" step="0.5" value="1" placeholder="1" inputmode="decimal">
+          </div>
+
+          <div class="field col-2">
+            <label for="file-${cat.id}">Comprovante (PDF)</label>
+            <input type="file" id="file-${cat.id}" accept="application/pdf,.pdf">
+            <small class="hint">Apenas arquivos <b>.pdf</b> — tamanho máximo de ${LIMITE_ARQUIVO_MB} MB.</small>
+          </div>
+
+          <div class="field col-2">
+            <button type="submit" class="btn-primary">+ Adicionar atividade</button>
+          </div>
+
+        </div>
+        <p class="form-msg" data-msg="${cat.id}"></p>
+      </form>
+
+      <div class="lista" data-lista="${cat.id}"></div>
+    `;
+
+    main.appendChild(sec);
+  });
+
+  buildResumoPanel();
+}
+
+function buildResumoPanel() {
+  const main = document.getElementById("panels");
+
+  const sec = document.createElement("section");
+  sec.className = "panel";
+  sec.id = "panel-resumo";
+  sec.dataset.cat = "resumo";
+  sec.setAttribute("role", "tabpanel");
+  sec.hidden = true;
+  sec.style.setProperty("--c", "#334155");
+  sec.style.setProperty("--soft", "#e2e8f0");
+
+  sec.innerHTML = `
+    <div class="cat-head">
+      <div class="cat-title">
+        <span class="cat-ico">📄</span>
+        <div>
+          <h2>Emissão do relatório final</h2>
+          <p class="cat-sub">
+            Gere um PDF único com a lista de atividades cadastradas, a pontuação por categoria,
+            o total geral e, ao final, todos os comprovantes em PDF anexados nesta sessão.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form">
+      <div class="grid">
+        <div class="field">
+          <label for="alunoNome">Nome completo <span class="unit">(opcional)</span></label>
+          <input type="text" id="alunoNome" placeholder="Nome do(a) estudante">
+        </div>
+        <div class="field">
+          <label for="alunoMatricula">Matrícula / RA <span class="unit">(opcional)</span></label>
+          <input type="text" id="alunoMatricula" placeholder="Ex.: 2023000000">
+        </div>
+      </div>
+      <p class="hint" style="margin-top:10px;">Esses dados aparecem apenas no cabeçalho do PDF gerado.</p>
+    </div>
+
+    <div class="lista" id="resumoLista"></div>
+
+    <div class="foot">
+      <p>
+        O botão abaixo monta o relatório e, em seguida, anexa integralmente cada comprovante em PDF
+        já enviado nos formulários das categorias. O download começa automaticamente ao final.
+      </p>
+      <button class="btn-primary" id="btnGerarPdf" type="button">⬇ Gerar e baixar PDF</button>
+    </div>
+    <p class="form-msg" id="resumoMsg"></p>
+  `;
+
+  main.appendChild(sec);
+}
+
+/* =========================================================
+   6) LIGAÇÃO DOS FORMULÁRIOS
+   ========================================================= */
+function bindForms() {
+  CATEGORIAS.forEach(cat => {
+    const sel    = document.getElementById("sub-" + cat.id);
+    const uniSel = document.getElementById("uni-" + cat.id);
+    const form   = document.querySelector(`[data-form="${cat.id}"]`);
+    const qtd    = document.getElementById("qtd-" + cat.id);
+
+    sel.addEventListener("change", () => {
+      renderInfoSubtopico(cat);
+      qtd.value = "";
+    });
+
+    uniSel.addEventListener("change", () => atualizarRotuloUnidade(cat));
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      submeterFormulario(cat);
+    });
+  });
+}
+
+function renderInfoSubtopico(cat) {
+  const sel    = document.getElementById("sub-" + cat.id);
+  const uniSel = document.getElementById("uni-" + cat.id);
+  const wrap   = document.querySelector(`[data-unidade-wrap="${cat.id}"]`);
+  const info   = document.querySelector(`[data-info="${cat.id}"]`);
+
+  const sub = getSub(cat, sel.value);
+
+  if (!sub) {
+    info.innerHTML = "<p>Selecione um subtópico para ver as regras de pontuação.</p>";
+    wrap.hidden = true;
+    uniSel.innerHTML = "";
+    document.querySelector(`[data-unit="${cat.id}"]`).textContent = "";
+    return;
+  }
+
+  uniSel.innerHTML = sub.unidades.map((u, i) =>
+    `<option value="${i}">${escapeHtml(u.rotulo)} — ${ptLabel(u.pontos)}</option>`
+  ).join("");
+
+  wrap.hidden = sub.unidades.length < 2;
+
+  info.innerHTML = `
+    <p class="info-nome">${escapeHtml(sub.nome)}</p>
+    <div class="info-grid">
+      <div>
+        <span>Pontuação</span>
+        <strong>${sub.unidades.map(u => `${ptLabel(u.pontos)} / ${escapeHtml(u.rotulo)}`).join(" ou ")}</strong>
+      </div>
+      <div>
+        <span>Limite do subtópico</span>
+        <strong>${sub.max} pts</strong>
+      </div>
+      <div>
+        <span>Comprovação</span>
+        <strong>${escapeHtml(sub.comprovacao)}</strong>
+      </div>
+    </div>`;
+
+  atualizarRotuloUnidade(cat);
+}
+
+function atualizarRotuloUnidade(cat) {
+  const sel    = document.getElementById("sub-" + cat.id);
+  const uniSel = document.getElementById("uni-" + cat.id);
+  const rotulo = document.querySelector(`[data-unit="${cat.id}"]`);
+
+  const sub = getSub(cat, sel.value);
+  if (!sub) { rotulo.textContent = ""; return; }
+
+  const u = sub.unidades[Number(uniSel.value) || 0];
+  rotulo.textContent = u ? `(${u.rotulo})` : "";
+}
+
+/* =========================================================
+   7) SUBMISSÃO
+   ========================================================= */
+function submeterFormulario(cat) {
+  const sel    = document.getElementById("sub-" + cat.id);
+  const uniSel = document.getElementById("uni-" + cat.id);
+  const qtd    = document.getElementById("qtd-" + cat.id);
+  const fileEl = document.getElementById("file-" + cat.id);
+  const msg    = document.querySelector(`[data-msg="${cat.id}"]`);
+
+  const mostrarErro = texto => {
+    msg.textContent = texto;
+    msg.className = "form-msg erro";
+  };
+
+  msg.textContent = "";
+  msg.className = "form-msg";
+
+  /* subtópico */
+  const sub = getSub(cat, sel.value);
+  if (!sub) return mostrarErro("Selecione um subtópico.");
+
+  /* quantidade */
+  const quantidade = Number(qtd.value);
+  if (!quantidade || quantidade <= 0)
+    return mostrarErro("Informe uma quantidade válida (maior que zero).");
+
+  /* arquivo */
+  const arquivo = fileEl.files[0];
+  if (!arquivo) return mostrarErro("Anexe o comprovante em PDF.");
+
+  const ehPdf = /\.pdf$/i.test(arquivo.name) ||
+                arquivo.type === "application/pdf";
+  if (!ehPdf) return mostrarErro("O arquivo deve estar no formato PDF.");
+
+  if (arquivo.size > LIMITE_ARQUIVO_MB * 1024 * 1024)
+    return mostrarErro(`O arquivo excede o limite de ${LIMITE_ARQUIVO_MB} MB.`);
+
+  /* cálculo */
+  const uniIdx  = Number(uniSel.value) || 0;
+  const unidade = sub.unidades[uniIdx];
+  const pontos  = Math.round(quantidade * unidade.pontos * 100) / 100;
+
+  /* registro */
+  state.registros.push({
+    id: ++seq,
+    catId: cat.id,
+    subId: sub.id,
+    uniIdx,
+    quantidade,
+    pontos,
+    arquivoNome: arquivo.name,
+    arquivoTamanho: arquivo.size,
+    arquivo: arquivo,
+    url: URL.createObjectURL(arquivo),
+    criadoEm: new Date()
+  });
+
+  /* reset */
+  document.querySelector(`[data-form="${cat.id}"]`).reset();
+  renderInfoSubtopico(cat);
+
+  renderLista(cat.id);
+  updateAll();
+
+  msg.textContent = `✔ Atividade registrada: +${fmtPts(pontos)} pts (sujeito aos limites).`;
+  msg.className = "form-msg ok";
+}
+
+/* =========================================================
+   8) LISTA DE LANÇAMENTOS
+   ========================================================= */
+function renderLista(catId) {
+  const cat = getCat(catId);
+  const el  = document.querySelector(`[data-lista="${catId}"]`);
+  const regs = state.registros.filter(r => r.catId === catId);
+
+  if (!regs.length) {
+    el.innerHTML = `<p class="vazio">Nenhuma atividade cadastrada nesta categoria.</p>`;
+    return;
+  }
+
+  el.innerHTML = regs.map(r => {
+    const sub = getSub(cat, r.subId);
+    const u   = sub.unidades[r.uniIdx];
+    return `
+      <div class="item">
+        <div class="item-main">
+          <span class="tag">${sub.id}</span>
+          <div class="item-info">
+            <strong>${escapeHtml(sub.nome)}</strong>
+            <span class="meta">
+              ${fmtQtd(r.quantidade)} ${escapeHtml(u.rotulo)} × ${ptLabel(u.pontos)}
+              = <b>${fmtPts(r.pontos)} pts</b>
+            </span>
+            <a class="file" href="${r.url}" target="_blank" rel="noopener">
+              📄 ${escapeHtml(r.arquivoNome)} <span>(${fmtSize(r.arquivoTamanho)})</span>
+            </a>
+          </div>
+        </div>
+        <div class="item-right">
+          <span class="pts">${fmtPts(r.pontos)}</span>
+          <button class="btn-remove" type="button" data-remove="${r.id}" title="Remover lançamento">✕</button>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+/* =========================================================
+   9) ATUALIZAÇÃO DOS TOTAIS
+   ========================================================= */
+function updateAll() {
+  let totalGeral = 0;
+  let maxGeral = 0;
+
+  CATEGORIAS.forEach(cat => {
+    const { total, excedeu } = calcCategoria(cat);
+    totalGeral += total;
+    maxGeral += cat.maxCurso;
+
+    document.querySelector(`[data-score="${cat.id}"]`).textContent = fmtPts(total);
+
+    const bar = document.querySelector(`[data-bar="${cat.id}"]`);
+    bar.style.width = Math.min(100, (total / cat.maxCurso) * 100) + "%";
+
+    document.querySelector(`[data-alert="${cat.id}"]`).hidden = !excedeu;
+
+    const badge = document.querySelector(`[data-tab-pts="${cat.id}"]`);
+    if (badge) badge.textContent = `${fmtPts(total)} / ${cat.maxCurso} pts`;
+  });
+
+  document.getElementById("totalGeral").textContent = fmtPts(totalGeral);
+  document.getElementById("maxGeral").textContent = maxGeral;
+  document.getElementById("barGeral").style.width =
+    (Math.min(100, (totalGeral / maxGeral) * 100)) + "%";
+
+  renderResumo();
+}
+
+/* =========================================================
+   9b) ABA "RELATÓRIO FINAL"
+   ========================================================= */
+function renderResumo() {
+  const el = document.getElementById("resumoLista");
+  if (!el) return;
+
+  if (!state.registros.length) {
+    el.innerHTML = `<p class="vazio">Nenhuma atividade cadastrada ainda. Adicione atividades nas abas acima antes de gerar o relatório.</p>`;
+    return;
+  }
+
+  let html = "";
+  let totalGeral = 0;
+
+  CATEGORIAS.forEach(cat => {
+    const regs = state.registros.filter(r => r.catId === cat.id);
+    if (!regs.length) return;
+
+    const { total } = calcCategoria(cat);
+    totalGeral += total;
+
+    html += `
+      <div style="margin-top:14px;">
+        <p style="margin:0 0 8px;font-weight:800;font-size:.85rem;color:${cat.cor};">
+          ${cat.icone} ${cat.id}. ${escapeHtml(cat.curto)}
+          <span style="color:var(--muted);font-weight:600;">— ${fmtPts(total)} / ${cat.maxCurso} pts</span>
+        </p>`;
+
+    regs.forEach(r => {
+      const sub = getSub(cat, r.subId);
+      const u = sub.unidades[r.uniIdx];
+      html += `
+        <div class="item">
+          <div class="item-main">
+            <span class="tag">${sub.id}</span>
+            <div class="item-info">
+              <strong>${escapeHtml(sub.nome)}</strong>
+              <span class="meta">
+                ${fmtQtd(r.quantidade)} ${escapeHtml(u.rotulo)} × ${ptLabel(u.pontos)}
+                = <b>${fmtPts(r.pontos)} pts</b>
+              </span>
+              <span class="meta">📄 ${escapeHtml(r.arquivoNome)}</span>
+            </div>
+          </div>
+          <div class="item-right">
+            <span class="pts">${fmtPts(r.pontos)}</span>
+          </div>
+        </div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  html += `
+    <div class="item" style="background:#f8fafc;margin-top:16px;">
+      <div class="item-main"><strong style="font-size:.95rem;">TOTAL GERAL</strong></div>
+      <div class="item-right"><span class="pts" style="font-size:1.1rem;">${fmtPts(totalGeral)} pts</span></div>
+    </div>`;
+
+  el.innerHTML = html;
+}
+
+/* =========================================================
+   9c) GERAÇÃO DO PDF FINAL (relatório + anexos)
+   ========================================================= */
+async function gerarRelatorioPDF() {
+  const msg = document.getElementById("resumoMsg");
+  const btn = document.getElementById("btnGerarPdf");
+
+  if (!state.registros.length) {
+    msg.textContent = "Adicione ao menos uma atividade antes de gerar o relatório.";
+    msg.className = "form-msg erro";
+    return;
+  }
+
+  if (typeof PDFLib === "undefined") {
+    msg.textContent = "Não foi possível carregar a biblioteca de geração de PDF. Verifique sua conexão com a internet e tente novamente.";
+    msg.className = "form-msg erro";
+    return;
+  }
+
+  btn.disabled = true;
+  msg.textContent = "Gerando PDF, aguarde…";
+  msg.className = "form-msg";
+
+  try {
+    const { PDFDocument, StandardFonts, rgb } = PDFLib;
+    const pdfDoc = await PDFDocument.create();
+    const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+    const pageW = 595.28, pageH = 841.89, margin = 50;
+    let page = pdfDoc.addPage([pageW, pageH]);
+    let y = pageH - margin;
+
+    function novaPaginaSeNecessario(espacoMinimo = 60) {
+      if (y < margin + espacoMinimo) {
+        page = pdfDoc.addPage([pageW, pageH]);
+        y = pageH - margin;
+      }
+    }
+
+    function quebrarTexto(texto, font, size, maxWidth) {
+      const palavras = String(texto).split(" ");
+      const linhas = [];
+      let linha = "";
+      palavras.forEach(palavra => {
+        const teste = linha ? linha + " " + palavra : palavra;
+        if (font.widthOfTextAtSize(teste, size) > maxWidth && linha) {
+          linhas.push(linha);
+          linha = palavra;
+        } else {
+          linha = teste;
+        }
+      });
+      if (linha) linhas.push(linha);
+      return linhas;
+    }
+
+    function escreverLinha(texto, opts = {}) {
+      const {
+        size = 10, font = fontRegular, color = rgb(0.12, 0.16, 0.22),
+        gap = 14, maxWidth = pageW - margin * 2, indent = 0
+      } = opts;
+      const linhas = quebrarTexto(texto, font, size, maxWidth - indent);
+      linhas.forEach(l => {
+        novaPaginaSeNecessario(gap + 10);
+        page.drawText(l, { x: margin + indent, y, size, font, color });
+        y -= gap;
+      });
+    }
+
+    /* Desenha uma linha de "link" clicável e devolve a área/página para
+       criarmos a anotação de destino depois que soubermos para onde apontar */
+    function escreverLinhaLink(texto, opts = {}) {
+      const { size = 9, font = fontBold, color = rgb(0.15, 0.39, 0.85), gap = 16, indent = 12 } = opts;
+      novaPaginaSeNecessario(gap + 10);
+      const x = margin + indent;
+      const largura = font.widthOfTextAtSize(texto, size);
+      page.drawText(texto, { x, y, size, font, color });
+      page.drawLine({
+        start: { x, y: y - 2 }, end: { x: x + largura, y: y - 2 },
+        thickness: 0.6, color
+      });
+      const area = { page, x, y: y - 3, x2: x + largura, y2: y + size + 1 };
+      y -= gap;
+      return area;
+    }
+
+    /* Cria uma anotação de link interno na página "origem", saltando para a página "destino" */
+    function criarLinkInterno(origem, destinoRef) {
+      const { PDFName } = PDFLib;
+      const context = pdfDoc.context;
+      const linkDict = context.obj({
+        Type: "Annot",
+        Subtype: "Link",
+        Rect: [origem.x, origem.y, origem.x2, origem.y2],
+        Border: [0, 0, 0],
+        Dest: [destinoRef, PDFName.of("Fit")]
+      });
+      const linkRef = context.register(linkDict);
+
+      let annots = origem.page.node.lookup(PDFName.of("Annots"));
+      if (!annots) {
+        annots = context.obj([]);
+        origem.page.node.set(PDFName.of("Annots"), annots);
+      }
+      annots.push(linkRef);
+    }
+
+    const linksPendentes = [];       // { area, registroId }
+    const destinosAnexo = new Map(); // registroId -> PDFRef da página do comprovante
+
+    /* Cabeçalho */
+    escreverLinha("Relatório de Atividades Complementares", { size: 16, font: fontBold, gap: 22 });
+    escreverLinha("Anexo I — Pontuação para as atividades complementares", { size: 10, color: rgb(0.4, 0.45, 0.53), gap: 18 });
+
+    const nome = (document.getElementById("alunoNome").value || "").trim();
+    const matricula = (document.getElementById("alunoMatricula").value || "").trim();
+    if (nome) escreverLinha(`Aluno(a): ${nome}`, { size: 11, font: fontBold, gap: 16 });
+    if (matricula) escreverLinha(`Matrícula/RA: ${matricula}`, { size: 11, gap: 16 });
+    escreverLinha(`Data de emissão: ${new Date().toLocaleString("pt-BR")}`, { size: 9, color: rgb(0.4, 0.45, 0.53), gap: 22 });
+
+    /* Corpo — atividades por categoria */
+    let totalGeral = 0, maxGeral = 0;
+
+    CATEGORIAS.forEach(cat => {
+      const regs = state.registros.filter(r => r.catId === cat.id);
+      maxGeral += cat.maxCurso;
+      if (!regs.length) return;
+
+      const { total } = calcCategoria(cat);
+      totalGeral += total;
+
+      novaPaginaSeNecessario(50);
+      y -= 6;
+      escreverLinha(`${cat.id}. ${cat.nome}`, { size: 12, font: fontBold, gap: 16 });
+      escreverLinha(`Subtotal da categoria: ${fmtPts(total)} / ${cat.maxCurso} pts`, { size: 9.5, color: rgb(0.3, 0.35, 0.42), gap: 16 });
+
+      regs.forEach(r => {
+        const sub = getSub(cat, r.subId);
+        const u = sub.unidades[r.uniIdx];
+        escreverLinha(`• [${sub.id}] ${sub.nome}`, { size: 9.5, gap: 12 });
+        escreverLinha(
+          `${fmtQtd(r.quantidade)} ${u.rotulo} × ${ptLabel(u.pontos)} = ${fmtPts(r.pontos)} pts — arquivo: ${r.arquivoNome}`,
+          { size: 9, color: rgb(0.35, 0.4, 0.47), gap: 14, indent: 12 }
+        );
+        const area = escreverLinhaLink(`» Abrir comprovante em PDF`);
+        linksPendentes.push({ area, registroId: r.id });
+      });
+      y -= 4;
+    });
+
+    novaPaginaSeNecessario(50);
+    y -= 6;
+    page.drawText(`TOTAL GERAL: ${fmtPts(totalGeral)} / ${maxGeral} pts`, {
+      x: margin, y, size: 13, font: fontBold, color: rgb(0.15, 0.1, 0.55)
+    });
+    y -= 10;
+
+    /* Anexos — comprovantes em PDF submetidos */
+    const comAnexo = state.registros.filter(r => r.arquivo instanceof Blob);
+
+    if (comAnexo.length) {
+      page = pdfDoc.addPage([pageW, pageH]);
+      y = pageH - margin;
+      escreverLinha("Comprovantes anexados", { size: 14, font: fontBold, gap: 24 });
+      escreverLinha(`Total de arquivos: ${comAnexo.length}`, { size: 9.5, color: rgb(0.4, 0.45, 0.53), gap: 20 });
+
+      for (const r of comAnexo) {
+        const cat = getCat(r.catId);
+        const sub = getSub(cat, r.subId);
+
+        page = pdfDoc.addPage([pageW, pageH]);
+        y = pageH - margin;
+        escreverLinha(`Anexo — Subtópico ${sub.id}`, { size: 12, font: fontBold, gap: 18 });
+        escreverLinha(sub.nome, { size: 10, gap: 14 });
+        escreverLinha(`Arquivo: ${r.arquivoNome}`, { size: 9.5, color: rgb(0.35, 0.4, 0.47), gap: 16 });
+
+        try {
+          const bytes = await r.arquivo.arrayBuffer();
+          const anexoDoc = await PDFDocument.load(bytes, { ignoreEncryption: true });
+          const paginasCopiadas = await pdfDoc.copyPages(anexoDoc, anexoDoc.getPageIndices());
+          paginasCopiadas.forEach(p => pdfDoc.addPage(p));
+
+          if (paginasCopiadas.length) {
+            destinosAnexo.set(r.id, paginasCopiadas[0].ref);
+          }
+        } catch (err) {
+          console.error("Falha ao incorporar anexo:", r.arquivoNome, err);
+          escreverLinha(
+            `ATENÇÃO: não foi possível incorporar este arquivo automaticamente (pode estar protegido ou corrompido). Anexe-o manualmente, se necessário.`,
+            { size: 9.5, color: rgb(0.8, 0.1, 0.1), gap: 14 }
+          );
+        }
+      }
+    }
+
+    /* Cria os links do sumário para cada comprovante embutido com sucesso */
+    linksPendentes.forEach(({ area, registroId }) => {
+      const destinoRef = destinosAnexo.get(registroId);
+      if (destinoRef) criarLinkInterno(area, destinoRef);
+    });
+
+    /* Download */
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `relatorio-atividades-complementares-${Date.now()}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+    msg.textContent = "✔ PDF gerado com sucesso! O download deve iniciar automaticamente.";
+    msg.className = "form-msg ok";
+  } catch (err) {
+    console.error(err);
+    msg.textContent = "Ocorreu um erro ao gerar o PDF. Tente novamente.";
+    msg.className = "form-msg erro";
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function bindResumo() {
+  const btn = document.getElementById("btnGerarPdf");
+  if (btn) btn.addEventListener("click", gerarRelatorioPDF);
+}
+
+/* =========================================================
+   10) REMOÇÃO E LIMPEZA
+   ========================================================= */
+function bindRemocao() {
+  document.getElementById("panels").addEventListener("click", e => {
+    const btn = e.target.closest("[data-remove]");
+    if (!btn) return;
+
+    const id = Number(btn.dataset.remove);
+    const idx = state.registros.findIndex(r => r.id === id);
+    if (idx < 0) return;
+
+    const [reg] = state.registros.splice(idx, 1);
+    if (reg.url) URL.revokeObjectURL(reg.url);
+
+    renderLista(reg.catId);
+    updateAll();
+  });
+
+  document.getElementById("limparTudo").addEventListener("click", () => {
+    if (!state.registros.length) return;
+    if (!confirm("Remover TODOS os lançamentos? Esta ação não pode ser desfeita.")) return;
+
+    state.registros.forEach(r => r.url && URL.revokeObjectURL(r.url));
+    state.registros = [];
+
+    CATEGORIAS.forEach(cat => renderLista(cat.id));
+    updateAll();
+  });
+}
+
+/* =========================================================
+   11) INICIALIZAÇÃO
+   ========================================================= */
+(function init() {
+  buildTabs();
+  buildPanels();
+  bindForms();
+  bindRemocao();
+  bindResumo();
+
+  CATEGORIAS.forEach(cat => renderLista(cat.id));
+  updateAll();
+})();
+</script>
+</body>
+</html>
