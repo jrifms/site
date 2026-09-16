@@ -129,14 +129,20 @@
     text-transform:uppercase;letter-spacing:.05em;
   }
   .field label .unit{color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0;}
+  .field label .req{color:var(--danger);font-weight:800;}
 
-  select, input[type="number"]{
+  select, input[type="number"], input[type="date"], input[type="text"]{
     font:inherit;width:100%;padding:11px 12px;border-radius:12px;
     border:1.5px solid var(--line);background:#fff;color:var(--text);
     outline:none;transition:border-color .15s, box-shadow .15s;
   }
-  select:focus, input[type="number"]:focus{
+  select:focus, input[type="number"]:focus,
+  input[type="date"]:focus, input[type="text"]:focus{
     border-color:var(--c);box-shadow:0 0 0 4px var(--soft);
+  }
+  input.invalido{
+    border-color:var(--danger);
+    box-shadow:0 0 0 4px #fee2e2;
   }
 
   input[type="file"]{
@@ -170,9 +176,18 @@
   }
   .btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px);}
   .btn-primary:active{transform:none;}
+  .btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none;filter:none;}
 
   .form-msg{margin:12px 0 0;font-size:.82rem;font-weight:600;}
-  .form-msg.erro{color:var(--danger);}
+  .form-msg.erro{
+    color:var(--danger);
+    white-space:pre-line;
+    background:#fef2f2;
+    border:1px solid #fecaca;
+    padding:10px 13px;
+    border-radius:11px;
+    line-height:1.5;
+  }
   .form-msg.ok{color:var(--ok);}
 
   /* ---------- LISTA ---------- */
@@ -194,6 +209,7 @@
   }
   .item-info{display:flex;flex-direction:column;gap:5px;min-width:0;}
   .item-info strong{font-size:.85rem;font-weight:600;line-height:1.4;}
+  .item-titulo{font-size:.9rem;font-weight:700;color:#0f172a;line-height:1.35;}
   .meta{font-size:.77rem;color:var(--muted);}
   .file{
     font-size:.77rem;color:#2563eb;text-decoration:none;
@@ -263,8 +279,8 @@
   <div class="foot">
     <p>
       Os limites são aplicados automaticamente: <strong>por subtópico</strong>, <strong>por categoria
-      (ao longo do curso)</strong> e no <strong>total geral</strong>. Pontos excedentes não são contabilizados.
-      O limite semestral é apenas informativo.
+      (ao longo do curso)</strong> e no <strong>total geral</strong>. Lançamentos que ultrapassem qualquer
+      limite são <strong>bloqueados</strong>. O limite semestral é apenas informativo.
     </p>
     <button class="btn-ghost" id="limparTudo" type="button">🗑 Limpar todos os lançamentos</button>
   </div>
@@ -499,6 +515,14 @@ function truncate(s, n) {
   return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s;
 }
 
+function formatarData(iso) {
+  if (!iso) return "—";
+  const [a, m, d] = iso.split("-");
+  return `${d}/${m}/${a}`;
+}
+
+const MAX_GERAL = () => CATEGORIAS.reduce((a, c) => a + c.maxCurso, 0);
+
 const getCat = id => CATEGORIAS.find(c => c.id === Number(id));
 const getSub = (cat, subId) => cat.subtopicos.find(s => s.id === subId);
 
@@ -615,14 +639,19 @@ function buildPanels() {
       <div class="bar"><div class="bar-fill" data-bar="${cat.id}" style="background:${cat.cor}"></div></div>
 
       <p class="cap-alert" data-alert="${cat.id}" hidden>
-        ⚠️ Limite da categoria atingido — os pontos excedentes não são contabilizados.
+        ⚠️ Limite da categoria atingido — novos lançamentos nesta categoria serão bloqueados.
       </p>
 
       <form class="form" data-form="${cat.id}" novalidate>
         <div class="grid">
 
           <div class="field col-2">
-            <label for="sub-${cat.id}">Subtópico</label>
+            <label for="titulo-${cat.id}">Título da atividade <span class="req">*</span></label>
+            <input type="text" id="titulo-${cat.id}" maxlength="120" placeholder="Ex.: Curso de inglês básico — Fisk" required>
+          </div>
+
+          <div class="field col-2">
+            <label for="sub-${cat.id}">Subtópico <span class="req">*</span></label>
             <select id="sub-${cat.id}" required>
               <option value="">Selecione um subtópico…</option>
               ${opcoes}
@@ -636,19 +665,25 @@ function buildPanels() {
           </div>
 
           <div class="field" data-unidade-wrap="${cat.id}" hidden>
-            <label for="uni-${cat.id}">Critério de pontuação</label>
+            <label for="uni-${cat.id}">Critério de pontuação <span class="req">*</span></label>
             <select id="uni-${cat.id}"></select>
           </div>
 
           <div class="field">
             <label for="qtd-${cat.id}">
-              Quantidade <span class="unit" data-unit="${cat.id}"></span>
+              Quantidade <span class="req">*</span> <span class="unit" data-unit="${cat.id}"></span>
             </label>
             <input type="number" id="qtd-${cat.id}" min="0.5" step="0.5" value="1" placeholder="1" inputmode="decimal">
           </div>
 
+          <div class="field">
+            <label for="data-${cat.id}">Data de conclusão <span class="req">*</span></label>
+            <input type="date" id="data-${cat.id}" required>
+            <small class="hint">Data em que a atividade foi concluída (não pode ser futura).</small>
+          </div>
+
           <div class="field col-2">
-            <label for="file-${cat.id}">Comprovante (PDF)</label>
+            <label for="file-${cat.id}">Comprovante (PDF) <span class="req">*</span></label>
             <input type="file" id="file-${cat.id}" accept="application/pdf,.pdf">
             <small class="hint">Apenas arquivos <b>.pdf</b> — tamanho máximo de ${LIMITE_ARQUIVO_MB} MB.</small>
           </div>
@@ -699,15 +734,15 @@ function buildResumoPanel() {
     <div class="form">
       <div class="grid">
         <div class="field">
-          <label for="alunoNome">Nome completo <span class="unit">(opcional)</span></label>
-          <input type="text" id="alunoNome" placeholder="Nome do(a) estudante">
+          <label for="alunoNome">Nome completo <span class="req">*</span></label>
+          <input type="text" id="alunoNome" placeholder="Nome do(a) estudante" required>
         </div>
         <div class="field">
-          <label for="alunoMatricula">Matrícula / RA <span class="unit">(opcional)</span></label>
-          <input type="text" id="alunoMatricula" placeholder="Ex.: 2023000000">
+          <label for="alunoDataIngresso">Data de ingresso <span class="req">*</span></label>
+          <input type="date" id="alunoDataIngresso" required>
         </div>
       </div>
-      <p class="hint" style="margin-top:10px;">Esses dados aparecem apenas no cabeçalho do PDF gerado.</p>
+      <p class="hint" style="margin-top:10px;">Campos obrigatórios. Esses dados aparecem no cabeçalho do PDF gerado.</p>
     </div>
 
     <div class="lista" id="resumoLista"></div>
@@ -734,6 +769,11 @@ function bindForms() {
     const uniSel = document.getElementById("uni-" + cat.id);
     const form   = document.querySelector(`[data-form="${cat.id}"]`);
     const qtd    = document.getElementById("qtd-" + cat.id);
+    const dataEl = document.getElementById("data-" + cat.id);
+
+    /* Limita a data máxima ao dia de hoje */
+    const hojeStr = new Date().toISOString().split("T")[0];
+    dataEl.setAttribute("max", hojeStr);
 
     sel.addEventListener("change", () => {
       renderInfoSubtopico(cat);
@@ -804,14 +844,70 @@ function atualizarRotuloUnidade(cat) {
 }
 
 /* =========================================================
-   7) SUBMISSÃO
+   7) SIMULAÇÃO DE EXTRAPOLAÇÃO DE LIMITES
+   ========================================================= */
+function simularExcesso(cat, sub, pontosNovos) {
+  const avisos = [];
+  const regsCat = state.registros.filter(r => r.catId === cat.id);
+
+  /* Subtópico: bruto atual + novo */
+  let brutoSub = 0;
+  regsCat.forEach(r => { if (r.subId === sub.id) brutoSub += r.pontos; });
+  brutoSub += pontosNovos;
+
+  /* Categoria: recalcula com o novo lançamento (aplicando caps por subtópico) */
+  const porSub = {};
+  cat.subtopicos.forEach(s => { porSub[s.id] = 0; });
+  regsCat.forEach(r => {
+    if (porSub[r.subId] !== undefined) porSub[r.subId] += r.pontos;
+  });
+  porSub[sub.id] = (porSub[sub.id] || 0) + pontosNovos;
+
+  let somaValidaCat = 0;
+  cat.subtopicos.forEach(s => {
+    somaValidaCat += Math.min(porSub[s.id] || 0, s.max);
+  });
+
+  /* Total geral: substitui o total desta categoria pelo simulado */
+  const totalCatAtual = calcCategoria(cat).total;
+  const totalCatNovo  = Math.min(somaValidaCat, cat.maxCurso);
+  const totalGeralAtual = CATEGORIAS.reduce((acc, c) => acc + calcCategoria(c).total, 0);
+  const totalGeralNovo  = totalGeralAtual - totalCatAtual + totalCatNovo;
+
+  if (brutoSub > sub.max) {
+    avisos.push(
+      `• Subtópico ${sub.id}: ficaria com ${fmtPts(brutoSub)} pts, mas o limite é ${sub.max} pts ` +
+      `(excedente de ${fmtPts(brutoSub - sub.max)} pts).`
+    );
+  }
+
+  if (somaValidaCat > cat.maxCurso) {
+    avisos.push(
+      `• Categoria ${cat.id} (${cat.curto}): ficaria com ${fmtPts(somaValidaCat)} pts, mas o limite é ${cat.maxCurso} pts ` +
+      `(excedente de ${fmtPts(somaValidaCat - cat.maxCurso)} pts).`
+    );
+  }
+
+  if (totalGeralNovo > MAX_GERAL()) {
+    avisos.push(
+      `• Total geral: ficaria com ${fmtPts(totalGeralNovo)} pts, mas o máximo é ${MAX_GERAL()} pts.`
+    );
+  }
+
+  return avisos;
+}
+
+/* =========================================================
+   8) SUBMISSÃO
    ========================================================= */
 function submeterFormulario(cat) {
-  const sel    = document.getElementById("sub-" + cat.id);
-  const uniSel = document.getElementById("uni-" + cat.id);
-  const qtd    = document.getElementById("qtd-" + cat.id);
-  const fileEl = document.getElementById("file-" + cat.id);
-  const msg    = document.querySelector(`[data-msg="${cat.id}"]`);
+  const tituloEl = document.getElementById("titulo-" + cat.id);
+  const sel      = document.getElementById("sub-" + cat.id);
+  const uniSel   = document.getElementById("uni-" + cat.id);
+  const qtd      = document.getElementById("qtd-" + cat.id);
+  const dataEl   = document.getElementById("data-" + cat.id);
+  const fileEl   = document.getElementById("file-" + cat.id);
+  const msg      = document.querySelector(`[data-msg="${cat.id}"]`);
 
   const mostrarErro = texto => {
     msg.textContent = texto;
@@ -821,6 +917,13 @@ function submeterFormulario(cat) {
   msg.textContent = "";
   msg.className = "form-msg";
 
+  /* título */
+  const titulo = (tituloEl.value || "").trim();
+  if (!titulo)
+    return mostrarErro("Informe o título da atividade.");
+  if (titulo.length > 120)
+    return mostrarErro("O título deve ter no máximo 120 caracteres.");
+
   /* subtópico */
   const sub = getSub(cat, sel.value);
   if (!sub) return mostrarErro("Selecione um subtópico.");
@@ -829,6 +932,16 @@ function submeterFormulario(cat) {
   const quantidade = Number(qtd.value);
   if (!quantidade || quantidade <= 0)
     return mostrarErro("Informe uma quantidade válida (maior que zero).");
+
+  /* data de conclusão */
+  const dataConclusaoStr = dataEl.value;
+  if (!dataConclusaoStr)
+    return mostrarErro("Informe a data de conclusão da atividade.");
+
+  const dataConclusao = new Date(dataConclusaoStr + "T00:00:00");
+  const hojeCheck = new Date(); hojeCheck.setHours(23, 59, 59, 999);
+  if (dataConclusao > hojeCheck)
+    return mostrarErro("A data de conclusão não pode ser uma data futura.");
 
   /* arquivo */
   const arquivo = fileEl.files[0];
@@ -846,14 +959,31 @@ function submeterFormulario(cat) {
   const unidade = sub.unidades[uniIdx];
   const pontos  = Math.round(quantidade * unidade.pontos * 100) / 100;
 
+  /* =========================================================
+     BLOQUEIO: se o lançamento extrapola qualquer limite,
+     não registra e mostra a mensagem de erro.
+     ========================================================= */
+  const avisos = simularExcesso(cat, sub, pontos);
+  if (avisos.length) {
+    mostrarErro(
+      "🚫 Lançamento bloqueado — esta atividade ultrapassa os limites:\n\n" +
+      avisos.join("\n\n") +
+      "\n\nAjuste a quantidade (ou escolha outro subtópico) para que o lançamento caiba dentro dos limites permitidos."
+    );
+    return; // não registra nada
+  }
+
   /* registro */
   state.registros.push({
     id: ++seq,
     catId: cat.id,
     subId: sub.id,
     uniIdx,
+    titulo,
     quantidade,
     pontos,
+    dataConclusao,
+    dataConclusaoStr,
     arquivoNome: arquivo.name,
     arquivoTamanho: arquivo.size,
     arquivo: arquivo,
@@ -868,12 +998,12 @@ function submeterFormulario(cat) {
   renderLista(cat.id);
   updateAll();
 
-  msg.textContent = `✔ Atividade registrada: +${fmtPts(pontos)} pts (sujeito aos limites).`;
+  msg.textContent = `✔ Atividade "${titulo}" registrada: +${fmtPts(pontos)} pts.`;
   msg.className = "form-msg ok";
 }
 
 /* =========================================================
-   8) LISTA DE LANÇAMENTOS
+   9) LISTA DE LANÇAMENTOS
    ========================================================= */
 function renderLista(catId) {
   const cat = getCat(catId);
@@ -893,11 +1023,13 @@ function renderLista(catId) {
         <div class="item-main">
           <span class="tag">${sub.id}</span>
           <div class="item-info">
+            <span class="item-titulo">${escapeHtml(r.titulo)}</span>
             <strong>${escapeHtml(sub.nome)}</strong>
             <span class="meta">
               ${fmtQtd(r.quantidade)} ${escapeHtml(u.rotulo)} × ${ptLabel(u.pontos)}
               = <b>${fmtPts(r.pontos)} pts</b>
             </span>
+            <span class="meta">📅 Concluída em ${formatarData(r.dataConclusaoStr)}</span>
             <a class="file" href="${r.url}" target="_blank" rel="noopener">
               📄 ${escapeHtml(r.arquivoNome)} <span>(${fmtSize(r.arquivoTamanho)})</span>
             </a>
@@ -912,7 +1044,7 @@ function renderLista(catId) {
 }
 
 /* =========================================================
-   9) ATUALIZAÇÃO DOS TOTAIS
+   10) ATUALIZAÇÃO DOS TOTAIS
    ========================================================= */
 function updateAll() {
   let totalGeral = 0;
@@ -943,7 +1075,7 @@ function updateAll() {
 }
 
 /* =========================================================
-   9b) ABA "RELATÓRIO FINAL"
+   10b) ABA "RELATÓRIO FINAL"
    ========================================================= */
 function renderResumo() {
   const el = document.getElementById("resumoLista");
@@ -979,11 +1111,13 @@ function renderResumo() {
           <div class="item-main">
             <span class="tag">${sub.id}</span>
             <div class="item-info">
+              <span class="item-titulo">${escapeHtml(r.titulo)}</span>
               <strong>${escapeHtml(sub.nome)}</strong>
               <span class="meta">
                 ${fmtQtd(r.quantidade)} ${escapeHtml(u.rotulo)} × ${ptLabel(u.pontos)}
                 = <b>${fmtPts(r.pontos)} pts</b>
               </span>
+              <span class="meta">📅 Concluída em ${formatarData(r.dataConclusaoStr)}</span>
               <span class="meta">📄 ${escapeHtml(r.arquivoNome)}</span>
             </div>
           </div>
@@ -1006,11 +1140,41 @@ function renderResumo() {
 }
 
 /* =========================================================
-   9c) GERAÇÃO DO PDF FINAL (relatório + anexos)
+   10c) GERAÇÃO DO PDF FINAL (relatório + anexos)
    ========================================================= */
 async function gerarRelatorioPDF() {
   const msg = document.getElementById("resumoMsg");
   const btn = document.getElementById("btnGerarPdf");
+  const nomeEl = document.getElementById("alunoNome");
+  const dataIngressoEl = document.getElementById("alunoDataIngresso");
+
+  /* Limpa destaques anteriores */
+  nomeEl.classList.remove("invalido");
+  dataIngressoEl.classList.remove("invalido");
+
+  /* =========================================================
+     VALIDAÇÃO DOS CAMPOS OBRIGATÓRIOS
+     ========================================================= */
+  const nome = (nomeEl.value || "").trim();
+  const dataIngressoStr = (dataIngressoEl.value || "").trim();
+
+  const faltando = [];
+  if (!nome) {
+    faltando.push("Nome completo");
+    nomeEl.classList.add("invalido");
+  }
+  if (!dataIngressoStr) {
+    faltando.push("Data de ingresso");
+    dataIngressoEl.classList.add("invalido");
+  }
+
+  if (faltando.length) {
+    msg.textContent =
+      "🚫 Preencha o(s) campo(s) obrigatório(s) antes de gerar o relatório:\n\n" +
+      faltando.map(f => `• ${f}`).join("\n");
+    msg.className = "form-msg erro";
+    return;
+  }
 
   if (!state.registros.length) {
     msg.textContent = "Adicione ao menos uma atividade antes de gerar o relatório.";
@@ -1075,8 +1239,6 @@ async function gerarRelatorioPDF() {
       });
     }
 
-    /* Desenha uma linha de "link" clicável e devolve a área/página para
-       criarmos a anotação de destino depois que soubermos para onde apontar */
     function escreverLinhaLink(texto, opts = {}) {
       const { size = 9, font = fontBold, color = rgb(0.15, 0.39, 0.85), gap = 16, indent = 12 } = opts;
       novaPaginaSeNecessario(gap + 10);
@@ -1092,7 +1254,6 @@ async function gerarRelatorioPDF() {
       return area;
     }
 
-    /* Cria uma anotação de link interno na página "origem", saltando para a página "destino" */
     function criarLinkInterno(origem, destinoRef) {
       const { PDFName } = PDFLib;
       const context = pdfDoc.context;
@@ -1113,17 +1274,15 @@ async function gerarRelatorioPDF() {
       annots.push(linkRef);
     }
 
-    const linksPendentes = [];       // { area, registroId }
-    const destinosAnexo = new Map(); // registroId -> PDFRef da página do comprovante
+    const linksPendentes = [];
+    const destinosAnexo = new Map();
 
     /* Cabeçalho */
     escreverLinha("Relatório de Atividades Complementares", { size: 16, font: fontBold, gap: 22 });
     escreverLinha("Anexo I — Pontuação para as atividades complementares", { size: 10, color: rgb(0.4, 0.45, 0.53), gap: 18 });
 
-    const nome = (document.getElementById("alunoNome").value || "").trim();
-    const matricula = (document.getElementById("alunoMatricula").value || "").trim();
-    if (nome) escreverLinha(`Aluno(a): ${nome}`, { size: 11, font: fontBold, gap: 16 });
-    if (matricula) escreverLinha(`Matrícula/RA: ${matricula}`, { size: 11, gap: 16 });
+    escreverLinha(`Aluno(a): ${nome}`, { size: 11, font: fontBold, gap: 16 });
+    escreverLinha(`Data de ingresso: ${formatarData(dataIngressoStr)}`, { size: 11, gap: 16 });
     escreverLinha(`Data de emissão: ${new Date().toLocaleString("pt-BR")}`, { size: 9, color: rgb(0.4, 0.45, 0.53), gap: 22 });
 
     /* Corpo — atividades por categoria */
@@ -1140,14 +1299,13 @@ async function gerarRelatorioPDF() {
       novaPaginaSeNecessario(50);
       y -= 6;
       escreverLinha(`${cat.id}. ${cat.nome}`, { size: 12, font: fontBold, gap: 16 });
-      escreverLinha(`Subtotal da categoria: ${fmtPts(total)} / ${cat.maxCurso} pts`, { size: 9.5, color: rgb(0.3, 0.35, 0.42), gap: 16 });
 
       regs.forEach(r => {
         const sub = getSub(cat, r.subId);
-        const u = sub.unidades[r.uniIdx];
-        escreverLinha(`• [${sub.id}] ${sub.nome}`, { size: 9.5, gap: 12 });
+        escreverLinha(`• ${fmtPts(r.pontos)} pts — ${r.titulo}`, { size: 10, font: fontBold, gap: 13 });
+        escreverLinha(`[${sub.id}] ${sub.nome}`, { size: 9, color: rgb(0.35, 0.4, 0.47), gap: 12, indent: 12 });
         escreverLinha(
-          `${fmtQtd(r.quantidade)} ${u.rotulo} × ${ptLabel(u.pontos)} = ${fmtPts(r.pontos)} pts — arquivo: ${r.arquivoNome}`,
+          `Concluída em ${formatarData(r.dataConclusaoStr)}`,
           { size: 9, color: rgb(0.35, 0.4, 0.47), gap: 14, indent: 12 }
         );
         const area = escreverLinhaLink(`» Abrir comprovante em PDF`);
@@ -1178,8 +1336,9 @@ async function gerarRelatorioPDF() {
 
         page = pdfDoc.addPage([pageW, pageH]);
         y = pageH - margin;
-        escreverLinha(`Anexo — Subtópico ${sub.id}`, { size: 12, font: fontBold, gap: 18 });
-        escreverLinha(sub.nome, { size: 10, gap: 14 });
+        escreverLinha(`Anexo — ${fmtPts(r.pontos)} pts — ${r.titulo}`, { size: 12, font: fontBold, gap: 18 });
+        escreverLinha(`Subtópico ${sub.id} — ${sub.nome}`, { size: 10, gap: 14 });
+        escreverLinha(`Data de conclusão: ${formatarData(r.dataConclusaoStr)}`, { size: 9.5, color: rgb(0.35, 0.4, 0.47), gap: 14 });
         escreverLinha(`Arquivo: ${r.arquivoNome}`, { size: 9.5, color: rgb(0.35, 0.4, 0.47), gap: 16 });
 
         try {
@@ -1233,10 +1392,16 @@ async function gerarRelatorioPDF() {
 function bindResumo() {
   const btn = document.getElementById("btnGerarPdf");
   if (btn) btn.addEventListener("click", gerarRelatorioPDF);
+
+  /* Limpa o destaque vermelho assim que o usuário digita/seleciona */
+  const nomeEl = document.getElementById("alunoNome");
+  const dataIngressoEl = document.getElementById("alunoDataIngresso");
+  if (nomeEl) nomeEl.addEventListener("input", () => nomeEl.classList.remove("invalido"));
+  if (dataIngressoEl) dataIngressoEl.addEventListener("change", () => dataIngressoEl.classList.remove("invalido"));
 }
 
 /* =========================================================
-   10) REMOÇÃO E LIMPEZA
+   11) REMOÇÃO E LIMPEZA
    ========================================================= */
 function bindRemocao() {
   document.getElementById("panels").addEventListener("click", e => {
@@ -1267,7 +1432,7 @@ function bindRemocao() {
 }
 
 /* =========================================================
-   11) INICIALIZAÇÃO
+   12) INICIALIZAÇÃO
    ========================================================= */
 (function init() {
   buildTabs();
