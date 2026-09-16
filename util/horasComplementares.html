@@ -178,6 +178,14 @@
   .btn-primary:active{transform:none;}
   .btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none;filter:none;}
 
+  .btn-secondary{
+    font:inherit;font-weight:700;font-size:.9rem;padding:12px 22px;
+    border:0;border-radius:12px;background:#e2e8f0;color:#334155;cursor:pointer;
+    transition:background .15s, transform .15s;
+  }
+  .btn-secondary:hover{background:#cbd5e1;transform:translateY(-1px);}
+  .btn-secondary:active{transform:none;}
+
   .form-msg{margin:12px 0 0;font-size:.82rem;font-weight:600;}
   .form-msg.erro{
     color:var(--danger);
@@ -237,6 +245,8 @@
     color:var(--muted);cursor:pointer;transition:.2s;
   }
   .btn-ghost:hover{border-color:var(--danger);color:var(--danger);background:#fef2f2;}
+
+  .btn-acoes{display:flex;gap:10px;flex-wrap:wrap;}
 
   /* ---------- RESPONSIVO ---------- */
   @media (max-width:680px){
@@ -526,6 +536,26 @@ const MAX_GERAL = () => CATEGORIAS.reduce((a, c) => a + c.maxCurso, 0);
 const getCat = id => CATEGORIAS.find(c => c.id === Number(id));
 const getSub = (cat, subId) => cat.subtopicos.find(s => s.id === subId);
 
+/* Converte Blob → base64 (para serializar no JSON) */
+async function blobParaBase64(blob) {
+  const buf = await blob.arrayBuffer();
+  const bytes = new Uint8Array(buf);
+  let bin = "";
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(bin);
+}
+
+/* Converte base64 → Blob (para reconstruir o arquivo importado) */
+function base64ParaBlob(b64, tipo) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new Blob([bytes], { type: tipo || "application/pdf" });
+}
+
 /* =========================================================
    4) CÁLCULO DE PONTOS (com limites)
    ========================================================= */
@@ -586,7 +616,7 @@ function buildTabs() {
     <span class="tab-ico">📄</span>
     <span class="tab-txt">
       <strong>Relatório final</strong>
-      <small>Gerar e baixar PDF</small>
+      <small>Gerar PDF · Exportar · Importar</small>
     </span>`;
   bResumo.addEventListener("click", () => activateTab("resumo"));
   nav.appendChild(bResumo);
@@ -749,12 +779,19 @@ function buildResumoPanel() {
 
     <div class="foot">
       <p>
-        O botão abaixo monta o relatório e, em seguida, anexa integralmente cada comprovante em PDF
-        já enviado nos formulários das categorias. O download começa automaticamente ao final.
+        <strong>Exportar</strong> salva todas as atividades (incluindo os PDFs) em um único arquivo
+        <b>.json</b> para você guardar ou transferir. <strong>Importar</strong> restaura esse arquivo
+        em qualquer navegador/dispositivo.
       </p>
-      <button class="btn-primary" id="btnGerarPdf" type="button">⬇ Gerar e baixar PDF</button>
+      <div class="btn-acoes">
+        <button class="btn-secondary" id="btnExportar" type="button">📤 Exportar dados</button>
+        <button class="btn-secondary" id="btnImportar" type="button">📥 Importar dados</button>
+        <button class="btn-primary" id="btnGerarPdf" type="button">⬇ Gerar e baixar PDF</button>
+      </div>
     </div>
     <p class="form-msg" id="resumoMsg"></p>
+
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
   `;
 
   main.appendChild(sec);
@@ -1389,9 +1426,207 @@ async function gerarRelatorioPDF() {
   }
 }
 
+/* =========================================================
+   10d) EXPORTAR / IMPORTAR DADOS (JSON com PDFs em base64)
+   ========================================================= */
+async function exportarDados() {
+  const msg = document.getElementById("resumoMsg");
+  const btnExp = document.getElementById("btnExportar");
+
+  if (!state.registros.length) {
+    msg.textContent = "Não há atividades para exportar.";
+    msg.className = "form-msg erro";
+    return;
+  }
+
+  btnExp.disabled = true;
+  msg.textContent = "Preparando arquivo para exportação…";
+  msg.className = "form-msg";
+
+  try {
+    const registros = [];
+
+    for (const r of state.registros) {
+      let arquivoBase64 = "";
+      let arquivoTipo = "application/pdf";
+      try {
+        if (r.arquivo instanceof Blob) {
+          arquivoBase64 = await blobParaBase64(r.arquivo);
+          arquivoTipo = r.arquivo.type || "application/pdf";
+        }
+      } catch (e) {
+        console.warn("Falha ao converter anexo para base64:", r.arquivoNome, e);
+      }
+
+      registros.push({
+        catId: r.catId,
+        subId: r.subId,
+        uniIdx: r.uniIdx,
+        titulo: r.titulo,
+        quantidade: r.quantidade,
+        pontos: r.pontos,
+        dataConclusaoStr: r.dataConclusaoStr,
+        arquivoNome: r.arquivoNome,
+        arquivoTamanho: r.arquivoTamanho,
+        arquivoTipo,
+        arquivoBase64
+      });
+    }
+
+    const pacote = {
+      app: "Atividades Complementares — Integralização",
+      versao: 1,
+      exportadoEm: new Date().toISOString(),
+      aluno: {
+        nome: (document.getElementById("alunoNome").value || "").trim(),
+        dataIngresso: (document.getElementById("alunoDataIngresso").value || "").trim()
+      },
+      totalGeral: CATEGORIAS.reduce((acc, c) => acc + calcCategoria(c).total, 0),
+      registros
+    };
+
+    const blob = new Blob([JSON.stringify(pacote, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `atividades-complementares-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+    msg.textContent =
+      `✔ Exportação concluída — ${registros.length} atividade(s) salva(s) no arquivo .json.\n` +
+      `Guarde-o para importar depois em outro dispositivo/navegador.`;
+    msg.className = "form-msg ok";
+  } catch (err) {
+    console.error(err);
+    msg.textContent = "Erro ao exportar os dados. Tente novamente.";
+    msg.className = "form-msg erro";
+  } finally {
+    btnExp.disabled = false;
+  }
+}
+
+async function importarDados(file) {
+  const msg = document.getElementById("resumoMsg");
+
+  msg.textContent = "Importando dados, aguarde…";
+  msg.className = "form-msg";
+
+  try {
+    const texto = await file.text();
+    const pacote = JSON.parse(texto);
+
+    if (!pacote || !Array.isArray(pacote.registros)) {
+      throw new Error("Estrutura inválida");
+    }
+
+    if (state.registros.length) {
+      const ok = confirm(
+        "Já existem lançamentos na tela.\n\n" +
+        "Deseja SUBSTITUIR todos pelos dados do arquivo?\n\n" +
+        "(OK = substituir · Cancelar = manter os atuais)"
+      );
+      if (!ok) {
+        msg.textContent = "Importação cancelada pelo usuário.";
+        msg.className = "form-msg";
+        return;
+      }
+    }
+
+    /* Limpa registros e revoga URLs antigas */
+    state.registros.forEach(r => r.url && URL.revokeObjectURL(r.url));
+    state.registros = [];
+
+    let importados = 0;
+    let anexosRecuperados = 0;
+
+    for (const item of pacote.registros) {
+      const cat = getCat(item.catId);
+      if (!cat) continue;
+      const sub = getSub(cat, item.subId);
+      if (!sub) continue;
+
+      let blob = new Blob([], { type: "application/pdf" });
+      let tamanho = item.arquivoTamanho || 0;
+
+      if (item.arquivoBase64) {
+        try {
+          blob = base64ParaBlob(item.arquivoBase64, item.arquivoTipo || "application/pdf");
+          tamanho = blob.size;
+          anexosRecuperados++;
+        } catch (e) {
+          console.warn("Falha ao restaurar anexo:", item.arquivoNome, e);
+        }
+      }
+
+      const url = URL.createObjectURL(blob);
+
+      state.registros.push({
+        id: ++seq,
+        catId: item.catId,
+        subId: item.subId,
+        uniIdx: item.uniIdx || 0,
+        titulo: item.titulo || "(sem título)",
+        quantidade: item.quantidade || 0,
+        pontos: item.pontos || 0,
+        dataConclusao: item.dataConclusaoStr ? new Date(item.dataConclusaoStr + "T00:00:00") : null,
+        dataConclusaoStr: item.dataConclusaoStr || "",
+        arquivoNome: item.arquivoNome || "comprovante.pdf",
+        arquivoTamanho: tamanho,
+        arquivo: blob,
+        url,
+        criadoEm: new Date()
+      });
+      importados++;
+    }
+
+    /* Restaura dados do aluno se presentes */
+    if (pacote.aluno) {
+      const nomeEl = document.getElementById("alunoNome");
+      const dataEl = document.getElementById("alunoDataIngresso");
+      if (pacote.aluno.nome) nomeEl.value = pacote.aluno.nome;
+      if (pacote.aluno.dataIngresso) dataEl.value = pacote.aluno.dataIngresso;
+      nomeEl.classList.remove("invalido");
+      dataEl.classList.remove("invalido");
+    }
+
+    /* Re-renderiza tudo */
+    CATEGORIAS.forEach(cat => renderLista(cat.id));
+    updateAll();
+
+    msg.textContent =
+      `✔ Importação concluída — ${importados} atividade(s) restaurada(s)` +
+      (anexosRecuperados ? ` (${anexosRecuperados} anexo(s) recuperado(s)).` : ".");
+    msg.className = "form-msg ok";
+  } catch (err) {
+    console.error(err);
+    msg.textContent =
+      "Erro ao importar — arquivo inválido ou corrompido.\n\n" +
+      "Use apenas arquivos .json gerados pelo próprio botão \"Exportar dados\".";
+    msg.className = "form-msg erro";
+  }
+}
+
 function bindResumo() {
-  const btn = document.getElementById("btnGerarPdf");
-  if (btn) btn.addEventListener("click", gerarRelatorioPDF);
+  const btnPdf = document.getElementById("btnGerarPdf");
+  const btnExportar = document.getElementById("btnExportar");
+  const btnImportar = document.getElementById("btnImportar");
+  const importFile = document.getElementById("importFile");
+
+  if (btnPdf) btnPdf.addEventListener("click", gerarRelatorioPDF);
+  if (btnExportar) btnExportar.addEventListener("click", exportarDados);
+
+  if (btnImportar && importFile) {
+    btnImportar.addEventListener("click", () => importFile.click());
+    importFile.addEventListener("change", async e => {
+      const f = e.target.files[0];
+      if (!f) return;
+      await importarDados(f);
+      importFile.value = ""; // permite reimportar o mesmo arquivo
+    });
+  }
 
   /* Limpa o destaque vermelho assim que o usuário digita/seleciona */
   const nomeEl = document.getElementById("alunoNome");
